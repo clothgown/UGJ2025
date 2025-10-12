@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -6,31 +6,35 @@ using UnityEngine.TestTools;
 public class IsoGrid2D : MonoBehaviour
 {
     public static IsoGrid2D instance;
-    public int width = 10;          // µØÍ¼¿í
-    public int height = 10;         // µØÍ¼¸ß
-    public float cellSize = 1f;     // ¸ñ×Ó´óĞ¡
-    public GameObject tilePrefab;   // ¸ñ×ÓÔ¤ÖÆÌå£¨Ò»¸ö Sprite£¬ÁâĞÎ¸ñ×Ó£©
+    public int width = 10;          // åœ°å›¾å®½
+    public int height = 10;         // åœ°å›¾é«˜
+    public float cellSize = 1f;     // æ ¼å­å¤§å°
+    public GameObject tilePrefab;   // æ ¼å­é¢„åˆ¶ä½“ï¼ˆä¸€ä¸ª Spriteï¼Œè±å½¢æ ¼å­ï¼‰
     public GameGrid currentSelectedGrid = null;
     public GameObject controller;
-    // ÓÃÒ»Î¬ÁĞ±í´æ¸ñ×Ó£¬Inspector ¿É¼û
+    // ç”¨ä¸€ç»´åˆ—è¡¨å­˜æ ¼å­ï¼ŒInspector å¯è§
     public List<GameObject> grid = new List<GameObject>();
     public GameGrid currentPlayerGrid = null;
 
     public bool isWaitingForGridClick = false;
     public Card waitingCard;
+
+    public Dictionary<Vector2Int, GridNode> extraNodes = new Dictionary<Vector2Int, GridNode>();
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            GenerateGrid();  // ÌáÇ°Éú³É
+            GenerateGrid();  // æå‰ç”Ÿæˆ
             
         }
         else
         {
             Destroy(gameObject);
         }
+
     }
 
     void Start()
@@ -62,7 +66,7 @@ public class IsoGrid2D : MonoBehaviour
     }
 
 
-    // Âß¼­×ø±ê (x,y) -> ÊÀ½ç×ø±ê
+    // é€»è¾‘åæ ‡ (x,y) -> ä¸–ç•Œåæ ‡
     public Vector3 GridToWorld(int x, int y, float cellSize)
     {
         float worldX = (x - y) * cellSize * 1f;
@@ -70,13 +74,22 @@ public class IsoGrid2D : MonoBehaviour
         return new Vector3(worldX, worldY, 0);
     }
 
-    // ¸ù¾İ (x,y) ÄÃµ½¸ñ×Ó GameObject
+    // æ ¹æ® (x,y) æ‹¿åˆ°æ ¼å­ GameObject
     public GameObject GetTile(int x, int y)
     {
-        if (x < 0 || x >= width || y < 0 || y >= height) return null;
-        int index = y * width + x;
-        return grid[index];
+        if (x >= 0 && x < width && y >= 0 && y < height)
+        {
+            int index = y * width + x;
+            return grid[index];
+        }
+
+        //æŸ¥æ‰¾æ‰©å±•èŠ‚ç‚¹
+        if (extraNodes.TryGetValue(new Vector2Int(x, y), out GridNode node))
+            return node.grid.gameObject;
+
+        return null;
     }
+
 
 
 
@@ -95,8 +108,8 @@ public class IsoGrid2D : MonoBehaviour
             var (pos, step) = queue.Dequeue();
             GameGrid gridComp = GetTile(pos.x, pos.y).GetComponent<GameGrid>();
 
-            // ±ê¼ÇÎª¿ÉÒÆ¶¯
-            if (step > 0) // step=0 ÊÇÍæ¼Ò×Ô¼ºËùÔÚ¸ñ×Ó£¬¿ÉÒÔÑ¡Ôñ²»¸ßÁÁ
+            // æ ‡è®°ä¸ºå¯ç§»åŠ¨
+            if (step > 0) // step=0 æ˜¯ç©å®¶è‡ªå·±æ‰€åœ¨æ ¼å­ï¼Œå¯ä»¥é€‰æ‹©ä¸é«˜äº®
             {
                 gridComp.SetColor(gridComp.moveRangeColor);
                 gridComp.isInRange = true;
@@ -104,20 +117,23 @@ public class IsoGrid2D : MonoBehaviour
 
             if (step >= moveRange) continue;
 
-            // ËÄ¸ö·½Ïò
+            // å››ä¸ªæ–¹å‘
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
             foreach (var dir in directions)
             {
                 Vector2Int newPos = pos + dir;
-                if (newPos.x < 0 || newPos.x >= width || newPos.y < 0 || newPos.y >= height) continue;
                 if (visited.Contains(newPos)) continue;
 
-                GameGrid neighbor = GetTile(newPos.x, newPos.y).GetComponent<GameGrid>();
-                if (neighbor.isOccupied) continue; // ±»Õ¼ÓÃ¸ñ×Ó²»ÄÜÒÆ¶¯
+                GameObject tileObj = GetTile(newPos.x, newPos.y);
+                if (tileObj == null) continue; // æ— æ•ˆæ ¼å­ï¼ˆè¶…å‡ºä¸»ç½‘æ ¼æˆ–ä¸å­˜åœ¨æ‰©å±•æ ¼å­ï¼‰
+
+                GameGrid neighbor = tileObj.GetComponent<GameGrid>();
+                if (neighbor.isOccupied) continue; // è¢«å ç”¨æ ¼å­ä¸èƒ½ç§»åŠ¨
 
                 queue.Enqueue((newPos, step + 1));
                 visited.Add(newPos);
             }
+
         }
     }
 
@@ -135,7 +151,7 @@ public class IsoGrid2D : MonoBehaviour
         foreach (var tile in grid)
         {
             GameGrid gridComp = tile.GetComponent<GameGrid>();
-            gridComp.ResetColor();       // »Ö¸´ÑÕÉ«
+            gridComp.ResetColor();       // æ¢å¤é¢œè‰²
             gridComp.isInRange = false;
             gridComp.isAttackTarget = false;
         }
@@ -144,9 +160,12 @@ public class IsoGrid2D : MonoBehaviour
 
     public List<GameGrid> FindPath(Vector2Int start, Vector2Int target)
     {
-        GridNode startNode = nodes[start.x, start.y];
-        GridNode targetNode = nodes[target.x, target.y];
+        // 1ï¸è·å– startNode å’Œ targetNodeï¼Œæ”¯æŒ extraNodes
+        GridNode startNode = GetNodeAt(start);
+        GridNode targetNode = GetNodeAt(target);
+        if (startNode == null || targetNode == null) return null;
 
+        // 2ï¸åˆå§‹åŒ– open å’Œ closed åˆ—è¡¨
         List<GridNode> openList = new List<GridNode>();
         HashSet<GridNode> closedList = new HashSet<GridNode>();
 
@@ -154,6 +173,7 @@ public class IsoGrid2D : MonoBehaviour
 
         while (openList.Count > 0)
         {
+            // 3ï¸é€‰å– fCost æœ€å°çš„èŠ‚ç‚¹
             GridNode currentNode = openList[0];
             for (int i = 1; i < openList.Count; i++)
             {
@@ -167,19 +187,21 @@ public class IsoGrid2D : MonoBehaviour
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
+            // 4ï¸æ‰¾åˆ°ç›®æ ‡
             if (currentNode == targetNode)
             {
                 return RetracePath(startNode, targetNode);
             }
 
+            // 5ï¸éå†é‚»å±…
             foreach (GridNode neighbor in GetNeighbors(currentNode))
             {
-                // Èç¹û¸Ã¸ñ×Ó±»Õ¼ÓÃ£¬²»ÄÜ×ß
-                if (neighbor.grid.isOccupied && neighbor != targetNode)
-                    continue;
+                if (closedList.Contains(neighbor)) continue;
 
-                if (!neighbor.walkable || closedList.Contains(neighbor))
-                    continue;
+                // å¦‚æœæ ¼å­è¢«å ç”¨ä¸”ä¸æ˜¯ç›®æ ‡ï¼Œè·³è¿‡
+                if (neighbor.grid.isOccupied && neighbor != targetNode) continue;
+
+                if (!neighbor.walkable) continue;
 
                 int newGCost = currentNode.gCost + GetDistance(currentNode, neighbor);
                 if (newGCost < neighbor.gCost || !openList.Contains(neighbor))
@@ -192,13 +214,31 @@ public class IsoGrid2D : MonoBehaviour
                         openList.Add(neighbor);
                 }
             }
-
         }
 
-        return null; // Ã»ÓĞÂ·¾¶
+        return null; // æ²¡æœ‰è·¯å¾„
     }
 
-    List<GameGrid> RetracePath(GridNode startNode, GridNode endNode)
+    //è¾…åŠ©æ–¹æ³•ï¼šæ ¹æ®åæ ‡è·å–èŠ‚ç‚¹
+    private GridNode GetNodeAt(Vector2Int pos)
+    {
+        if (pos.x >= 0 && pos.x < width && pos.y >= 0 && pos.y < height)
+            return nodes[pos.x, pos.y];
+
+        if (extraNodes.TryGetValue(pos, out GridNode extraNode))
+            return extraNode;
+
+        return null; // ä¸å­˜åœ¨
+    }
+
+    // æ›¼å“ˆé¡¿è·ç¦»
+    private int GetDistance(GridNode a, GridNode b)
+    {
+        return Mathf.Abs(a.position.x - b.position.x) + Mathf.Abs(a.position.y - b.position.y);
+    }
+
+    // å›æº¯è·¯å¾„
+    private List<GameGrid> RetracePath(GridNode startNode, GridNode endNode)
     {
         List<GameGrid> path = new List<GameGrid>();
         GridNode currentNode = endNode;
@@ -213,33 +253,29 @@ public class IsoGrid2D : MonoBehaviour
         return path;
     }
 
-    List<GridNode> GetNeighbors(GridNode node)
+    // é‚»å±…è·å–ï¼ˆå·²æ”¯æŒ extraNodesï¼‰
+    private List<GridNode> GetNeighbors(GridNode node)
     {
         List<GridNode> neighbors = new List<GridNode>();
-        Vector2Int[] directions = {
-        new Vector2Int(0,1), new Vector2Int(1,0),
-        new Vector2Int(0,-1), new Vector2Int(-1,0)
-    };
+        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
         foreach (var dir in directions)
         {
-            int nx = node.position.x + dir.x;
-            int ny = node.position.y + dir.y;
-            if (nx >= 0 && nx < width && ny >= 0 && ny < height)
-                neighbors.Add(nodes[nx, ny]);
+            Vector2Int np = node.position + dir;
+
+            GridNode neighbor = GetNodeAt(np);
+            if (neighbor != null)
+                neighbors.Add(neighbor);
         }
         return neighbors;
     }
 
-    int GetDistance(GridNode a, GridNode b)
-    {
-        return Mathf.Abs(a.position.x - b.position.x) + Mathf.Abs(a.position.y - b.position.y);
-    }
 
-    
+
+
     public void HighlightSingleTile(Vector2Int pos)
     {
-        ClearHighlight(); // ÏÈÇå¿ÕÒÑÓĞ¸ßÁÁ£¨¿ÉÑ¡£¬¿´ÄãĞè²»ĞèÒª¶à¸ñÍ¬Ê±ÁÁ£©
+        ClearHighlight(); // å…ˆæ¸…ç©ºå·²æœ‰é«˜äº®ï¼ˆå¯é€‰ï¼Œçœ‹ä½ éœ€ä¸éœ€è¦å¤šæ ¼åŒæ—¶äº®ï¼‰
 
         GameObject tile = GetTile(pos.x, pos.y);
         if (tile != null)
@@ -272,11 +308,11 @@ public class IsoGrid2D : MonoBehaviour
         return tilesInRange;
     }
     /// <summary>
-    /// ¸ßÁÁÍæ¼Ò¹¥»÷·¶Î§£¨µĞÈËÓë¿Õ¸ñ×Ó£©
+    /// é«˜äº®ç©å®¶æ”»å‡»èŒƒå›´ï¼ˆæ•Œäººä¸ç©ºæ ¼å­ï¼‰
     /// </summary>
-    /// <param name="playerPos">Íæ¼Ò¸ñ×Ó×ø±ê</param>
-    /// <param name="attackRange">¹¥»÷·¶Î§</param>
-    /// <returns>·¶Î§ÄÚÊÇ·ñÓĞµĞÈË</returns>
+    /// <param name="playerPos">ç©å®¶æ ¼å­åæ ‡</param>
+    /// <param name="attackRange">æ”»å‡»èŒƒå›´</param>
+    /// <returns>èŒƒå›´å†…æ˜¯å¦æœ‰æ•Œäºº</returns>
     public bool HighlightAttackArea(Vector2Int playerPos, int attackRange)
     {
         ClearHighlight();
@@ -287,7 +323,7 @@ public class IsoGrid2D : MonoBehaviour
         {
             for (int dy = -attackRange; dy <= attackRange; dy++)
             {
-                int distance = Mathf.Abs(dx) + Mathf.Abs(dy); // Âü¹ş¶Ù¾àÀë
+                int distance = Mathf.Abs(dx) + Mathf.Abs(dy); // æ›¼å“ˆé¡¿è·ç¦»
                 if (distance == 0 || distance > attackRange) continue;
 
                 Vector2Int targetPos = playerPos + new Vector2Int(dx, dy);
@@ -300,14 +336,14 @@ public class IsoGrid2D : MonoBehaviour
 
                     if (enemy != null)
                     {
-                        // µĞÈË ¡ú ¸ßÁÁ²»Í¸Ã÷ºìÉ«
+                        // æ•Œäºº â†’ é«˜äº®ä¸é€æ˜çº¢è‰²
                         gridComp.SetColor(new Color(1f, 0.5f, 0.5f, 1f));
                         gridComp.isAttackTarget = true;
                         hasEnemy = true;
                     }
                     else
                     {
-                        // ¿Õ¸ñ×Ó ¡ú °ëÍ¸Ã÷ºìÉ«
+                        // ç©ºæ ¼å­ â†’ åŠé€æ˜çº¢è‰²
                         gridComp.SetColor(new Color(1f, 0.5f, 0.5f, 0.3f));
                     }
                 }
@@ -320,7 +356,7 @@ public class IsoGrid2D : MonoBehaviour
     }
 
     /// <summary>
-    /// »ñÈ¡·¶Î§ÄÚ¿É¹¥»÷µÄ¸ñ×ÓÁĞ±í
+    /// è·å–èŒƒå›´å†…å¯æ”»å‡»çš„æ ¼å­åˆ—è¡¨
     /// </summary>
     public List<GameGrid> GetAttackableTiles(Vector2Int playerPos, int attackRange)
     {
@@ -343,19 +379,19 @@ public class IsoGrid2D : MonoBehaviour
         return tiles;
     }
     /// <summary>
-    /// ¸ßÁÁÍæ¼ÒÉÏÏÂ×óÓÒÖ±Ïß·¶Î§£¨ÀàËÆÊ®×Ö¹¥»÷£©
+    /// é«˜äº®ç©å®¶ä¸Šä¸‹å·¦å³ç›´çº¿èŒƒå›´ï¼ˆç±»ä¼¼åå­—æ”»å‡»ï¼‰
     /// </summary>
-    /// <param name="playerPos">Íæ¼Ò¸ñ×Ó×ø±ê</param>
-    /// <param name="attackRange">Ö±Ïß·¶Î§</param>
-    /// <returns>·¶Î§ÄÚÊÇ·ñÓĞµĞÈË</returns>
+    /// <param name="playerPos">ç©å®¶æ ¼å­åæ ‡</param>
+    /// <param name="attackRange">ç›´çº¿èŒƒå›´</param>
+    /// <returns>èŒƒå›´å†…æ˜¯å¦æœ‰æ•Œäºº</returns>
     public bool HighlightStraightAttackArea(Vector2Int playerPos, int attackRange)
     {
         ClearHighlight();
-        HighlightSingleTile(playerPos); // ¸ßÁÁÍæ¼Ò×Ô¼º
+        HighlightSingleTile(playerPos); // é«˜äº®ç©å®¶è‡ªå·±
 
         bool hasEnemy = false;
 
-        // ËÄ¸ö·½Ïò
+        // å››ä¸ªæ–¹å‘
         Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
         foreach (var dir in directions)
@@ -365,21 +401,21 @@ public class IsoGrid2D : MonoBehaviour
                 Vector2Int targetPos = playerPos + dir * step;
                 GameObject tile = GetTile(targetPos.x, targetPos.y);
 
-                if (tile == null) break; // ³¬³öµØÍ¼
+                if (tile == null) break; // è¶…å‡ºåœ°å›¾
 
                 GameGrid gridComp = tile.GetComponent<GameGrid>();
                 EnemyUnit enemy = tile.GetComponentInChildren<EnemyUnit>();
 
                 if (enemy != null)
                 {
-                    // µĞÈË ¡ú ²»Í¸Ã÷ºìÉ«
+                    // æ•Œäºº â†’ ä¸é€æ˜çº¢è‰²
                     gridComp.SetColor(new Color(1f, 0.5f, 0.5f, 1f));
                     gridComp.isAttackTarget = true;
                     hasEnemy = true;
                 }
                 else
                 {
-                    // ¿Õ¸ñ×Ó ¡ú °ëÍ¸Ã÷ºìÉ«
+                    // ç©ºæ ¼å­ â†’ åŠé€æ˜çº¢è‰²
                     gridComp.SetColor(new Color(1f, 0.5f, 0.5f, 0.3f));
                 }
             }
@@ -393,15 +429,15 @@ public class IsoGrid2D : MonoBehaviour
     {
         if (waitingCard != null)
         {
-            Debug.Log("È¡Ïû³ö¿¨£¬¿¨ÅÆ·µ»ØÊÖÅÆ¡£");
+            Debug.Log("å–æ¶ˆå‡ºå¡ï¼Œå¡ç‰Œè¿”å›æ‰‹ç‰Œã€‚");
             HorizontalCardHolder holder = FindObjectOfType<HorizontalCardHolder>();
             Card cancelledCard = waitingCard;
             ClearHighlight();
 
-            // ¶¯»­·µ»Øµ½ÊÖÅÆÎ»ÖÃ
+            // åŠ¨ç”»è¿”å›åˆ°æ‰‹ç‰Œä½ç½®
             cancelledCard.transform.DOLocalMove(Vector3.zero, 0.3f).SetEase(Ease.OutBack);
 
-            // »Ö¸´ÎªÎ´´ò³öµÄ×´Ì¬
+            // æ¢å¤ä¸ºæœªæ‰“å‡ºçš„çŠ¶æ€
             if (!holder.cards.Contains(cancelledCard))
                 holder.cards.Add(cancelledCard);
         }
