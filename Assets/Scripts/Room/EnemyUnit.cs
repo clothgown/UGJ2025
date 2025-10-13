@@ -36,6 +36,9 @@ public class EnemyUnit : MonoBehaviour
     public Sprite frontSprite;
     public Sprite backSprite;
 
+    [Header("Passive Buff Settings")]
+    private bool hasTriggeredLifeAbsorb = false; // 是否已触发吸血事件
+    private bool damageBoostActive = false;      // 是否正在进行伤害加成
     private void Start()
     {
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -376,6 +379,36 @@ public class EnemyUnit : MonoBehaviour
             Debug.Log("Passive enemy is now active!");
         }
 
+        // ✅ Passive: 血量第一次低于30%时触发吸血事件
+        if (enemyType == EnemyType.Passive && !hasTriggeredLifeAbsorb && currentHealth / maxHealth <= 0.3f)
+        {
+            hasTriggeredLifeAbsorb = true;
+            sr.color = Color.red;
+            Debug.Log("Passive enemy triggers life absorption!");
+
+            // 吸收所有我方在场角色生命值
+            UnitController[] players = FindObjectsOfType<UnitController>();
+            float totalAbsorbed = 0f;
+            foreach (var p in players)
+            {
+                float absorbAmount = Mathf.Min(5f, p.currentHealth - 1f); // 最多吸5，保留1点血
+                if (absorbAmount > 0)
+                {
+                    p.TakeDamage(absorbAmount);
+                    totalAbsorbed += absorbAmount;
+                }
+            }
+
+            // 敌人回满当前吸收量的血
+            currentHealth += totalAbsorbed;
+            if (currentHealth > maxHealth) currentHealth = maxHealth;
+            healthSystem.SetHealth(currentHealth);
+
+            // 下一回合开始后，所有造成的伤害 ×1.5
+            damageBoostActive = true;
+            attackDamage *= 1.5f;
+        }
+
         if (IsoGrid2D.instance.controller.GetComponent<UnitController>().isNextAttackBloodSucking == true)
         {
             IsoGrid2D.instance.controller.GetComponent<UnitController>().Heal(amount);
@@ -386,10 +419,10 @@ public class EnemyUnit : MonoBehaviour
         {
             currentHealth = 0;
             Debug.Log($"{name} is dead!");
-
             Die();
         }
     }
+
 
     private void Die()
     {

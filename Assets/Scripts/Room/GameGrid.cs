@@ -1,16 +1,26 @@
-using DG.Tweening;   // ±ğÍüÁËÒıÈë DOTween ÃüÃû¿Õ¼ä
+ï»¿using DG.Tweening;   // å¼•å…¥ DOTween å‘½åç©ºé—´
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+public enum GridState
+{
+    None,   // æ™®é€šæ ¼å­
+    Water,  // æ°´æ ¼å­ï¼Œä¸å¯è¡Œèµ°
+    Oil     // æ²¹æ ¼å­ï¼ˆå¯åšç‰¹æ®Šæ•ˆæœï¼‰
+}
+
 public class GameGrid : MonoBehaviour
 {
     public Vector2Int gridPos;
     public SpriteRenderer rend;
     private Color originalColor;
     public Color hoverColor = Color.green;
-    public Color moveRangeColor = new Color(1f, 0.5f, 0f,0.5f); // ³ÈÉ«
+    public Color moveRangeColor = new Color(1f, 0.5f, 0f, 0.5f); // æ©™è‰²
     public bool isInRange = false;
+    public bool canChangeState = false;
+
 
     public SpriteRenderer selectGrid;
     public bool isAttackTarget = false;
@@ -18,29 +28,36 @@ public class GameGrid : MonoBehaviour
 
     public UnitController occupiedPlayer;
     public EnemyUnit currentEnemy;
-    public bool isInterable = false; // ÊÇ·ñ¿É½»»¥
+    public bool isInterable = false;
 
-    public Color interactColor = Color.blue; // ¿É½»»¥¸ñ×ÓÑÕÉ«
     public Vector3 playerOriginalScale;
-
     public int sortingOrder;
+
+    // âœ… æ–°å¢éƒ¨åˆ†ï¼šæ ¼å­çŠ¶æ€ç®¡ç†
+    [Header("Grid State Settings")]
+    public GridState currentState = GridState.None;
+
+    // ä¸‰ç§çŠ¶æ€é¢œè‰²ï¼ˆä½ å¯ä»¥åœ¨ Inspector è°ƒæ•´ï¼‰
+    public Color normalColor = Color.white;
+    public Color waterColor = new Color(0f, 0.5f, 1f, 0.8f);
+    public Color oilColor = new Color(0.3f, 0.3f, 0.3f, 0.8f);
+
     private void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
-
     }
+
     void Start()
     {
-        //ÒÔ (0,0) Îª×î½üµã£¬Ô½Ô¶µÄ¸ñ×ÓÔ½¡°¿¿ºó¡±
         sortingOrder = gridPos.x + gridPos.y;
-
-        // Èç¹ûÑ¡ÖĞ¿òÒªÔÚ¸ñ×ÓÉÏ²ã
         if (selectGrid != null)
             selectGrid.sortingOrder = -sortingOrder + 1;
         originalColor = rend.color;
         selectGrid.enabled = false;
-    }
 
+        // åˆå§‹åŒ–æ—¶åˆ·æ–°ä¸€æ¬¡å¤–è§‚
+        UpdateGridAppearance();
+    }
 
     void OnMouseEnter()
     {
@@ -50,20 +67,11 @@ public class GameGrid : MonoBehaviour
         if (occupiedPlayer != null)
         {
             Transform playerTransform = occupiedPlayer.transform;
-
-            // Ö»ÔÚµÚÒ»´Î¼ÇÂ¼Ô­Ê¼Ëõ·Å
             if (playerOriginalScale == Vector3.zero)
-            {
                 playerOriginalScale = playerTransform.localScale;
-            }
 
-            // ÏÈÍ£Ö¹¾É¶¯»­
             playerTransform.DOKill();
-
-            // Ã¿´ÎÖ´ĞĞ¶¯»­Ç°£¬ÖØÖÃÎªÔ­Ê¼´óĞ¡£¨·ÀÖ¹Ô½·ÅÔ½´ó£©
             playerTransform.localScale = playerOriginalScale;
-
-            // Ö´ĞĞ·Å´óÔÙ»¹Ô­¶¯»­
             playerTransform.DOScale(playerOriginalScale * 1.1f, 0.1f)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.OutQuad);
@@ -75,27 +83,24 @@ public class GameGrid : MonoBehaviour
         selectGrid.enabled = false;
         IsoGrid2D.instance.currentSelectedGrid = null;
     }
-
-    // Íâ²¿µ÷ÓÃ¸Ä±ä¸ñ×ÓÑÕÉ«
-    public void SetColor(Color color)
-    {
-        rend.color = color;
-    }
-
-    // »Ö¸´Ô­Ê¼ÑÕÉ«
-    public void ResetColor()
-    {
-        rend.color = originalColor;
-    }
-
+    public void SetColor(Color color) => rend.color = color;
+    public void ResetColor() => rend.color = originalColor;
     void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        if (occupiedPlayer != null) // ÇĞ»»½ÇÉ«
-        { 
-            TurnManager.instance.ChangePlayer(occupiedPlayer); 
+        // ç‚¹å‡»æ°´æ ¼å­æ— æ•ˆ
+        if (currentState == GridState.Water)
+        {
+            Debug.Log("è¿™æ˜¯æ°´æ ¼å­ï¼Œæ— æ³•ç§»åŠ¨æˆ–äº¤äº’ã€‚");
+            return;
         }
+
+        if (occupiedPlayer != null)
+        {
+            TurnManager.instance.ChangePlayer(occupiedPlayer);
+        }
+
         NormalGridClick();
     }
 
@@ -140,19 +145,37 @@ public class GameGrid : MonoBehaviour
         }
     }
 
-    
-
-
-
     private IEnumerator AttackMultiple()
     {
         var unitController = IsoGrid2D.instance.controller.GetComponent<UnitController>();
-
         for (int i = 0; i < unitController.SegmentCount; i++)
         {
             unitController.Attack(this);
-            yield return new WaitForSeconds(0.2f); // µÈ´ı 0.4 ÃëÔÙ¼ÌĞø
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
+    // å¤–éƒ¨è°ƒç”¨è®¾ç½®æ ¼å­çŠ¶æ€
+    public void SetState(GridState newState)
+    {
+        currentState = newState;
+        UpdateGridAppearance();
+    }
+
+    // æ ¹æ®çŠ¶æ€åˆ·æ–°å¤–è§‚
+    public void UpdateGridAppearance()
+    {
+        switch (currentState)
+        {
+            case GridState.None:
+                rend.color = normalColor;
+                break;
+            case GridState.Water:
+                rend.color = waterColor;
+                break;
+            case GridState.Oil:
+                rend.color = oilColor;
+                break;
+        }
+    }
 }

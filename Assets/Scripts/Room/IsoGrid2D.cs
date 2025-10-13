@@ -355,6 +355,36 @@ public class IsoGrid2D : MonoBehaviour
         return hasEnemy;
     }
 
+    public void MarkEditableArea(Vector2Int centerPos, int range)
+    {
+        ClearHighlight();
+        HighlightSingleTile(centerPos);
+
+        for (int dx = -range; dx <= range; dx++)
+        {
+            for (int dy = -range; dy <= range; dy++)
+            {
+                int distance = Mathf.Abs(dx) + Mathf.Abs(dy); // 曼哈顿距离
+                if (distance == 0 || distance > range) continue;
+
+                Vector2Int pos = centerPos + new Vector2Int(dx, dy);
+                GameObject tile = GetTile(pos.x, pos.y);
+                if (tile == null) continue;
+
+                GameGrid gridComp = tile.GetComponent<GameGrid>();
+                if (gridComp == null) continue;
+
+
+                gridComp.isAttackTarget = true;
+                gridComp.canChangeState = true;
+
+                // （可选）稍微改个颜色区分范围
+                gridComp.SetColor(new Color(0.5f, 0.8f, 1f, 0.3f));
+            }
+        }
+    }
+
+
     /// <summary>
     /// 获取范围内可攻击的格子列表
     /// </summary>

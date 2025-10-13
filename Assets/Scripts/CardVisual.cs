@@ -219,7 +219,7 @@ public class CardVisual : MonoBehaviour
             return;
 
         Vector2Int playerPos = TurnManager.instance.currentController.currentGridPos;
-        if(parentCard.data.effectType == CardData.CardEffectType.Attack || parentCard.data.effectType == CardData.CardEffectType.RemoteAttack)
+        if (parentCard.data.effectType == CardData.CardEffectType.Attack || parentCard.data.effectType == CardData.CardEffectType.RemoteAttack)
         {
             IsoGrid2D.instance.HighlightAttackArea(playerPos, parentCard.data.attackRange);
         }
@@ -227,10 +227,16 @@ public class CardVisual : MonoBehaviour
         {
             IsoGrid2D.instance.HighlightStraightAttackArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
         }
+        else if (parentCard.data.effectType == CardData.CardEffectType.ChangeGridState)
+        {
+            IsoGrid2D.instance.MarkEditableArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
+
+        }
         else
         {
             IsoGrid2D.instance.HighlightSingleTile(playerPos);
         }
+        
     }
 
 
