@@ -32,7 +32,8 @@ public class CardData : ScriptableObject
         Shield,
         Switch,
         Bloodsucking,
-        StraightAttack
+        StraightAttack,
+        ChangeGridState
     }
 
     // π•ª˜ Ù–‘£®ø…¿©’π£©
@@ -41,6 +42,8 @@ public class CardData : ScriptableObject
         None,
         Fire,
         Ice,
+        Oil,
+        Water,
         Poison,
         Lightning,
         Dizziness,
