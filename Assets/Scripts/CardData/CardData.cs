@@ -22,6 +22,9 @@ public class CardData : ScriptableObject
     public AttackAttribute attackAttribute = AttackAttribute.None;
     public int SegmentCount = 0;
     public int PullDistance = 0;
+
+    [Header("Grid State Change")]
+    public GridState targetGridState = GridState.None;
     // Enum for simple effects
     public enum CardEffectType
     {
@@ -33,7 +36,8 @@ public class CardData : ScriptableObject
         Switch,
         Bloodsucking,
         StraightAttack,
-        ChangeGridState
+        ChangeGridState,
+        Double
     }
 
     // π•ª˜ Ù–‘£®ø…¿©’π£©
@@ -42,14 +46,14 @@ public class CardData : ScriptableObject
         None,
         Fire,
         Ice,
-        Oil,
-        Water,
         Poison,
         Lightning,
         Dizziness,
         MultipleDamage,
-        Pull
+        Pull,
     }
+
+
 
     // Optional: Delegate for custom effects
     public System.Action ExecuteCustomEffect;

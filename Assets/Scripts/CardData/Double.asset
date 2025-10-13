@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 071c0a67929233046a864cffac2c1e00, type: 3}
-  m_Name: ArrowIceCard
+  m_Name: Double
   m_EditorClassIdentifier: 
   cardName: Attack
   description: Attack
   cardSprite: {fileID: 0}
-  visualPrefab: {fileID: 7310339964073049012, guid: 90bcae148942fa84b8d6a9cb9f0fdee6, type: 3}
+  visualPrefab: {fileID: 7310339964073049012, guid: 058d7cbc28b17d74bbb89149ade78ae3, type: 3}
   manaCost: 0
-  effectType: 3
-  amount: 5
-  attackRange: 8
-  attackAttribute: 2
+  effectType: 9
+  amount: 0
+  attackRange: 1
+  attackAttribute: 8
   SegmentCount: 0
   PullDistance: 0
   targetGridState: 0

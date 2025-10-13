@@ -40,7 +40,11 @@ public class UnitController : MonoBehaviour
 
     public bool isNextAttackBloodSucking = false;
 
+    public bool isNextAttackFire = false;
+
+    public bool isNextAttackIce = false;
     public bool isNextAttackPull = false;
+    public bool isNextAttackDouble = false; 
     public int PullDistance = 0;
 
     [Header("Sprites")]
@@ -319,7 +323,11 @@ public class UnitController : MonoBehaviour
             sr.color = c;
         }
     }
-    
+    public void SetNextAttackDouble()
+    {
+        isNextAttackDouble = true;
+        sr.color = Color.yellow;
+    }
     public void SetNextAttackBloodSuck()
     {
         isNextAttackBloodSucking = true;
@@ -328,6 +336,7 @@ public class UnitController : MonoBehaviour
     public void RecoverState()
     {
         isNextAttackBloodSucking = false;
+        isNextAttackDouble = false;
         sr.color = Color.white;
     }
 
