@@ -1387,6 +1387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 290854811}
   - component: {fileID: 290854810}
+  - component: {fileID: 290854812}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: "poker-house(1)_0001s_0014_\u753B"
@@ -1466,6 +1467,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &290854812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290854809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cornerA: {x: 16, y: 2}
+  cornerB: {x: 17, y: 4}
+  isSingleCell: 0
+  isInterable: 0
+  sr: {fileID: 0}
 --- !u!1 &300474780
 GameObject:
   m_ObjectHideFlags: 0
@@ -2205,6 +2223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 669946511}
   - component: {fileID: 669946510}
+  - component: {fileID: 669946512}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: "poker-house(1)_0001s_0018_\u95E8-\u526F\u672C-5"
@@ -2284,6 +2303,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &669946512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669946509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cornerA: {x: 14, y: 10}
+  cornerB: {x: 16, y: 11}
+  isSingleCell: 0
+  isInterable: 0
+  sr: {fileID: 0}
 --- !u!1 &678394066
 GameObject:
   m_ObjectHideFlags: 0
