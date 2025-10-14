@@ -261,6 +261,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                         {
                             playerUnit.isNextAttackDizziness = true;
                         }
+                        else if (data.attackAttribute == CardData.AttackAttribute.Fire)
+                        {
+                            playerUnit.isNextAttackFire = true;
+                        }
+                        else if (data.attackAttribute == CardData.AttackAttribute.Ice)
+                        {
+                            playerUnit.isNextAttackIce = true;
+                        }
 
                         IsoGrid2D.instance.isWaitingForGridClick = true;
                         IsoGrid2D.instance.waitingCard = this;
@@ -308,6 +316,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                 effectExecuted = true;
                 Debug.Log("BloodSuck");
                 break;
+            case CardData.CardEffectType.Double:
+                playerUnit.SetNextAttackDouble();
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                effectExecuted = true;
+                Debug.Log("BloodSuck");
+                break;
             case CardData.CardEffectType.Shield:
                 
                 playerUnit.AddShield(data.amount); // 使用卡牌定义的治疗数值
@@ -321,7 +335,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                 effectExecuted = true;
                 Debug.Log($"切换");
                 break;
-            
+            case CardData.CardEffectType.ChangeGridState:
+                
+                IsoGrid2D.instance.isWaitingForGridClick = true;
+                IsoGrid2D.instance.waitingCard = this;
+                IsoGrid2D.instance.gridStateToChange = data.targetGridState;
+                effectExecuted = true;
+                Debug.Log($"{data.targetGridState}");
+                break;
             default:
                 Debug.LogWarning("No effect defined for this card type.");
                 break;

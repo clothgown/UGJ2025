@@ -20,7 +20,7 @@ public class IsoGrid2D : MonoBehaviour
     public Card waitingCard;
 
     public Dictionary<Vector2Int, GridNode> extraNodes = new Dictionary<Vector2Int, GridNode>();
-
+    public GridState gridStateToChange = GridState.None;
     private void Awake()
     {
         if (instance == null)
@@ -154,6 +154,7 @@ public class IsoGrid2D : MonoBehaviour
             gridComp.ResetColor();       // 恢复颜色
             gridComp.isInRange = false;
             gridComp.isAttackTarget = false;
+            gridComp.canChangeState = false;
         }
 
     }

@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 111.84, y: 190}
+  m_SizeDelta: {x: 107.1, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8110481357869007721
 CanvasRenderer:
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c83a590034ce2744f9841ab642f864f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dde7c5473d2ded141b1e4313bc24bbcc, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -165,7 +165,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -6}
-  m_SizeDelta: {x: 111.2, y: 190}
+  m_SizeDelta: {x: 106.6, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3226935036547433282
 CanvasRenderer:
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: feeb3e50d5fa495409f72f2f22258c25, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f5ba00dade259d49af4ca1fa25d1944, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 404130344431792101}
   m_Layer: 5
   m_HasEditorInfo: 1
-  m_Name: WaterCard
+  m_Name: DoubleCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,7 +333,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 109.64, y: 200}
+  m_SizeDelta: {x: 107.43, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7120376734261528799
 CanvasRenderer:

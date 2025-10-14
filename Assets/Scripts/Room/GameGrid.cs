@@ -4,18 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum GridState
-{
-    None,   // 普通格子
-    Water,  // 水格子，不可行走
-    Oil     // 油格子（可做特殊效果）
-}
 
 public class GameGrid : MonoBehaviour
 {
     public Vector2Int gridPos;
     public SpriteRenderer rend;
-    private Color originalColor;
+    public Color originalColor;
     public Color hoverColor = Color.green;
     public Color moveRangeColor = new Color(1f, 0.5f, 0f, 0.5f); // 橙色
     public bool isInRange = false;
@@ -38,6 +32,7 @@ public class GameGrid : MonoBehaviour
     public GridState currentState = GridState.None;
 
     // 三种状态颜色（你可以在 Inspector 调整）
+    public SpriteRenderer stateGrid;
     public Color normalColor = Color.white;
     public Color waterColor = new Color(0f, 0.5f, 1f, 0.8f);
     public Color oilColor = new Color(0.3f, 0.3f, 0.3f, 0.8f);
@@ -51,10 +46,12 @@ public class GameGrid : MonoBehaviour
     {
         sortingOrder = gridPos.x + gridPos.y;
         if (selectGrid != null)
-            selectGrid.sortingOrder = -sortingOrder + 1;
+            selectGrid.sortingOrder = -sortingOrder +1;
+        if (stateGrid != null)
+            stateGrid.sortingOrder = -501;
         originalColor = rend.color;
         selectGrid.enabled = false;
-
+        stateGrid.enabled = false;
         // 初始化时刷新一次外观
         UpdateGridAppearance();
     }
@@ -87,13 +84,38 @@ public class GameGrid : MonoBehaviour
     public void ResetColor() => rend.color = originalColor;
     void OnMouseDown()
     {
+        
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        // 点击水格子无效
-        if (currentState == GridState.Water)
+        if (canChangeState)
         {
-            Debug.Log("这是水格子，无法移动或交互。");
-            return;
+            var newState = IsoGrid2D.instance.gridStateToChange;
+
+            // 如果目标状态是None，不做任何事
+            if (newState == GridState.None)
+            {
+                Debug.Log("当前未选择任何格子状态。");
+                return;
+            }
+
+            // 改变格子状态
+            SetState(newState);
+
+
+
+            // 播放动画反馈
+            transform.DOPunchScale(Vector3.one * 0.1f, 0.25f, 6, 0.6f);
+
+            Debug.Log($"格子 {gridPos} 状态已改为：{newState}");
+
+            // 重置全局状态
+            IsoGrid2D.instance.gridStateToChange = GridState.None;
+
+
+
+            FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+            IsoGrid2D.instance.ResetWaiting();
+            return; // 提前结束
         }
 
         if (occupiedPlayer != null)
@@ -117,6 +139,12 @@ public class GameGrid : MonoBehaviour
 
         if (isAttackTarget)
         {
+            if (playerController.isNextAttackDouble)
+            {
+                playerController.attackDamage *= 2;
+                playerController.RecoverState();
+            }
+
             if (playerController.isNextAttackDizziness)
             {
                 currentEnemy.Dizziness();
@@ -135,9 +163,33 @@ public class GameGrid : MonoBehaviour
                 playerController.PullDistance = 0;
                 playerController.isNextAttackPull = false;
             }
+            else if (playerController.isNextAttackFire)
+            {
+                if (currentState == GridState.Oil)
+                {
+                    playerController.attackDamage *= 2;
+                    playerController.RecoverState();
+                }
+                playerController.Attack(this);
+
+                playerController.isNextAttackFire = false;
+            }
+            else if (playerController.isNextAttackIce)
+            {
+                if (currentState == GridState.Water)
+                {
+                    playerController.attackDamage *= 2;
+                    currentEnemy.Dizziness();
+                }
+
+                playerController.Attack(this);
+
+                playerController.isNextAttackIce = false;
+            }
             else
             {
                 playerController.Attack(this);
+                
             }
 
             FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
@@ -159,6 +211,7 @@ public class GameGrid : MonoBehaviour
     public void SetState(GridState newState)
     {
         currentState = newState;
+        
         UpdateGridAppearance();
     }
 
@@ -168,13 +221,16 @@ public class GameGrid : MonoBehaviour
         switch (currentState)
         {
             case GridState.None:
-                rend.color = normalColor;
+                stateGrid.enabled = false;
+                stateGrid.color = normalColor;
                 break;
             case GridState.Water:
-                rend.color = waterColor;
+                stateGrid.enabled = true;
+                stateGrid.color = waterColor;
                 break;
             case GridState.Oil:
-                rend.color = oilColor;
+                stateGrid.enabled = true;
+                stateGrid.color = oilColor;
                 break;
         }
     }
