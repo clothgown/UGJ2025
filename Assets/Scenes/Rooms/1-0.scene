@@ -6615,6 +6615,7 @@ MonoBehaviour:
   currentPlayerGrid: {fileID: 0}
   isWaitingForGridClick: 0
   waitingCard: {fileID: 0}
+  gridStateToChange: 0
 --- !u!4 &2058402606
 Transform:
   m_ObjectHideFlags: 0
@@ -6927,6 +6928,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.size
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[28]
+      value: 
+      objectReference: {fileID: 11400000, guid: 65c7ff49c19429640975e7cfbd7ca424, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[33]
+      value: 
+      objectReference: {fileID: 11400000, guid: babc0cf363ed85f4fb122225f734f40a, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[37]
+      value: 
+      objectReference: {fileID: 11400000, guid: 24c02874296823a4fa11c63bb899c8d9, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[38]
+      value: 
+      objectReference: {fileID: 11400000, guid: 24c02874296823a4fa11c63bb899c8d9, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[42]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2d2f23389f52f0346b963c0436455836, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[43]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2d2f23389f52f0346b963c0436455836, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[44]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2d2f23389f52f0346b963c0436455836, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[47]
+      value: 
+      objectReference: {fileID: 11400000, guid: babc0cf363ed85f4fb122225f734f40a, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[48]
+      value: 
+      objectReference: {fileID: 11400000, guid: babc0cf363ed85f4fb122225f734f40a, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[49]
+      value: 
+      objectReference: {fileID: 11400000, guid: babc0cf363ed85f4fb122225f734f40a, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[50]
+      value: 
+      objectReference: {fileID: 11400000, guid: babc0cf363ed85f4fb122225f734f40a, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[51]
+      value: 
+      objectReference: {fileID: 11400000, guid: 209cfa02e4a2d314980fa590515b5282, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[52]
+      value: 
+      objectReference: {fileID: 11400000, guid: 209cfa02e4a2d314980fa590515b5282, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[53]
+      value: 
+      objectReference: {fileID: 11400000, guid: 209cfa02e4a2d314980fa590515b5282, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[54]
+      value: 
+      objectReference: {fileID: 11400000, guid: 209cfa02e4a2d314980fa590515b5282, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7152,6 +7217,10 @@ PrefabInstance:
     - target: {fileID: 5084986422234508334, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5084986422234508334, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5471558585402360791, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: m_SortingOrder

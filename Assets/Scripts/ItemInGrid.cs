@@ -1,59 +1,113 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemInGrid : MonoBehaviour
 {
-    [Tooltip("¾ØĞÎÕ¼ÓÃÇøÓòµÄÁ½¸ö¶Ô½Ç×ø±ê")]
+    [Tooltip("çŸ©å½¢å ç”¨åŒºåŸŸçš„ä¸¤ä¸ªå¯¹è§’åæ ‡")]
     public Vector2Int cornerA = Vector2Int.zero;
     public Vector2Int cornerB = Vector2Int.zero;
 
-    [Tooltip("ÊÇ·ñÊÇµ¥¸ñÎï¼ş£¬Èç¹û¹´Ñ¡£¬Ö»Õ¼ÓÃcornerA")]
+    [Tooltip("æ˜¯å¦æ˜¯å•æ ¼ç‰©ä»¶ï¼Œå¦‚æœå‹¾é€‰ï¼Œåªå ç”¨cornerA")]
     public bool isSingleCell = false;
 
     private List<GameGrid> occupiedGrids = new List<GameGrid>();
-    public bool isInterable = false; // ÊÇ·ñ¿É½»»¥
+    public bool isInterable = false;
     public SpriteRenderer sr;
+
+    // æ–°å¢éƒ¨åˆ†
+    private UnitController[] players;   // æ‰€æœ‰ç©å®¶
+    public float transparentAlpha = 0.75f;
+    private float normalAlpha = 1f;
+    private bool isTransparent = false;
+
+    [Header("é€æ˜åº¦æ£€æµ‹ Layer")]
+    public LayerMask blockingLayer;  // Item æ‰€åœ¨ Layer
 
     void Start()
     {
-        sr = transform.GetComponent<SpriteRenderer>();
-        // Õ¼ÓÃ¸ñ×Ó
+        sr = GetComponent<SpriteRenderer>();
+
+        // æ‰¾åˆ°æ‰€æœ‰ UnitController å®ä¾‹
+        players = FindObjectsOfType<UnitController>();
+
+        // ===== åŸå§‹åˆå§‹åŒ–é€»è¾‘ =====
         if (isSingleCell)
-        {
-            Occupy(cornerA, cornerA); // µ¥¸ñÎï¼şÖ»Õ¼cornerA
-        }
+            Occupy(cornerA, cornerA);
         else
-        {
             Occupy(cornerA, cornerB);
-        }
 
         if (sr != null && occupiedGrids.Count > 0)
         {
             float sum = 0f;
             foreach (var grid in occupiedGrids)
             {
-                sum += -(grid.gridPos.x + grid.gridPos.y); // °´ÕÕÔ­À´µÄ¹æÔòÈ¡¸º
+                sum += -(grid.gridPos.x + grid.gridPos.y);
             }
-
             int average = Mathf.RoundToInt(sum / occupiedGrids.Count);
-            sr.sortingOrder = average + 2; // +2 È·±£ÏÔÊ¾ÔÚ¸ñ×ÓÉÏ·½
-            transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = average + 3;
+            sr.sortingOrder = average + 2;
+            if (transform.childCount > 0)
+                transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = average + 3;
         }
 
-        // ¿É½»»¥Ö»±ê¼Ç£¬²»¸Ä±äÑÕÉ«
         if (isInterable)
         {
             foreach (var grid in occupiedGrids)
-            {
                 grid.isInterable = true;
+        }
+    }
+
+    void Update()
+    {
+        if (sr == null || players == null || players.Length == 0) return;
+
+        bool blockingAny = false;
+
+        foreach (var player in players)
+        {
+            if (player == null) continue;
+
+            // è·å–ç©å®¶åœ¨å±å¹•ç©ºé—´çš„çŸ©å½¢ï¼ˆç”¨ Transform æˆ– SpriteRenderer.boundsï¼‰
+            Vector3 playerScreenPos = Camera.main.WorldToScreenPoint(player.transform.position);
+
+            // è·å– Item çš„å±å¹•çŸ©å½¢
+            Bounds itemBounds = sr.bounds;
+            Vector3 itemMin = Camera.main.WorldToScreenPoint(itemBounds.min);
+            Vector3 itemMax = Camera.main.WorldToScreenPoint(itemBounds.max);
+
+            Rect itemRect = new Rect(itemMin.x, itemMin.y, itemMax.x - itemMin.x, itemMax.y - itemMin.y);
+
+            // åˆ¤æ–­ç©å®¶æ˜¯å¦åœ¨ Item çš„å±å¹•çŸ©å½¢å†…
+            if (itemRect.Contains(new Vector2(playerScreenPos.x, playerScreenPos.y)))
+            {
+                blockingAny = true;
+                break;
             }
         }
+
+        // åˆ‡æ¢é€æ˜çŠ¶æ€
+        if (blockingAny && !isTransparent)
+        {
+            SetAlpha(transparentAlpha);
+            isTransparent = true;
+        }
+        else if (!blockingAny && isTransparent)
+        {
+            SetAlpha(normalAlpha);
+            isTransparent = false;
+        }
+    }
+
+
+    void SetAlpha(float a)
+    {
+        Color c = sr.color;
+        c.a = a;
+        sr.color = c;
     }
 
     public void Occupy(Vector2Int a, Vector2Int b)
     {
         ClearOccupied();
-
         int minX = Mathf.Min(a.x, b.x);
         int maxX = Mathf.Max(a.x, b.x);
         int minY = Mathf.Min(a.y, b.y);
@@ -70,10 +124,6 @@ public class ItemInGrid : MonoBehaviour
                     gridComp.isOccupied = true;
                     occupiedGrids.Add(gridComp);
                 }
-                else
-                {
-                    Debug.LogWarning($"Ã»ÕÒµ½ ({x},{y}) ¶ÔÓ¦µÄ¸ñ×Ó£¬Ìø¹ı {gameObject.name}");
-                }
             }
         }
     }
@@ -83,7 +133,7 @@ public class ItemInGrid : MonoBehaviour
         foreach (var grid in occupiedGrids)
         {
             grid.isOccupied = false;
-            grid.isInterable = false;  // Çå³ı¿É½»»¥±ê¼Ç
+            grid.isInterable = false;
         }
         occupiedGrids.Clear();
     }
