@@ -22,7 +22,7 @@ public class CardData : ScriptableObject
     public AttackAttribute attackAttribute = AttackAttribute.None;
     public int SegmentCount = 0;
     public int PullDistance = 0;
-
+    public int level = 1;
     [Header("Grid State Change")]
     public GridState targetGridState = GridState.None;
     // Enum for simple effects
