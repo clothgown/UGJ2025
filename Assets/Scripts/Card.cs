@@ -301,13 +301,19 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                 }
                 break;
             case CardData.CardEffectType.Heal:
-                if(playerUnit.currentHealth < playerUnit.maxHealth)
                 {
-                    playerUnit.Heal(data.amount); // 使用卡牌定义的治疗数值
-                    FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                    // 高亮治疗范围（复用攻击范围逻辑）
+                    IsoGrid2D.instance.HighlightHealArea(playerUnit.currentGridPos, data.attackRange);
+                    playerUnit.healPoint = data.amount;
+                    // 等待玩家点击格子
+                    IsoGrid2D.instance.isWaitingForGridClick = true;
+                    IsoGrid2D.instance.waitingCard = this;
                     effectExecuted = true;
-                    Debug.Log($"治疗 {data.amount} 点生命值！");
+
+                    Debug.Log($"准备在范围内选择一个格子进行治疗，治疗量：{data.amount}");
                 }
+                break;
+
 
                 break;
             case CardData.CardEffectType.Bloodsucking:
@@ -316,11 +322,17 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                 effectExecuted = true;
                 Debug.Log("BloodSuck");
                 break;
-            case CardData.CardEffectType.Double:
+            case CardData.CardEffectType.Double: 
                 playerUnit.SetNextAttackDouble();
                 FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
                 effectExecuted = true;
-                Debug.Log("BloodSuck");
+                Debug.Log("Double");
+                break;
+            case CardData.CardEffectType.Mass:
+                playerUnit.SetNextAttackMass();
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                effectExecuted = true;
+                Debug.Log("Mass");
                 break;
             case CardData.CardEffectType.Shield:
                 

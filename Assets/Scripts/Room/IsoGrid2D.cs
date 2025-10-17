@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TestTools;
+using static UnityEditor.PlayerSettings;
 
 public class IsoGrid2D : MonoBehaviour
 {
@@ -155,6 +156,7 @@ public class IsoGrid2D : MonoBehaviour
             gridComp.isInRange = false;
             gridComp.isAttackTarget = false;
             gridComp.canChangeState = false;
+            gridComp.canHeal = false;
         }
 
     }
@@ -474,5 +476,111 @@ public class IsoGrid2D : MonoBehaviour
         }
     }
 
+    public void DealMassAttackDamage(float damage)
+    {
+        foreach (var tileObj in grid)
+        {
+            if (tileObj == null) continue;
+
+            GameGrid gridComp = tileObj.GetComponent<GameGrid>();
+            if (gridComp == null || !gridComp.isAttackTarget) continue;
+
+            // 检查是否有敌人
+            EnemyUnit enemy = tileObj.GetComponentInChildren<EnemyUnit>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+        }
+
+        // 若存在扩展格子（extraNodes）
+        foreach (var extra in extraNodes.Values)
+        {
+            GameGrid gridComp = extra.grid;
+            if (gridComp == null || !gridComp.isAttackTarget) continue;
+
+            EnemyUnit enemy = gridComp.GetComponentInChildren<EnemyUnit>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+        }
+    }
+
+    public bool HighlightHealArea(Vector2Int playerPos, int range)
+    {
+        ClearHighlight();
+
+        GameObject playerTile = GetTile(playerPos.x, playerPos.y);
+        if (playerTile != null)
+        {
+            GameGrid gridComp = playerTile.GetComponent<GameGrid>();
+            gridComp.SetColor(new Color(0.5f, 1f, 0.5f, 1f));
+            gridComp.canHeal = true;
+
+        }
+
+        for (int dx = -range; dx <= range; dx++)
+        {
+            for (int dy = -range; dy <= range; dy++)
+            {
+                int distance = Mathf.Abs(dx) + Mathf.Abs(dy);
+                if (distance == 0 || distance > range) continue;
+
+                Vector2Int pos = playerPos + new Vector2Int(dx, dy);
+                GameObject tile = GetTile(pos.x, pos.y);
+                if (tile == null) continue;
+
+                GameGrid gridComp = tile.GetComponent<GameGrid>();
+                UnitController ally = tile.GetComponentInChildren<UnitController>();
+                if (ally != null)
+                {
+                    gridComp.SetColor(new Color(0.5f, 1f, 0.5f, 1f)); // 绿色高亮
+                    gridComp.canHeal = true;
+                }
+
+                else
+                    gridComp.SetColor(new Color(0.5f, 1f, 0.5f, 0.3f)); // 半透明
+            }
+        }
+        return true;
+    }
+
+    public void DealMassHeal(float healAmount)
+    {
+        foreach (var tileObj in grid)
+        {
+            if (tileObj == null) continue;
+
+            GameGrid gridComp = tileObj.GetComponent<GameGrid>();
+            if (gridComp == null || !gridComp.isAttackTarget) continue;
+
+            // ✅ 检查格子上是否有可治疗的玩家单位
+            if (gridComp.occupiedPlayer != null)
+            {
+                UnitController unit = gridComp.occupiedPlayer;
+                unit.Heal(healAmount);
+            }
+        }
+
+        // ✅ 若存在扩展格子（extraNodes）
+        foreach (var extra in extraNodes.Values)
+        {
+            GameGrid gridComp = extra.grid;
+            if (gridComp == null || !gridComp.isAttackTarget) continue;
+
+            if (gridComp.occupiedPlayer != null)
+            {
+                UnitController unit = gridComp.occupiedPlayer;
+                unit.Heal(healAmount);
+            }
+        }
+
+        // ✅ 出卡后抽卡 + 重置等待状态
+        FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+        IsoGrid2D.instance.ResetWaiting();
+
+        Debug.Log($"Mass Heal：为范围内所有角色回复 {healAmount} 点生命值！");
+    }
 
 }

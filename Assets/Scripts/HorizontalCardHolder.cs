@@ -56,6 +56,14 @@ public class HorizontalCardHolder : MonoBehaviour
         newCard.EndDragEvent.AddListener(EndDrag);
 
         cards.Add(newCard);
+        if (FindAnyObjectByType<UnitController>().isNextAttackDouble)
+        {
+            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToDouble();
+        }
+        if(FindAnyObjectByType<UnitController>().isNextAttackMass)
+        {
+            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToMass();
+        }
     }
 
     public IEnumerator DrawNewCard()
@@ -88,6 +96,14 @@ public class HorizontalCardHolder : MonoBehaviour
                 card.cardVisual.UpdateIndex(transform.childCount); 
         }
         cards.Add(newCard);
+        if(FindAnyObjectByType<UnitController>().isNextAttackDouble)
+        {
+            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToDouble();
+        }
+        if (FindAnyObjectByType<UnitController>().isNextAttackMass)
+        {
+            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToMass();
+        }
     }
 
     private void BeginDrag(Card card)
@@ -262,4 +278,44 @@ public class HorizontalCardHolder : MonoBehaviour
         // 动画结束后的逻辑（如果有）
         Debug.Log("动画播放完成");
     }
+
+    public void ChangeAllCardToDouble()
+    {
+        foreach (var card in cards)
+        {
+            if (card.cardVisual != null)
+            {
+                card.cardVisual.SetDouble();
+            }
+        }
+
+        Debug.Log("所有手牌已切换为 Double 模式。");
+    }
+
+    public void ChangeAllCardToMass()
+    {
+        foreach (var card in cards)
+        {
+            if (card.cardVisual != null)
+            {
+                card.cardVisual.SetMass();
+            }
+        }
+
+        Debug.Log("所有手牌已切换为 Mass 模式。");
+    }
+
+    public void ChangeAllCardToNormal()
+    {
+        foreach (var card in cards)
+        {
+            if (card.cardVisual != null)
+            {
+                card.cardVisual.SetNormal();
+            }
+        }
+
+        Debug.Log("所有手牌已切换为 Normal 模式。");
+    }
+
 }

@@ -68,11 +68,24 @@ public class CardVisual : MonoBehaviour
     public HorizontalCardHolder horizontalCardHolder;
     
     private CanvasGroup canvasGroup;
+
+    public Image normalSprite;
+    public Image doubleSprite;
+    public Image massSprite;
     private void Start()
     {
         horizontalCardHolder = FindFirstObjectByType<HorizontalCardHolder>();
         shadowDistance = visualShadow.localPosition;
         canvasGroup = GetComponent<CanvasGroup>();
+
+        if(doubleSprite!=null)
+        {
+            doubleSprite.enabled = false;
+        }
+        if(massSprite!=null)
+        {
+            massSprite.enabled = false;
+        }
     }
 
     public void Initialize(Card target, int index = 0)
@@ -194,6 +207,11 @@ public class CardVisual : MonoBehaviour
             IsoGrid2D.instance.MarkEditableArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
 
         }
+        else if (parentCard.data.effectType == CardData.CardEffectType.Heal)
+        {
+            IsoGrid2D.instance.HighlightHealArea(playerPos, parentCard.data.attackRange);
+
+        }
         else
         {
             IsoGrid2D.instance.HighlightSingleTile(playerPos);
@@ -236,10 +254,15 @@ public class CardVisual : MonoBehaviour
             IsoGrid2D.instance.MarkEditableArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
 
         }
+        else if (parentCard.data.effectType == CardData.CardEffectType.Heal)
+        {
+            IsoGrid2D.instance.HighlightHealArea(playerPos, parentCard.data.attackRange);
+        }
         else
         {
             IsoGrid2D.instance.HighlightSingleTile(playerPos);
         }
+        
         
     }
 
@@ -296,6 +319,38 @@ public class CardVisual : MonoBehaviour
         else
         {
             IsoGrid2D.instance.ClearHighlight();
+        }
+    }
+
+
+    public void SetNormal()
+    {
+        if (doubleSprite != null && massSprite != null && normalSprite != null)
+        {
+            normalSprite.enabled = true;
+            doubleSprite.enabled = false;
+            massSprite.enabled = false;
+        }
+
+    }
+
+    public void SetDouble()
+    {
+        if (doubleSprite != null && massSprite != null && normalSprite != null)
+        {
+            normalSprite.enabled = false;
+            doubleSprite.enabled = true;
+            massSprite.enabled = false;
+        }
+    }
+
+    public void SetMass()
+    {
+        if (doubleSprite != null && massSprite != null && normalSprite != null)
+        {
+            normalSprite.enabled = false;
+            doubleSprite.enabled = false;
+            massSprite.enabled = true;
         }
     }
 }

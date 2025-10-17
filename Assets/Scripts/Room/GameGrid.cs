@@ -19,7 +19,7 @@ public class GameGrid : MonoBehaviour
     public SpriteRenderer selectGrid;
     public bool isAttackTarget = false;
     public bool isOccupied = false;
-
+    public bool canHeal = false;
     public UnitController occupiedPlayer;
     public EnemyUnit currentEnemy;
     public bool isInterable = false;
@@ -118,7 +118,34 @@ public class GameGrid : MonoBehaviour
             return; // 提前结束
         }
 
-        if (occupiedPlayer != null)
+        if (canHeal)
+        {
+            UnitController playerController = IsoGrid2D.instance.controller.GetComponent<UnitController>();
+            if (this.occupiedPlayer != null)
+            {
+                
+                if (playerController.isNextAttackMass)
+                {
+                    playerController.RecoverState();
+                    FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+
+                    IsoGrid2D.instance.DealMassHeal(playerController.healPoint);
+                    FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                    IsoGrid2D.instance.ResetWaiting();
+                    return;
+                }
+                else
+                {
+                    UnitController playerToHeal = this.occupiedPlayer;
+                    playerToHeal.Heal(playerController.healPoint);
+                    FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                    IsoGrid2D.instance.ResetWaiting();
+                }
+                    
+
+            }
+        }
+        else if (occupiedPlayer != null)
         {
             TurnManager.instance.ChangePlayer(occupiedPlayer);
         }
@@ -143,6 +170,17 @@ public class GameGrid : MonoBehaviour
             {
                 playerController.attackDamage *= 2;
                 playerController.RecoverState();
+                FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+            }
+
+            if(playerController.isNextAttackMass)
+            {
+                playerController.RecoverState();
+                FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+                IsoGrid2D.instance.DealMassAttackDamage(playerController.attackDamage);
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                IsoGrid2D.instance.ResetWaiting();
+                return;
             }
 
             if (playerController.isNextAttackDizziness)
@@ -234,4 +272,6 @@ public class GameGrid : MonoBehaviour
                 break;
         }
     }
+
+
 }

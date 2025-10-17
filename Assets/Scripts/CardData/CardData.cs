@@ -37,7 +37,8 @@ public class CardData : ScriptableObject
         Bloodsucking,
         StraightAttack,
         ChangeGridState,
-        Double
+        Double,
+        Mass
     }
 
     // π•ª˜ Ù–‘£®ø…¿©’π£©

@@ -44,9 +44,11 @@ public class UnitController : MonoBehaviour
 
     public bool isNextAttackIce = false;
     public bool isNextAttackPull = false;
-    public bool isNextAttackDouble = false; 
+    public bool isNextAttackDouble = false;
+    public bool isNextAttackMass = false;
     public int PullDistance = 0;
 
+    public float healPoint = 0;
     [Header("Sprites")]
     public Sprite frontSprite;
     public Sprite backSprite;
@@ -328,6 +330,11 @@ public class UnitController : MonoBehaviour
         isNextAttackDouble = true;
         sr.color = Color.yellow;
     }
+    public void SetNextAttackMass()
+    {
+        isNextAttackMass = true;
+        sr.color = new Color(1,0,0,1);
+    }
     public void SetNextAttackBloodSuck()
     {
         isNextAttackBloodSucking = true;
@@ -337,6 +344,7 @@ public class UnitController : MonoBehaviour
     {
         isNextAttackBloodSucking = false;
         isNextAttackDouble = false;
+        isNextAttackMass = false;
         sr.color = Color.white;
     }
 
