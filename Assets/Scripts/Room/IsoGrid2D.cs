@@ -149,7 +149,7 @@ public class IsoGrid2D : MonoBehaviour
                 if (neighborObj == null) continue;
 
                 ItemInGrid item = neighborObj.GetComponent<GameGrid>().ocuupiedItem;
-                if (item != null)
+                if (item != null && item.isInterable==true)
                 {
                     if (item.isSingleCell)
                         item.SetCanInteract(item.cornerA, item.cornerA);

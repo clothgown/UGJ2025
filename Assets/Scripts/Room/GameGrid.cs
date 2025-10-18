@@ -119,8 +119,11 @@ public class GameGrid : MonoBehaviour
             IsoGrid2D.instance.ResetWaiting();
             return; // 提前结束
         }
-
-        if (canHeal)
+        if (occupiedPlayer != null)
+        {
+            TurnManager.instance.ChangePlayer(occupiedPlayer);
+        }
+        else if (canHeal)
         {
             UnitController playerController = IsoGrid2D.instance.controller.GetComponent<UnitController>();
             if (this.occupiedPlayer != null)
@@ -147,10 +150,7 @@ public class GameGrid : MonoBehaviour
 
             }
         }
-        else if (occupiedPlayer != null)
-        {
-            TurnManager.instance.ChangePlayer(occupiedPlayer);
-        }
+
 
         NormalGridClick();
     }
@@ -165,7 +165,7 @@ public class GameGrid : MonoBehaviour
             IsoGrid2D.instance.ResetWaiting();
             return;
         }
-        if(canDialogue)
+        if(canDialogue && isInterable)
         {
             Debug.Log("对话");
         }
