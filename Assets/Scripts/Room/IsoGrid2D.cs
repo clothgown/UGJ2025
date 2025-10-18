@@ -40,7 +40,7 @@ public class IsoGrid2D : MonoBehaviour
 
     void Start()
     {
-        
+        controller = FindAnyObjectByType<UnitController>().gameObject;
     }
 
     public GridNode[,] nodes;
@@ -107,10 +107,13 @@ public class IsoGrid2D : MonoBehaviour
         while (queue.Count > 0)
         {
             var (pos, step) = queue.Dequeue();
-            GameGrid gridComp = GetTile(pos.x, pos.y).GetComponent<GameGrid>();
+            GameObject tileObj = GetTile(pos.x, pos.y);
+            if (tileObj == null) continue;
 
-            // 标记为可移动
-            if (step > 0) // step=0 是玩家自己所在格子，可以选择不高亮
+            GameGrid gridComp = tileObj.GetComponent<GameGrid>();
+
+            // ✅ 普通移动范围高亮
+            if (step > 0)
             {
                 gridComp.SetColor(gridComp.moveRangeColor);
                 gridComp.isInRange = true;
@@ -118,25 +121,46 @@ public class IsoGrid2D : MonoBehaviour
 
             if (step >= moveRange) continue;
 
-            // 四个方向
+            // 四个方向扩展
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
             foreach (var dir in directions)
             {
                 Vector2Int newPos = pos + dir;
                 if (visited.Contains(newPos)) continue;
 
-                GameObject tileObj = GetTile(newPos.x, newPos.y);
-                if (tileObj == null) continue; // 无效格子（超出主网格或不存在扩展格子）
+                GameObject neighborObj = GetTile(newPos.x, newPos.y);
+                if (neighborObj == null) continue;
 
-                GameGrid neighbor = tileObj.GetComponent<GameGrid>();
-                if (neighbor.isOccupied) continue; // 被占用格子不能移动
+                GameGrid neighbor = neighborObj.GetComponent<GameGrid>();
+                if (neighbor.isOccupied) continue;
 
                 queue.Enqueue((newPos, step + 1));
                 visited.Add(newPos);
             }
-
         }
+
+        if(true)
+        {
+            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            foreach (var dir in directions)
+            {
+                Vector2Int neighborPos = playerPos + dir;
+                GameObject neighborObj = GetTile(neighborPos.x, neighborPos.y);
+                if (neighborObj == null) continue;
+
+                ItemInGrid item = neighborObj.GetComponent<GameGrid>().ocuupiedItem;
+                if (item != null)
+                {
+                    if (item.isSingleCell)
+                        item.SetCanInteract(item.cornerA, item.cornerA);
+                    else
+                        item.SetCanInteract(item.cornerA, item.cornerB);
+                }
+            }
+        }
+   
     }
+
 
 
     public void ResetWaiting()
@@ -157,6 +181,7 @@ public class IsoGrid2D : MonoBehaviour
             gridComp.isAttackTarget = false;
             gridComp.canChangeState = false;
             gridComp.canHeal = false;
+            gridComp.canDialogue = false;
         }
 
     }
@@ -555,7 +580,7 @@ public class IsoGrid2D : MonoBehaviour
             GameGrid gridComp = tileObj.GetComponent<GameGrid>();
             if (gridComp == null || !gridComp.isAttackTarget) continue;
 
-            // ✅ 检查格子上是否有可治疗的玩家单位
+            // 检查格子上是否有可治疗的玩家单位
             if (gridComp.occupiedPlayer != null)
             {
                 UnitController unit = gridComp.occupiedPlayer;
@@ -563,7 +588,7 @@ public class IsoGrid2D : MonoBehaviour
             }
         }
 
-        // ✅ 若存在扩展格子（extraNodes）
+        // 若存在扩展格子（extraNodes）
         foreach (var extra in extraNodes.Values)
         {
             GameGrid gridComp = extra.grid;
@@ -576,11 +601,13 @@ public class IsoGrid2D : MonoBehaviour
             }
         }
 
-        // ✅ 出卡后抽卡 + 重置等待状态
+        // 出卡后抽卡 + 重置等待状态
         FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
         IsoGrid2D.instance.ResetWaiting();
 
         Debug.Log($"Mass Heal：为范围内所有角色回复 {healAmount} 点生命值！");
     }
+
+    
 
 }

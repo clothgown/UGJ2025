@@ -21,6 +21,8 @@ public class GameGrid : MonoBehaviour
     public bool isOccupied = false;
     public bool canHeal = false;
     public UnitController occupiedPlayer;
+    public ItemInGrid ocuupiedItem;
+    public bool canDialogue;
     public EnemyUnit currentEnemy;
     public bool isInterable = false;
 
@@ -163,7 +165,10 @@ public class GameGrid : MonoBehaviour
             IsoGrid2D.instance.ResetWaiting();
             return;
         }
-
+        if(canDialogue)
+        {
+            Debug.Log("对话");
+        }
         if (isAttackTarget)
         {
             if (playerController.isNextAttackDouble)

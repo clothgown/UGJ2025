@@ -122,6 +122,8 @@ public class ItemInGrid : MonoBehaviour
                 {
                     GameGrid gridComp = tileObj.GetComponent<GameGrid>();
                     gridComp.isOccupied = true;
+                    gridComp.ocuupiedItem = this;
+                    
                     occupiedGrids.Add(gridComp);
                 }
             }
@@ -141,5 +143,27 @@ public class ItemInGrid : MonoBehaviour
     private void OnDestroy()
     {
         ClearOccupied();
+    }
+
+    public void SetCanInteract(Vector2Int a, Vector2Int b)
+    {
+        int minX = Mathf.Min(a.x, b.x);
+        int maxX = Mathf.Max(a.x, b.x);
+        int minY = Mathf.Min(a.y, b.y);
+        int maxY = Mathf.Max(a.y, b.y);
+
+        for (int x = minX; x <= maxX; x++)
+        {
+            for (int y = minY; y <= maxY; y++)
+            {
+                GameObject tileObj = IsoGrid2D.instance.GetTile(x, y);
+                if (tileObj != null)
+                {
+                    GameGrid gridComp = tileObj.GetComponent<GameGrid>();
+                    gridComp.SetColor(new Color(0.3f, 0.6f, 1f, 0.8f));
+                    gridComp.canDialogue = true;
+                }
+            }
+        }
     }
 }
