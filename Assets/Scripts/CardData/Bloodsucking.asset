@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Attack
   description: Attack
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 21300000, guid: d9547adb188f29843baa01f459bc48bb, type: 3}
   visualPrefab: {fileID: 7310339964073049012, guid: 4d69c0aa6b784d5449ddb0f36eacfc7c, type: 3}
   manaCost: 0
   effectType: 6
@@ -22,3 +22,6 @@ MonoBehaviour:
   attackRange: 1
   attackAttribute: 0
   SegmentCount: 0
+  PullDistance: 0
+  level: 1
+  targetGridState: 0

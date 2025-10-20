@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Dagger
   description: Dagger
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 21300000, guid: 64b0f02db9620e54c8c3f0c51a41b6b7, type: 3}
   visualPrefab: {fileID: 7310339964073049012, guid: 241578b7a878fee4fa7933bfabe10dd1, type: 3}
   manaCost: 0
   effectType: 8
@@ -23,4 +23,5 @@ MonoBehaviour:
   attackAttribute: 3
   SegmentCount: 0
   PullDistance: 0
+  level: 1
   targetGridState: 2
