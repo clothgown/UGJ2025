@@ -1,130 +1,81 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
-[System.Serializable]
-public class GridTypePrefab
+
+/// <summary>
+/// è½»é‡çº§ç­‰è·æ ¼å­ç”Ÿæˆå™¨ï¼ˆåŸºäº IsoGrid2D çš„ GridToWorld å…¬å¼ï¼‰
+/// æ”¯æŒæŒ‰ Y è½´åˆ†ç»„åˆ°ç©ºç‰©ä½“
+/// </summary>
+public class IsoGridSpawner : MonoBehaviour
 {
-    public int type;               // ¸ñ×ÓÀàĞÍ£¬ÀıÈç 1,2,3
-    public GameObject prefabs;   // ¶ÔÓ¦ÀàĞÍµÄPrefabÊı×é£¬¿ÉÔÚInspectorÖĞËæ»úÑ¡Ôñ
-}
-public class MapGridManager : MonoBehaviour
-{
-    public TextAsset csvFile;
-    public GameObject grid2Prefab; // ĞÂÔö£º2ÀàĞÍ¸ñ×ÓµÄPrefab
-    public GameObject grid3Prefab; 
-    public GameObject playerPrefab;   //ĞÂÔö£ºÍæ¼ÒÔ¤ÖÆÌå
+    [Header("Grid Settings")]
+    public int width = 10;
+    public int height = 10;
     public float cellSize = 1f;
 
+    [Header("Prefab")]
+    public GameObject tilePrefab;
 
-    
+    [Header("Generated Tiles")]
+    public List<GameObject> tiles = new List<GameObject>();
 
-    public Dictionary<Vector2Int, GameObject> gridDict = new Dictionary<Vector2Int, GameObject>();
+    // å­˜å‚¨æ¯è¡Œç©ºç‰©ä½“
+    private Dictionary<int, GameObject> rowParents = new Dictionary<int, GameObject>();
 
-    public GridTypePrefab[] grid1Prefabs; // 1ÀàĞÍ¸ñ×ÓËæ»úÑ¡ÔñµÄPrefabÊı×é
     void Start()
     {
-        if (csvFile == null)
+        GenerateGrid();
+    }
+
+    public void GenerateGrid()
+    {
+        ClearGrid();
+
+        if (tilePrefab == null)
         {
-            Debug.LogError("ÇëÔÚ Inspector ÖĞÍÏÈë CSV ÎÄ¼ş£¡");
+            Debug.LogWarning("âŒ æœªè®¾ç½® tilePrefabï¼");
             return;
         }
 
-        LoadMapFromCSV(csvFile.text);
+        rowParents.Clear();
 
-        //ÓÎÏ·¿ªÊ¼Ê±ÔÚ (1,5) Éú³É Player
-        SpawnPlayerAt(new Vector2Int(1, 5));
-    }
-
-    void LoadMapFromCSV(string csvText)
-    {
-        string[] lines = csvText.Split('\n');
-        int type = 0;
-        for (int y = 0; y < lines.Length; y++)
+        for (int y = 0; y < height; y++)
         {
-            string line = lines[y].Trim();
-            if (string.IsNullOrEmpty(line)) continue;
+            // ä¸ºæ¯ä¸€è¡Œåˆ›å»ºç©ºç‰©ä½“
+            GameObject rowParent = new GameObject($"Row_{y}");
+            rowParent.transform.parent = transform;
+            rowParents[y] = rowParent;
 
-            string[] values = line.Split(new char[] { '\t', ',' });
-
-            for (int x = 0; x < values.Length; x++)
+            for (int x = 0; x < width; x++)
             {
-                Vector2Int gridPos = new Vector2Int(x, y);
-                Vector3 localPos = new Vector3(x * cellSize, -y * cellSize, 0);
-
-                GameObject prefabToUse = null;
-
-                if (values[x] == "1")
-                {
-                    // ´ÓÊı×éÖĞËæ»úÑ¡Ò»¸öPrefab
-                    if (grid1Prefabs.Length > 0)
-                    {
-                        int index = Random.Range(0, grid1Prefabs.Length);
-                        prefabToUse = grid1Prefabs[index].prefabs;
-                        type = grid1Prefabs[index].type;
-                    }
-                    
-                }
-                else if (values[x] == "2")
-                {
-                    prefabToUse = grid2Prefab; // Ô­À´µÄ2¸ñ×ÓPrefab
-                    type = 2;
-                }
-                else if (values[x] == "3")
-                {
-                    prefabToUse = grid3Prefab; // Ô­À´µÄ2¸ñ×ÓPrefab
-                    type = 3;
-                }
-
-
-
-                if (prefabToUse != null)
-                {
-                    GameObject obj = Instantiate(prefabToUse, transform);
-                    obj.transform.localPosition = localPos;
-
-                    MapGrid gridComp = obj.GetComponent<MapGrid>();
-                    if (gridComp != null)
-                    {
-                        gridComp.gridPos = gridPos;
-                        gridComp.type = type;
-                        type = 0;
-                    }
-
-                    gridDict[gridPos] = obj;
-                }
+                Vector3 worldPos = GridToWorld(x, y, cellSize);
+                GameObject tile = Instantiate(tilePrefab, rowParent.transform); // çˆ¶ç‰©ä½“æ˜¯è¡Œç©ºç‰©ä½“
+                tile.transform.localPosition = worldPos;
+                tile.name = $"Tile_{x}_{y}";
+                tiles.Add(tile);
             }
         }
     }
 
-
-
-    public GameObject GetGridObject(Vector2Int gridPos)
+    private Vector3 GridToWorld(int x, int y, float cellSize)
     {
-        if (gridDict.TryGetValue(gridPos, out GameObject obj))
-        {
-            return obj;
-        }
-        return null;
+        float worldX = (x - y) * cellSize * 1f;
+        float worldY = (x + y) * cellSize * 0.5f;
+        return new Vector3(worldX, worldY, 0);
     }
 
-    public void SpawnPlayerAt(Vector2Int gridPos)
+    public void ClearGrid()
     {
-        GameObject gridObj = GetGridObject(gridPos);
-        if (gridObj != null && playerPrefab != null)
+        foreach (var tile in tiles)
         {
-            GameObject player = Instantiate(playerPrefab, gridObj.transform);
-            player.transform.localPosition = Vector3.zero;
+            if (tile != null) DestroyImmediate(tile);
+        }
+        tiles.Clear();
 
-            //ÆğÊ¼¸ñ×Ó±ä»Ò
-            MapGrid gridComp = gridObj.GetComponent<MapGrid>();
-            if (gridComp != null)
-            {
-                gridComp.SetVisited();
-            }
-        }
-        else
+        // åˆ é™¤æ¯è¡Œç©ºç‰©ä½“
+        foreach (var row in rowParents.Values)
         {
-            Debug.LogWarning("Ä¿±ê¸ñ×Ó²»´æÔÚ£¬»ò PlayerPrefab Î´ÉèÖÃ£¡");
+            if (row != null) DestroyImmediate(row);
         }
+        rowParents.Clear();
     }
-
 }
