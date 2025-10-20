@@ -1,72 +1,135 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using DG.Tweening;
+using UnityEngine.UI;
 
-public class MapGrid : MonoBehaviour
+public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public Vector2Int gridPos;
-    private SpriteRenderer rend;
-    private bool visited = false;  // 是否已经被访问过
-    public int type;
-    public SpriteRenderer icon;
-    public Color gridColor = Color.white;
+    private Vector3 originalScale;
+    public Vector3 originalLocation;
+    public bool isVisited;
+    public bool canSelect;
+    public bool isReached;
+    public GameObject HiddenPrefab;
+    public MapGridType gridType;
 
-    void Awake()
+    private Image hiddenImage; // 若 HiddenPrefab 是 UI 对象
+
+    public bool isNextBoss;
+    public MapGrid bossGrid;
+    private void Awake()
     {
-        rend = GetComponent<SpriteRenderer>();
+        originalScale = transform.localScale;
+        originalLocation = transform.localPosition;
     }
 
     private void Start()
     {
-        if (rend != null)
+        if (HiddenPrefab != null)
         {
-            if (type == 1)
+            hiddenImage = HiddenPrefab.GetComponent<Image>();
+            if (hiddenImage != null)
             {
-                rend.color = Color.white;
+                var color = hiddenImage.color;
+                color.a = 0f;
+                hiddenImage.color = color;
+                HiddenPrefab.SetActive(true);
+            }
+            else
+            {
+                HiddenPrefab.SetActive(false);
             }
         }
-
-        if (icon != null)
-            if (type != 2) icon.enabled = false;
     }
-    // 玩家走过的格子 → 永远灰色
-    public void SetVisited()
+
+    // 鼠标悬停
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!visited)
+        // 可选：悬停动画
+        // transform.DOScale(originalScale * 1.1f, 0.2f).SetEase(Ease.OutBack);
+    }
+
+    // 鼠标离开
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // transform.DOScale(originalScale, 0.2f).SetEase(Ease.OutBack);
+    }
+
+    // 点击格子
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (isReached) return;
+        PlayerInMap player = MapGridManager.instance.player;
+        if (player == null || canSelect == false) return;
+
+        // 先脱离父物件
+        player.transform.SetParent(player.transform.parent.parent);
+
+        // 移动动画
+        player.transform.DOMove(transform.position, 0.5f)
+            .SetEase(Ease.InOutSine)
+            .OnComplete(() =>
+            {
+                
+
+                player.transform.SetParent(transform);
+                player.transform.localPosition = Vector3.zero;
+                player.transform.localRotation = Quaternion.identity;
+                player.currentPos = gridPos;
+
+                // 显示隐藏内容
+                SetVisual();
+                MapGridManager.instance.DimPreviousGrids(gridPos.x);
+                if (isNextBoss!=true)
+                {
+                    MapGridManager.instance.HighlightNearbyGrids();
+                }
+                else
+                {
+                    foreach (var grid in MapGridManager.instance.grids)
+                    {
+                        grid.transform.DOLocalMoveY(grid.originalLocation.y, MapGridManager.instance.highlightDuration).SetEase(Ease.OutQuad);
+                        grid.canSelect = false;
+                    }
+                    bossGrid.canSelect = true;
+                    bossGrid.transform.DOLocalMoveY(bossGrid.originalLocation.y + MapGridManager.instance.highlightHeight, MapGridManager.instance.highlightDuration).SetEase(Ease.OutQuad);
+                }
+                isReached = true;
+            });
+        
+
+    }
+
+    /// <summary>
+    /// 根据类型显示格子的视觉效果
+    /// </summary>
+    public void SetVisual()
+    {
+        var player = MapGridManager.instance?.player;
+        if (player != null && player.currentPos == gridPos)
         {
-            visited = true;
-            if (rend != null)
-                rend.color = Color.gray;
+            return;
         }
-    }
 
-    // 高亮格子 → 只作用于未访问格子
-    public void SetHighlight(Color highlightColor)
-    {
-        if (!visited && rend != null)
-            rend.color = highlightColor;
+        Image selfImage = GetComponent<Image>();              // 当前格子的 UI Image
+        Image hiddenImage = HiddenPrefab?.GetComponent<Image>(); // 隐藏物件的 UI Image
 
-        if (icon != null)
-            icon.enabled = true;
-    }
+        if (hiddenImage != null)
+        {
+            // 确保初始状态
+            Color hc = hiddenImage.color;
+            hc.a = 0f;
+            hiddenImage.color = hc;
+            HiddenPrefab.SetActive(true);
 
-    // 判断格子是否灰色（已访问）
-    public bool IsGray()
-    {
-        return visited;
-    }
-
-    public void ResetIfFarFromPlayer()
-{
-    // 如果格子未被访问过或未显示过 icon，保持白色
-    if (!visited && (icon == null || !icon.enabled))
-    {
-        if (rend != null)
-            rend.color = Color.white;
-    }
-}
-    void OnMouseDown()
-    {
-
+            // 同时进行淡出和淡入动画
+            float duration = 0.8f;
+            hiddenImage.DOFade(1f, duration).SetEase(Ease.OutQuad);
+            if (selfImage != null)
+                selfImage.DOFade(0f, duration).SetEase(Ease.OutQuad);
+        }
+        
     }
 
 }
