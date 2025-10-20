@@ -1597,7 +1597,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 226331881}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -1766,6 +1766,195 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1288824938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 7
+  m_Component:
+  - component: {fileID: 1288824940}
+  - component: {fileID: 1288824939}
+  - component: {fileID: 1288824941}
+  - component: {fileID: 1288824942}
+  m_Layer: 0
+  m_HasEditorInfo: 1
+  m_Name: DialogueManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1288824939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288824938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ac9e2aac3f0534abbd490641d92bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tableMappings:
+  - fileName: "30000-dialogue-\u5173\u5361\u5185-\u6218\u6597\u540E.csv"
+    dialogueType: 0
+  - fileName: "20000-dialogue-\u5173\u5361\u5185-\u63A2\u7D22.csv"
+    dialogueType: 1
+  - fileName: "0-dialogue-\u5173\u5361\u5185S&E.csv"
+    dialogueType: 2
+  - fileName: "10000-dialogue-\u5173\u5361\u5916.csv"
+    dialogueType: 3
+  - fileName: 50000-dialogue-dead.csv
+    dialogueType: 4
+  dataFolderPath: DialogueData
+  debugMode: 1
+  autoLoadOnStart: 1
+--- !u!4 &1288824940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288824938}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 897.30096, y: 533.15875, z: 8.897704}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1288824941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288824938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab69260e4efb12e438c0ca17b7759e7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataLoader: {fileID: 1288824939}
+  _currentNodeID: 0
+  _currentNode:
+    ID: 0
+    Next: 
+    Flag: 
+    Level: 
+    TableType: 0
+    BattleRound: 0
+    BattleCondition: 
+    BattleCharacter: 
+    BattlePortrait: 
+    BattlePortraitPos: 
+    BattleContent: 
+    BattleCG: 
+    BattleSeen: 0
+    ExploreCharacter: 
+    ExplorePortrait: 
+    ExplorePortraitPos: 
+    ExploreCondition: 
+    ExploreItem: 
+    ExploreEffect: 
+    ExploreContent: 
+    ExploreSeen: 0
+    ExploreOnceOnly: 0
+    NormalPosition: 
+    NormalCondition: 
+    NormalCharacter: 
+    NormalPortrait: 
+    NormalPortraitPos: 
+    NormalContent: 
+    NormalCG: 
+    NormalSeen: 0
+    OutsidePosition: 
+    OutsideCondition: 
+    OutsideCharacter: 
+    OutsidePortrait: 
+    OutsidePortraitPos: 
+    OutsideContent: 
+    OutsideCG: 
+    OutsideSeen: 0
+    DeadLevel: 
+    DeadCondition: 
+    DeadTitle: 
+    DeadContent: 
+  _state: 0
+  currentSceneName: 
+  autoLoadSceneDialogue: 1
+  gameState:
+    health: 0
+    money: 0
+    maidInParty: 0
+    currentScene: 
+  textDisplaySpeed: 0.05
+  autoContinue: 0
+  autoContinueDelay: 2
+  debugMode: 1
+  OnDialogueStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDialogueNodeChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDialogueContentUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDialogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBranchOptionsShow:
+    m_PersistentCalls:
+      m_Calls: []
+  OnConditionCheck:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectApplied:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSceneDialogueTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSceneEndReached:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1288824942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288824938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e0dbf94b0c1f8b4885156b095494fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialoguePanel: {fileID: 1160361195}
+  characterNameText: {fileID: 811994341}
+  contentText: {fileID: 285417787}
+  portraitLeft: {fileID: 1423771989}
+  portraitRight: {fileID: 1545822061}
+  cgImage: {fileID: 422276462}
+  branchPanel: {fileID: 1716467079}
+  branchButtonContainer: {fileID: 1595777433}
+  continueButton: {fileID: 963374027}
+  skipButton: {fileID: 0}
+  backgroundPanel: {fileID: 0}
+  branchButtonPrefab: {fileID: 0}
+  fadeDuration: 0.3
+  typewriterSpeed: 0.05
+  enableAnimations: 1
+  typewriterSound: {fileID: 0}
+  dialogueOpenSound: {fileID: 0}
+  dialogueCloseSound: {fileID: 0}
+  branchSelectSound: {fileID: 0}
+  dialogueManager: {fileID: 1288824941}
 --- !u!1 &1423771987
 GameObject:
   m_ObjectHideFlags: 0
@@ -2726,4 +2915,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 1113729870}
   - {fileID: 1551758608}
+  - {fileID: 1288824940}
   - {fileID: 366097130}
