@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using DG.Tweening;  // 记得引入 DOTween 命名空间
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class Window : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -14,9 +15,14 @@ public class Window : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     public float clickScale = 0.9f;     // 点击瞬间缩小比例
     public float animDuration = 0.2f;   // 动画时长
     public Ease animEase = Ease.OutBack; // 缩放曲线（可以换成 Ease.OutElastic）
+    public CardData cardToSell;
+    public Image cardImage;
     private void Awake()
     {
-
+        if(cardImage!=null && cardToSell!=null)
+        {
+            cardImage.sprite = cardToSell.cardSprite;
+        }
     }
     void Start()
     {
