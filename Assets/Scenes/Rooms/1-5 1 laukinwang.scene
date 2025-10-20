@@ -227,10 +227,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 16, y: -5}
-  cornerB: {x: 17, y: -1}
+  cornerB: {x: 16, y: -2}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &13885655
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,10 +503,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 6, y: 5}
-  cornerB: {x: 7, y: 6}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &79378657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,10 +1153,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 11, y: -6}
-  cornerB: {x: 15, y: -1}
+  cornerB: {x: 14, y: -1}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &274566326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,10 +1492,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 16, y: 2}
-  cornerB: {x: 17, y: 4}
+  cornerB: {x: 16, y: 3}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &300474780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,10 +1964,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 5, y: 10}
-  cornerB: {x: 7, y: 11}
+  cornerB: {x: 6, y: 10}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &527755230
 GameObject:
   m_ObjectHideFlags: 0
@@ -2316,10 +2336,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 14, y: 10}
-  cornerB: {x: 16, y: 11}
+  cornerB: {x: 15, y: 10}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &678394066
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,10 +2447,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 2, y: 6}
-  cornerB: {x: 5, y: 7}
+  cornerB: {x: 4, y: 6}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &688570643
 GameObject:
   m_ObjectHideFlags: 0
@@ -3371,10 +3399,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 4, y: 2}
-  cornerB: {x: 5, y: 3}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &869402005
 GameObject:
   m_ObjectHideFlags: 0
@@ -4209,10 +4241,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 11, y: 1}
-  cornerB: {x: 17, y: 4}
+  cornerB: {x: 16, y: 3}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!212 &1205283496
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5155,10 +5191,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 1, y: 3}
-  cornerB: {x: 2, y: 4}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1534963262
 GameObject:
   m_ObjectHideFlags: 0
@@ -5497,10 +5537,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 3, y: 9}
-  cornerB: {x: 4, y: 10}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1590711551
 GameObject:
   m_ObjectHideFlags: 0
@@ -5739,10 +5783,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 14, y: 7}
-  cornerB: {x: 15, y: 8}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1618390493
 GameObject:
   m_ObjectHideFlags: 0
@@ -5935,10 +5983,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 8, y: 9}
-  cornerB: {x: 9, y: 10}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1690278703
 GameObject:
   m_ObjectHideFlags: 0
@@ -6860,6 +6912,7 @@ MonoBehaviour:
   currentPlayerGrid: {fileID: 0}
   isWaitingForGridClick: 0
   waitingCard: {fileID: 0}
+  gridStateToChange: 0
 --- !u!1 &1767931070
 GameObject:
   m_ObjectHideFlags: 0
@@ -6963,10 +7016,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 15, y: 7}
-  cornerB: {x: 16, y: 8}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1840987776
 GameObject:
   m_ObjectHideFlags: 0
@@ -7914,10 +7971,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 4, y: 4}
-  cornerB: {x: 5, y: 5}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2081245903
 GameObject:
   m_ObjectHideFlags: 0
@@ -8381,10 +8442,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 16, y: 7}
-  cornerB: {x: 17, y: 8}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

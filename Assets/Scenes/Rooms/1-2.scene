@@ -156,9 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 11, y: 12}
-  cornerB: {x: 13, y: 13}
+  cornerB: {x: 12, y: 12}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -867,9 +867,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 5, y: 10}
-  cornerB: {x: 7, y: 13}
+  cornerB: {x: 6, y: 12}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -1787,10 +1787,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerA: {x: 3, y: 3}
-  cornerB: {x: 4, y: 6}
-  isSingleCell: 0
-  isInterable: 0
+  cornerA: {x: 3, y: 5}
+  cornerB: {x: 0, y: 0}
+  isSingleCell: 1
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -1899,9 +1899,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 3, y: 12}
-  cornerB: {x: 4, y: 13}
-  isSingleCell: 0
-  isInterable: 0
+  cornerB: {x: 0, y: 0}
+  isSingleCell: 1
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -2662,7 +2662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 9, y: 10}
-  cornerB: {x: 11, y: 13}
+  cornerB: {x: 10, y: 12}
   isSingleCell: 0
   isInterable: 0
   sr: {fileID: 0}
@@ -2924,9 +2924,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 1, y: 10}
-  cornerB: {x: 3, y: 13}
+  cornerB: {x: 2, y: 12}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -3588,9 +3588,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 13, y: 0}
-  cornerB: {x: 14, y: 2}
+  cornerB: {x: 13, y: 1}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -4024,9 +4024,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 13, y: 6}
-  cornerB: {x: 14, y: 7}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -4575,9 +4575,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 13, y: 3}
-  cornerB: {x: 14, y: 5}
+  cornerB: {x: 13, y: 4}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -4771,9 +4771,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 13, y: 7}
-  cornerB: {x: 14, y: 9}
+  cornerB: {x: 13, y: 8}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -5157,9 +5157,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 13, y: 11}
-  cornerB: {x: 14, y: 12}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -5503,9 +5503,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 3, y: 3}
-  cornerB: {x: 4, y: 6}
+  cornerB: {x: 3, y: 4}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -6783,9 +6783,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 13, y: 9}
-  cornerB: {x: 14, y: 10}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 1
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -7199,9 +7199,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 7, y: 12}
-  cornerB: {x: 9, y: 13}
+  cornerB: {x: 8, y: 12}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -7966,9 +7966,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 4, y: 12}
-  cornerB: {x: 5, y: 13}
+  cornerB: {x: 0, y: 0}
   isSingleCell: 0
-  isInterable: 0
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
@@ -8566,9 +8566,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornerA: {x: 12, y: 11}
-  cornerB: {x: 13, y: 12}
-  isSingleCell: 0
-  isInterable: 0
+  cornerB: {x: 0, y: 0}
+  isSingleCell: 1
+  isInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
