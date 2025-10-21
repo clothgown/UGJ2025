@@ -42,8 +42,11 @@ public class DialogueSystem : MonoBehaviour
     public Image cgImage;  // Inspector 指定 UI 背景 Image
     public float cgFadeDuration = 0.5f; // CG 淡入淡出时间
     public CanvasGroup UIGroup;
+
+    public TextAsset battleDialogDataFile; // 指向你的CSV/TSV文件
     void Start()
     {
+        UIGroup.gameObject.SetActive(true);
         UIGroup.alpha = 1f;
         // 初始化CG
         if (cgImage != null)
@@ -79,7 +82,21 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
+    public void StartNewDialogue()
+    {
+        currentIndex = 0;
+        LoadDialogues(battleDialogDataFile.text);
+        isLoaded = true;
 
+        if (UIGroup != null)
+        {
+            UIGroup.gameObject.SetActive(true);
+            UIGroup.DOFade(1f, fadeDuration).OnComplete(() => {
+
+            });
+        }
+        ShowDialogue(currentIndex);
+    }
 
 
     void ShowDialogue(int index)
@@ -113,6 +130,7 @@ public class DialogueSystem : MonoBehaviour
                 Sprite cgSprite = characterManager.GetCG(d.CG);
                 if (cgSprite != null) cgImage.sprite = cgSprite;
                 cgImage.DOKill();
+                cgImage.gameObject.SetActive(true);
                 cgImage.DOFade(1f, cgFadeDuration);
             }
             else
@@ -120,6 +138,7 @@ public class DialogueSystem : MonoBehaviour
                 // 没CG → 渐隐
                 cgImage.DOKill();
                 cgImage.DOFade(0f, cgFadeDuration);
+                cgImage.gameObject.SetActive(false);
             }
         }
 
@@ -155,8 +174,9 @@ public class DialogueSystem : MonoBehaviour
         if (UIGroup != null)
         {
             UIGroup.DOFade(0f, fadeDuration).OnComplete(() => {
+                cgImage.gameObject.SetActive(false);
                 // 渐隐完成后可以禁用UI组或执行其他操作
-                //UIGroup.gameObject.SetActive(false);
+                UIGroup.gameObject.SetActive(false);
             });
         }
     }

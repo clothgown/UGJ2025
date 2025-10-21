@@ -566,7 +566,7 @@ public class DialogueUI : MonoBehaviour
         }
 
         cgCanvasGroup.alpha = 0f;
-
+        
         float elapsed = 0f;
         while (elapsed < 0.5f)
         {
