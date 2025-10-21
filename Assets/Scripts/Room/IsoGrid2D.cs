@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using static UnityEditor.PlayerSettings;
 
@@ -37,7 +38,15 @@ public class IsoGrid2D : MonoBehaviour
         }
 
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            LevelSelectRoot.instance.SetGridManagerTrue();
 
+            SceneManager.LoadScene("Map");
+        }
+    }
     void Start()
     {
         controller = FindAnyObjectByType<UnitController>().gameObject;

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -13,11 +14,13 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public bool isReached;
     public GameObject HiddenPrefab;
     public MapGridType gridType;
-
+    public int normalType;
     private Image hiddenImage; // 若 HiddenPrefab 是 UI 对象
 
     public bool isNextBoss;
     public MapGrid bossGrid;
+
+
     private void Awake()
     {
         originalScale = transform.localScale;
@@ -77,28 +80,56 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 player.transform.localPosition = Vector3.zero;
                 player.transform.localRotation = Quaternion.identity;
                 player.currentPos = gridPos;
-
-                // 显示隐藏内容
-                SetVisual();
-                MapGridManager.instance.DimPreviousGrids(gridPos.x);
-                if (isNextBoss!=true)
+                MapGridManager.instance.currentGrid = this;
+                if (normalType == 0 && gridType == MapGridType.Normal)
                 {
-                    MapGridManager.instance.HighlightNearbyGrids();
+                    // 监听加载完成事件
+                    SceneManager.sceneLoaded += OnSceneLoaded;
+                    SceneManager.LoadScene("1-0");
                 }
                 else
                 {
-                    foreach (var grid in MapGridManager.instance.grids)
-                    {
-                        grid.transform.DOLocalMoveY(grid.originalLocation.y, MapGridManager.instance.highlightDuration).SetEase(Ease.OutQuad);
-                        grid.canSelect = false;
-                    }
-                    bossGrid.canSelect = true;
-                    bossGrid.transform.DOLocalMoveY(bossGrid.originalLocation.y + MapGridManager.instance.highlightHeight, MapGridManager.instance.highlightDuration).SetEase(Ease.OutQuad);
+                    ShowNextGrids();
                 }
-                isReached = true;
             });
         
 
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 加载完成后再关闭地图
+        if (scene.name == "1-0")
+        {
+            if (MapGridManager.instance != null)
+            {
+                MapGridManager.instance.gameObject.SetActive(false);
+            }
+
+
+            // 移除事件防止重复触发
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+    }
+    public void ShowNextGrids()
+    {
+        // 显示隐藏内容
+        SetVisual();
+        MapGridManager.instance.DimPreviousGrids(gridPos.x);
+        if (isNextBoss != true)
+        {
+            MapGridManager.instance.HighlightNearbyGrids();
+        }
+        else
+        {
+            foreach (var grid in MapGridManager.instance.grids)
+            {
+                grid.transform.DOLocalMoveY(grid.originalLocation.y, MapGridManager.instance.highlightDuration).SetEase(Ease.OutQuad);
+                grid.canSelect = false;
+            }
+            bossGrid.canSelect = true;
+            bossGrid.transform.DOLocalMoveY(bossGrid.originalLocation.y + MapGridManager.instance.highlightHeight, MapGridManager.instance.highlightDuration).SetEase(Ease.OutQuad);
+        }
+        isReached = true;
     }
 
     /// <summary>
