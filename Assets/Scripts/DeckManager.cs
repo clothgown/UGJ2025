@@ -51,7 +51,9 @@ public class DeckManager : MonoBehaviour
 
         CardData drawnCard = deck[0];
         deck.RemoveAt(0);
+        
         return drawnCard;
+
     }
 
     /// <summary>

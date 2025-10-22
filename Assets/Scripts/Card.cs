@@ -87,6 +87,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         BeginDragEvent.Invoke(this);
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         offset = mousePosition - (Vector2)transform.position;

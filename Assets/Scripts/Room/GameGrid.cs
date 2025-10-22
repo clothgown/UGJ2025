@@ -86,7 +86,7 @@ public class GameGrid : MonoBehaviour
     public void ResetColor() => rend.color = originalColor;
     void OnMouseDown()
     {
-        
+        if (FindAnyObjectByType<DialogueSystem>().isDialoguing == true) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (canChangeState)
@@ -119,11 +119,8 @@ public class GameGrid : MonoBehaviour
             IsoGrid2D.instance.ResetWaiting();
             return; // 提前结束
         }
-        if (occupiedPlayer != null)
-        {
-            TurnManager.instance.ChangePlayer(occupiedPlayer);
-        }
-        else if (canHeal)
+
+        if (canHeal)
         {
             UnitController playerController = IsoGrid2D.instance.controller.GetComponent<UnitController>();
             if (this.occupiedPlayer != null)
@@ -147,10 +144,12 @@ public class GameGrid : MonoBehaviour
                     IsoGrid2D.instance.ResetWaiting();
                 }
                     
-
             }
         }
-
+        else if (occupiedPlayer != null)
+        {
+            TurnManager.instance.ChangePlayer(occupiedPlayer);
+        }
 
         NormalGridClick();
     }

@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Cinemachine;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -259,6 +260,7 @@ public class EnemyUnit : MonoBehaviour
 
     public void Move()
     {
+        
         IsoGrid2D.instance.HighlightMoveRange(startPoint, moveRange);
     }
 
@@ -278,6 +280,9 @@ public class EnemyUnit : MonoBehaviour
 
     private IEnumerator FollowPath(List<GameGrid> path)
     {
+        CinemachineVirtualCamera virtualCamera = FindAnyObjectByType<CinemachineVirtualCamera>();
+        if (virtualCamera != null)
+            virtualCamera.Follow = this.transform;
         foreach (var grid in path)
         {
             Vector2Int prevPos = startPoint;
@@ -372,8 +377,11 @@ public class EnemyUnit : MonoBehaviour
         FindObjectOfType<CameraShake>().Shake();
         healthSystem.SetHealth(currentHealth);
 
-        
-        GetComponent<BattleDialogue>().CheckTrigger();
+        if(GetComponent<BattleDialogue>()!=null)
+        {
+            GetComponent<BattleDialogue>().CheckTrigger();
+        }
+
 
 
         // Passive: 第一次被攻击后激活行动

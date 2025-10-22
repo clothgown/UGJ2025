@@ -84,6 +84,10 @@ public class UnitController : MonoBehaviour
             {
                 int sortingOrder = startPoint.x+ startPoint.y;
                 sr.sortingOrder = -sortingOrder + 2; // +2 确保比格子高
+                if(RunOutActionPoint!=null)
+                {
+                    RunOutActionPoint.GetComponent<Renderer>().sortingOrder = sr.sortingOrder;
+                }
             }
 
 
@@ -102,7 +106,8 @@ public class UnitController : MonoBehaviour
         if (isActive == false) return;
         if (transform.childCount == 0) return; // 防止没子物件时报错
 
-        
+
+
     }
 
 
@@ -131,7 +136,7 @@ public class UnitController : MonoBehaviour
     }
 
     private System.Collections.IEnumerator FollowPath(List<GameGrid> path)
-{
+    {
     isMoving = true;
     if (startGrid != null)
         startGrid.GetComponent<GameGrid>().isOccupied = false;
@@ -192,12 +197,19 @@ public class UnitController : MonoBehaviour
         transform.localPosition = Vector3.zero;
 
         if (sr != null)
-                sr.sortingOrder = grid.GetComponent<GameGrid>().sortingOrder*-1 + 2;
-    }
+            {
+                sr.sortingOrder = grid.GetComponent<GameGrid>().sortingOrder * -1 + 2;
+            }
+
+            if (RunOutActionPoint != null)
+            {
+                RunOutActionPoint.GetComponent<Renderer>().sortingOrder = sr.sortingOrder;
+            }
+        }
 
     isMoving = false;
     Move();
-}
+    }
 
 
 

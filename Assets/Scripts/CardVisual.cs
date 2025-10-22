@@ -187,6 +187,7 @@ public class CardVisual : MonoBehaviour
 
     private void BeginDrag(Card card)
     {
+        if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         if (scaleAnimations)
             transform.DOScale(scaleOnSelect, scaleTransition).SetEase(scaleEase);
         canvasGroup.alpha = Mathf.Clamp01(canvasGroup.alpha - 0.25f);
@@ -222,6 +223,7 @@ public class CardVisual : MonoBehaviour
 
     private void EndDrag(Card card)
     {
+        if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         canvas.overrideSorting = false;
         transform.DOScale(1, scaleTransition).SetEase(scaleEase);
         canvasGroup.alpha = Mathf.Clamp01(canvasGroup.alpha + 0.25f);
@@ -231,6 +233,7 @@ public class CardVisual : MonoBehaviour
 
     private void PointerEnter(Card card)
     {
+        if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         if (scaleAnimations)
             transform.DOScale(scaleOnHover, scaleTransition).SetEase(scaleEase);
 
@@ -270,6 +273,7 @@ public class CardVisual : MonoBehaviour
 
     private void PointerExit(Card card)
     {
+        if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         if (horizontalCardHolder.isDraging) return;
         if (!parentCard.wasDragged)
         {
