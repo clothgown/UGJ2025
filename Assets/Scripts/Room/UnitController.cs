@@ -309,9 +309,10 @@ public class UnitController : MonoBehaviour
         if (actionPoints <= 0)
         {
             // 半透明
-            Color c = sr.color;
-            c.a = 0.75f;
-            sr.color = c;
+            RunOutActionPoint.gameObject.SetActive(true);
+            RunOutActionPoint.Play(); // 直接播放特效
+            Debug.Log("🎇 播放行动点耗尽特效！");
+           
         }
     }
 
@@ -320,9 +321,7 @@ public class UnitController : MonoBehaviour
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         actionPoints = maxActionPoints;
         TurnManager.instance.actionPointText.text = "Action Point: " + TurnManager.instance.currentController.actionPoints;
-        Color c = sr.color;
-        c.a = 1f;
-        sr.color = c;
+        
     }
 
     public void SetActionPoint(int actionPoint)
@@ -331,7 +330,7 @@ public class UnitController : MonoBehaviour
         TurnManager.instance.actionPointText.text = "行动点: " + TurnManager.instance.currentController.actionPoints;
         if (actionPoints <= 0)
         {
-            vfx.SendEvent("runoutofactionpoint");
+           
         }
     }
     public void SetNextAttackDouble()
