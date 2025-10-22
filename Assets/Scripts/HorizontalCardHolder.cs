@@ -56,14 +56,6 @@ public class HorizontalCardHolder : MonoBehaviour
         newCard.EndDragEvent.AddListener(EndDrag);
 
         cards.Add(newCard);
-        if (FindAnyObjectByType<UnitController>().isNextAttackDouble)
-        {
-            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToDouble();
-        }
-        if(FindAnyObjectByType<UnitController>().isNextAttackMass)
-        {
-            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToMass();
-        }
     }
 
     public IEnumerator DrawNewCard()
@@ -96,18 +88,13 @@ public class HorizontalCardHolder : MonoBehaviour
                 card.cardVisual.UpdateIndex(transform.childCount); 
         }
         cards.Add(newCard);
-        if(FindAnyObjectByType<UnitController>().isNextAttackDouble)
-        {
-            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToDouble();
-        }
-        if (FindAnyObjectByType<UnitController>().isNextAttackMass)
-        {
-            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToMass();
-        }
+
+
     }
 
     private void BeginDrag(Card card)
     {
+        
         selectedCard = card;
     }
 
@@ -152,6 +139,7 @@ public class HorizontalCardHolder : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
+            
             foreach (Card card in cards)
             {
                 card.Deselect();

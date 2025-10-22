@@ -60,11 +60,12 @@ public class TurnManager : MonoBehaviour
     }
     public void StartPlayerTurn()
     {
+        FindAnyObjectByType<NextTurnButton>().RestoreButton();
         // 回合开始时重置行动点
         foreach (var unitController in unitControllers) 
         {
             unitController.RecoverActionPoint();
-            unitController.RecoverState();
+            //unitController.RecoverState();
         }
         actionPointText.text = "[" + unitControllers[0].name +"]"+"Action Point: " + unitControllers[0].actionPoints;
         ChangePlayer(unitControllers[0]);

@@ -46,6 +46,19 @@ public class IsoGrid2D : MonoBehaviour
 
             SceneManager.LoadScene("Map");
         }
+
+        if (controller.GetComponent<UnitController>().isNextAttackDouble)
+        {
+            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToDouble();
+        }
+        else if (controller.GetComponent<UnitController>().isNextAttackMass)
+        {
+            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToMass();
+        }
+        else
+        {
+            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+        }
     }
     void Start()
     {

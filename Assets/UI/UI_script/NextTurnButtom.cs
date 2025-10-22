@@ -6,6 +6,7 @@ using DG.Tweening;
 public class NextTurnButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     private Vector3 originalScale;
+    private Vector3 originalPosition;
     private Color originalColor;
     private Image buttonImage;
 
@@ -18,10 +19,12 @@ public class NextTurnButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public Color clickColor = new Color(0.8f, 0.8f, 0.8f, 1f); // 点击变暗颜色
     public Ease scaleEase = Ease.OutBack;    // 放大/弹性缩放曲线
     public Ease flyEase = Ease.InOutQuad;    // 飞出曲线
+    public Ease returnEase = Ease.OutBack;   // 恢复曲线
 
     private void Start()
     {
         originalScale = transform.localScale;
+        originalPosition = transform.localPosition; // 保存初始位置
         buttonImage = GetComponent<Image>();
 
         if (buttonImage != null)
@@ -62,5 +65,28 @@ public class NextTurnButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         // 向右弹走
         seq.Append(transform.DOLocalMoveX(transform.localPosition.x + flyDistance, flyDuration)
             .SetEase(flyEase));
+    }
+    public void RestoreButton()
+    {
+        Sequence restoreSeq = DOTween.Sequence();
+
+        // 回到原位
+        restoreSeq.Append(transform.DOLocalMove(originalPosition, flyDuration)
+            .SetEase(returnEase));
+
+        // 同时恢复颜色与缩放
+        restoreSeq.Join(transform.DOScale(originalScale, 0.3f).SetEase(scaleEase));
+
+        if (buttonImage != null)
+            restoreSeq.Join(buttonImage.DOColor(originalColor, 0.3f));
+
+        // 确保动画完成后状态干净
+        restoreSeq.OnComplete(() =>
+        {
+            transform.localScale = originalScale;
+            transform.localPosition = originalPosition;
+            if (buttonImage != null)
+                buttonImage.color = originalColor;
+        });
     }
 }

@@ -21,6 +21,7 @@ public class Dialogue
 }
 public class DialogueSystem : MonoBehaviour
 {
+    public bool isDialoguing;
     public TextAsset dialogDataFile; // 指向你的CSV/TSV文件
     public List<Dialogue> dialogues = new List<Dialogue>();
     public TMP_Text nameTMP;     // 显示角色名字
@@ -96,6 +97,7 @@ public class DialogueSystem : MonoBehaviour
             });
         }
         ShowDialogue(currentIndex);
+        isDialoguing = true;
     }
 
 
@@ -167,6 +169,7 @@ public class DialogueSystem : MonoBehaviour
         {
             Debug.Log("对话结束。");
             FadeOutUI();
+            isDialoguing = false;
         }
     }
     void FadeOutUI()
