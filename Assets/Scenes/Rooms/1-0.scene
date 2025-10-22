@@ -7342,6 +7342,14 @@ PrefabInstance:
       propertyPath: m_Bindings.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: startPoint.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: startPoint.y
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5084986422234508334, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: m_Name
       value: Player
