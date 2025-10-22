@@ -302,11 +302,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2800923184542147507, guid: 4be9a46e3712dc34c9a64bd07928ec63, type: 3}
   m_PrefabInstance: {fileID: 141513073}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &207631002 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6504935391888436072, guid: b847115ac8299fb4fbf59a057448a565, type: 3}
-  m_PrefabInstance: {fileID: 8229480439804005075}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &261524858
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,11 +711,6 @@ RectTransform:
   m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1274759749 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7711931986440068823, guid: 6199f7ae41b350e488cc2c87794dcaf6, type: 3}
-  m_PrefabInstance: {fileID: 1994060178}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1431040978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -931,6 +921,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1905441084031926442, guid: 6199f7ae41b350e488cc2c87794dcaf6, type: 3}
+      propertyPath: uiRoot
+      value: 
+      objectReference: {fileID: 1031366900}
     - target: {fileID: 7711931986440068823, guid: 6199f7ae41b350e488cc2c87794dcaf6, type: 3}
       propertyPath: m_Name
       value: BAG
@@ -938,30 +932,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7711931986440068823, guid: 6199f7ae41b350e488cc2c87794dcaf6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1994060184}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6199f7ae41b350e488cc2c87794dcaf6, type: 3}
 --- !u!224 &1994060179 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1114846860562883822, guid: 6199f7ae41b350e488cc2c87794dcaf6, type: 3}
   m_PrefabInstance: {fileID: 1994060178}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1994060184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274759749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 430d905b17ac5f04d87cd84e3afb3a92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bagPrefab: {fileID: 6504935391888436072, guid: b847115ac8299fb4fbf59a057448a565, type: 3}
-  uiRoot: {fileID: 1031366900}
 --- !u!1 &2128965437
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,17 +1189,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1031366900}
     m_Modifications:
-    - target: {fileID: 5417818633410871905, guid: b847115ac8299fb4fbf59a057448a565, type: 3}
-      propertyPath: panelToClose
-      value: 
-      objectReference: {fileID: 207631002}
     - target: {fileID: 6504935391888436072, guid: b847115ac8299fb4fbf59a057448a565, type: 3}
       propertyPath: m_Name
       value: bag_details_R
       objectReference: {fileID: 0}
     - target: {fileID: 6504935391888436072, guid: b847115ac8299fb4fbf59a057448a565, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7883439663403157622, guid: b847115ac8299fb4fbf59a057448a565, type: 3}
       propertyPath: m_Pivot.x

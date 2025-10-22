@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class CardHoverPreview : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -14,14 +15,17 @@ public class CardHoverPreview : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public float scaleDuration = 0.25f;     // 卡牌放大时间
 
     private Vector3 originalScale;          // 记录原始大小
-    private Tween scaleTween;               // 存放缩放动画引用
-    private Tween fadeTween;                // 存放淡入淡出动画引用
+    private Transform originalParent;       // 原始父物体
+    private int originalSiblingIndex;       // 原始层级顺序
+    private Canvas cardCanvas;              // 独立Canvas用于顶层显示
+
+    private Tween scaleTween;
+    private Tween fadeTween;
 
     private void Start()
     {
         originalScale = transform.localScale;
 
-        // 初始化详情框为隐藏
         if (previewGroup != null)
         {
             previewGroup.alpha = 0;
@@ -31,12 +35,21 @@ public class CardHoverPreview : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // Q弹放大效果
+        // ------------------- 提升层级 -------------------
+        originalParent = transform.parent;
+        originalSiblingIndex = transform.GetSiblingIndex();
+
+        //  给这张卡加个独立Canvas，让它永远在最上层
+        cardCanvas = gameObject.AddComponent<Canvas>();
+        cardCanvas.overrideSorting = true;
+        cardCanvas.sortingOrder = 999; // 保证最顶层
+        gameObject.AddComponent<GraphicRaycaster>(); // 保持可交互
+
+        // ------------------- 动画部分 -------------------
         scaleTween?.Kill();
         scaleTween = transform.DOScale(originalScale * scaleUpFactor, scaleDuration)
                               .SetEase(Ease.OutBack);
 
-        // 淡入显示详情框
         if (previewGroup != null)
         {
             fadeTween?.Kill();
@@ -47,17 +60,26 @@ public class CardHoverPreview : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // 回到原始大小
+        // ------------------- 动画 -------------------
         scaleTween?.Kill();
         scaleTween = transform.DOScale(originalScale, scaleDuration)
                               .SetEase(Ease.InBack);
 
-        // 淡出隐藏详情框
         if (previewGroup != null)
         {
             fadeTween?.Kill();
             fadeTween = previewGroup.DOFade(0, fadeDuration)
                                      .OnComplete(() => previewGroup.gameObject.SetActive(false));
         }
+
+        // ------------------- 恢复层级 -------------------
+        if (cardCanvas != null)
+        {
+            Destroy(cardCanvas.GetComponent<GraphicRaycaster>());
+            Destroy(cardCanvas);
+        }
+
+        transform.SetParent(originalParent);
+        transform.SetSiblingIndex(originalSiblingIndex);
     }
 }

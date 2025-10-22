@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7355730144181960096}
   - component: {fileID: 1569194647765361362}
   - component: {fileID: 6949831106883267009}
+  - component: {fileID: 1905441084031926442}
   m_Layer: 5
   m_HasEditorInfo: 1
   m_Name: BAG
@@ -150,3 +151,19 @@ MonoBehaviour:
   clickScale: 0.9
   animDuration: 0.2
   animEase: 27
+  cardToSell: {fileID: 0}
+  cardImage: {fileID: 0}
+--- !u!114 &1905441084031926442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7711931986440068823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 430d905b17ac5f04d87cd84e3afb3a92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bagPrefab: {fileID: 6504935391888436072, guid: b847115ac8299fb4fbf59a057448a565, type: 3}
+  uiRoot: {fileID: 0}
