@@ -29,7 +29,7 @@ public class MapGridManager : MonoBehaviour
     public float highlightDuration = 0.3f; // 动画时间
 
     public MapGridTypeAndPrefab[] mapGridTypeAndPrefabs;
-
+    public MapGrid currentGrid;
     private void Awake()
     {
         if (instance == null)
@@ -70,7 +70,7 @@ public class MapGridManager : MonoBehaviour
                 Debug.LogWarning($"MapGridTypeAndPrefabs[{randomIndex}] 的 Prefab 为空，跳过该格子。");
                 continue;
             }
-
+            grid.normalType = randomIndex;
             // 生成隐藏预制体（不激活）
             GameObject instance = Instantiate(prefabToAssign, grid.transform);
             instance.SetActive(false); // 初始隐藏

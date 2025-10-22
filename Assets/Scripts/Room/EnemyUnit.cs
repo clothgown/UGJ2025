@@ -372,6 +372,10 @@ public class EnemyUnit : MonoBehaviour
         FindObjectOfType<CameraShake>().Shake();
         healthSystem.SetHealth(currentHealth);
 
+        
+        GetComponent<BattleDialogue>().CheckTrigger();
+
+
         // Passive: 第一次被攻击后激活行动
         if (enemyType == EnemyType.Passive && !hasBeenAttacked)
         {
