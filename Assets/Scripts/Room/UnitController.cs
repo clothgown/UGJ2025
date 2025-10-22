@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class UnitController : MonoBehaviour
 {
@@ -52,6 +53,17 @@ public class UnitController : MonoBehaviour
     [Header("Sprites")]
     public Sprite frontSprite;
     public Sprite backSprite;
+
+    [Header("VFX")]
+    public VisualEffect MoveVFX;
+    public VisualEffect RunOutActionPoint;
+    public VisualEffect X2;
+    public VisualEffect XN;
+    public VisualEffect AttackedBySword;
+    public VisualEffect AttackedByArrow;
+    public VisualEffect ArrowAttack;
+    public VisualEffect Cure;
+
     private void Start()
     {
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -316,13 +328,10 @@ public class UnitController : MonoBehaviour
     public void SetActionPoint(int actionPoint)
     {
         actionPoints = actionPoint;
-        TurnManager.instance.actionPointText.text = "Action Point: " + TurnManager.instance.currentController.actionPoints;
+        TurnManager.instance.actionPointText.text = "行动点: " + TurnManager.instance.currentController.actionPoints;
         if (actionPoints <= 0)
         {
-            // 半透明
-            Color c = sr.color;
-            c.a = 0.75f;
-            sr.color = c;
+            vfx.SendEvent("runoutofactionpoint");
         }
     }
     public void SetNextAttackDouble()
