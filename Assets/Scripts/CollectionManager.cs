@@ -24,7 +24,7 @@ public class CollectionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        coinText.text = "Coin: " + coins;
+        coinText.text = coins.ToString();
     }
 
     // Update is called once per frame
@@ -35,6 +35,6 @@ public class CollectionManager : MonoBehaviour
     public void AddCoin(int coin)
     {
         coins += coin;
-        coinText.text = "Coin: " + coins;
+        coinText.text = coins.ToString();
     }
 }

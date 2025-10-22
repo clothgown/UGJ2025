@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class LevelSelectRoot : MonoBehaviour
 {
-    private static LevelSelectRoot instance;
+    public static LevelSelectRoot instance;
 
+    public MapGridManager mapGridManager;
     private void Awake()
     {
         // µ•¿˝≈–∂œ£¨∑¿÷π÷ÿ∏¥
@@ -18,5 +19,16 @@ public class LevelSelectRoot : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        mapGridManager = FindAnyObjectByType<MapGridManager>();
+    }
+
+    public void SetGridManagerTrue()
+    {
+        mapGridManager.gameObject.SetActive(true);
+        mapGridManager.currentGrid.ShowNextGrids();
     }
 }
