@@ -329,7 +329,7 @@ public class UnitController : MonoBehaviour
         if (TurnManager.instance.currentController == this)
         {
             actionPoints-=usePoint;
-            TurnManager.instance.UpdateActionPointUI(actionPoints);
+            TurnManager.instance.UpdateActionPointUI(this);
         }
         
         Debug.Log($"剩余行动点：{TurnManager.instance.currentController.actionPoints}");
@@ -348,7 +348,7 @@ public class UnitController : MonoBehaviour
     {
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         actionPoints = maxActionPoints;
-        TurnManager.instance.UpdateActionPointUI(actionPoints);
+        TurnManager.instance.UpdateActionPointUI(this);
         if (RunOutActionPoint != null)
         {
             RunOutActionPoint.Stop();               // 停止播放
@@ -361,7 +361,7 @@ public class UnitController : MonoBehaviour
     public void SetActionPoint(int actionPoint)
     {
         actionPoints = actionPoint;
-        TurnManager.instance.UpdateActionPointUI(actionPoints);
+        TurnManager.instance.UpdateActionPointUI(this);
         if (actionPoints <= 0)
         {
            
