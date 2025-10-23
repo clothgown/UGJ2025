@@ -106,6 +106,12 @@ public class PlayerSwitchManager : MonoBehaviour
         // 上场新角色
         currentUnitController = newSlot.unit;
         currentUnitController.SetActionPoint(remainingAP);
+        // 🔺 通知 TurnManager 更新UI显示
+if (TurnManager.instance != null)
+{
+    TurnManager.instance.ChangePlayer(currentUnitController);
+}
+
         int currentListIndex = System.Array.IndexOf(TurnManager.instance.unitControllers, currentSlot.unit);
         if (currentListIndex >= 0)
         {
