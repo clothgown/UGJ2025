@@ -118,6 +118,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndPlayerTurn()
     {
+        if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         phase = TurnPhase.EnemyTurn;
         EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
         if (enemies.Length == 0)

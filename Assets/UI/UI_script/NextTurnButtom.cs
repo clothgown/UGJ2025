@@ -46,6 +46,7 @@ public class NextTurnButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     // 点击时缩小 → 颜色变深 → 弹起 → 向右弹走
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         Sequence seq = DOTween.Sequence();
 
         // 轻微点击反馈
