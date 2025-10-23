@@ -3,7 +3,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.VFX;
 
 public enum EnemyType
 {
@@ -40,8 +40,17 @@ public class EnemyUnit : MonoBehaviour
     [Header("Passive Buff Settings")]
     private bool hasTriggeredLifeAbsorb = false; // 是否已触发吸血事件
     private bool damageBoostActive = false;      // 是否正在进行伤害加成
+
+    [Header("VFX")]
+    public VisualEffect Attacked;
+    public VisualEffect Dizzy;
+
     private void Start()
     {
+        if (Attacked != null)
+        {
+            Attacked.gameObject.SetActive(false);
+        }
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         // 初始化敌人的位置
         if (IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y) != null)
@@ -374,6 +383,14 @@ public class EnemyUnit : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
+        Attacked.gameObject.SetActive(true);
+      
+        Attacked.SendEvent("OnPlay");
+        DOTweenAnimation attackedTween = GetComponent<DOTweenAnimation>();
+        if (attackedTween != null && attackedTween.id == "Attacked")
+        {
+            attackedTween.DORestart();
+        }
         FindObjectOfType<CameraShake>().Shake();
         healthSystem.SetHealth(currentHealth);
 
@@ -450,6 +467,7 @@ public class EnemyUnit : MonoBehaviour
     public void Dizziness()
     {
         isDizziness = true;
+        Dizzy.Play();
         Color c = Color.blue;
         sr.color = c;
     }

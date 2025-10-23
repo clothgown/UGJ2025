@@ -254,6 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d025f6ad2da404a95c9d2975af897f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDialoguing: 0
   dialogDataFile: {fileID: 4900000, guid: b27bd1f70b0d72549983f3fab2c86b4e, type: 3}
   dialogues: []
   nameTMP: {fileID: 1723306654313891733}
@@ -267,6 +268,7 @@ MonoBehaviour:
   cgImage: {fileID: 7635443274121986967}
   cgFadeDuration: 0.25
   UIGroup: {fileID: 7958241466168621693}
+  battleDialogDataFile: {fileID: 0}
 --- !u!114 &2809308851762126491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1287,8 +1289,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
+  m_sharedMaterial: {fileID: 8253381855789811873, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1318,7 +1320,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2186,6 +2188,10 @@ PrefabInstance:
       propertyPath: m_fontColor.r
       value: 0.2792452
       objectReference: {fileID: 0}
+    - target: {fileID: 7611499427588031894, guid: 58616c656062b944b9fbff3da696aade, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2943483290310905797, guid: 4776f3cd11bfccc419795feb4090f8d0, type: 2}
     - target: {fileID: 7611499427588031894, guid: 58616c656062b944b9fbff3da696aade, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4281677127

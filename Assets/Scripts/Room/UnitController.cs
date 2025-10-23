@@ -1,4 +1,6 @@
+using DG.Tweening;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -59,9 +61,10 @@ public class UnitController : MonoBehaviour
     public VisualEffect RunOutActionPoint;
     public VisualEffect X2;
     public VisualEffect XN;
-    public VisualEffect AttackedBySword;
+    public VisualEffect Attacked;
     public VisualEffect AttackedByArrow;
-    public VisualEffect ArrowAttack;
+    public int attackway;
+    public VisualEffect Attack1;
     public VisualEffect Cure;
 
     private void Start()
@@ -234,8 +237,19 @@ public class UnitController : MonoBehaviour
             Debug.Log($"{name} 闪避了这次攻击！");
             return;
         }
-        FindObjectOfType<CameraShake>().Shake();
+        DOTweenAnimation attackedTween = GetComponent<DOTweenAnimation>();
+        if (attackedTween != null && attackedTween.id == "Attacked")
+        {
+            attackedTween.DORestart();
+        }
 
+        FindObjectOfType<CameraShake>().Shake();
+        if (shield == 0)
+        {
+            Attacked.gameObject.SetActive(true);
+
+            Attacked.SendEvent("OnPlay");
+        }
 
         if (shield > 0)
         {
@@ -248,6 +262,9 @@ public class UnitController : MonoBehaviour
             {
                 amount -= shield;
                 shield = 0f;
+                Attacked.gameObject.SetActive(true);
+
+                Attacked.SendEvent("OnPlay");
             }
 
             // ���»�������ʾ��ǰֵ
@@ -362,10 +379,7 @@ public class UnitController : MonoBehaviour
     {
         actionPoints = actionPoint;
         TurnManager.instance.UpdateActionPointUI(this);
-        if (actionPoints <= 0)
-        {
-           
-        }
+        
     }
     public void SetNextAttackDouble()
     {
@@ -389,6 +403,22 @@ public class UnitController : MonoBehaviour
         isNextAttackMass = false;
         sr.color = Color.white;
     }
+    public string vectorPropertyName = "哪个攻击"; // 属性名称
+
+    // 修改VFX中的Vector2属性
+    public void ChangeVFXVectorProperty(Vector2 newValue)
+    {
+        if (Attack1 != null)
+        {
+            // 使用SetVector2方法，传入属性名称和新的Vector2值
+            Attack1.SetVector2(vectorPropertyName, newValue);
+            Debug.Log($"已设置属性 '{vectorPropertyName}' 为: {newValue}");
+        }
+        else
+        {
+            Debug.LogWarning("VisualEffect组件未分配");
+        }
+    }
 
     private void UpdateDirectionSprite(Vector2Int from, Vector2Int to)
     {
@@ -405,6 +435,11 @@ public class UnitController : MonoBehaviour
                 Vector3 scale = MoveVFX.transform.localScale;
                 scale.x = -Mathf.Abs(scale.x);
                 MoveVFX.transform.localScale = scale;
+            }
+            if (Attack1 != null)
+            {
+                Vector2 AttackAnimation = new Vector2(attackway, 1);
+                ChangeVFXVectorProperty(AttackAnimation);
             }
         }
         else if (dir.y > 0) // 向后（地图上y增大）
