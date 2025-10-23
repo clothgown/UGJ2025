@@ -138,7 +138,14 @@ public class UnitController : MonoBehaviour
     private System.Collections.IEnumerator FollowPath(List<GameGrid> path)
     {
     isMoving = true;
-    if (startGrid != null)
+        // ✅ 开始播放奔跑烟雾
+        if (MoveVFX != null)
+        {
+            MoveVFX.gameObject.SetActive(true);
+            MoveVFX.Play();
+        }
+
+        if (startGrid != null)
         startGrid.GetComponent<GameGrid>().isOccupied = false;
 
     foreach (var grid in path)
@@ -208,7 +215,14 @@ public class UnitController : MonoBehaviour
         }
 
     isMoving = false;
-    Move();
+        // ✅ 停止播放奔跑烟雾
+        if (MoveVFX != null)
+        {
+            MoveVFX.Stop();
+            MoveVFX.gameObject.SetActive(false);
+        }
+
+        Move();
     }
 
 
@@ -309,6 +323,7 @@ public class UnitController : MonoBehaviour
         transform.localPosition = Vector3.zero;
     }
 
+    private bool hasPlayedRunOutVFX = false;
     public void UseActionPoint(int usePoint)
     {
         if (TurnManager.instance.currentController == this)
@@ -321,6 +336,7 @@ public class UnitController : MonoBehaviour
         if (actionPoints <= 0)
         {
             // 半透明
+            hasPlayedRunOutVFX = true;
             RunOutActionPoint.gameObject.SetActive(true);
             RunOutActionPoint.Play(); // 直接播放特效
             Debug.Log("🎇 播放行动点耗尽特效！");
@@ -333,7 +349,13 @@ public class UnitController : MonoBehaviour
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         actionPoints = maxActionPoints;
         TurnManager.instance.actionPointText.text = "Action Point: " + TurnManager.instance.currentController.actionPoints;
-        
+        if (RunOutActionPoint != null)
+        {
+            RunOutActionPoint.Stop();               // 停止播放
+            RunOutActionPoint.gameObject.SetActive(false); // 隐藏它（可选）
+            Debug.Log("🛑 停止播放耗尽行动点特效");
+        }
+        hasPlayedRunOutVFX = false;
     }
 
     public void SetActionPoint(int actionPoint)
@@ -376,22 +398,52 @@ public class UnitController : MonoBehaviour
         {
             sr.sprite = frontSprite;
             sr.flipX = true;
+
+            // ✅ 调整MoveVFX缩放（X反转）
+            if (MoveVFX != null)
+            {
+                Vector3 scale = MoveVFX.transform.localScale;
+                scale.x = -Mathf.Abs(scale.x);
+                MoveVFX.transform.localScale = scale;
+            }
         }
         else if (dir.y > 0) // 向后（地图上y增大）
         {
             sr.sprite = backSprite;
             sr.flipX = false;
+
+            if (MoveVFX != null)
+            {
+                Vector3 scale = MoveVFX.transform.localScale;
+                scale.x = Mathf.Abs(scale.x);
+                MoveVFX.transform.localScale = scale;
+            }
         }
         else if (dir.x > 0) // 向右
         {
             sr.sprite = backSprite;
             sr.flipX = true;
+
+            if (MoveVFX != null)
+            {
+                Vector3 scale = MoveVFX.transform.localScale;
+                scale.x = -Mathf.Abs(scale.x);
+                MoveVFX.transform.localScale = scale;
+            }
         }
         else if (dir.x < 0) // 向左
         {
             sr.sprite = frontSprite;
             sr.flipX = false;
+
+            if (MoveVFX != null)
+            {
+                Vector3 scale = MoveVFX.transform.localScale;
+                scale.x = Mathf.Abs(scale.x);
+                MoveVFX.transform.localScale = scale;
+            }
         }
     }
 
 }
+
