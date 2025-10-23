@@ -271,7 +271,6 @@ public class TurnManager : MonoBehaviour
     }
 
     // ✅ 控制卡片选中/未选中动画（使用selected和noselect，并控制位置）
-    // ✅ 控制卡片选中/未选中动画（使用selected和noselect，并控制位置）
     public void UpdateCardSelectionUI(UnitController selectedController)
     {
         if (playerCards == null || playerCards.Count == 0) return;
@@ -326,19 +325,20 @@ public class TurnManager : MonoBehaviour
             foreach (var tween in tweens)
             {
                 // ✅ 只播放你指定的动画
-                if (isSelected && tween.id == "selected")
-                {
-                    tween.DORestart();
-                }
-                else if (!isSelected && tween.id == "noselect")
-                {
-                    tween.DORestart();
-                }
-                else
-                {
-                    // 停止其他动画
-                    tween.DOPause();
-                }
+                //if (isSelected && tween.id == "selected")
+                //{
+                //    tween.DORestart();
+                //}
+                //else if (!isSelected && tween.id == "noselect")
+                //{
+                //    tween.DORestart();
+                //}
+                //else
+                //{
+                //    // 停止其他动画
+                //    tween.DOPause();
+                //}
+
             }
         }
     }

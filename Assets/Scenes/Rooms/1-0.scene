@@ -132,6 +132,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1088234031}
     m_Modifications:
+    - target: {fileID: 321699609697377459, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1218145353696829810, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
       propertyPath: m_Name
       value: UIlogo
@@ -259,6 +263,10 @@ PrefabInstance:
     - target: {fileID: 4820988024556854519, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912787249808819172, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6933628170231614415, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
       propertyPath: m_Name
@@ -5975,6 +5983,10 @@ PrefabInstance:
       propertyPath: cgFadeDuration
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3517782284423755613, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4761055139602469662, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
@@ -6062,6 +6074,10 @@ PrefabInstance:
     - target: {fileID: 7718186883744278321, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7825193305867525887, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
