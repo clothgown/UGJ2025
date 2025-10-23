@@ -218,7 +218,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
         bool effectExecuted = false;
         UnitController playerUnit = IsoGrid2D.instance.controller.GetComponent<UnitController>();
-
+        playerUnit.attackType = data.attackType;
         switch (data.effectType)
         {
             case CardData.CardEffectType.MoveUnit:
@@ -243,6 +243,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                         }
                         IsoGrid2D.instance.isWaitingForGridClick = true;
                         IsoGrid2D.instance.waitingCard = this;
+
                         effectExecuted = true;
                         Debug.Log($"近战攻击，造成 {playerUnit.attackDamage} 点伤害！");
                     }

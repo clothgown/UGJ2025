@@ -67,6 +67,7 @@ public class UnitController : MonoBehaviour
     public VisualEffect Attack1;
     public VisualEffect Cure;
 
+    public int attackType = -1;
     private void Start()
     {
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
