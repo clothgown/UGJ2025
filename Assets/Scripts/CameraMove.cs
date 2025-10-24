@@ -8,7 +8,7 @@ public class CameraMove : MonoBehaviour
     public static CameraMove instance;
     public CinemachineVirtualCamera virtualCamera; // 虚拟摄像机
     public float moveSpeed = 2f;                   // 移动速度
-    public float offsetLimit = 3f;                 // 相对初始offset的最大偏移
+    public float offsetLimit = 5f;                 // 相对初始offset的最大偏移
     public float returnSpeed = 5f;                 // 返回初始offset的平滑速度
 
     private CinemachineTransposer transposer;
@@ -57,7 +57,7 @@ public class CameraMove : MonoBehaviour
         else
         {
             // 无输入时平滑返回初始offset
-            currentOffset = Vector3.Lerp(currentOffset, initialOffset, returnSpeed * Time.deltaTime);
+            
         }
 
         // 应用offset
