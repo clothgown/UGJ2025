@@ -224,7 +224,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &894227919444947554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +268,6 @@ MonoBehaviour:
   cgImage: {fileID: 7635443274121986967}
   cgFadeDuration: 0.25
   UIGroup: {fileID: 7958241466168621693}
-  GameGroup: {fileID: 0}
   battleDialogDataFile: {fileID: 0}
 --- !u!114 &2809308851762126491
 MonoBehaviour:

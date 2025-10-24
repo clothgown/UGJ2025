@@ -91,6 +91,7 @@ public class TurnManager : MonoBehaviour
 
     public void StartPlayerTurn()
     {
+        SoundManager.Instance.PlaychangeturnAudio();
         FindAnyObjectByType<NextTurnButton>().RestoreButton();
 
         foreach (var uc in unitControllers)

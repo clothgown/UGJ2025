@@ -105,6 +105,7 @@ public class HorizontalCardHolder : MonoBehaviour
     {
         
         selectedCard = card;
+        
     }
 
     void EndDrag(Card card)
@@ -122,7 +123,8 @@ public class HorizontalCardHolder : MonoBehaviour
         }
 
         selectedCard = null;
-        
+        SoundManager.Instance.PlayenddragAudio();
+
     }
 
     void CardPointerEnter(Card card)
