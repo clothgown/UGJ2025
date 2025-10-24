@@ -83,9 +83,19 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 MapGridManager.instance.currentGrid = this;
                 if (normalType == 0 && gridType == MapGridType.Normal)
                 {
-                    // 监听加载完成事件
-                    SceneManager.sceneLoaded += OnSceneLoaded;
-                    SceneManager.LoadScene("1-0");
+                    // 从 sceneNames 列表中随机选择一个场景
+                    if (MapGridManager.instance.battleSceneNames != null && MapGridManager.instance.battleSceneNames.Count > 0)
+                    {
+                        int randomIndex = Random.Range(0, MapGridManager.instance.battleSceneNames.Count);
+                        string sceneToLoad = MapGridManager.instance.battleSceneNames[randomIndex];
+                        // 监听加载完成事件
+                        SceneManager.sceneLoaded += OnSceneLoaded;
+                        SceneManager.LoadScene(sceneToLoad);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("sceneNames 列表为空，无法加载随机场景！");
+                    }
                 }
                 else
                 {
@@ -98,17 +108,13 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 加载完成后再关闭地图
-        if (scene.name == "1-0")
+        if (MapGridManager.instance != null)
         {
-            if (MapGridManager.instance != null)
-            {
-                MapGridManager.instance.gameObject.SetActive(false);
-            }
-
-
-            // 移除事件防止重复触发
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            MapGridManager.instance.gameObject.SetActive(false);
         }
+
+        // 移除事件防止重复触发
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     public void ShowNextGrids()
     {

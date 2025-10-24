@@ -118,6 +118,7 @@ public class IsoGrid2D : MonoBehaviour
 
     public void HighlightMoveRange(Vector2Int playerPos, int moveRange)
     {
+        
         ClearHighlight();
 
         Queue<(Vector2Int pos, int step)> queue = new Queue<(Vector2Int, int)>();

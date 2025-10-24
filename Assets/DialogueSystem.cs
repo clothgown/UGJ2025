@@ -47,6 +47,13 @@ public class DialogueSystem : MonoBehaviour
     public TextAsset battleDialogDataFile; // 指向你的CSV/TSV文件
     void Start()
     {
+        if(dialogDataFile == null)
+        {
+            FadeOutUI();
+            isDialoguing = false;
+            return;
+        }
+
         UIGroup.gameObject.SetActive(true);
         UIGroup.alpha = 1f;
         // 初始化CG
