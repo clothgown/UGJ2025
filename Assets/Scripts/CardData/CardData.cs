@@ -55,7 +55,7 @@ public class CardData : ScriptableObject
         Pull,
     }
 
-
+    
 
     // Optional: Delegate for custom effects
     public System.Action ExecuteCustomEffect;

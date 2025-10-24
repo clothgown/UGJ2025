@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -59,7 +60,7 @@ public class UnitController : MonoBehaviour
     [Header("VFX")]
     public VisualEffect MoveVFX;
     public VisualEffect RunOutActionPoint;
-    public VisualEffect X2;
+    
     public VisualEffect XN;
     public VisualEffect Attacked;
     public VisualEffect AttackedByArrow;
@@ -294,9 +295,18 @@ public class UnitController : MonoBehaviour
         healthSystem.SetShield(shield);
     }
 
+    
     public void Heal(float health)
     {
         currentHealth += health;
+        if (health > 5)
+        {
+            Cure.SetFloat(Shader.PropertyToID("size"), 2.5f);
+            Cure.SetVector2(Shader.PropertyToID("count"), new Vector2(20,25));
+            
+        }
+        Cure.gameObject.SetActive(true);
+        Cure.Play();
         if(currentHealth>=maxHealth)
         {
             currentHealth=maxHealth;
@@ -310,6 +320,8 @@ public class UnitController : MonoBehaviour
         {
             UpdateDirectionSprite(currentGridPos, targetGrid.gridPos);
             Debug.Log($"��ҹ��� {enemy.name}����� {attackDamage} �˺���");
+            Attack1.gameObject.SetActive(true);
+            Attack1.Play();
             enemy.TakeDamage(attackDamage);
            
         }
@@ -420,10 +432,12 @@ public class UnitController : MonoBehaviour
             Debug.LogWarning("VisualEffect组件未分配");
         }
     }
-
+    
     private void UpdateDirectionSprite(Vector2Int from, Vector2Int to)
     {
         Vector2Int dir = to - from;
+
+        attackway = attackType;
 
         if (dir.y < 0) // 向前（地图上y减小）
         {
@@ -454,6 +468,11 @@ public class UnitController : MonoBehaviour
                 scale.x = Mathf.Abs(scale.x);
                 MoveVFX.transform.localScale = scale;
             }
+            if (Attack1 != null)
+            {
+                Vector2 AttackAnimation = new Vector2(attackway, 2);
+                ChangeVFXVectorProperty(AttackAnimation);
+            }
         }
         else if (dir.x > 0) // 向右
         {
@@ -466,6 +485,11 @@ public class UnitController : MonoBehaviour
                 scale.x = -Mathf.Abs(scale.x);
                 MoveVFX.transform.localScale = scale;
             }
+            if (Attack1 != null)
+            {
+                Vector2 AttackAnimation = new Vector2(attackway, 0);
+                ChangeVFXVectorProperty(AttackAnimation);
+            }
         }
         else if (dir.x < 0) // 向左
         {
@@ -477,6 +501,11 @@ public class UnitController : MonoBehaviour
                 Vector3 scale = MoveVFX.transform.localScale;
                 scale.x = Mathf.Abs(scale.x);
                 MoveVFX.transform.localScale = scale;
+            }
+            if (Attack1 != null)
+            {
+                Vector2 AttackAnimation = new Vector2(attackway, 3);
+                ChangeVFXVectorProperty(AttackAnimation);
             }
         }
     }

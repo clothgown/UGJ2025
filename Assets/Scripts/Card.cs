@@ -210,7 +210,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     //    return true;
     //}
 
+
+    
+
     // 返回是否成功执行
+
+
     public bool ExecuteEffect()
     {
         if (data == null) return false;
@@ -218,6 +223,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
         bool effectExecuted = false;
         UnitController playerUnit = IsoGrid2D.instance.controller.GetComponent<UnitController>();
+        
         playerUnit.attackType = data.attackType;
         switch (data.effectType)
         {
@@ -243,6 +249,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                         }
                         IsoGrid2D.instance.isWaitingForGridClick = true;
                         IsoGrid2D.instance.waitingCard = this;
+
+                        // 我写代码真的假的？
+                        
 
                         effectExecuted = true;
                         Debug.Log($"近战攻击，造成 {playerUnit.attackDamage} 点伤害！");
