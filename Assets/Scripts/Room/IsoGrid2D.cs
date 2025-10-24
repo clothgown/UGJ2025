@@ -23,6 +23,8 @@ public class IsoGrid2D : MonoBehaviour
 
     public Dictionary<Vector2Int, GridNode> extraNodes = new Dictionary<Vector2Int, GridNode>();
     public GridState gridStateToChange = GridState.None;
+    public bool isExploreScene;
+    public string exploringSceneName;
     private void Awake()
     {
         if (instance == null)
@@ -40,25 +42,40 @@ public class IsoGrid2D : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            LevelSelectRoot.instance.SetGridManagerTrue();
-
-            SceneManager.LoadScene("Map");
+            if(isExploreScene == true)
+            {
+                LevelSelectRoot.instance.SetGridManagerTrue();
+                SceneManager.LoadScene("Map");
+            }
+            else
+            {
+                if (exploringSceneName != "" && TurnManager.instance.isWin == true)
+                {
+                SceneManager.LoadScene(exploringSceneName);
+                }
+            }
         }
 
-        if (controller.GetComponent<UnitController>().isNextAttackDouble)
+        
+
+        if (FindAnyObjectByType<HorizontalCardHolder>()!=null)
         {
-            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToDouble();
+            if (controller.GetComponent<UnitController>().isNextAttackDouble)
+            {
+                FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToDouble();
+            }
+            else if (controller.GetComponent<UnitController>().isNextAttackMass)
+            {
+                FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToMass();
+            }
+            else
+            {
+                FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+            }
         }
-        else if (controller.GetComponent<UnitController>().isNextAttackMass)
-        {
-            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToMass();
-        }
-        else
-        {
-            FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
-        }
+        
     }
     void Start()
     {

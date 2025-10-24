@@ -467,7 +467,11 @@ public class EnemyUnit : MonoBehaviour
     public void Dizziness()
     {
         isDizziness = true;
-        Dizzy.Play();
+        if(Dizzy!=null)
+        {
+            Dizzy.Play();
+        }
+        
         Color c = Color.blue;
         sr.color = c;
     }

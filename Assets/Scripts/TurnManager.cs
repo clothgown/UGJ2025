@@ -26,6 +26,9 @@ public class TurnManager : MonoBehaviour
     private float noselectXPosition = 890f; // 未选中卡片的X位置
     private int previousActionPoints = -1; // 记录上一次的行动点数值
 
+   
+    public bool isWin = false;
+    
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -42,6 +45,16 @@ public class TurnManager : MonoBehaviour
         StartCoroutine(RunTurnLoop());
     }
 
+    private void Update()
+    {
+        
+        EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
+        if (enemies.Length == 0)
+        {
+            isWin = true;
+        }
+        
+    }
     // 初始化卡片行动点显示
     private void InitializeCardActionPoints()
     {
