@@ -217,6 +217,10 @@ public class UnitController : MonoBehaviour
             {
                 RunOutActionPoint.GetComponent<Renderer>().sortingOrder = sr.sortingOrder;
             }
+            if (XN != null)
+            {
+                XN.GetComponent<Renderer>().sortingOrder = sr.sortingOrder;
+            }
         }
 
     isMoving = false;
@@ -397,12 +401,16 @@ public class UnitController : MonoBehaviour
     public void SetNextAttackDouble()
     {
         isNextAttackDouble = true;
-        sr.color = Color.yellow;
+        XN.SetBool(Shader.PropertyToID("isxn"), false);
+        XN.gameObject.SetActive(true);
+        
     }
     public void SetNextAttackMass()
     {
         isNextAttackMass = true;
-        sr.color = new Color(1,0,0,1);
+        XN.SetBool(Shader.PropertyToID("isxn"), true);
+        XN.gameObject.SetActive(true);
+        
     }
     public void SetNextAttackBloodSuck()
     {
@@ -414,6 +422,7 @@ public class UnitController : MonoBehaviour
         isNextAttackBloodSucking = false;
         isNextAttackDouble = false;
         isNextAttackMass = false;
+        XN.gameObject.SetActive(false);
         sr.color = Color.white;
     }
     public string vectorPropertyName = "哪个攻击"; // 属性名称

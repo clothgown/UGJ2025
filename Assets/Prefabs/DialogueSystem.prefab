@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDialoguing: 0
-  dialogDataFile: {fileID: 4900000, guid: b27bd1f70b0d72549983f3fab2c86b4e, type: 3}
+  dialogDataFile: {fileID: 0}
   dialogues: []
   nameTMP: {fileID: 1723306654313891733}
   dialogTMP: {fileID: 5013346572103593280}
@@ -268,6 +268,7 @@ MonoBehaviour:
   cgImage: {fileID: 7635443274121986967}
   cgFadeDuration: 0.25
   UIGroup: {fileID: 7958241466168621693}
+  GameGroup: {fileID: 0}
   battleDialogDataFile: {fileID: 0}
 --- !u!114 &2809308851762126491
 MonoBehaviour:

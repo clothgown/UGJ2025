@@ -43,11 +43,13 @@ public class DialogueSystem : MonoBehaviour
     public Image cgImage;  // Inspector 指定 UI 背景 Image
     public float cgFadeDuration = 0.5f; // CG 淡入淡出时间
     public CanvasGroup UIGroup;
-
+    
     public TextAsset battleDialogDataFile; // 指向你的CSV/TSV文件
     void Start()
     {
+        
         UIGroup.gameObject.SetActive(true);
+
         UIGroup.alpha = 1f;
         // 初始化CG
         if (cgImage != null)
@@ -91,6 +93,7 @@ public class DialogueSystem : MonoBehaviour
 
         if (UIGroup != null)
         {
+            
             UIGroup.gameObject.SetActive(true);
             UIGroup.DOFade(1f, fadeDuration).OnComplete(() => {
 
@@ -180,6 +183,9 @@ public class DialogueSystem : MonoBehaviour
                 cgImage.gameObject.SetActive(false);
                 // 渐隐完成后可以禁用UI组或执行其他操作
                 UIGroup.gameObject.SetActive(false);
+               
+                
+
             });
         }
     }
