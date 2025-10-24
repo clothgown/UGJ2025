@@ -1,11 +1,12 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using DG.Tweening;
-using System.Linq;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class HorizontalCardHolder : MonoBehaviour
 {
@@ -41,6 +42,10 @@ public class HorizontalCardHolder : MonoBehaviour
 
     public void DrawNewCardImmediate()
     {
+        if (cards.Count >= startingHandSize)
+        {
+            return;
+        }
         CardData data = DeckManager.instance.DrawCard();
         if (data == null) return;
 
@@ -60,6 +65,10 @@ public class HorizontalCardHolder : MonoBehaviour
 
     public IEnumerator DrawNewCard()
     {
+        if(cards.Count >= startingHandSize)
+        {
+            yield break;
+        }
         CardData data = DeckManager.instance.DrawCard();
         if (data == null) yield break;
 
@@ -147,10 +156,10 @@ public class HorizontalCardHolder : MonoBehaviour
         }
 
         // New card draw input
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(DrawNewCard());
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    StartCoroutine(DrawNewCard());
+        //}
 
         if (selectedCard == null)
             return;
