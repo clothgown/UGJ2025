@@ -444,17 +444,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76655594}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2000002, y: 1.2000002, z: 1.2000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1069790410}
+  m_Father: {fileID: 1088234031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 437.41763, y: -929}
+  m_SizeDelta: {x: 695.66, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &76655596
 MonoBehaviour:
@@ -619,6 +619,10 @@ PrefabInstance:
     - target: {fileID: 1824900825736178728, guid: a6f7f73a7302a0146be295805fe06a19, type: 3}
       propertyPath: m_Name
       value: spade_head
+      objectReference: {fileID: 0}
+    - target: {fileID: 1824900825736178728, guid: a6f7f73a7302a0146be295805fe06a19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8181147782471697084, guid: a6f7f73a7302a0146be295805fe06a19, type: 3}
       propertyPath: m_Pivot.x
@@ -2098,6 +2102,10 @@ PrefabInstance:
     - target: {fileID: 655722902897790977, guid: fbe251e132bfda44c9b7b5cb06aa0838, type: 3}
       propertyPath: m_Name
       value: diamond_head
+      objectReference: {fileID: 0}
+    - target: {fileID: 655722902897790977, guid: fbe251e132bfda44c9b7b5cb06aa0838, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3001721553672285771, guid: fbe251e132bfda44c9b7b5cb06aa0838, type: 3}
       propertyPath: m_Pivot.x
@@ -4326,8 +4334,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2000002, y: 1.2000002, z: 1.2000002}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 76655595}
+  m_Children: []
   m_Father: {fileID: 1088234031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -4382,7 +4389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.30980393}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.45882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4537,6 +4544,7 @@ RectTransform:
   - {fileID: 568387003}
   - {fileID: 793197220}
   - {fileID: 911169069}
+  - {fileID: 76655595}
   - {fileID: 1069790410}
   - {fileID: 886117868}
   m_Father: {fileID: 0}
@@ -7069,6 +7077,174 @@ PrefabInstance:
       propertyPath: battleDialogDataFile
       value: 
       objectReference: {fileID: 4900000, guid: fcbade3c74d6e6d44bca28be70cb10af, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[0].cgName
+      value: CG-castle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[1].cgName
+      value: CG-club&heart
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[2].cgName
+      value: CG-clubfight2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[3].cgName
+      value: CG-heart&diamond
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[4].cgName
+      value: CG-heart&diamond2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[5].cgName
+      value: CG-maid&heart
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[6].cgName
+      value: CG-maidhandsword
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[7].cgName
+      value: club&diamondbattle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[1].cgSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c7de0764264f4744aad9fa8f2e12ba8b, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[2].cgSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 731e42a575a191743ba4ea81104e0eb3, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[3].cgSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 88e9b66dfad03d546985d9ebe02e7b35, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[4].cgSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ca97e55f2a14564419afc6b3177aa9c8, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[5].cgSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a31fc6b01d984fb40b4b347fb7aef7e5, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[6].cgSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 609299a3961a35444a7d9dd75a394b8e, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: cgs.Array.data[7].cgSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 850033b882b44a64b85b0a0ed5a6325b, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[2].characterName
+      value: Diamond
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[3].characterName
+      value: Club
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[4].characterName
+      value: Spade
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[4].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 894a68217d03d2a4e837d990fef72948, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[5].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 778a3ccfe82204d4ba6ac2a70aad3259, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[6].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 380c0cb33cb01e1469dc98e50b05c8ec, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[7].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 7c46689ebedc48549b76641e35458ee5, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[8].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 7cd88c9b1eef7724c984200e6b600249, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[9].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 5aa890e022085ef4d9bdc0608c2d88cc, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[0].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: c545b79daa7d7c947be4ebe47f4abc58, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[0].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: c545b79daa7d7c947be4ebe47f4abc58, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[0].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: c545b79daa7d7c947be4ebe47f4abc58, type: 3}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[4].expressionName
+      value: smile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[5].expressionName
+      value: happy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[6].expressionName
+      value: fans
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[7].expressionName
+      value: fan
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[8].expressionName
+      value: ding
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[9].expressionName
+      value: chouchang
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[0].expressionName
+      value: normal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[0].expressionName
+      value: normal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[0].expressionName
+      value: normal
+      objectReference: {fileID: 0}
     - target: {fileID: 3517782284423755613, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
       propertyPath: m_Color.a
       value: 1
