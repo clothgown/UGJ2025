@@ -45,6 +45,9 @@ public class DialogueSystem : MonoBehaviour
     public CanvasGroup UIGroup;
 
     public TextAsset battleDialogDataFile; // 指向你的CSV/TSV文件
+    public Button[] optionButtons; // Inspector 里拖 3 个按钮进来
+    public TMP_Text[] optionTexts; // 每个按钮上的文字
+    public bool isChoosing = false; // 是否正在显示选项中
     void Start()
     {
         if(dialogDataFile == null)
@@ -84,7 +87,7 @@ public class DialogueSystem : MonoBehaviour
     
     {
         // 点击鼠标左键（或触屏）时跳下一句
-        if (isLoaded && Input.GetMouseButtonDown(0))
+        if (isLoaded && !isChoosing && Input.GetMouseButtonDown(0))
         {
             NextDialogue();
         }
@@ -154,6 +157,80 @@ public class DialogueSystem : MonoBehaviour
         // 打字机效果
         typingTween?.Kill();
         typingTween = dialogTMP.DOText(d.Text, speakTime).SetEase(Ease.Linear);
+
+        if (d.Type == "Select" || d.Type == "@")
+        {
+            // 停止输入事件
+            typingTween?.Kill();
+
+            // 假设当前选项在 CSV 中是连续的三行
+            ShowOptions(index);
+        }
+        else
+        {
+            HideOptions();
+        }
+    }
+
+    void ShowOptions(int startIndex)
+    {
+        
+        HideOptions(); // 先隐藏所有按钮
+        int count = 0;
+        isChoosing = true; // 进入选项状态
+
+        // 遍历接下来的几行，把 Type 仍是 @ 的当成选项
+        for (int i = startIndex; i < dialogues.Count && count < 3; i++)
+        {
+            Dialogue d = dialogues[i];
+            if (d.Type == "@" || d.Type == "Select")
+            {
+                optionButtons[count].gameObject.SetActive(true);
+                optionTexts[count].text = d.Text;
+
+                int next = d.NextID; // 捕获正确的 NextID
+                Debug.Log(next);
+                int idx = i;         // 捕获当前索引
+                optionButtons[count].onClick.RemoveAllListeners();
+                optionButtons[count].onClick.AddListener(() =>
+                {
+                    
+                    HideOptions();
+                    isChoosing = false; // 选完恢复正常点击
+                    
+                    JumpToDialogueByID(next);
+                });
+
+                count++;
+            }
+            else break;
+        }
+    }
+
+    void JumpToDialogueByID(int id)
+    {
+        int idx = dialogues.FindIndex(d => d.ID == id);
+        if (idx >= 0)
+        {
+            currentIndex = idx;
+            ShowDialogue(idx);
+        }
+        else
+        {
+            Debug.LogWarning("找不到目标对话 ID：" + id);
+            FadeOutUI();
+        }
+    }
+
+
+    void HideOptions()
+    {
+        foreach (var btn in optionButtons)
+        {
+            if (btn != null)
+                btn.gameObject.SetActive(false);
+        }
+        isChoosing = false;
     }
 
     void NextDialogue()
@@ -166,8 +243,14 @@ public class DialogueSystem : MonoBehaviour
         }
 
         // 否则跳到下一句
-        int nextIndex = currentIndex + 1;
-        if (nextIndex < dialogues.Count)
+        int nextIndex = dialogues[currentIndex].NextID;
+        if(nextIndex == -1)
+        {
+            Debug.Log("对话结束。");
+            FadeOutUI();
+            isDialoguing = false;
+        }
+        else if (nextIndex < dialogues.Count)
         {
             ShowDialogue(nextIndex);
             currentIndex = nextIndex;
