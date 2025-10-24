@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
 
         // Initialize the loop SFX AudioSource
         
-        loopSfxSource.loop = true; // Set the loopSfxSource to loop
+        //loopSfxSource.loop = true; // Set the loopSfxSource to loop
     }
 
     private void Start()
