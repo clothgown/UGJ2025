@@ -93,7 +93,7 @@ public class TurnManager : MonoBehaviour
 
     public void StartPlayerTurn()
     {
-        //-SoundManager.Instance.PlaychangeturnAudio();
+        
         FindAnyObjectByType<NextTurnButton>().RestoreButton();
 
         foreach (var uc in unitControllers)
@@ -166,6 +166,8 @@ public class TurnManager : MonoBehaviour
 
             enemy.ChasePlayer();
             yield return new WaitForSeconds(1.5f);
+            SoundManager.Instance.PlaychangeturnAudio();
+
         }
     }
 
