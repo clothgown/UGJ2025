@@ -311,7 +311,8 @@ public class UnitController : MonoBehaviour
         }
         Cure.gameObject.SetActive(true);
         Cure.Play();
-        if(currentHealth>=maxHealth)
+        SoundManager.Instance.PlayhealAudio();
+        if (currentHealth>=maxHealth)
         {
             currentHealth=maxHealth;
         }
@@ -403,14 +404,16 @@ public class UnitController : MonoBehaviour
         isNextAttackDouble = true;
         XN.SetBool(Shader.PropertyToID("isxn"), false);
         XN.gameObject.SetActive(true);
-        
+        SoundManager.Instance.PlaydoubleAudio();
+
     }
     public void SetNextAttackMass()
     {
         isNextAttackMass = true;
         XN.SetBool(Shader.PropertyToID("isxn"), true);
         XN.gameObject.SetActive(true);
-        
+        SoundManager.Instance.PlaymassAudio();
+
     }
     public void SetNextAttackBloodSuck()
     {
