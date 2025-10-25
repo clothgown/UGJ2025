@@ -46,7 +46,7 @@ public class ItemInGrid : MonoBehaviour
             int average = Mathf.RoundToInt(sum / occupiedGrids.Count);
             sr.sortingOrder = average + 2;
             if (transform.childCount > 0)
-                transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = average + 3;
+                transform.GetComponent<SpriteRenderer>().sortingOrder = average + 3;
         }
 
         if (isInterable)

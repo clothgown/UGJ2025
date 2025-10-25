@@ -26,7 +26,7 @@ public class TurnManager : MonoBehaviour
     private float noselectXPosition = 890f; // 未选中卡片的X位置
     private int previousActionPoints = -1; // 记录上一次的行动点数值
 
-   
+    public EnemyUnit[] enemies ;
     public bool isWin = false;
     
     private void Awake()
@@ -43,6 +43,7 @@ public class TurnManager : MonoBehaviour
         InitializeCardActionPoints();
 
         StartCoroutine(RunTurnLoop());
+        enemies = FindObjectsOfType<EnemyUnit>();
     }
 
     private void Update()
@@ -76,7 +77,8 @@ public class TurnManager : MonoBehaviour
         IsoGrid2D.instance.ClearHighlight();
         currentController = player;
         IsoGrid2D.instance.controller = player.gameObject;
-        IsoGrid2D.instance.currentPlayerGrid = player.startGrid.GetComponent<GameGrid>();
+
+        IsoGrid2D.instance.currentPlayerGrid = player.currentGrid;
 
         // ✅ 更新全局行动点显示
         UpdateActionPointUI(player.actionPoints);
@@ -91,7 +93,7 @@ public class TurnManager : MonoBehaviour
 
     public void StartPlayerTurn()
     {
-        SoundManager.Instance.PlaychangeturnAudio();
+        //-SoundManager.Instance.PlaychangeturnAudio();
         FindAnyObjectByType<NextTurnButton>().RestoreButton();
 
         foreach (var uc in unitControllers)
@@ -123,6 +125,7 @@ public class TurnManager : MonoBehaviour
                     break;
 
                 case TurnPhase.EnemyTurn:
+                    
                     yield return StartCoroutine(EnemyTurn());
                     phase = TurnPhase.PlayerTurn;
                     turnIndex++;
@@ -134,6 +137,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndPlayerTurn()
     {
+        
         if (IsoGrid2D.instance.isWaitingForGridClick) return;
         phase = TurnPhase.EnemyTurn;
 
@@ -148,9 +152,11 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator EnemyTurn()
     {
-        EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
+        
+        
         foreach (var enemy in enemies)
         {
+            
             if (enemy == null) continue;
             if (enemy.isDizziness)
             {
