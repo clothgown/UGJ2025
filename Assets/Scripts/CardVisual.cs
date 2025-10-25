@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class CardVisual : MonoBehaviour
 {
+    private GameObject cardAssetsPreview;
     [SerializeField] private bool initalize = false;
 
     [Header("Card")]
@@ -85,6 +86,13 @@ public class CardVisual : MonoBehaviour
         if(massSprite!=null)
         {
             massSprite.enabled = false;
+        }
+
+        Transform previewTransform = transform.Find("card_assets_preview  ");
+        if (previewTransform != null)
+        {
+            cardAssetsPreview = previewTransform.gameObject;
+            cardAssetsPreview.SetActive(false); // Ä¬ÈÏÒþ²Ø
         }
     }
 
@@ -188,6 +196,17 @@ public class CardVisual : MonoBehaviour
     private void BeginDrag(Card card)
     {
         if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
+        if (cardAssetsPreview != null)
+            cardAssetsPreview.SetActive(false);
+        foreach(Card cards in horizontalCardHolder.cards)
+        {
+            if(cards.cardVisual.cardAssetsPreview!=null)
+            {
+                cards.cardVisual.cardAssetsPreview.SetActive(false);
+            }
+            
+        }
+            
         if (scaleAnimations)
             transform.DOScale(scaleOnSelect, scaleTransition).SetEase(scaleEase);
         canvasGroup.alpha = Mathf.Clamp01(canvasGroup.alpha - 0.25f);
@@ -239,7 +258,8 @@ public class CardVisual : MonoBehaviour
 
         DOTween.Kill(2, true);
         shakeParent.DOPunchRotation(Vector3.forward * hoverPunchAngle, hoverTransition, 20, 1).SetId(2);
-
+        if (cardAssetsPreview != null)
+            cardAssetsPreview.SetActive(true);
         if (TurnManager.instance.currentController.isMoving)
             return;
 
@@ -279,8 +299,9 @@ public class CardVisual : MonoBehaviour
         {
             transform.DOScale(1, scaleTransition).SetEase(scaleEase);
         }
-
-        if(TurnManager.instance.currentController.isMoving) return;
+        if (cardAssetsPreview != null)
+            cardAssetsPreview.SetActive(false);
+        if (TurnManager.instance.currentController.isMoving) return;
         TurnManager.instance.ChangePlayer(TurnManager.instance.currentController);
 
     }
