@@ -48,19 +48,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821f1a9330ce48548bfaff0d322fc531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   startPoint: {x: 5, y: 4}
   startGrid: {fileID: 0}
   moveRange: 6
   moveSpeed: 2
   targetPlayer: {fileID: 0}
-  healthSystem: {fileID: 0}
+  healthSystem: {fileID: 5695332646528642167}
   maxHealth: 15
   currentHealth: 0
   attackDamage: 5
   isDizziness: 0
+  hasBeenAttacked: 0
   sr: {fileID: 0}
   frontSprite: {fileID: 21300000, guid: f9ecb1348d7f9c54e99418803643ff68, type: 3}
   backSprite: {fileID: 21300000, guid: 1b522d72ca4766f4492a4e8934d73b41, type: 3}
+  Attacked: {fileID: 0}
+  Dizzy: {fileID: 0}
 --- !u!114 &5695332646528642167
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -103,7 +103,7 @@ public class UnitController : MonoBehaviour
         healthSystem.SetMaxHealth(maxHealth);
         healthSystem.SetMaxShield(10f);
         healthSystem.SetShield(shield);
-        PlayerSwitchManager.instance.currentUnitController = this;
+        //PlayerSwitchManager.instance.currentUnitController = this;
     }
 
     private void Update()
