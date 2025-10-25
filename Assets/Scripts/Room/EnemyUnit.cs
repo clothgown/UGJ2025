@@ -383,9 +383,14 @@ public class EnemyUnit : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        Attacked.gameObject.SetActive(true);
-      
-        Attacked.SendEvent("OnPlay");
+        if(Attacked!=null)
+        {
+            Attacked.gameObject.SetActive(true);
+            Attacked.SendEvent("OnPlay");
+        }
+        
+        
+        
         DOTweenAnimation attackedTween = GetComponent<DOTweenAnimation>();
         if (attackedTween != null && attackedTween.id == "Attacked")
         {
