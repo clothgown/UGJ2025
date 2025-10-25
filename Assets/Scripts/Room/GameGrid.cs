@@ -88,7 +88,7 @@ public class GameGrid : MonoBehaviour
     {
         if (FindAnyObjectByType<DialogueSystem>().isDialoguing == true) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
-
+        Debug.Log(1);
         if (canChangeState)
         {
             var newState = IsoGrid2D.instance.gridStateToChange;
@@ -146,16 +146,21 @@ public class GameGrid : MonoBehaviour
                     
             }
         }
-        else if (occupiedPlayer != null)
-        {
-            TurnManager.instance.ChangePlayer(occupiedPlayer);
-        }
+        
 
         NormalGridClick();
     }
 
     void NormalGridClick()
     {
+        Debug.Log(2);
+        
+        if (occupiedPlayer != null)
+        {
+            Debug.Log(TurnManager.instance);
+            TurnManager.instance.ChangePlayer(occupiedPlayer);
+        }
+
         UnitController playerController = IsoGrid2D.instance.controller.GetComponent<UnitController>();
 
         if (isInRange)

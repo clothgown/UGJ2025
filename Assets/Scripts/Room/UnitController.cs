@@ -69,6 +69,8 @@ public class UnitController : MonoBehaviour
     public VisualEffect Cure;
 
     public int attackType = -1;
+
+    public GameGrid currentGrid;
     private void Start()
     {
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -94,8 +96,6 @@ public class UnitController : MonoBehaviour
                     RunOutActionPoint.GetComponent<Renderer>().sortingOrder = sr.sortingOrder;
                 }
             }
-
-
             IsoGrid2D.instance.currentPlayerGrid = gridComp;
         }
 
@@ -110,8 +110,8 @@ public class UnitController : MonoBehaviour
     {
         if (isActive == false) return;
         if (transform.childCount == 0) return; // 防止没子物件时报错
-
-
+        currentGrid = transform.parent.GetComponent<GameGrid>();
+        
 
     }
 

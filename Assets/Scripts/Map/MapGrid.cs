@@ -97,6 +97,12 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                         Debug.LogWarning("sceneNames 列表为空，无法加载随机场景！");
                     }
                 }
+                else if(normalType == 2)
+                {
+                    string sceneToLoad = "choose_baoxiang";
+                    SceneManager.sceneLoaded += OnSceneLoaded;
+                    SceneManager.LoadScene(sceneToLoad);
+                }
                 else
                 {
                     ShowNextGrids();
