@@ -260,15 +260,15 @@ MonoBehaviour:
   nameTMP: {fileID: 1723306654313891733}
   dialogTMP: {fileID: 5013346572103593280}
   currentIndex: 0
-  fadeDuration: 0.5
+  fadeDuration: 0.75
   speakTime: 0.5
   characterManager: {fileID: 2809308851762126491}
   leftImage: {fileID: 5142156484869478826}
   rightImage: {fileID: 376725607821320058}
   cgImage: {fileID: 7635443274121986967}
-  cgFadeDuration: 0.5
+  cgFadeDuration: 0.75
   UIGroup: {fileID: 7958241466168621693}
-  battleDialogDataFile: {fileID: 4900000, guid: fcbade3c74d6e6d44bca28be70cb10af, type: 3}
+  battleDialogDataFile: {fileID: 0}
   optionButtons:
   - {fileID: 6807698093615832212}
   - {fileID: 3362809455920461405}
@@ -278,6 +278,7 @@ MonoBehaviour:
   - {fileID: 6231210514969272071}
   - {fileID: 8919756395453296279}
   isChoosing: 0
+  allowMultipleDialogs: 1
 --- !u!114 &2809308851762126491
 MonoBehaviour:
   m_ObjectHideFlags: 0

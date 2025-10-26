@@ -81,6 +81,7 @@ public class UnitController : MonoBehaviour
     public GameGrid currentGrid;
     private void Start()
     {
+        characterName = transform.name;
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         currentGridPos = startPoint;
         if (IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y) != null)
@@ -107,16 +108,41 @@ public class UnitController : MonoBehaviour
             IsoGrid2D.instance.currentPlayerGrid = gridComp;
         }
         healthSystem = GetComponent<HealthSystem>();
+        // ===== 新增：继承 AllPlayerState 中的血量 =====
         if (healthSystem != null)
         {
-            // 订阅死亡事件
-            
-            currentHealth = maxHealth;
+            currentHealth = maxHealth; // 默认血量
             healthSystem.SetMaxHealth(maxHealth);
             healthSystem.SetMaxShield(10f);
             healthSystem.SetShield(shield);
-            //PlayerSwitchManager.instance.currentUnitController = this;
+            // 检查 AllPlayerState 是否存在
+            if (AllPlayerState.Instance != null)
+            {
+                
+                int index = AllPlayerState.Instance.unitNames.IndexOf(characterName);
+                if (index >= 0)
+                {
+                    // 找到自己名字，继承血量
+                    float savedHealth = AllPlayerState.Instance.unitHealths[index];
+                    currentHealth = savedHealth;
+                    healthSystem.SetHealth(savedHealth);
+                    Debug.Log($"[继承血量] {characterName} 当前血量：{savedHealth}");
+                }
+                else
+                {
+                    // 名字不在 AllPlayerState 中，保持默认血量
+                    healthSystem.SetHealth(currentHealth);
+                    Debug.Log("No");
+                }
+            }
+            else
+            {
+                // 没有 AllPlayerState，保持默认血量
+                healthSystem.SetHealth(currentHealth);
+                Debug.Log("No2");
+            }
         }
+
     }
 
     private void Update()

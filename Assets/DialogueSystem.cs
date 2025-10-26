@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [Serializable]
@@ -143,6 +144,24 @@ public class DialogueSystem : MonoBehaviour
 
             });
         }
+        // 初始化CG
+        if (cgImage != null)
+        {
+            cgImage.gameObject.SetActive(true);
+            cgImage.color = new Color(1, 1, 1, 0); // 透明
+        }
+
+        // 左右立绘初始化
+        if (leftImage != null)
+        {
+            leftImage.gameObject.SetActive(true);
+            leftImage.color = new Color(1, 1, 1, 0);
+        }
+        if (rightImage != null)
+        {
+            rightImage.gameObject.SetActive(true);
+            rightImage.color = new Color(1, 1, 1, 0);
+        }
         ShowDialogue(currentIndex);
         isDialoguing = true;
     }
@@ -182,6 +201,7 @@ public class DialogueSystem : MonoBehaviour
             }
             else if (d.Position == "右" && rightImage != null)
             {
+                Debug.Log(1);
                 rightImage.sprite = s;
                 rightImage.DOFade(1f, fadeDuration);
             }
@@ -203,8 +223,10 @@ public class DialogueSystem : MonoBehaviour
             {
                 // 没CG → 渐隐
                 cgImage.DOKill();
-                cgImage.DOFade(0f, cgFadeDuration);
-                cgImage.gameObject.SetActive(false);
+                cgImage.DOFade(0f, cgFadeDuration).OnComplete(() => {
+                    cgImage.gameObject.SetActive(false);
+                });
+                
             }
         }
 
@@ -349,10 +371,20 @@ public class DialogueSystem : MonoBehaviour
             UIGroup.DOFade(0f, fadeDuration).OnComplete(() => {
                 cgImage.gameObject.SetActive(false);
                 UIGroup.gameObject.SetActive(false);
-
+                Scene currentScene = SceneManager.GetActiveScene();
+                string sceneName = currentScene.name;
+               
                 // 对话结束后检查队列
                 isDialoguing = false;
                 CheckDialogQueue();
+                if (sceneName == "1-0" && battleDialogDataFile.name == "1-0-talk2")
+                {
+                    FindAnyObjectByType<NextSceneManager>().canChange = true;
+                }
+                if (sceneName == "1-0 Maid" && battleDialogDataFile.name == "1-0-MaidLose")
+                {
+                    FindAnyObjectByType<NextSceneManager>().canChange = true;
+                }
             });
         }
         else

@@ -97,9 +97,31 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                         Debug.LogWarning("sceneNames 列表为空，无法加载随机场景！");
                     }
                 }
-                else if(normalType == 2)
+                else if (normalType == 1 && gridType == MapGridType.Normal)
+                {
+                    // 从 sceneNames 列表中随机选择一个场景
+                    if (MapGridManager.instance.bigBattleSceneNames != null && MapGridManager.instance.bigBattleSceneNames.Count > 0)
+                    {
+                        int randomIndex = Random.Range(0, MapGridManager.instance.bigBattleSceneNames.Count);
+                        string sceneToLoad = MapGridManager.instance.bigBattleSceneNames[randomIndex];
+                        // 监听加载完成事件
+                        SceneManager.sceneLoaded += OnSceneLoaded;
+                        SceneManager.LoadScene(sceneToLoad);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("sceneNames 列表为空，无法加载随机场景！");
+                    }
+                }
+                else if (normalType == 2)
                 {
                     string sceneToLoad = "choose_baoxiang";
+                    SceneManager.sceneLoaded += OnSceneLoaded;
+                    SceneManager.LoadScene(sceneToLoad);
+                }
+                else if (gridType == MapGridType.Boss)
+                {
+                    string sceneToLoad = "1-9";
                     SceneManager.sceneLoaded += OnSceneLoaded;
                     SceneManager.LoadScene(sceneToLoad);
                 }

@@ -208,11 +208,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18589c4eb25fbc84e87729b7d8fe580c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogDataFile: {fileID: 4900000, guid: fcbade3c74d6e6d44bca28be70cb10af, type: 3}
-  isHealthDialogue: 1
-  TrigerHealth: 0
-  enemyUnit: {fileID: 13367891}
-  isTrigger: 0
+  dialogDataFile: {fileID: 0}
+  triggerType: 0
+  onlyTriggerOnce: 1
+  healthThreshold: 0
+  targetAlly: {fileID: 0}
+  targetEnemy: {fileID: 0}
+  turnNumber: 1
+  customEventName: 
+  waitForCurrentDialog: 1
+  retryDelay: 1
 --- !u!114 &13367890 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5695332646528642167, guid: 892cb1b35f2f3764080733d1e6c43ff4, type: 3}
@@ -222,17 +227,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 540ca39d738685c4a95d34a3cc912eac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &13367891 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3406468419049815727, guid: 892cb1b35f2f3764080733d1e6c43ff4, type: 3}
-  m_PrefabInstance: {fileID: 303140028}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 13367886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821f1a9330ce48548bfaff0d322fc531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &22581587
@@ -1776,7 +1770,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: -2.2516649, y: 2.7332335}
+  m_Offset: {x: -1.6547208, y: 2.7332335}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1787,7 +1781,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 18.063942, y: 18.880194}
+  m_Size: {x: 19.257832, y: 18.880194}
   m_EdgeRadius: 0
 --- !u!66 &247979015
 CompositeCollider2D:
@@ -1828,18 +1822,18 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 247979014}
     m_ColliderPaths:
-    - - X: 101704584
+    - - X: 119612920
         Y: 182599952
       - X: -169254528
         Y: 182599952
       - X: -169254528
         Y: -100602952
-      - X: 101704584
+      - X: 119612920
         Y: -100602952
   m_CompositePaths:
     m_Paths:
-    - - {x: 10.170429, y: -10.060295}
-      - {x: 10.170429, y: 18.259995}
+    - - {x: 11.961263, y: -10.060295}
+      - {x: 11.961263, y: 18.259995}
       - {x: -16.925453, y: 18.259966}
       - {x: -16.925425, y: -10.060295}
   m_VertexDistance: 0.0005
@@ -3387,8 +3381,13 @@ MonoBehaviour:
   playerCards:
   - {fileID: 1489751350}
   - {fileID: 540617703}
+  deadCardColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.7}
+  aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
   enemies: []
   isWin: 0
+  Gameover: {fileID: 0}
+  criticalCharacters: []
+  gameOverOnCriticalDeath: 1
 --- !u!4 &497699329
 Transform:
   m_ObjectHideFlags: 0
@@ -4985,11 +4984,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18589c4eb25fbc84e87729b7d8fe580c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogDataFile: {fileID: 4900000, guid: fcbade3c74d6e6d44bca28be70cb10af, type: 3}
-  isHealthDialogue: 1
-  TrigerHealth: 0
-  enemyUnit: {fileID: 755114672}
-  isTrigger: 0
+  dialogDataFile: {fileID: 0}
+  triggerType: 0
+  onlyTriggerOnce: 1
+  healthThreshold: 0
+  targetAlly: {fileID: 0}
+  targetEnemy: {fileID: 0}
+  turnNumber: 1
+  customEventName: 
+  waitForCurrentDialog: 1
+  retryDelay: 1
 --- !u!114 &755114671 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5695332646528642167, guid: 892cb1b35f2f3764080733d1e6c43ff4, type: 3}
@@ -4999,17 +5003,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 540ca39d738685c4a95d34a3cc912eac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &755114672 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3406468419049815727, guid: 892cb1b35f2f3764080733d1e6c43ff4, type: 3}
-  m_PrefabInstance: {fileID: 200917764}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 755114667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821f1a9330ce48548bfaff0d322fc531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &757479710
@@ -10237,11 +10230,11 @@ PrefabInstance:
       addedObject: {fileID: 1771864917}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4238420088579884289, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1489751355}
+      insertIndex: 1
+      addedObject: {fileID: 1489751354}
     - targetCorrespondingSourceObject: {fileID: 4238420088579884289, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1489751354}
+      addedObject: {fileID: 1489751355}
     - targetCorrespondingSourceObject: {fileID: 4238420088579884289, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1489751353}

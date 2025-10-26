@@ -39,6 +39,8 @@ public class GameGrid : MonoBehaviour
     public Color waterColor = new Color(0f, 0.5f, 1f, 0.8f);
     public Color oilColor = new Color(0.3f, 0.3f, 0.3f, 0.8f);
 
+    public bool isLeaveGrid = false;
+    public Color LeaveColor = new Color(00f, 0.5f, 0f, 0.8f);
     private void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
@@ -265,6 +267,12 @@ public class GameGrid : MonoBehaviour
     // 根据状态刷新外观
     public void UpdateGridAppearance()
     {
+        if(isLeaveGrid == true)
+        {
+            originalColor = normalColor;
+            stateGrid.color = normalColor;
+            return;
+        }
         switch (currentState)
         {
             case GridState.None:

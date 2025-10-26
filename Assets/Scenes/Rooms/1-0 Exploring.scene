@@ -3478,7 +3478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1143168898}
   - component: {fileID: 1143168900}
-  - component: {fileID: 1143168899}
+  - component: {fileID: 1143168901}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: "Map0_0005_\u95E8"
@@ -3502,27 +3502,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1396156511}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1143168899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143168897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerA: {x: 7, y: 2}
-  cornerB: {x: 7, y: 4}
-  isSingleCell: 0
-  isInterable: 1
-  sr: {fileID: 0}
-  transparentAlpha: 0.75
-  blockingLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!212 &1143168900
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3567,7 +3546,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: -990
   m_Sprite: {fileID: 21300000, guid: abbc7d91aa4cef143800d66feaa3f1cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3579,6 +3558,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1143168901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143168897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551713e101df5314fb59b2971476c8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameGridsPos:
+  - {x: 7, y: 2}
+  - {x: 7, y: 3}
 --- !u!4 &1163970349 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5822160426406325450, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
@@ -6619,6 +6613,7 @@ MonoBehaviour:
   playerCards:
   - {fileID: 507650610}
   - {fileID: 1561596416}
+  enemies: []
   isWin: 0
 --- !u!4 &2069185591
 Transform:
