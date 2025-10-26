@@ -224,7 +224,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &894227919444947554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,20 +255,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDialoguing: 0
-  dialogDataFile: {fileID: 4900000, guid: 53ccec2b6dcd29740826594e091bad1d, type: 3}
+  dialogDataFile: {fileID: 4900000, guid: 0329a1c0fe4bafa4eb00647285df80e3, type: 3}
   dialogues: []
   nameTMP: {fileID: 1723306654313891733}
   dialogTMP: {fileID: 5013346572103593280}
   currentIndex: 0
   fadeDuration: 0.5
-  speakTime: 1.5
+  speakTime: 0.5
   characterManager: {fileID: 2809308851762126491}
   leftImage: {fileID: 5142156484869478826}
   rightImage: {fileID: 376725607821320058}
   cgImage: {fileID: 7635443274121986967}
-  cgFadeDuration: 0.25
+  cgFadeDuration: 0.5
   UIGroup: {fileID: 7958241466168621693}
-  battleDialogDataFile: {fileID: 0}
+  battleDialogDataFile: {fileID: 4900000, guid: fcbade3c74d6e6d44bca28be70cb10af, type: 3}
   optionButtons:
   - {fileID: 6807698093615832212}
   - {fileID: 3362809455920461405}
@@ -301,17 +301,51 @@ MonoBehaviour:
       portrait: {fileID: 21300000, guid: 7bc6319a07a16ca4ebad310a29cb74ae, type: 3}
     - expressionName: jingyas
       portrait: {fileID: 21300000, guid: fa260c3e43cf3214e806c5386820cfc8, type: 3}
+    - expressionName: smile
+      portrait: {fileID: 21300000, guid: 894a68217d03d2a4e837d990fef72948, type: 3}
+    - expressionName: happy
+      portrait: {fileID: 21300000, guid: 778a3ccfe82204d4ba6ac2a70aad3259, type: 3}
+    - expressionName: fans
+      portrait: {fileID: 21300000, guid: 380c0cb33cb01e1469dc98e50b05c8ec, type: 3}
+    - expressionName: fan
+      portrait: {fileID: 21300000, guid: 7c46689ebedc48549b76641e35458ee5, type: 3}
+    - expressionName: ding
+      portrait: {fileID: 21300000, guid: 7cd88c9b1eef7724c984200e6b600249, type: 3}
+    - expressionName: chouchang
+      portrait: {fileID: 21300000, guid: 5aa890e022085ef4d9bdc0608c2d88cc, type: 3}
   - characterName: Maid
     expressions:
     - expressionName: normal
       portrait: {fileID: 21300000, guid: fe867200e604f1a4183b56f1511026b0, type: 3}
+  - characterName: Diamond
+    expressions:
+    - expressionName: normal
+      portrait: {fileID: 21300000, guid: c545b79daa7d7c947be4ebe47f4abc58, type: 3}
+  - characterName: Club
+    expressions:
+    - expressionName: normal
+      portrait: {fileID: 21300000, guid: c545b79daa7d7c947be4ebe47f4abc58, type: 3}
+  - characterName: Spade
+    expressions:
+    - expressionName: normal
+      portrait: {fileID: 21300000, guid: c545b79daa7d7c947be4ebe47f4abc58, type: 3}
   cgs:
-  - cgName: CG-1
+  - cgName: CG-castle
     cgSprite: {fileID: 21300000, guid: 66509b042598ac64e9f54f2b378ae312, type: 3}
+  - cgName: CG-club&heart
+    cgSprite: {fileID: 21300000, guid: c7de0764264f4744aad9fa8f2e12ba8b, type: 3}
+  - cgName: CG-clubfight2
+    cgSprite: {fileID: 21300000, guid: 731e42a575a191743ba4ea81104e0eb3, type: 3}
+  - cgName: CG-heart&diamond
+    cgSprite: {fileID: 21300000, guid: 88e9b66dfad03d546985d9ebe02e7b35, type: 3}
+  - cgName: CG-heart&diamond2
+    cgSprite: {fileID: 21300000, guid: ca97e55f2a14564419afc6b3177aa9c8, type: 3}
   - cgName: CG-maid&heart
     cgSprite: {fileID: 21300000, guid: a31fc6b01d984fb40b4b347fb7aef7e5, type: 3}
   - cgName: CG-maidhandsword
     cgSprite: {fileID: 21300000, guid: 609299a3961a35444a7d9dd75a394b8e, type: 3}
+  - cgName: club&diamondbattle
+    cgSprite: {fileID: 21300000, guid: 850033b882b44a64b85b0a0ed5a6325b, type: 3}
 --- !u!1 &635830409939925666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,6 +1268,82 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &5638701106911374927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 7
+  m_Component:
+  - component: {fileID: 1324816916852487247}
+  - component: {fileID: 3631745570519806671}
+  - component: {fileID: 4757083908802708319}
+  m_Layer: 5
+  m_HasEditorInfo: 1
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1324816916852487247
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5638701106911374927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6380306500993558066}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3631745570519806671
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5638701106911374927}
+  m_CullTransparentMesh: 1
+--- !u!114 &4757083908802708319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5638701106911374927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5807787167539721037
 GameObject:
   m_ObjectHideFlags: 0
@@ -2156,6 +2266,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1324816916852487247}
   - {fileID: 7510298295271403434}
   - {fileID: 7433381381917571389}
   - {fileID: 5834811160944848124}

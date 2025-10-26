@@ -399,11 +399,19 @@ public class EnemyUnit : MonoBehaviour
         FindObjectOfType<CameraShake>().Shake();
         healthSystem.SetHealth(currentHealth);
 
-        if(GetComponent<BattleDialogue>()!=null)
+        DialogueTrigger[] triggers = GetComponents<DialogueTrigger>();
+        foreach (DialogueTrigger trigger in triggers)
         {
-            GetComponent<BattleDialogue>().CheckTrigger();
+            if (trigger.triggerType == DialogueTriggerType.EnemyHealthBelow)
+            {
+                // 血量条件在触发器的Update中自动检查
+            }
+            else if (trigger.triggerType == DialogueTriggerType.CustomEvent &&
+                     trigger.customEventName == "OnTakeDamage")
+            {
+                trigger.TriggerManually();
+            }
         }
-
 
 
         // Passive: 第一次被攻击后激活行动
@@ -460,6 +468,14 @@ public class EnemyUnit : MonoBehaviour
 
     private void Die()
     {
+        DialogueTrigger[] triggers = GetComponents<DialogueTrigger>();
+        foreach (DialogueTrigger trigger in triggers)
+        {
+            if (trigger.triggerType == DialogueTriggerType.EnemyDeath)
+            {
+                trigger.TriggerManually();
+            }
+        }
         if (startGrid != null)
         {
             GameGrid grid = startGrid.GetComponent<GameGrid>();
@@ -686,5 +702,11 @@ public class EnemyUnit : MonoBehaviour
 
         onComplete?.Invoke();
     }
-
+    /// <summary>
+    /// 检查敌人是否死亡
+    /// </summary>
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
+    }
 }
