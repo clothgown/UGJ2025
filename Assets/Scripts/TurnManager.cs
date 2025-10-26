@@ -5,7 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public enum TurnPhase { PlayerTurn, EnemyTurn }
+public enum TurnPhase { PlayerTurn, EnemyTurn ,Exploration }
 
 public class TurnManager : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class TurnManager : MonoBehaviour
 
     public UnitController currentController;
     public TurnPhase phase = TurnPhase.PlayerTurn;
+    private bool isCheckingForWin = false;
     public int turnIndex = 1;
 
     [SerializeField] private HorizontalCardHolder playerCardHolder;
@@ -41,6 +42,9 @@ public class TurnManager : MonoBehaviour
     [Header("关键角色设置")]
     public UnitController[] criticalCharacters; // 关键角色列表
     public bool gameOverOnCriticalDeath = true; // 关键角色死亡是否导致游戏结束
+
+    [Header("探索模式")]
+    public ExplorationManager explorationManager;
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -50,7 +54,21 @@ public class TurnManager : MonoBehaviour
     private void Start()
     {
         unitControllers = FindObjectsOfType<UnitController>();
+        
 
+        // 确保ExplorationManager引用
+        if (explorationManager == null)
+        {
+            explorationManager = FindObjectOfType<ExplorationManager>();
+            if (explorationManager == null)
+            {
+                Debug.LogError("未找到ExplorationManager！请确保场景中有ExplorationManager组件");
+            }
+            else
+            {
+                Debug.Log($"找到ExplorationManager: {explorationManager.gameObject.name}");
+            }
+        }
         // 为所有单位订阅死亡事件
         foreach (var unit in unitControllers)
         {
@@ -71,13 +89,15 @@ public class TurnManager : MonoBehaviour
 
     private void Update()
     {
-        
-        EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
-        if (enemies.Length == 0)
+
+        enemies = FindObjectsOfType<EnemyUnit>();
+        if (phase == TurnPhase.PlayerTurn && enemies.Length == 0 && !isWin && !isCheckingForWin)
         {
-            isWin = true;
+            isCheckingForWin = true;
+            Debug.Log($"检测到所有敌人被消灭，准备进入探索模式");
+            StartCoroutine(HandleVictory());
         }
-        
+
     }
     // 初始化卡片行动点显示
     private void InitializeCardActionPoints()
@@ -284,18 +304,40 @@ public class TurnManager : MonoBehaviour
     {
         while (true)
         {
+            if (ExplorationManager.IsInExploration() || phase == TurnPhase.Exploration)
+            {
+                yield return null;
+                continue;
+            }
+
             switch (phase)
             {
                 case TurnPhase.PlayerTurn:
-                    // 触发回合开始事件
                     OnTurnStart?.Invoke(turnIndex);
                     StartPlayerTurn();
                     yield return new WaitUntil(() => phase != TurnPhase.PlayerTurn);
+                    Debug.Log($"玩家回合结束，进入 {phase}");
                     break;
 
                 case TurnPhase.EnemyTurn:
+                    // 进入敌人回合前再次检查
+                    enemies = FindObjectsOfType<EnemyUnit>();
+                    if (enemies.Length == 0 && !isWin)
+                    {
+                        StartCoroutine(HandleVictory());
+                        yield break; // 退出敌人回合
+                    }
+
                     yield return StartCoroutine(EnemyTurn());
-                    // 触发回合结束事件  
+
+                    // 敌人回合结束后检查
+                    enemies = FindObjectsOfType<EnemyUnit>();
+                    if (enemies.Length == 0 && !isWin)
+                    {
+                        StartCoroutine(HandleVictory());
+                        yield break;
+                    }
+
                     OnTurnEnd?.Invoke(turnIndex);
                     phase = TurnPhase.PlayerTurn;
                     turnIndex++;
@@ -305,40 +347,109 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+
+
+
+    private IEnumerator HandleVictory()
+    {
+        isWin = true;
+        Debug.Log("战斗胜利，准备进入探索模式");
+
+        // 确保当前是玩家回合
+        phase = TurnPhase.Exploration;
+
+        // 清空高亮等战斗状态
+        IsoGrid2D.instance.ClearHighlight();
+        IsoGrid2D.instance.isWaitingForGridClick = true;
+
+        // 稍微延迟一帧确保状态切换完成
+        yield return null;
+
+        // 启动探索模式
+        if (explorationManager != null)
+        {
+            Debug.Log("调用 ExplorationManager.StartExploration()");
+            explorationManager.StartExploration();
+        }
+        else
+        {
+            Debug.LogError("ExplorationManager 未找到！");
+        }
+
+        isCheckingForWin = false;
+    }
+
     public void EndPlayerTurn()
     {
-        
         if (IsoGrid2D.instance.isWaitingForGridClick) return;
-        phase = TurnPhase.EnemyTurn;
+        if (isWin) return; // 如果已经胜利，不执行敌人回合
 
-        EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
-        if (enemies.Length == 0)
+        // 检查是否还有敌人
+        enemies = FindObjectsOfType<EnemyUnit>();
+        if (enemies.Length == 0 && !isWin)
         {
-            Debug.Log("没有敌人了，返回地图场景");
-            CollectionManager.instance.AddCoin(5);
-            PanelManager.instance.ShowEndPanel();
+            StartCoroutine(HandleVictory());
+            return;
+        }
+
+        phase = TurnPhase.EnemyTurn;
+        Debug.Log($"进入敌人回合，敌人数量: {enemies.Length}");
+    }
+
+    private IEnumerator StartExplorationAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Debug.Log($"开始探索模式，ExplorationManager: {explorationManager != null}");
+
+        // 进入探索模式
+        if (explorationManager != null)
+        {
+            explorationManager.StartExploration();
+            Debug.Log("探索模式已成功启动");
+        }
+        else
+        {
+            Debug.LogError("ExplorationManager 未设置！请检查场景中的ExplorationManager");
         }
     }
 
     private IEnumerator EnemyTurn()
     {
-        
-        
+        // 再次检查敌人数组
+        enemies = FindObjectsOfType<EnemyUnit>();
+        if (enemies.Length == 0)
+        {
+            Debug.Log("敌人回合开始但无敌人，直接胜利");
+            yield break;
+        }
+
+        bool hasEnemyActed = false;
         foreach (var enemy in enemies)
         {
-            
             if (enemy == null) continue;
+
             if (enemy.isDizziness)
             {
+                Debug.Log($"敌人 {enemy.name} 处于眩晕状态，跳过行动");
                 enemy.Recover();
                 continue;
             }
 
+            Debug.Log($"敌人 {enemy.name} 开始行动");
             enemy.ChasePlayer();
+            hasEnemyActed = true;
             yield return new WaitForSeconds(1.5f);
             SoundManager.Instance.PlaychangeturnAudio();
-
         }
+
+        // 如果没有敌人行动，立即结束回合
+        if (!hasEnemyActed)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        Debug.Log("敌人回合结束");
     }
 
     // ✅ 重载方法：支持从UnitController调用
@@ -346,6 +457,8 @@ public class TurnManager : MonoBehaviour
     {
         if (controller == null) return;
 
+        if (ExplorationManager.IsInExploration())
+            return;
         // 更新全局行动点显示
         UpdateActionPointUI(controller.actionPoints);
 

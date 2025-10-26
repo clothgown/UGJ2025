@@ -188,19 +188,30 @@ public class UnitController : MonoBehaviour
     public void Move()
     {
         if (IsoGrid2D.instance.isWaitingForGridClick) return;
-        if (actionPoints <= 0) return;
+
         IsoGrid2D.instance.HighlightMoveRange(startPoint, moveRange);
         if (IsDead())
         {
             Debug.Log("单位已死亡，无法移动");
             return;
         }
+        if (!ExplorationManager.IsInExploration())
+        {
+            if (actionPoints <= 0) return;
+        }
+        else IsoGrid2D.instance.HighlightMoveRange(startPoint, moveRange);
+
     }
 
     public void MoveToGrid(GameGrid targetGrid)
     {
-        if (actionPoints <= 0) return;
-        UseActionPoint(1);
+        // 探索模式下不消耗行动点
+        if (!ExplorationManager.IsInExploration())
+        {
+            if (actionPoints <= 0) return;
+            UseActionPoint(1);
+        }
+        
         string[] nameParts = targetGrid.gameObject.name.Split('_');
         Vector2Int targetPos = new Vector2Int(int.Parse(nameParts[1]), int.Parse(nameParts[2]));
 

@@ -12,6 +12,7 @@ public class GameGrid : MonoBehaviour
     public Color originalColor;
     public Color hoverColor = Color.green;
     public Color moveRangeColor = new Color(1f, 0.5f, 0f, 0.5f); // 橙色
+    public Color explorecolor = new Color(0.9960785f, 0.9803922f, 0.9294118f, 0.5f);
     public bool isInRange = false;
     public bool canChangeState = false;
 
@@ -89,6 +90,20 @@ public class GameGrid : MonoBehaviour
         if (FindAnyObjectByType<DialogueSystem>().isDialoguing == true) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
         Debug.Log(1);
+        if (ExplorationManager.IsInExploration() && canDialogue && ocuupiedItem != null)
+        {
+            Debug.Log($"探索模式下与物品交互: {ocuupiedItem.gameObject.name}");
+            ocuupiedItem.Interact();
+            IsoGrid2D.instance.ResetWaiting();
+            return; // 交互后直接返回，不执行其他逻辑
+        }
+        if (canDialogue && isInterable && ocuupiedItem != null)
+        {
+            Debug.Log($"战斗模式下与物品交互: {ocuupiedItem.gameObject.name}");
+            ocuupiedItem.Interact();
+            IsoGrid2D.instance.ResetWaiting();
+            return; // 交互后直接返回，不执行其他逻辑
+        }
         if (canChangeState)
         {
             var newState = IsoGrid2D.instance.gridStateToChange;
@@ -103,8 +118,6 @@ public class GameGrid : MonoBehaviour
             // 改变格子状态
             SetState(newState);
 
-
-
             // 播放动画反馈
             transform.DOPunchScale(Vector3.one * 0.1f, 0.25f, 6, 0.6f);
 
@@ -112,8 +125,6 @@ public class GameGrid : MonoBehaviour
 
             // 重置全局状态
             IsoGrid2D.instance.gridStateToChange = GridState.None;
-
-
 
             FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
             IsoGrid2D.instance.ResetWaiting();
@@ -253,7 +264,14 @@ public class GameGrid : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
     }
-
+    public void OnGridClicked()
+    {
+        // 如果在探索模式且这个格子可以对话
+        if (ExplorationManager.IsInExploration() && canDialogue && ocuupiedItem != null)
+        {
+            ocuupiedItem.Interact();
+        }
+    }
     // 外部调用设置格子状态
     public void SetState(GridState newState)
     {

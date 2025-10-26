@@ -288,7 +288,7 @@ public class HorizontalCardHolder : MonoBehaviour
             }
         }
 
-        Debug.Log("所有手牌已切换为 Double 模式。");
+        
     }
 
     public void ChangeAllCardToMass()
@@ -301,7 +301,7 @@ public class HorizontalCardHolder : MonoBehaviour
             }
         }
 
-        Debug.Log("所有手牌已切换为 Mass 模式。");
+        
     }
 
     public void ChangeAllCardToNormal()
@@ -314,7 +314,7 @@ public class HorizontalCardHolder : MonoBehaviour
             }
         }
 
-        Debug.Log("所有手牌已切换为 Normal 模式。");
+        
     }
 
 }

@@ -12,6 +12,7 @@ public class ItemInGrid : MonoBehaviour
 
     private List<GameGrid> occupiedGrids = new List<GameGrid>();
     public bool isInterable = false;
+    public bool isBattleInterable = true;
     public SpriteRenderer sr;
 
     // 新增部分
@@ -22,6 +23,10 @@ public class ItemInGrid : MonoBehaviour
 
     [Header("透明度检测 Layer")]
     public LayerMask blockingLayer;  // Item 所在 Layer
+
+    [Header("对话设置")]
+    public TextAsset dialogueFile; // 关联的对话文件
+    public bool triggerDialogueOnInteract = true; // 是否触发对话
 
     void Start()
     {
@@ -52,7 +57,15 @@ public class ItemInGrid : MonoBehaviour
         if (isInterable)
         {
             foreach (var grid in occupiedGrids)
+            {
                 grid.isInterable = true;
+                grid.canDialogue = true;
+
+                // 设置战斗时的交互格子颜色
+                grid.SetColor(new Color(0.3f, 0.6f, 1f, 0.8f));
+
+                Debug.Log($"物品 {gameObject.name} 初始化：设置格子 {grid.gridPos} 为可交互");
+            }
         }
     }
 
@@ -164,6 +177,40 @@ public class ItemInGrid : MonoBehaviour
                     gridComp.canDialogue = true;
                 }
             }
+        }
+    }
+    public virtual void Interact()
+    {
+        if (!isInterable)
+        {
+            Debug.LogWarning($"物品 {name} 不可交互，isInterable = {isInterable}");
+            return;
+        }
+
+        Debug.Log($"与物品交互: {gameObject.name}");
+
+        // 触发对话
+        if (triggerDialogueOnInteract && dialogueFile != null)
+        {
+            TriggerDialogue();
+        }
+
+        // 可以在这里添加其他交互逻辑
+        // 例如：获得物品、触发事件等
+    }
+
+    private void TriggerDialogue()
+    {
+        DialogueSystem dialogueSystem = FindObjectOfType<DialogueSystem>();
+        if (dialogueSystem != null)
+        {
+            dialogueSystem.battleDialogDataFile = dialogueFile;
+            dialogueSystem.StartNewDialogue();
+            Debug.Log($"触发对话: {dialogueFile.name}");
+        }
+        else
+        {
+            Debug.LogWarning("未找到对话系统！");
         }
     }
 }

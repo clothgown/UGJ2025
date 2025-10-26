@@ -482,6 +482,7 @@ public class EnemyUnit : MonoBehaviour
             grid.isOccupied = false;
             grid.currentEnemy = null;
         }
+        Debug.Log($"敌人死亡: {name}");
         Destroy(gameObject);
     }
 

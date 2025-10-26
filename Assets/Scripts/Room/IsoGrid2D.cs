@@ -135,8 +135,10 @@ public class IsoGrid2D : MonoBehaviour
 
     public void HighlightMoveRange(Vector2Int playerPos, int moveRange)
     {
-        
         ClearHighlight();
+
+        // 检查当前模式
+        bool isExplorationMode = ExplorationManager.IsInExploration();
 
         Queue<(Vector2Int pos, int step)> queue = new Queue<(Vector2Int, int)>();
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
@@ -152,10 +154,17 @@ public class IsoGrid2D : MonoBehaviour
 
             GameGrid gridComp = tileObj.GetComponent<GameGrid>();
 
-            // ✅ 普通移动范围高亮
+            // ✅ 根据模式使用不同颜色
             if (step > 0)
             {
-                gridComp.SetColor(gridComp.moveRangeColor);
+                if (isExplorationMode)
+                {
+                    gridComp.SetColor(gridComp.explorecolor);
+                }
+                else
+                {
+                    gridComp.SetColor(gridComp.moveRangeColor);
+                }
                 gridComp.isInRange = true;
             }
 
@@ -179,29 +188,11 @@ public class IsoGrid2D : MonoBehaviour
             }
         }
 
-        if(true)
-        {
-            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-            foreach (var dir in directions)
-            {
-                Vector2Int neighborPos = playerPos + dir;
-                GameObject neighborObj = GetTile(neighborPos.x, neighborPos.y);
-                if (neighborObj == null) continue;
-
-                ItemInGrid item = neighborObj.GetComponent<GameGrid>().ocuupiedItem;
-                if (item != null && item.isInterable==true)
-                {
-                    if (item.isSingleCell)
-                        item.SetCanInteract(item.cornerA, item.cornerA);
-                    else
-                        item.SetCanInteract(item.cornerA, item.cornerB);
-                }
+        // ✅ 重要：在战斗模式下也设置可交互物品
+        SetInteractableItemsAroundPlayer(playerPos);
             }
-        }
-   
-    }
 
-
+    
 
     public void ResetWaiting()
     {
@@ -521,7 +512,35 @@ public class IsoGrid2D : MonoBehaviour
 
         return hasEnemy;
     }
+    private void SetInteractableItemsAroundPlayer(Vector2Int playerPos)
+    {
+        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
+        foreach (var dir in directions)
+        {
+            Vector2Int neighborPos = playerPos + dir;
+            GameObject neighborObj = GetTile(neighborPos.x, neighborPos.y);
+            if (neighborObj == null) continue;
+
+            GameGrid gridComp = neighborObj.GetComponent<GameGrid>();
+            ItemInGrid item = gridComp.ocuupiedItem;
+
+            if (item != null && item.isInterable)
+            {
+                // 设置格子为可交互状态
+                gridComp.canDialogue = true;
+                gridComp.isInterable = true;
+
+                // 设置可交互格子的高亮
+                if (item.isSingleCell)
+                    item.SetCanInteract(item.cornerA, item.cornerA);
+                else
+                    item.SetCanInteract(item.cornerA, item.cornerB);
+
+                Debug.Log($"设置可交互物品: {item.gameObject.name} 在格子 {neighborPos}");
+            }
+        }
+    }
 
     public void CancelPendingCard()
     {
