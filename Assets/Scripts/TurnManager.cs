@@ -33,7 +33,14 @@ public class TurnManager : MonoBehaviour
 
     public EnemyUnit[] enemies ;
     public bool isWin = false;
-    
+
+    public static System.Action<int> OnTurnStart;
+    public static System.Action<int> OnTurnEnd;
+
+    public GameObject Gameover;
+    [Header("关键角色设置")]
+    public UnitController[] criticalCharacters; // 关键角色列表
+    public bool gameOverOnCriticalDeath = true; // 关键角色死亡是否导致游戏结束
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -207,12 +214,23 @@ public class TurnManager : MonoBehaviour
         HandleGameOver();
     }
 
-
-    private void HandleGameOver()
+    public void OnCriticalCharacterDeath(UnitController deadCharacter)
     {
+        if (!gameOverOnCriticalDeath) return;
+
+        Debug.Log($"关键角色 {deadCharacter.characterName} 死亡，触发游戏结束");
+
+        // 停止所有协程
+        StopAllCoroutines();
+
+        // 禁用所有输入
+        IsoGrid2D.instance.isWaitingForGridClick = true;
+
         // 显示游戏结束界面
-        // 重新开始游戏或返回主菜单
-        // Gameover.gameObject.setactive(true);
+    }
+    public void HandleGameOver()
+    {
+        Gameover.gameObject.SetActive(true);
     }
 
     public void StartPlayerTurn()
@@ -269,13 +287,16 @@ public class TurnManager : MonoBehaviour
             switch (phase)
             {
                 case TurnPhase.PlayerTurn:
+                    // 触发回合开始事件
+                    OnTurnStart?.Invoke(turnIndex);
                     StartPlayerTurn();
                     yield return new WaitUntil(() => phase != TurnPhase.PlayerTurn);
                     break;
 
                 case TurnPhase.EnemyTurn:
-                    
                     yield return StartCoroutine(EnemyTurn());
+                    // 触发回合结束事件  
+                    OnTurnEnd?.Invoke(turnIndex);
                     phase = TurnPhase.PlayerTurn;
                     turnIndex++;
                     break;
@@ -528,6 +549,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 }
+
 
 // ✅ 状态组件，用来记录卡片当前是否选中
 public class CardFocusState : MonoBehaviour

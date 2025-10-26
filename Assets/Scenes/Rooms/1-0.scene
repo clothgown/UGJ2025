@@ -5573,6 +5573,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 1989483027908214065, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: allowMultipleDialogs
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7718186883744278321, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6669,10 +6673,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogDataFile: {fileID: 4900000, guid: fcbade3c74d6e6d44bca28be70cb10af, type: 3}
-  isHealthDialogue: 1
-  TrigerHealth: 0
-  enemyUnit: {fileID: 2038695710}
-  isTrigger: 0
+  triggerType: 3
+  onlyTriggerOnce: 1
+  healthThreshold: 0
+  targetAlly: {fileID: 0}
+  targetEnemy: {fileID: 2038695710}
+  turnNumber: 1
+  customEventName: 
+  waitForCurrentDialog: 1
+  retryDelay: 1
 --- !u!114 &2038695710 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3406468419049815727, guid: 892cb1b35f2f3764080733d1e6c43ff4, type: 3}
@@ -6788,8 +6797,13 @@ MonoBehaviour:
   playerCards:
   - {fileID: 507650610}
   - {fileID: 1561596416}
+  deadCardColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.7}
+  aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
   enemies: []
   isWin: 0
+  Gameover: {fileID: 0}
+  criticalCharacters: []
+  gameOverOnCriticalDeath: 1
 --- !u!4 &2069185591
 Transform:
   m_ObjectHideFlags: 0

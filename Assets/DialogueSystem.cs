@@ -1,9 +1,10 @@
-﻿using System;
+﻿using DG.Tweening; // 记得引用DoTween命名空间
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using DG.Tweening; // 记得引用DoTween命名空间
 using UnityEngine.UI;
 
 [Serializable]
@@ -18,6 +19,7 @@ public class Dialogue
     public string Text;        // 对话文本
     public string CG;          // CG名（可选）
     public bool IsWatched;     // 是否已观看
+    public string Condition;
 }
 public class DialogueSystem : MonoBehaviour
 {
@@ -48,9 +50,25 @@ public class DialogueSystem : MonoBehaviour
     public Button[] optionButtons; // Inspector 里拖 3 个按钮进来
     public TMP_Text[] optionTexts; // 每个按钮上的文字
     public bool isChoosing = false; // 是否正在显示选项中
+
+    [Header("触发器支持")]
+    public bool allowMultipleDialogs = false; // 是否允许多个对话同时触发
+    private Queue<TextAsset> dialogQueue = new Queue<TextAsset>(); // 对话队列
+
+    // 添加一个静态实例以便全局访问
+    public static DialogueSystem Instance { get; private set; }
     void Start()
     {
-        if(dialogDataFile == null)
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        if (dialogDataFile == null)
         {
             FadeOutUI();
             isDialoguing = false;
@@ -93,11 +111,30 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    public void StartNewDialogue()
+    public void StartNewDialogue(TextAsset dialogFile = null)
     {
+        // 如果指定了对话文件，使用它
+        if (dialogFile != null)
+        {
+            battleDialogDataFile = dialogFile;
+        }
+
+        // 如果已经有对话在进行中，且不允许多重对话，则加入队列
+        if (isDialoguing && !allowMultipleDialogs)
+        {
+            if (battleDialogDataFile != null)
+            {
+                dialogQueue.Enqueue(battleDialogDataFile);
+                Debug.Log($"对话已加入队列，当前队列长度: {dialogQueue.Count}");
+            }
+            return;
+        }
         currentIndex = 0;
-        LoadDialogues(battleDialogDataFile.text);
-        isLoaded = true;
+        if (battleDialogDataFile != null)
+        {
+            LoadDialogues(battleDialogDataFile.text);
+            isLoaded = true;
+        }
 
         if (UIGroup != null)
         {
@@ -116,6 +153,23 @@ public class DialogueSystem : MonoBehaviour
         Dialogue d = dialogues[index];
         nameTMP.text = d.Speaker;
         dialogTMP.text = "";
+
+        if (!string.IsNullOrEmpty(d.Condition) && !CheckCondition(d.Condition))
+        {
+            // 条件不满足，跳过这句对话
+            int nextIndex = d.NextID;
+            if (nextIndex == -1 || nextIndex >= dialogues.Count)
+            {
+                FadeOutUI();
+                isDialoguing = false;
+            }
+            else
+            {
+                ShowDialogue(nextIndex);
+                currentIndex = nextIndex;
+            }
+            return;
+        }
 
         // 立绘
         Sprite s = characterManager.GetPortrait(d.Speaker, d.IMG);
@@ -169,6 +223,32 @@ public class DialogueSystem : MonoBehaviour
         else
         {
             HideOptions();
+        }
+        if (d.Type == "&")
+        {
+            // 在Book对象的TextMeshPro中显示文本
+            GameObject bookObj = GameObject.Find("Book");
+            if (bookObj != null)
+            {
+                TMP_Text bookText = bookObj.GetComponent<TMP_Text>();
+                if (bookText != null)
+                {
+                    bookText.text = d.Text;
+                }
+                else
+                {
+                    Debug.LogWarning("Book对象上没有找到TextMeshPro组件");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("没有找到名为Book的GameObject");
+            }
+
+            // 书本显示后直接结束对话（NextID为E）
+            FadeOutUI();
+            isDialoguing = false;
+            return;
         }
     }
 
@@ -268,12 +348,279 @@ public class DialogueSystem : MonoBehaviour
         {
             UIGroup.DOFade(0f, fadeDuration).OnComplete(() => {
                 cgImage.gameObject.SetActive(false);
-                // 渐隐完成后可以禁用UI组或执行其他操作
                 UIGroup.gameObject.SetActive(false);
+
+                // 对话结束后检查队列
+                isDialoguing = false;
+                CheckDialogQueue();
             });
+        }
+        else
+        {
+            isDialoguing = false;
+            CheckDialogQueue();
+        }
+    }
+    private void CheckDialogQueue()
+    {
+        if (dialogQueue.Count > 0)
+        {
+            TextAsset nextDialog = dialogQueue.Dequeue();
+            battleDialogDataFile = nextDialog;
+            StartNewDialogue();
+            Debug.Log($"播放队列中的下一个对话，剩余: {dialogQueue.Count}");
         }
     }
 
+    // 清空对话队列
+    public void ClearDialogQueue()
+    {
+        dialogQueue.Clear();
+        Debug.Log("对话队列已清空");
+    }
+
+    // 检查是否正在对话
+    public bool IsInDialogue()
+    {
+        return isDialoguing;
+    }
+
+    // 强制结束当前对话（用于紧急情况）
+    public void ForceEndDialogue()
+    {
+        typingTween?.Kill();
+        FadeOutUI();
+        ClearDialogQueue();
+    }
+    private bool CheckCondition(string condition)
+    {
+        if (string.IsNullOrEmpty(condition)) return true;
+
+        // 支持多个条件用逗号分隔
+        string[] conditions = condition.Split(',');
+
+        foreach (string cond in conditions)
+        {
+            if (!EvaluateSingleCondition(cond.Trim()))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // ✅ 新增：单个条件评估
+    private bool EvaluateSingleCondition(string condition)
+    {
+        // 条件格式示例：
+        // "enemy_health<50"      - 任意敌人血量低于50%
+        // "enemy1_health<30"     - 特定敌人血量低于30%
+        // "ally_health>80"       - 任意友方血量高于80%
+        // "ally2_health>50"      - 特定友方血量高于50%
+        // "ally_dead"            - 任意友方死亡
+        // "ally1_dead"           - 特定友方死亡
+        // "enemy_all_dead"       - 所有敌人都死亡
+
+        string[] parts = condition.Split('_');
+        if (parts.Length < 2) return true; // 条件格式错误，默认通过
+
+        string target = parts[0];  // enemy 或 ally
+        string conditionType = parts[1]; // health 或 dead
+
+        // 处理死亡条件
+        if (conditionType == "dead")
+        {
+            return CheckDeathCondition(target);
+        }
+
+        // 处理血量条件
+        if (conditionType.StartsWith("health"))
+        {
+            return CheckHealthCondition(target, conditionType);
+        }
+
+        // 处理全体死亡条件
+        if (conditionType == "all_dead")
+        {
+            return CheckAllDeadCondition(target);
+        }
+
+        return true; // 未知条件类型，默认通过
+    }
+
+    // ✅ 新增：检查死亡条件
+    private bool CheckDeathCondition(string target)
+    {
+        if (target == "ally")
+        {
+            // 检查是否有任意友方死亡
+            foreach (UnitController ally in TurnManager.instance.unitControllers)
+            {
+                if (ally != null && ally.IsDead())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else if (target.StartsWith("ally_"))
+        {
+            // 检查特定友方死亡 (ally_Player1, ally_Knight等)
+            string allyName = target.Substring(5); // 去掉 "ally_" 前缀
+            foreach (UnitController ally in TurnManager.instance.unitControllers)
+            {
+                if (ally != null && ally.gameObject.name == allyName && ally.IsDead())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else if (target == "enemy")
+        {
+            // 检查是否有任意敌人死亡
+            EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
+            foreach (EnemyUnit enemy in enemies)
+            {
+                if (enemy != null && enemy.IsDead())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else if (target.StartsWith("enemy_"))
+        {
+            // 检查特定敌人死亡 (enemy_Goblin, enemy_Boss等)
+            string enemyName = target.Substring(6); // 去掉 "enemy_" 前缀
+            EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
+            foreach (EnemyUnit enemy in enemies)
+            {
+                if (enemy != null && enemy.gameObject.name == enemyName && enemy.IsDead())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        return false;
+    }
+
+
+    // ✅ 新增：检查血量条件
+    // ✅ 修改：检查血量条件（使用GameObject名称）
+    private bool CheckHealthCondition(string target, string conditionType)
+    {
+        // 解析条件：health<50 或 health>80
+        string operatorStr = conditionType.Contains(">") ? ">" : "<";
+        string[] healthParts = conditionType.Split(new char[] { '<', '>' });
+
+        if (healthParts.Length < 2) return true;
+
+        float threshold;
+        if (!float.TryParse(healthParts[1], out threshold)) return true;
+
+        if (target == "ally")
+        {
+            // 检查任意友方血量条件
+            foreach (UnitController ally in TurnManager.instance.unitControllers)
+            {
+                if (ally != null && !ally.IsDead())
+                {
+                    float healthPercent = (ally.currentHealth / ally.maxHealth) * 100f;
+                    if (operatorStr == ">" && healthPercent > threshold) return true;
+                    if (operatorStr == "<" && healthPercent < threshold) return true;
+                }
+            }
+            return false;
+        }
+        else if (target.StartsWith("ally_"))
+        {
+            // 检查特定友方血量条件
+            string allyName = target.Substring(5); // 去掉 "ally_" 前缀
+            foreach (UnitController ally in TurnManager.instance.unitControllers)
+            {
+                if (ally != null && !ally.IsDead() && ally.gameObject.name == allyName)
+                {
+                    float healthPercent = (ally.currentHealth / ally.maxHealth) * 100f;
+                    if (operatorStr == ">" && healthPercent > threshold) return true;
+                    if (operatorStr == "<" && healthPercent < threshold) return true;
+                }
+            }
+            return false;
+        }
+        else if (target == "enemy")
+        {
+            // 检查任意敌人数值条件
+            EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
+            foreach (EnemyUnit enemy in enemies)
+            {
+                if (enemy != null && !enemy.IsDead())
+                {
+                    float healthPercent = (enemy.currentHealth / enemy.maxHealth) * 100f;
+                    if (operatorStr == ">" && healthPercent > threshold) return true;
+                    if (operatorStr == "<" && healthPercent < threshold) return true;
+                }
+            }
+            return false;
+        }
+        else if (target.StartsWith("enemy_"))
+        {
+            // 检查特定敌人血量条件
+            string enemyName = target.Substring(6); // 去掉 "enemy_" 前缀
+            EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
+            foreach (EnemyUnit enemy in enemies)
+            {
+                if (enemy != null && !enemy.IsDead() && enemy.gameObject.name == enemyName)
+                {
+                    float healthPercent = (enemy.currentHealth / enemy.maxHealth) * 100f;
+                    if (operatorStr == ">" && healthPercent > threshold) return true;
+                    if (operatorStr == "<" && healthPercent < threshold) return true;
+                }
+            }
+            return false;
+        }
+
+        return false;
+    }
+
+    // ✅ 新增：检查全体死亡条件
+    private bool CheckAllDeadCondition(string target)
+    {
+        if (target == "enemy")
+        {
+            // 检查是否所有敌人都死亡
+            EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
+            if (enemies.Length == 0) return true;
+
+            foreach (EnemyUnit enemy in enemies)
+            {
+                if (enemy != null && !enemy.IsDead())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else if (target == "ally")
+        {
+            // 检查是否所有友方都死亡
+            foreach (UnitController ally in TurnManager.instance.unitControllers)
+            {
+                if (ally != null && !ally.IsDead())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+   
 
     void OnClickNext()
     {
@@ -335,6 +682,7 @@ public class DialogueSystem : MonoBehaviour
             d.NextID = nextid;
             d.Text = cells[6].Replace("\\n", "\n"); // 如果CSV里用 \n 表示换行
             d.CG = cells.Count > 7 ? cells[7].Trim() : "";
+            d.Condition = cells.Count > 8 ? cells[8].Trim() : "";
             d.IsWatched = false;
 
             dialogues.Add(d);

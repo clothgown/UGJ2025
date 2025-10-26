@@ -74,6 +74,10 @@ public class UnitController : MonoBehaviour
 
     public int attackType = -1;
 
+    [Header("关键角色设置")]
+    public bool isCriticalCharacter = false; // 如果这个角色死亡，游戏直接结束
+    public string characterName; // 角色名称（用于显示）
+
     public GameGrid currentGrid;
     private void Start()
     {
@@ -146,10 +150,34 @@ public class UnitController : MonoBehaviour
 
         // 如果有死亡动画，播放它
         // PlayDeathAnimation();
-
+        DialogueTrigger[] triggers = GetComponents<DialogueTrigger>();
+        foreach (DialogueTrigger trigger in triggers)
+        {
+            if (trigger.triggerType == DialogueTriggerType.AllyDeath)
+            {
+                trigger.TriggerManually();
+            }
+        }
+        if (isCriticalCharacter)
+        {
+            HandleCriticalCharacterDeath();
+        }
         Debug.Log($"单位 {name} 已死亡，不再可操作");
     }
+    private void HandleCriticalCharacterDeath()
+    {
+        Debug.Log($"关键角色 {characterName} 死亡，游戏结束！");
 
+        // 触发游戏结束事件
+        if (TurnManager.instance != null)
+        {
+            TurnManager.instance.OnCriticalCharacterDeath(this);
+            TurnManager.instance.HandleGameOver();
+        }
+
+        // 显示游戏结束UI
+        
+    }
     // 检查单位是否死亡
     public bool IsDead()
     {
@@ -334,6 +362,19 @@ public class UnitController : MonoBehaviour
                 currentHealth = 0;
                 Debug.Log("Player is dead!");
                 // TODO: ��Ϸʧ���߼�
+            }
+        }
+        DialogueTrigger[] triggers = GetComponents<DialogueTrigger>();
+        foreach (DialogueTrigger trigger in triggers)
+        {
+            if (trigger.triggerType == DialogueTriggerType.AllyHealthBelow)
+            {
+                // 血量条件在触发器的Update中自动检查
+            }
+            else if (trigger.triggerType == DialogueTriggerType.CustomEvent &&
+                     trigger.customEventName == "OnTakeDamage")
+            {
+                trigger.TriggerManually();
             }
         }
     }
