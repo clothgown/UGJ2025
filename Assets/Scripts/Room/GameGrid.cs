@@ -89,14 +89,19 @@ public class GameGrid : MonoBehaviour
     {
         if (FindAnyObjectByType<DialogueSystem>().isDialoguing == true) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
-        Debug.Log(1);
+
+        Debug.Log($"点击格子: {gridPos}, 探索模式: {ExplorationManager.IsInExploration()}, canDialogue: {canDialogue}, ocuupiedItem: {ocuupiedItem != null}");
+
+        // 优先处理探索模式下的物品交互
         if (ExplorationManager.IsInExploration() && canDialogue && ocuupiedItem != null)
         {
-            Debug.Log($"探索模式下与物品交互: {ocuupiedItem.gameObject.name}");
+            Debug.Log($"探索模式下与物品交互: {ocuupiedItem.gameObject.name}, 类型: {ocuupiedItem.GetType()}");
             ocuupiedItem.Interact();
             IsoGrid2D.instance.ResetWaiting();
             return; // 交互后直接返回，不执行其他逻辑
         }
+
+        // 战斗模式下的物品交互
         if (canDialogue && isInterable && ocuupiedItem != null)
         {
             Debug.Log($"战斗模式下与物品交互: {ocuupiedItem.gameObject.name}");

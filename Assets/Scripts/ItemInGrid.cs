@@ -10,7 +10,7 @@ public class ItemInGrid : MonoBehaviour
     [Tooltip("是否是单格物件，如果勾选，只占用cornerA")]
     public bool isSingleCell = false;
 
-    private List<GameGrid> occupiedGrids = new List<GameGrid>();
+    public List<GameGrid> occupiedGrids = new List<GameGrid>();
     public bool isInterable = false;
     public bool isBattleInterable = true;
     public SpriteRenderer sr;
