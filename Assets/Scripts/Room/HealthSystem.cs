@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -11,9 +10,15 @@ public class HealthSystem : MonoBehaviour
 
     private float maxHealth;
     private float maxShield;
+    private bool isDead = false;
 
     [Header("Smoothing")]
     public float smoothTime = 0.2f;
+
+    // 死亡事件，其他脚本可以订阅
+    public System.Action<UnitController> OnDeath;
+
+    public bool IsDead => isDead;
 
     // 设置最大血量
     public void SetMaxHealth(float health)
@@ -26,14 +31,18 @@ public class HealthSystem : MonoBehaviour
     public void SetHealth(float health)
     {
         StartCoroutine(SmoothHealthChange(healthBar, health, maxHealth));
+
+        // 检查死亡
+        if (health <= 0 && !isDead)
+        {
+            Die();
+        }
     }
 
     // 设置最大护盾
     public void SetMaxShield(float shield)
     {
         maxShield = shield;
-        //if (shieldBar != null)
-        //    StartCoroutine(SmoothHealthChange(shieldBar, shield, maxShield));
     }
 
     // 设置当前护盾
@@ -41,11 +50,48 @@ public class HealthSystem : MonoBehaviour
     {
         if (shieldBar != null)
         {
-            // 使用 fillAmount 直接按比例显示，可以和血量条不同步最大值
             StartCoroutine(SmoothHealthChange(shieldBar, shieldValue, maxShield));
         }
     }
 
+    // 死亡方法
+    private void Die()
+    {
+        isDead = true;
+        Debug.Log($"{gameObject.name} 已死亡");
+
+        // 触发死亡事件，传递UnitController引用
+        UnitController unitController = GetComponent<UnitController>();
+        if (unitController != null)
+        {
+            unitController.SetDeadAppearance();
+        }
+        OnDeath?.Invoke(unitController);
+
+        // 可以在这里添加死亡特效、动画等
+        StartCoroutine(DeathRoutine());
+    }
+
+    // 死亡协程
+    private IEnumerator DeathRoutine()
+    {
+        // 播放死亡动画或特效
+        // 例如：GetComponent<Animator>().SetTrigger("Die");
+
+        // 等待一段时间后隐藏或销毁对象
+        yield return new WaitForSeconds(2f);
+
+        // 可以选择隐藏对象而不是立即销毁
+        gameObject.SetActive(false);
+    }
+
+    // 复活方法（如果需要）
+    public void Revive(float health)
+    {
+        isDead = false;
+        SetHealth(health);
+        gameObject.SetActive(true);
+    }
 
     // 平滑变化协程
     private IEnumerator SmoothHealthChange(Image bar, float targetValue, float maxValue)

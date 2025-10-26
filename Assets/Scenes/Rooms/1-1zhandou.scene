@@ -1269,11 +1269,11 @@ PrefabInstance:
       addedObject: {fileID: 257905579}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4591715456569924147, guid: 30b635dc459f0b647a748a97f093de5a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 540617708}
+      insertIndex: 1
+      addedObject: {fileID: 540617706}
     - targetCorrespondingSourceObject: {fileID: 4591715456569924147, guid: 30b635dc459f0b647a748a97f093de5a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 540617706}
+      addedObject: {fileID: 540617708}
     - targetCorrespondingSourceObject: {fileID: 4591715456569924147, guid: 30b635dc459f0b647a748a97f093de5a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 540617705}
@@ -5252,11 +5252,11 @@ PrefabInstance:
     - target: {fileID: 1989483027908214065, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
       propertyPath: dialogDataFile
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4900000, guid: b8d6f2401d77d66428ed7234aa270536, type: 3}
     - target: {fileID: 1989483027908214065, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
       propertyPath: battleDialogDataFile
       value: 
-      objectReference: {fileID: 4900000, guid: fcbade3c74d6e6d44bca28be70cb10af, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2809308851762126491, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
       propertyPath: cgs.Array.size
       value: 8

@@ -139,7 +139,28 @@ if (TurnManager.instance != null)
         Debug.Log($"Switched: {currentSlot.unit.name} ⇄ {newSlot.unit.name}");
     }
 
+    public void SwitchToNextPlayer()
+    {
+        int startIndex = currentIndex;
 
+        do
+        {
+            currentIndex = (currentIndex + 1) % allSlots.Count;
+
+            // 检查玩家是否存活
+            if (allSlots[currentIndex].unit != null &&
+                !allSlots[currentIndex].unit.IsDead() &&
+                allSlots[currentIndex].unit.isActive)
+            {
+                TurnManager.instance.ChangePlayer(allSlots[currentIndex].unit);
+                return;
+            }
+
+        } while (currentIndex != startIndex);
+
+        // 如果没有存活的玩家
+        Debug.Log("没有存活的玩家可以切换");
+    }
 
     public void StartChooseSwitch()
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public enum TurnPhase { PlayerTurn, EnemyTurn }
 
@@ -20,6 +21,10 @@ public class TurnManager : MonoBehaviour
     [Header("角色与UI卡片对应")]
     public UnitController[] unitControllers; // 每个角色
     public List<GameObject> playerCards; // 每个角色对应的UI卡片（顺序一一对应）
+
+    [Header("卡片颜色设置")]
+    public Color deadCardColor = new Color(0.3f, 0.3f, 0.3f, 0.7f); // 死亡卡片颜色
+    public Color aliveCardColor = Color.white; // 存活卡片颜色
 
     private int focusedIndex = -1; // 当前选中卡片索引
     private float selectedXPosition = 840f; // 选中卡片的X位置
@@ -39,10 +44,21 @@ public class TurnManager : MonoBehaviour
     {
         unitControllers = FindObjectsOfType<UnitController>();
 
+        // 为所有单位订阅死亡事件
+        foreach (var unit in unitControllers)
+        {
+            HealthSystem healthSystem = unit.GetComponent<HealthSystem>();
+            if (healthSystem != null)
+            {
+                healthSystem.OnDeath += OnUnitDeath;
+            }
+        }
+
         // 初始化卡片行动点显示
         InitializeCardActionPoints();
 
         StartCoroutine(RunTurnLoop());
+        
         enemies = FindObjectsOfType<EnemyUnit>();
     }
 
@@ -72,45 +88,178 @@ public class TurnManager : MonoBehaviour
 
     public void ChangePlayer(UnitController player)
     {
-        if (player == null || !player.isActive) return;
+        if (player == null || player.IsDead() || !player.isActive)
+        {
+            Debug.Log($"玩家 {player?.name} 已死亡或不可用，尝试切换下一个");
+            FindNextAlivePlayer();
+            return;
+        }
 
+        // 原有切换逻辑...
         IsoGrid2D.instance.ClearHighlight();
         currentController = player;
         IsoGrid2D.instance.controller = player.gameObject;
+        IsoGrid2D.instance.currentPlayerGrid = player.startGrid.GetComponent<GameGrid>();
 
-        IsoGrid2D.instance.currentPlayerGrid = player.currentGrid;
-
-        // ✅ 更新全局行动点显示
+        // 更新全局行动点显示
         UpdateActionPointUI(player.actionPoints);
 
         CameraMove.instance.ChangeFollow(player.gameObject);
         player.Move();
         PlayerSwitchManager.instance.currentUnitController = player;
 
-        // ✅ 更新卡片 UI 状态
+        var psm = PlayerSwitchManager.instance;
+        if (psm != null)
+        {
+            psm.currentUnitController = player;
+            int slotIndex = psm.allSlots.FindIndex(s => s.unit == player);
+            if (slotIndex >= 0)
+                psm.currentIndex = slotIndex;
+            else
+                Debug.LogWarning("玩家未在 PlayerSwitchManager 的 slots 中找到！");
+        }
+
+        // 更新卡片 UI 状态
         UpdateCardSelectionUI(player);
+    }
+    private void OnUnitDeath(UnitController deadUnit)
+    {
+        Debug.Log($"检测到单位死亡: {deadUnit.name}");
+
+        // 更新死亡角色的卡片
+        UpdateDeadUnitCard(deadUnit);
+
+        // 如果当前控制的角色死亡，切换到下一个存活角色
+        if (currentController == deadUnit)
+        {
+            FindNextAlivePlayer();
+        }
+
+        // 检查游戏是否结束（所有玩家死亡）
+        CheckGameOver();
+    }
+    private void UpdateDeadUnitCard(UnitController deadUnit)
+    {
+        int deadIndex = System.Array.IndexOf(unitControllers, deadUnit);
+        if (deadIndex >= 0 && deadIndex < playerCards.Count)
+        {
+            GameObject card = playerCards[deadIndex];
+            if (card != null)
+            {
+                // 改变卡片颜色为灰色
+                Image cardImage = card.GetComponent<Image>();
+                if (cardImage != null)
+                {
+                    cardImage.color = deadCardColor;
+                }
+
+                // 改变卡片上所有文本颜色
+                TextMeshProUGUI[] texts = card.GetComponentsInChildren<TextMeshProUGUI>();
+                foreach (var text in texts)
+                {
+                    text.color = deadCardColor;
+                }
+
+                // 禁用卡片的交互（如果有）
+                Button button = card.GetComponent<Button>();
+                if (button != null)
+                {
+                    button.interactable = false;
+                }
+
+                Debug.Log($"已更新死亡单位 {deadUnit.name} 的卡片外观");
+            }
+        }
+    }
+
+    private void CheckGameOver()
+    {
+        bool allDead = true;
+        foreach (var unit in unitControllers)
+        {
+            if (unit != null && !unit.IsDead())
+            {
+                allDead = false;
+                break;
+            }
+        }
+
+        if (allDead)
+        {
+            Debug.Log("所有玩家都已死亡，游戏结束");
+            HandleGameOver();
+        }
+    }
+    private void FindNextAlivePlayer()
+    {
+        foreach (var unit in unitControllers)
+        {
+            if (unit != null && !unit.IsDead() && unit.isActive)
+            {
+                ChangePlayer(unit);
+                Debug.Log($"自动切换到存活角色: {unit.name}");
+                return;
+            }
+        }
+
+        // 如果没有存活的玩家
+        Debug.Log("没有存活的玩家可以切换");
+        HandleGameOver();
+    }
+
+
+    private void HandleGameOver()
+    {
+        // 显示游戏结束界面
+        // 重新开始游戏或返回主菜单
+        // Gameover.gameObject.setactive(true);
     }
 
     public void StartPlayerTurn()
     {
-        
         FindAnyObjectByType<NextTurnButton>().RestoreButton();
 
-        foreach (var uc in unitControllers)
+        // 只重置存活角色的行动点
+        foreach (var unitController in unitControllers)
         {
-            uc.RecoverActionPoint();
+            if (unitController != null && !unitController.IsDead())
+            {
+                unitController.RecoverActionPoint();
+            }
         }
 
-        ChangePlayer(unitControllers[0]);
-        UpdateCardSelectionUI(unitControllers[0]);
+        // 查找第一个存活的玩家
+        UnitController firstAlivePlayer = null;
+        foreach (var unit in unitControllers)
+        {
+            if (unit != null && !unit.IsDead() && unit.isActive)
+            {
+                firstAlivePlayer = unit;
+                break;
+            }
+        }
 
+        if (firstAlivePlayer != null)
+        {
+            ChangePlayer(firstAlivePlayer);
+            UpdateCardSelectionUI(firstAlivePlayer);
+        }
+        else
+        {
+            HandleGameOver();
+        }
+
+        // 清空护盾（只对存活玩家）
         foreach (UnitController player in FindObjectsOfType<UnitController>())
         {
-            player.shield = 0;
-            player.healthSystem.SetShield(0);
+            if (!player.IsDead())
+            {
+                player.shield = 0;
+                player.healthSystem.SetShield(0);
+            }
         }
 
-        Debug.Log("🎯 玩家回合开始");
+        Debug.Log("Player Turn Started!");
     }
 
     private IEnumerator RunTurnLoop()
@@ -361,6 +510,20 @@ public class TurnManager : MonoBehaviour
                 //    tween.DOPause();
                 //}
 
+            }
+        }
+    }
+    private void OnDestroy()
+    {
+        foreach (var unit in unitControllers)
+        {
+            if (unit != null)
+            {
+                HealthSystem healthSystem = unit.GetComponent<HealthSystem>();
+                if (healthSystem != null)
+                {
+                    healthSystem.OnDeath -= OnUnitDeath;
+                }
             }
         }
     }

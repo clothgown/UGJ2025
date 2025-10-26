@@ -17,6 +17,7 @@ public class UnitController : MonoBehaviour
     public float currentHealth;
 
     [Header("Combat")]
+
     public int attackRange = 1;    // ������Χ���������� 1 ��
     public float attackDamage = 5f;
     public float meleeMultiplier = 1f;   
@@ -68,6 +69,9 @@ public class UnitController : MonoBehaviour
     public VisualEffect Attack1;
     public VisualEffect Cure;
 
+    [Header("死亡效果")]
+    public Color deadColor = new Color(0.3f, 0.3f, 0.3f, 1f);
+
     public int attackType = -1;
 
     public GameGrid currentGrid;
@@ -98,12 +102,17 @@ public class UnitController : MonoBehaviour
             }
             IsoGrid2D.instance.currentPlayerGrid = gridComp;
         }
-
-        currentHealth = maxHealth;
-        healthSystem.SetMaxHealth(maxHealth);
-        healthSystem.SetMaxShield(10f);
-        healthSystem.SetShield(shield);
-        //PlayerSwitchManager.instance.currentUnitController = this;
+        healthSystem = GetComponent<HealthSystem>();
+        if (healthSystem != null)
+        {
+            // 订阅死亡事件
+            
+            currentHealth = maxHealth;
+            healthSystem.SetMaxHealth(maxHealth);
+            healthSystem.SetMaxShield(10f);
+            healthSystem.SetShield(shield);
+            //PlayerSwitchManager.instance.currentUnitController = this;
+        }
     }
 
     private void Update()
@@ -115,12 +124,49 @@ public class UnitController : MonoBehaviour
 
     }
 
+    private void OnUnitDeath()
+    {
+        // 设置单位不可用
+        isActive = false;
 
+        // 停止所有移动和攻击
+        StopAllCoroutines();
+        isMoving = false;
+
+        // 清除格子占用
+        if (startGrid != null)
+        {
+            var gridComp = startGrid.GetComponent<GameGrid>();
+            if (gridComp != null)
+            {
+                gridComp.isOccupied = false;
+                gridComp.occupiedPlayer = null;
+            }
+        }
+
+        // 如果有死亡动画，播放它
+        // PlayDeathAnimation();
+
+        Debug.Log($"单位 {name} 已死亡，不再可操作");
+    }
+
+    // 检查单位是否死亡
+    public bool IsDead()
+    {
+        return healthSystem != null && healthSystem.IsDead;
+    }
+
+    // 在移动和攻击前检查死亡状态
     public void Move()
     {
         if (IsoGrid2D.instance.isWaitingForGridClick) return;
         if (actionPoints <= 0) return;
         IsoGrid2D.instance.HighlightMoveRange(startPoint, moveRange);
+        if (IsDead())
+        {
+            Debug.Log("单位已死亡，无法移动");
+            return;
+        }
     }
 
     public void MoveToGrid(GameGrid targetGrid)
@@ -320,6 +366,11 @@ public class UnitController : MonoBehaviour
     }
     public void Attack(GameGrid targetGrid)
     {
+        if (IsDead())
+        {
+            Debug.Log("单位已死亡，无法攻击");
+            return;
+        }
         EnemyUnit enemy = targetGrid.GetComponentInChildren<EnemyUnit>();
         if (enemy != null)
         {
@@ -330,6 +381,7 @@ public class UnitController : MonoBehaviour
             enemy.TakeDamage(attackDamage);
            
         }
+        
     }
 
     public void TeleportToGrid(GameGrid targetGrid)
@@ -444,7 +496,19 @@ public class UnitController : MonoBehaviour
             Debug.LogWarning("VisualEffect组件未分配");
         }
     }
-    
+    public void SetDeadAppearance()
+    {
+        // 改变角色精灵颜色
+        if (sr != null)
+        {
+            sr.color = deadColor;
+        }
+
+        // 停止所有VFX
+        if (MoveVFX != null) MoveVFX.Stop();
+        if (RunOutActionPoint != null) RunOutActionPoint.Stop();
+        // 停止其他VFX...
+    }
     private void UpdateDirectionSprite(Vector2Int from, Vector2Int to)
     {
         Vector2Int dir = to - from;
@@ -521,6 +585,7 @@ public class UnitController : MonoBehaviour
             }
         }
     }
+    
 
 }
 
