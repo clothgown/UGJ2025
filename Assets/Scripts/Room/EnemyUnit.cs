@@ -45,6 +45,8 @@ public class EnemyUnit : MonoBehaviour
     public VisualEffect Attacked;
     public VisualEffect Dizzy;
 
+    public bool isMaid = false;
+    
     private void Start()
     {
         if (Attacked != null)
@@ -55,7 +57,15 @@ public class EnemyUnit : MonoBehaviour
         // 初始化敌人的位置
         if (IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y) != null)
         {
-            startGrid = IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y);
+            if(IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y).GetComponent<GameGrid>().occupiedPlayer != null)
+            {
+                startGrid = IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y-1);
+            }
+            else
+            {
+                startGrid = IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y);
+            }
+            
             var gridComp = startGrid.GetComponent<GameGrid>();
 
             gridComp.isOccupied = true;
@@ -67,7 +77,8 @@ public class EnemyUnit : MonoBehaviour
             //同步敌人 SpriteRenderer 层级
             if (sr != null)
             {
-                int sortingOrder = startPoint.x + startPoint.y;
+                
+                int sortingOrder = startGrid.GetComponent<GameGrid>().gridPos.x + startGrid.GetComponent<GameGrid>().gridPos.y;
                 sr.sortingOrder = -sortingOrder + 2; // +2 确保比格子高
             }
         }
@@ -483,6 +494,10 @@ public class EnemyUnit : MonoBehaviour
             grid.currentEnemy = null;
         }
         Debug.Log($"敌人死亡: {name}");
+        if(isMaid)
+        {
+            TurnManager.instance.isMaidDead = true;
+        }
         Destroy(gameObject);
     }
 

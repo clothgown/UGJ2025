@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class DeckManager : MonoBehaviour
@@ -48,6 +49,8 @@ public class DeckManager : MonoBehaviour
                 return null;
             }
         }
+
+
 
         CardData drawnCard = deck[0];
         deck.RemoveAt(0);

@@ -40,6 +40,8 @@ public class GameGrid : MonoBehaviour
     public Color waterColor = new Color(0f, 0.5f, 1f, 0.8f);
     public Color oilColor = new Color(0.3f, 0.3f, 0.3f, 0.8f);
 
+    public bool isLeaveGrid = false;
+    public Color LeaveColor = new Color(00f, 0.5f, 0f, 0.8f);
     private void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
@@ -83,7 +85,11 @@ public class GameGrid : MonoBehaviour
         selectGrid.enabled = false;
         IsoGrid2D.instance.currentSelectedGrid = null;
     }
-    public void SetColor(Color color) => rend.color = color;
+    public void SetColor(Color color)
+    {
+        if (isLeaveGrid) return;
+        rend.color = color;
+    }
     public void ResetColor() => rend.color = originalColor;
     void OnMouseDown()
     {
@@ -151,6 +157,15 @@ public class GameGrid : MonoBehaviour
                     FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
                     IsoGrid2D.instance.ResetWaiting();
                     return;
+                }
+                else if(playerController.isNextAttackDouble)
+                {
+                    UnitController playerToHeal = this.occupiedPlayer;
+                    playerToHeal.Heal(playerController.healPoint*2);
+                    playerController.RecoverState();
+                    FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+                    FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                    IsoGrid2D.instance.ResetWaiting();
                 }
                 else
                 {
@@ -288,6 +303,12 @@ public class GameGrid : MonoBehaviour
     // 根据状态刷新外观
     public void UpdateGridAppearance()
     {
+        if (isLeaveGrid == true)
+        {
+            originalColor = normalColor;
+            stateGrid.color = normalColor;
+            return;
+        }
         switch (currentState)
         {
             case GridState.None:

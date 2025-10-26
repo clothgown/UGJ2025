@@ -35,12 +35,17 @@ public class ExplorationManager : MonoBehaviour
         FindExplorationOnlyItems();
     }
 
+    private void Update()
+    {
+
+    }
     // 开始探索模式
     public void StartExploration()
     {
         isExplorationMode = true;
         Debug.Log("进入探索模式");
 
+            
         // 隐藏战斗UI
         HideBattleUI();
 
@@ -63,6 +68,17 @@ public class ExplorationManager : MonoBehaviour
         {
             IsoGrid2D.instance.controller = TurnManager.instance.currentController.gameObject;
         }
+
+        UnitController[] unitControllers = FindObjectsOfType<UnitController>();
+        foreach (UnitController unitController in unitControllers)
+        {
+            if (unitController.transform.name == "Player")
+            {
+                Debug.Log(1);
+                unitController.Move();
+            }
+        }
+
     }
 
     // 结束探索模式

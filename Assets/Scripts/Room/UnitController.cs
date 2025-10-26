@@ -187,8 +187,9 @@ public class UnitController : MonoBehaviour
     // 在移动和攻击前检查死亡状态
     public void Move()
     {
+        if (FindAnyObjectByType<DialogueSystem>().isDialoguing == true) return;
         if (IsoGrid2D.instance.isWaitingForGridClick) return;
-
+        if(actionPoints == 0) return;
         IsoGrid2D.instance.HighlightMoveRange(startPoint, moveRange);
         if (IsDead())
         {

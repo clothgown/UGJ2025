@@ -195,6 +195,7 @@ public class CardVisual : MonoBehaviour
 
     private void BeginDrag(Card card)
     {
+        if (TurnManager.instance.currentController.isMoving == true) return;
         if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         if (cardAssetsPreview != null)
             cardAssetsPreview.SetActive(false);
@@ -203,8 +204,7 @@ public class CardVisual : MonoBehaviour
             if(cards.cardVisual.cardAssetsPreview!=null)
             {
                 cards.cardVisual.cardAssetsPreview.SetActive(false);
-            }
-            
+            } 
         }
             
         if (scaleAnimations)
@@ -252,14 +252,22 @@ public class CardVisual : MonoBehaviour
 
     private void PointerEnter(Card card)
     {
+        foreach (Card cards in horizontalCardHolder.cards)
+        {
+            if (cards.cardVisual.cardAssetsPreview != null)
+            {
+                cards.cardVisual.cardAssetsPreview.SetActive(false);
+            }
+        }
+        if (cardAssetsPreview != null)
+            cardAssetsPreview.SetActive(true);
+        if (TurnManager.instance.currentController.isMoving == true) return;
         if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         if (scaleAnimations)
             transform.DOScale(scaleOnHover, scaleTransition).SetEase(scaleEase);
 
         DOTween.Kill(2, true);
         shakeParent.DOPunchRotation(Vector3.forward * hoverPunchAngle, hoverTransition, 20, 1).SetId(2);
-        if (cardAssetsPreview != null)
-            cardAssetsPreview.SetActive(true);
         if (TurnManager.instance.currentController.isMoving)
             return;
 
@@ -295,20 +303,21 @@ public class CardVisual : MonoBehaviour
     {
         if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         if (horizontalCardHolder.isDraging) return;
+        if (TurnManager.instance.currentController.isMoving == true) return;
         if (!parentCard.wasDragged)
         {
             transform.DOScale(1, scaleTransition).SetEase(scaleEase);
         }
         if (cardAssetsPreview != null)
             cardAssetsPreview.SetActive(false);
-        if (TurnManager.instance.currentController.isMoving) return;
         TurnManager.instance.ChangePlayer(TurnManager.instance.currentController);
 
     }
 
     private void PointerUp(Card card, bool longPress)
     {
-        if(scaleAnimations)
+        if (TurnManager.instance.currentController.isMoving == true) return;
+        if (scaleAnimations)
             transform.DOScale(longPress ? scaleOnHover : scaleOnSelect, scaleTransition).SetEase(scaleEase);
         canvas.overrideSorting = false;
 
@@ -318,7 +327,8 @@ public class CardVisual : MonoBehaviour
 
     private void PointerDown(Card card)
     {
-        if(scaleAnimations)
+        if (TurnManager.instance.currentController.isMoving == true) return;
+        if (scaleAnimations)
             transform.DOScale(scaleOnSelect, scaleTransition).SetEase(scaleEase);
             
         visualShadow.localPosition += (-Vector3.up * shadowOffset);

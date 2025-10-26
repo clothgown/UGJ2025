@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [Serializable]
@@ -352,7 +353,17 @@ public class DialogueSystem : MonoBehaviour
 
                 // 对话结束后检查队列
                 isDialoguing = false;
+                Scene currentScene = SceneManager.GetActiveScene();
+                string sceneName = currentScene.name;
+                if (sceneName == "1-0" && battleDialogDataFile.name == "1-0-talk2")
+                {
+                    FindAnyObjectByType<NextSceneManager>().EnemySpawn();
+                }
                 CheckDialogQueue();
+
+
+
+
             });
         }
         else

@@ -65,10 +65,7 @@ public class HorizontalCardHolder : MonoBehaviour
 
     public IEnumerator DrawNewCard()
     {
-        if(cards.Count >= startingHandSize)
-        {
-            yield break;
-        }
+        
         CardData data = DeckManager.instance.DrawCard();
         if (data == null) yield break;
 
@@ -257,6 +254,10 @@ public class HorizontalCardHolder : MonoBehaviour
 
     public void DrawCardAndUpdate()
     {
+        if (cards.Count > startingHandSize)
+        {
+            return;
+        }
         StartCoroutine(DrawNewCard());
         // ¸üĞÂÏÔÊ¾
         foreach (var c in cards)

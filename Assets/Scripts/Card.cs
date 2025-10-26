@@ -88,6 +88,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
+        if(TurnManager.instance.currentController.isMoving == true) return;
         BeginDragEvent.Invoke(this);
         SoundManager.Instance.PlaybegindragAudio();
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

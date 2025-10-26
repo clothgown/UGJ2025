@@ -45,6 +45,7 @@ public class TurnManager : MonoBehaviour
 
     [Header("探索模式")]
     public ExplorationManager explorationManager;
+    public bool isMaidDead = false;
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -91,8 +92,9 @@ public class TurnManager : MonoBehaviour
     {
 
         enemies = FindObjectsOfType<EnemyUnit>();
-        if (phase == TurnPhase.PlayerTurn && enemies.Length == 0 && !isWin && !isCheckingForWin)
+        if (phase == TurnPhase.PlayerTurn && enemies.Length == 0 && !isWin && !isCheckingForWin && isMaidDead == true)
         {
+            
             isCheckingForWin = true;
             Debug.Log($"检测到所有敌人被消灭，准备进入探索模式");
             StartCoroutine(HandleVictory());
