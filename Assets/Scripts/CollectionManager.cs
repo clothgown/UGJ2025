@@ -8,6 +8,7 @@ public class CollectionManager : MonoBehaviour
     public static CollectionManager instance;
     public int coins=0;
     public TextMeshProUGUI coinText;
+    public int thisLevelGetCoins;
     private void Awake()
     {
         if (instance == null)
@@ -35,6 +36,9 @@ public class CollectionManager : MonoBehaviour
     public void AddCoin(int coin)
     {
         coins += coin;
-        coinText.text = coins.ToString();
+        if(FindAnyObjectByType<NextSceneManager>()!=null)
+        {
+            thisLevelGetCoins += coin;
+        }
     }
 }

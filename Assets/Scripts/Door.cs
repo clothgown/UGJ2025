@@ -15,6 +15,8 @@ public class Door : MonoBehaviour
     private GameObject instantiatedPanel; // 生成的面板实例
     public Canvas canvas;
 
+    
+
     private void Start()
     {
         allUnits = FindObjectsOfType<UnitController>();
