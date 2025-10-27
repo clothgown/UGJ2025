@@ -823,12 +823,16 @@ MonoBehaviour:
   cornerA: {x: 3, y: 15}
   cornerB: {x: 5, y: 15}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &220085366
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -980,12 +984,16 @@ MonoBehaviour:
   cornerA: {x: 5, y: 12}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &323226894
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2517,12 +2525,16 @@ MonoBehaviour:
   cornerA: {x: 1, y: 22}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &881351960
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2809,12 +2821,16 @@ MonoBehaviour:
   cornerA: {x: 2, y: 11}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &973679638 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1844952570015235914, guid: 9e8ee9de506dfc94dbdbc4a0209db3d8, type: 3}
@@ -2926,12 +2942,16 @@ MonoBehaviour:
   cornerA: {x: 7, y: 1}
   cornerB: {x: 7, y: 1}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &992588194
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3941,12 +3961,16 @@ MonoBehaviour:
   cornerA: {x: 7, y: 2}
   cornerB: {x: 7, y: 4}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &1143168900
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5177,6 +5201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coins: 0
   coinText: {fileID: 0}
+  thisLevelGetCoins: 0
 --- !u!4 &1488886200
 Transform:
   m_ObjectHideFlags: 0
@@ -5601,6 +5626,111 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 17363233}
   m_SourcePrefab: {fileID: 100100000, guid: fbe251e132bfda44c9b7b5cb06aa0838, type: 3}
+--- !u!1001 &1628551352
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Bool.m_Array.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Bool.m_Array.Array.data[1].m_Name
+      value: New bool
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Bool.m_Array.Array.data[1].m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Name
+      value: positionrandom
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Bool.m_Array.Array.data[0].m_Overridden
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Bool.m_Array.Array.data[1].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.w
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
+      value: 3.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817178165205856587, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Overridden
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352015326094791446, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305949641952503861, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
+      propertyPath: m_Name
+      value: attacked
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2ea790227a541c9408a7c6e0bcba0f5c, type: 3}
 --- !u!1 &1629240013
 GameObject:
   m_ObjectHideFlags: 0
@@ -6308,12 +6438,16 @@ MonoBehaviour:
   cornerA: {x: 7, y: 5}
   cornerB: {x: 7, y: 5}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &1852614199
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7187,12 +7321,16 @@ MonoBehaviour:
   cornerA: {x: 2, y: 13}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &1999823516
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7316,6 +7454,8 @@ MonoBehaviour:
   isWaitingForGridClick: 0
   waitingCard: {fileID: 0}
   gridStateToChange: 0
+  isExploreScene: 0
+  exploringSceneName: 
 --- !u!4 &2058402606
 Transform:
   m_ObjectHideFlags: 0
@@ -7364,11 +7504,20 @@ MonoBehaviour:
   currentController: {fileID: 1163970352}
   phase: 0
   turnIndex: 1
-  enemyUnit: {fileID: 0}
   playerCardHolder: {fileID: 1069790414}
-  actionPoints: 0
   actionPointText: {fileID: 1835330197}
   unitControllers: []
+  playerCards: []
+  deadCardColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.7}
+  aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
+  enemies: []
+  isWin: 0
+  Gameover: {fileID: 0}
+  criticalCharacters: []
+  gameOverOnCriticalDeath: 1
+  explorationManager: {fileID: 0}
+  isMaidDead: 0
+  allowDirectExploration: 1
 --- !u!4 &2069185591
 Transform:
   m_ObjectHideFlags: 0
@@ -8044,12 +8193,16 @@ MonoBehaviour:
   cornerA: {x: 3, y: 19}
   cornerB: {x: 5, y: 22}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -8073,3 +8226,4 @@ SceneRoots:
   - {fileID: 1396156511}
   - {fileID: 1999823517}
   - {fileID: 323226895}
+  - {fileID: 1628551352}
