@@ -196,7 +196,7 @@ public class TurnManager : MonoBehaviour
         IsoGrid2D.instance.ClearHighlight();
         currentController = player;
         IsoGrid2D.instance.controller = player.gameObject;
-        IsoGrid2D.instance.currentPlayerGrid = player.startGrid.GetComponent<GameGrid>();
+        IsoGrid2D.instance.currentPlayerGrid = player.currentGrid;
 
         // 更新全局行动点显示
         UpdateActionPointUI(player.actionPoints);
@@ -324,7 +324,11 @@ public class TurnManager : MonoBehaviour
 
     public void HandleGameOver()
     {
-        Gameover.gameObject.SetActive(true);
+        if(Gameover!= null)
+        {
+            Gameover.gameObject.SetActive(true);
+        }
+
     }
 
     public void StartPlayerTurn()
@@ -394,6 +398,7 @@ public class TurnManager : MonoBehaviour
                     break;
 
                 case TurnPhase.EnemyTurn:
+                    Debug.Log(1);
                     // 进入敌人回合前再次检查
                     enemies = FindObjectsOfType<EnemyUnit>();
                     if (enemies.Length == 0 && !isWin && !explorationTriggered)
@@ -517,7 +522,6 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator EnemyTurn()
     {
-        // 再次检查敌人数组
         enemies = FindObjectsOfType<EnemyUnit>();
         if (enemies.Length == 0)
         {
@@ -526,9 +530,10 @@ public class TurnManager : MonoBehaviour
         }
 
         bool hasEnemyActed = false;
+
         foreach (var enemy in enemies)
         {
-            if (enemy == null) continue;
+            if (enemy == null || enemy.IsDead()) continue;
 
             if (enemy.isDizziness)
             {
@@ -538,13 +543,16 @@ public class TurnManager : MonoBehaviour
             }
 
             Debug.Log($"敌人 {enemy.name} 开始行动");
-            enemy.ChasePlayer();
             hasEnemyActed = true;
-            yield return new WaitForSeconds(1.5f);
+
+            // ✅ 等待敌人行动完成
+            yield return StartCoroutine(enemy.ChasePlayerRoutine());
+
+            // 给一点间隔让玩家看清楚
+            yield return new WaitForSeconds(0.5f);
             SoundManager.Instance.PlaychangeturnAudio();
         }
 
-        // 如果没有敌人行动，立即结束回合
         if (!hasEnemyActed)
         {
             yield return new WaitForSeconds(0.5f);
@@ -552,6 +560,7 @@ public class TurnManager : MonoBehaviour
 
         Debug.Log("敌人回合结束");
     }
+
 
     // ✅ 重载方法：支持从UnitController调用
     public void UpdateActionPointUI(UnitController controller)

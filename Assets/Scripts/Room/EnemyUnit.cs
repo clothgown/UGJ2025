@@ -673,6 +673,80 @@ public class EnemyUnit : MonoBehaviour
         StartCoroutine(FollowPathWithCallback(path, onComplete));
     }
 
+    public IEnumerator ChasePlayerRoutine()
+    {
+        // Passive: 第一次被攻击前不行动
+        if (enemyType == EnemyType.Passive && !hasBeenAttacked)
+        {
+            Debug.Log("Passive enemy is not active yet.");
+            yield break;
+        }
+
+        // 选择目标玩家
+        ChooseNearestPlayer();
+        if (targetPlayer == null) yield break;
+
+        Vector2Int playerPos = targetPlayer.currentGridPos;
+        int dist = Mathf.Abs(playerPos.x - startPoint.x) + Mathf.Abs(playerPos.y - startPoint.y);
+        int attackRadius = (enemyType == EnemyType.Passive) ? 4 : 1;
+
+        // ---------------- Normal 敌人逻辑 ----------------
+        if (enemyType == EnemyType.Normal)
+        {
+            if (dist <= attackRadius)
+            {
+                AttackPlayer();
+                yield return new WaitForSeconds(0.5f);
+                yield break;
+            }
+
+            List<GameGrid> path = IsoGrid2D.instance.FindPath(startPoint, playerPos);
+            if (path == null || path.Count == 0)
+            {
+                Debug.Log("Normal enemy: No valid path to player.");
+                yield break;
+            }
+
+            int steps = Mathf.Min(moveRange, path.Count - 1);
+            List<GameGrid> limitedPath = path.GetRange(0, steps);
+
+            yield return StartCoroutine(FollowPath(limitedPath)); // ✅ 等待移动完成
+            yield break;
+        }
+
+        // ---------------- Passive 敌人逻辑 ----------------
+        if (enemyType == EnemyType.Passive)
+        {
+            if (dist <= attackRadius)
+            {
+                AttackPlayer();
+                yield return new WaitForSeconds(0.5f);
+                yield break;
+            }
+
+            List<GameGrid> path = IsoGrid2D.instance.FindPath(startPoint, playerPos);
+            List<GameGrid> movePath = new List<GameGrid>();
+
+            if (path != null && path.Count > 0)
+            {
+                int stopIndex = Mathf.Max(0, path.Count - attackRadius - 1);
+                stopIndex = Mathf.Min(stopIndex, moveRange);
+                movePath = path.GetRange(0, Mathf.Min(path.Count, stopIndex + 1));
+            }
+
+            if (movePath.Count > 0)
+            {
+                yield return StartCoroutine(FollowPathThenAttack(movePath)); // ✅ 等待移动+攻击完成
+            }
+            else
+            {
+                Debug.Log("Passive enemy: no valid path or move needed, staying in place.");
+                yield return new WaitForSeconds(0.3f);
+            }
+        }
+    }
+
+
     /// <summary>
     /// 协程：沿路径移动敌人，每格更新占用和Sprite朝向
     /// </summary>

@@ -1,4 +1,4 @@
-using Cinemachine;
+ï»¿using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +6,15 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     public static CameraMove instance;
-    public CinemachineVirtualCamera virtualCamera; // ĞéÄâÉãÏñ»ú
-    public float moveSpeed = 2f;                   // ÒÆ¶¯ËÙ¶È
-    public float offsetLimit = 5f;                 // Ïà¶Ô³õÊ¼offsetµÄ×î´óÆ«ÒÆ
-    public float returnSpeed = 5f;                 // ·µ»Ø³õÊ¼offsetµÄÆ½»¬ËÙ¶È
+
+    [Header("åŸºç¡€è®¾ç½®")]
+    public CinemachineVirtualCamera virtualCamera; // è™šæ‹Ÿæ‘„åƒæœº
+    public float moveSpeed = 2f;                   // åç§»ç§»åŠ¨é€Ÿåº¦
+    public float offsetLimit = 5f;                 // æœ€å¤§åç§»é™åˆ¶
+    public float returnSpeed = 5f;                 // è¿”å›åˆå§‹ offset çš„å¹³æ»‘é€Ÿåº¦
 
     private CinemachineTransposer transposer;
-    private Vector3 initialOffset;  // ³õÊ¼offset
+    private Vector3 initialOffset;  // åˆå§‹ offset
     private Vector3 currentOffset;
     private Transform currentTarget;
 
@@ -22,66 +24,72 @@ public class CameraMove : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
     void Start()
     {
+        if (virtualCamera == null)
+        {
+            Debug.LogError("æœªç»‘å®š CinemachineVirtualCameraï¼");
+            return;
+        }
+
         transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-        initialOffset = transposer.m_FollowOffset; // ¼ÇÂ¼³õÊ¼offset
+        initialOffset = transposer.m_FollowOffset; // è®°å½•åˆå§‹ offset
         currentOffset = initialOffset;
-        currentTarget = virtualCamera.Follow;      // ¼ÇÂ¼³õÊ¼¸úËæ¶ÔÏó
+        currentTarget = virtualCamera.Follow;      // è®°å½•åˆå§‹è·Ÿéšå¯¹è±¡
     }
 
     void Update()
     {
-        //// »ñÈ¡ÊäÈë
+        if (transposer == null) return;
+
+        // è·å–è¾“å…¥ï¼ˆç®­å¤´é”® / WASDï¼‰
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
-        // ¼ì²éÊÇ·ñÓĞÊäÈë
+        // æ£€æŸ¥æ˜¯å¦æœ‰è¾“å…¥
         if (moveX != 0f || moveY != 0f)
         {
-            Debug.Log(1);
-          // ¼ÆËãÒÆ¶¯Á¿
+            // è®¡ç®—åç§»ç§»åŠ¨
             currentOffset += new Vector3(moveX, moveY, 0f) * moveSpeed * Time.deltaTime;
 
-            // ¸ù¾İ³õÊ¼offset¼ÆËã¶¯Ì¬±ß½ç
-           currentOffset.x = Mathf.Clamp(currentOffset.x, initialOffset.x - offsetLimit, initialOffset.x + offsetLimit);
-           currentOffset.y = Mathf.Clamp(currentOffset.y, initialOffset.y - offsetLimit, initialOffset.y + offsetLimit);
+            // é™åˆ¶åç§»èŒƒå›´
+            currentOffset.x = Mathf.Clamp(currentOffset.x, initialOffset.x - offsetLimit, initialOffset.x + offsetLimit);
+            currentOffset.y = Mathf.Clamp(currentOffset.y, initialOffset.y - offsetLimit, initialOffset.y + offsetLimit);
         }
         else
         {
-            // ÎŞÊäÈëÊ±Æ½»¬·µ»Ø³õÊ¼offset
-            
+            // âœ… æ— è¾“å…¥æ—¶å¹³æ»‘å›å½’åˆå§‹ offset
+            currentOffset = Vector3.Lerp(currentOffset, initialOffset, returnSpeed * Time.deltaTime);
         }
 
-        // Ó¦ÓÃoffset
+        // åº”ç”¨ offset åˆ°ç›¸æœº
         transposer.m_FollowOffset = currentOffset;
     }
 
     /// <summary>
-    /// ¶¯Ì¬ÇĞ»»¸úËæ¶ÔÏó
+    /// åŠ¨æ€åˆ‡æ¢è·Ÿéšå¯¹è±¡
     /// </summary>
-    /// <param name="target">ĞÂµÄ¸úËæÄ¿±ê</param>
     public void ChangeFollow(GameObject target)
     {
         if (target != null)
         {
             virtualCamera.Follow = target.transform;
             currentTarget = target.transform;
-            
-            // ¿ÉÑ¡£ºÇĞ»»Ä¿±êÊ±ÖØÖÃÆ«ÒÆ
+
+            // å¯é€‰ï¼šåˆ‡æ¢ç›®æ ‡æ—¶é‡ç½®åç§»
             currentOffset = initialOffset;
         }
     }
 
     /// <summary>
-    /// »ñÈ¡µ±Ç°¸úËæ¶ÔÏó
+    /// è·å–å½“å‰è·Ÿéšå¯¹è±¡
     /// </summary>
     public Transform GetCurrentFollow()
     {

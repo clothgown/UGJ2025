@@ -210,11 +210,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18589c4eb25fbc84e87729b7d8fe580c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogDataFile: {fileID: 4900000, guid: fcbade3c74d6e6d44bca28be70cb10af, type: 3}
-  isHealthDialogue: 1
-  TrigerHealth: 0
-  enemyUnit: {fileID: 13367891}
-  isTrigger: 0
+  dialogDataFile: {fileID: 0}
+  triggerType: 0
+  onlyTriggerOnce: 1
+  healthThreshold: 0
+  targetAlly: {fileID: 0}
+  targetEnemy: {fileID: 0}
+  turnNumber: 1
+  customEventName: 
+  waitForCurrentDialog: 1
+  retryDelay: 1
 --- !u!114 &13367890 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5695332646528642167, guid: 892cb1b35f2f3764080733d1e6c43ff4, type: 3}
@@ -224,17 +229,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 540ca39d738685c4a95d34a3cc912eac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &13367891 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3406468419049815727, guid: 892cb1b35f2f3764080733d1e6c43ff4, type: 3}
-  m_PrefabInstance: {fileID: 303140028}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 13367886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821f1a9330ce48548bfaff0d322fc531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &22581587
@@ -407,12 +401,16 @@ MonoBehaviour:
   cornerA: {x: 8, y: 1}
   cornerB: {x: 9, y: 2}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &75060353
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,12 +619,16 @@ MonoBehaviour:
   cornerA: {x: 4, y: 7}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &91598581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1089,7 +1091,7 @@ Transform:
   m_GameObject: {fileID: 149099090}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.111998, y: 27.75, z: -8.4}
+  m_LocalPosition: {x: 16.051998, y: 27.75, z: -8.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1778,7 +1780,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: -2.2516649, y: 2.7332335}
+  m_Offset: {x: -2.4799519, y: 2.7332335}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1789,7 +1791,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 18.063942, y: 18.880194}
+  m_Size: {x: 19.956554, y: 18.880194}
   m_EdgeRadius: 0
 --- !u!66 &247979015
 CompositeCollider2D:
@@ -1830,20 +1832,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 247979014}
     m_ColliderPaths:
-    - - X: 101704584
+    - - X: 112474880
         Y: 182599952
-      - X: -169254528
+      - X: -186873440
         Y: 182599952
-      - X: -169254528
+      - X: -186873440
         Y: -100602952
-      - X: 101704584
+      - X: 112474880
         Y: -100602952
   m_CompositePaths:
     m_Paths:
-    - - {x: 10.170429, y: -10.060295}
-      - {x: 10.170429, y: 18.259995}
-      - {x: -16.925453, y: 18.259966}
-      - {x: -16.925425, y: -10.060295}
+    - - {x: 11.247458, y: -10.060295}
+      - {x: 11.247458, y: 18.259995}
+      - {x: -18.687344, y: 18.259966}
+      - {x: -18.687315, y: -10.060295}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -2639,12 +2641,16 @@ MonoBehaviour:
   cornerA: {x: 16, y: 24}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &363552616
 GameObject:
   m_ObjectHideFlags: 0
@@ -3106,12 +3112,16 @@ MonoBehaviour:
   cornerA: {x: 10, y: 23}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &456570816
 GameObject:
   m_ObjectHideFlags: 0
@@ -3326,12 +3336,16 @@ MonoBehaviour:
   cornerA: {x: 6, y: 24}
   cornerB: {x: 7, y: 24}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!4 &487392630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5822160426406325450, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}
@@ -3389,8 +3403,16 @@ MonoBehaviour:
   playerCards:
   - {fileID: 1489751350}
   - {fileID: 540617703}
+  deadCardColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.7}
+  aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
   enemies: []
   isWin: 0
+  Gameover: {fileID: 0}
+  criticalCharacters: []
+  gameOverOnCriticalDeath: 1
+  explorationManager: {fileID: 0}
+  isMaidDead: 0
+  allowDirectExploration: 1
 --- !u!4 &497699329
 Transform:
   m_ObjectHideFlags: 0
@@ -3512,12 +3534,16 @@ MonoBehaviour:
   cornerA: {x: 13, y: 20}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &540617703 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4591715456569924147, guid: 30b635dc459f0b647a748a97f093de5a, type: 3}
@@ -3941,7 +3967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 2.06, y: 0.44, z: -10}
+  m_FollowOffset: {x: 0, y: 0.44, z: -10}
   m_XDamping: 2.5
   m_YDamping: 2.5
   m_ZDamping: 2.5
@@ -4186,6 +4212,53 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2097086752}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &645265287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 7
+  m_Component:
+  - component: {fileID: 645265289}
+  - component: {fileID: 645265288}
+  m_Layer: 0
+  m_HasEditorInfo: 1
+  m_Name: AllPlayerState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &645265288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645265287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fa7ce5e6725874ca80730d44e9d871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitNames: []
+  unitHealths: []
+--- !u!4 &645265289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645265287}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 29.36011, y: 23.279137, z: 1.7183949}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &652437831 stripped
 MonoBehaviour:
@@ -4498,12 +4571,16 @@ MonoBehaviour:
   cornerA: {x: 1, y: 21}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &692093364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4987,11 +5064,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18589c4eb25fbc84e87729b7d8fe580c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogDataFile: {fileID: 4900000, guid: fcbade3c74d6e6d44bca28be70cb10af, type: 3}
-  isHealthDialogue: 1
-  TrigerHealth: 0
-  enemyUnit: {fileID: 755114672}
-  isTrigger: 0
+  dialogDataFile: {fileID: 0}
+  triggerType: 0
+  onlyTriggerOnce: 1
+  healthThreshold: 0
+  targetAlly: {fileID: 0}
+  targetEnemy: {fileID: 0}
+  turnNumber: 1
+  customEventName: 
+  waitForCurrentDialog: 1
+  retryDelay: 1
 --- !u!114 &755114671 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5695332646528642167, guid: 892cb1b35f2f3764080733d1e6c43ff4, type: 3}
@@ -5001,17 +5083,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 540ca39d738685c4a95d34a3cc912eac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &755114672 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3406468419049815727, guid: 892cb1b35f2f3764080733d1e6c43ff4, type: 3}
-  m_PrefabInstance: {fileID: 200917764}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 755114667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821f1a9330ce48548bfaff0d322fc531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &757479710
@@ -5138,12 +5209,16 @@ MonoBehaviour:
   cornerA: {x: 5, y: 12}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &762893443
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5431,6 +5506,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4578699807662169607, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
+      propertyPath: m_SortingOrder
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 4761055139602469662, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
@@ -5565,12 +5644,16 @@ MonoBehaviour:
   cornerA: {x: 2, y: 13}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &818557813
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5967,12 +6050,16 @@ MonoBehaviour:
   cornerA: {x: 5, y: 7}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!114 &880281347 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1129624056121770692, guid: 30b635dc459f0b647a748a97f093de5a, type: 3}
@@ -6053,7 +6140,7 @@ Transform:
   m_GameObject: {fileID: 887377837}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.111998, y: 27.75, z: -8.4}
+  m_LocalPosition: {x: 16.051998, y: 27.75, z: -8.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6437,12 +6524,16 @@ MonoBehaviour:
   cornerA: {x: 9, y: 11}
   cornerB: {x: 9, y: 13}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &927778853
 GameObject:
   m_ObjectHideFlags: 0
@@ -6549,12 +6640,16 @@ MonoBehaviour:
   cornerA: {x: 4, y: 10}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &952714359 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5084986422234508334, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
@@ -6970,12 +7065,16 @@ MonoBehaviour:
   cornerA: {x: 1, y: 14}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &1011775210
 GameObject:
   m_ObjectHideFlags: 0
@@ -7082,12 +7181,16 @@ MonoBehaviour:
   cornerA: {x: 8, y: 5}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &1040461867 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1824900825736178728, guid: a6f7f73a7302a0146be295805fe06a19, type: 3}
@@ -7295,7 +7398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1366507481422452203, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7350943317629776874, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_UiScaleMode
@@ -7667,12 +7770,16 @@ MonoBehaviour:
   cornerA: {x: 17, y: 22}
   cornerB: {x: 17, y: 23}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!212 &1204903332
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7850,12 +7957,16 @@ MonoBehaviour:
   cornerA: {x: 4, y: 5}
   cornerB: {x: 5, y: 6}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &1225480007
 GameObject:
   m_ObjectHideFlags: 0
@@ -8634,12 +8745,16 @@ MonoBehaviour:
   cornerA: {x: 1, y: 7}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &1387126333
 GameObject:
   m_ObjectHideFlags: 0
@@ -9038,12 +9153,16 @@ MonoBehaviour:
   cornerA: {x: 10, y: 20}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &1448425396
 GameObject:
   m_ObjectHideFlags: 0
@@ -9241,12 +9360,16 @@ MonoBehaviour:
   cornerA: {x: 4, y: 21}
   cornerB: {x: 7, y: 21}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!2083052967 &1465107284 stripped
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 3437202966844542116, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
@@ -9358,12 +9481,16 @@ MonoBehaviour:
   cornerA: {x: 9, y: 5}
   cornerB: {x: 9, y: 8}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &1489751350 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4238420088579884289, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
@@ -10165,12 +10292,16 @@ MonoBehaviour:
   cornerA: {x: 4, y: 12}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1001 &1553039872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10547,12 +10678,16 @@ MonoBehaviour:
   cornerA: {x: 4, y: 16}
   cornerB: {x: 4, y: 23}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &1652688665
 GameObject:
   m_ObjectHideFlags: 0
@@ -10691,12 +10826,16 @@ MonoBehaviour:
   cornerA: {x: 9, y: 23}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1001 &1672275248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11244,12 +11383,16 @@ MonoBehaviour:
   cornerA: {x: 5, y: 11}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &1830545466
 GameObject:
   m_ObjectHideFlags: 0
@@ -12363,12 +12506,16 @@ MonoBehaviour:
   cornerA: {x: 9, y: 15}
   cornerB: {x: 9, y: 16}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 0
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1 &2041830532
 GameObject:
   m_ObjectHideFlags: 0
@@ -12616,12 +12763,16 @@ MonoBehaviour:
   cornerA: {x: 10, y: 21}
   cornerB: {x: 11, y: 22}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
 --- !u!1001 &2100397848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12727,6 +12878,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f646e95bb4270f94886fe202beddac37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &2120965725
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2520332101505703935, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_Name
+      value: ExplorationManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: xiayihuihe
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: cardUIHolder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: shengyubushu
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: healthBarsHolder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: playerCardHolder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: stelse.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 24.542385
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 28.923883
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0054001366
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -12747,3 +12979,5 @@ SceneRoots:
   - {fileID: 762893444}
   - {fileID: 1917677430}
   - {fileID: 1138070361}
+  - {fileID: 645265289}
+  - {fileID: 2120965725}
