@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 250
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4776f3cd11bfccc419795feb4090f8d0, type: 2}
-  m_sharedMaterial: {fileID: -2943483290310905797, guid: 4776f3cd11bfccc419795feb4090f8d0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -144,6 +144,7 @@ GameObject:
   serializedVersion: 7
   m_Component:
   - component: {fileID: 8097542528505675561}
+  - component: {fileID: 333998543636658776}
   m_Layer: 5
   m_HasEditorInfo: 1
   m_Name: SHELL
@@ -161,7 +162,7 @@ RectTransform:
   m_GameObject: {fileID: 8335095885061124126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.12, y: 2.12, z: 2.12}
+  m_LocalScale: {x: 2.92, y: 2.92, z: 2.92}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4872724734249144761}
@@ -173,6 +174,19 @@ RectTransform:
   m_AnchoredPosition: {x: -409, y: 186}
   m_SizeDelta: {x: 45.41, y: 45.41}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &333998543636658776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8335095885061124126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e0ccbb855cd47e4aa8a18c5009a4651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shellText: {fileID: 1260296877107447322}
 --- !u!1 &9196508123195335427
 GameObject:
   m_ObjectHideFlags: 0

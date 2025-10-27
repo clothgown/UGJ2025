@@ -23,6 +23,7 @@ public class MapGridManager : MonoBehaviour
 {
     
     public List<string> battleSceneNames = new List<string>();
+    public List<string> bigBattleSceneNames = new List<string>();
     public static MapGridManager instance;
     public MapGrid[] grids;
     public PlayerInMap player;
