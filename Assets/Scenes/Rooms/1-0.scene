@@ -2425,6 +2425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coins: 0
   coinText: {fileID: 0}
+  thisLevelGetCoins: 0
 --- !u!4 &1488886200
 Transform:
   m_ObjectHideFlags: 0
@@ -3422,7 +3423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20eac64fab2bbfa458a6022870f13195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: 
+  nextSceneName: Map
   canChange: 0
   enemyMaid: {fileID: 1719842650}
 --- !u!4 &2050127509

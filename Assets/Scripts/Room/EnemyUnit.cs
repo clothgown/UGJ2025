@@ -46,7 +46,8 @@ public class EnemyUnit : MonoBehaviour
     public VisualEffect Dizzy;
 
     public bool isMaid = false;
-    
+
+    public int coin;
     private void Start()
     {
         if (Attacked != null)
@@ -498,6 +499,7 @@ public class EnemyUnit : MonoBehaviour
         {
             TurnManager.instance.isMaidDead = true;
         }
+        CollectionManager.instance.AddCoin(coin);
         Destroy(gameObject);
     }
 

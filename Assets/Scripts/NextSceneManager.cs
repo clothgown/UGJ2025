@@ -8,6 +8,7 @@ public class NextSceneManager : MonoBehaviour
     public string nextSceneName;
     public bool canChange;
     public EnemyUnit enemyMaid;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,12 +21,17 @@ public class NextSceneManager : MonoBehaviour
 
         if (canChange)
         {
-            if (FindAnyObjectByType<AllPlayerState>())
+            
+            if((Input.GetMouseButtonDown(0)))
             {
-                FindAnyObjectByType<AllPlayerState>().UpdateUnitStates();
+                if (FindAnyObjectByType<AllPlayerState>())
+                {
+                    FindAnyObjectByType<AllPlayerState>().UpdateUnitStates();
+                }
+                
+                SceneManager.LoadScene(nextSceneName);
             }
-
-            SceneManager.LoadScene(nextSceneName);
+            
         }
 
     }
