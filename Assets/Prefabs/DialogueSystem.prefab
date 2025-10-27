@@ -222,7 +222,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &894227919444947554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +280,7 @@ MonoBehaviour:
   nextDialogueButton: {fileID: 870674682983490014}
   skipAllButton: {fileID: 5677656240536580993}
   overlayBlock: {fileID: 0}
+  canTriggerExploration: 1
 --- !u!114 &2809308851762126491
 MonoBehaviour:
   m_ObjectHideFlags: 0
