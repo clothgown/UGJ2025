@@ -13,6 +13,10 @@ public class ExplorationManager : MonoBehaviour
     public GameObject cardUIHolder; // 卡牌UI的父对象
     public GameObject healthBarsHolder; // 血条UI的父对象
     public HorizontalCardHolder playerCardHolder; // 卡牌持有器
+    public GameObject shengyubushu; //剩余步数
+    public GameObject xiayihuihe; //管你是什么反正别显示
+    public GameObject cardaction; //管你是什么反正别显示
+    public List<GameObject> stelse; //为什么要藏的东西这么多
 
     private List<ItemInGrid> explorationOnlyItems = new List<ItemInGrid>(); // 只在探索模式下可用的物品
 
@@ -225,6 +229,23 @@ public class ExplorationManager : MonoBehaviour
         // 隐藏行动点显示
         if (TurnManager.instance != null && TurnManager.instance.actionPointText != null)
             TurnManager.instance.actionPointText.gameObject.SetActive(false);
+
+        if (shengyubushu != null)
+            shengyubushu.SetActive(false);
+
+        if (xiayihuihe != null)
+            xiayihuihe.SetActive(false);
+
+        if (cardaction != null)
+            cardaction.SetActive(false);
+
+        foreach (GameObject cardElement in stelse)
+        {
+            if (cardElement != null)
+            {
+                cardElement.SetActive(false);
+            }
+        }
     }
 
     // 显示战斗UI
@@ -241,6 +262,23 @@ public class ExplorationManager : MonoBehaviour
         // 显示行动点显示
         if (TurnManager.instance != null && TurnManager.instance.actionPointText != null)
             TurnManager.instance.actionPointText.gameObject.SetActive(true);
+
+        if (shengyubushu != null)
+            shengyubushu.SetActive(true);
+
+        if (xiayihuihe != null)
+            xiayihuihe.SetActive(true);
+
+        if (cardaction != null)
+            cardaction.SetActive(true);
+
+        foreach (GameObject cardElement in stelse)
+        {
+            if (cardElement != null)
+            {
+                cardElement.SetActive(true);
+            }
+        }
     }
 
     // 设置无限行动点

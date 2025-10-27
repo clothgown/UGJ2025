@@ -42,21 +42,7 @@ public class IsoGrid2D : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if(isExploreScene == true)
-            {
-                LevelSelectRoot.instance.SetGridManagerTrue();
-                SceneManager.LoadScene("Map");
-            }
-            else
-            {
-                if (exploringSceneName != "" && TurnManager.instance.isWin == true)
-                {
-                SceneManager.LoadScene(exploringSceneName);
-                }
-            }
-        }
+        
 
         
 

@@ -5,7 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public enum TurnPhase { PlayerTurn, EnemyTurn ,Exploration }
+public enum TurnPhase { PlayerTurn, EnemyTurn, Exploration }
 
 public class TurnManager : MonoBehaviour
 {
@@ -32,7 +32,7 @@ public class TurnManager : MonoBehaviour
     private float noselectXPosition = 890f; // 未选中卡片的X位置
     private int previousActionPoints = -1; // 记录上一次的行动点数值
 
-    public EnemyUnit[] enemies ;
+    public EnemyUnit[] enemies;
     public bool isWin = false;
 
     public static System.Action<int> OnTurnStart;
@@ -46,6 +46,11 @@ public class TurnManager : MonoBehaviour
     [Header("探索模式")]
     public ExplorationManager explorationManager;
     public bool isMaidDead = false;
+
+    [Header("探索模式触发")]
+    public bool allowDirectExploration = true; // 是否允许直接进入探索模式
+    private bool explorationTriggered = false; // 防止重复触发
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -55,7 +60,6 @@ public class TurnManager : MonoBehaviour
     private void Start()
     {
         unitControllers = FindObjectsOfType<UnitController>();
-        
 
         // 确保ExplorationManager引用
         if (explorationManager == null)
@@ -84,23 +88,87 @@ public class TurnManager : MonoBehaviour
         InitializeCardActionPoints();
 
         StartCoroutine(RunTurnLoop());
-        
+
         enemies = FindObjectsOfType<EnemyUnit>();
     }
 
     private void Update()
     {
-
         enemies = FindObjectsOfType<EnemyUnit>();
-        if (phase == TurnPhase.PlayerTurn && enemies.Length == 0 && !isWin && !isCheckingForWin && isMaidDead == true)
+
+        // 检查是否满足进入探索模式的条件
+        if (phase != TurnPhase.Exploration && !explorationTriggered && !isWin)
         {
-            
-            isCheckingForWin = true;
-            Debug.Log($"检测到所有敌人被消灭，准备进入探索模式");
-            StartCoroutine(HandleVictory());
+            if (CheckExplorationConditions())
+            {
+                explorationTriggered = true;
+                Debug.Log($"满足探索模式条件，准备进入探索模式");
+                StartCoroutine(HandleVictory());
+            }
+        }
+    }
+
+    // ✅ 新增：检查探索模式条件
+    private bool CheckExplorationConditions()
+    {
+        // 条件1：所有敌人被消灭 + 女仆死亡
+        if (enemies.Length == 0 && isMaidDead && !isCheckingForWin)
+        {
+            return true;
         }
 
+        // 条件2：如果允许直接进入探索模式，可以通过其他方式触发
+        // 这个条件可以由对话系统或其他触发器设置
+        if (allowDirectExploration && ShouldForceExploration())
+        {
+            return true;
+        }
+
+        return false;
     }
+
+    // ✅ 新增：强制进入探索模式的检查
+    private bool ShouldForceExploration()
+    {
+        // 这里可以添加其他强制进入探索模式的条件
+        // 例如：通过对话系统设置的标志、特定事件触发等
+        return false; // 默认不强制
+    }
+
+    // ✅ 新增：直接进入探索模式的公共接口
+    public void StartExplorationMode(bool forceExploration = true)
+    {
+        if (explorationTriggered || isWin) return;
+
+        Debug.Log($"直接进入探索模式，forceExploration: {forceExploration}");
+
+        if (forceExploration)
+        {
+            // 强制模式：立即进入探索模式
+            explorationTriggered = true;
+            StartCoroutine(HandleVictory());
+        }
+        else
+        {
+            // 非强制模式：设置标志，在下一帧检查
+            allowDirectExploration = true;
+        }
+    }
+
+    // ✅ 新增：设置女仆死亡状态（可以从对话系统调用）
+    public void SetMaidDead(bool dead)
+    {
+        isMaidDead = dead;
+        Debug.Log($"女仆死亡状态设置为: {dead}");
+
+        // 如果女仆死亡且没有敌人，立即检查是否可以进入探索模式
+        if (dead && enemies.Length == 0 && !explorationTriggered && !isWin)
+        {
+            explorationTriggered = true;
+            StartCoroutine(HandleVictory());
+        }
+    }
+
     // 初始化卡片行动点显示
     private void InitializeCardActionPoints()
     {
@@ -151,6 +219,7 @@ public class TurnManager : MonoBehaviour
         // 更新卡片 UI 状态
         UpdateCardSelectionUI(player);
     }
+
     private void OnUnitDeath(UnitController deadUnit)
     {
         Debug.Log($"检测到单位死亡: {deadUnit.name}");
@@ -167,6 +236,7 @@ public class TurnManager : MonoBehaviour
         // 检查游戏是否结束（所有玩家死亡）
         CheckGameOver();
     }
+
     private void UpdateDeadUnitCard(UnitController deadUnit)
     {
         int deadIndex = System.Array.IndexOf(unitControllers, deadUnit);
@@ -219,6 +289,7 @@ public class TurnManager : MonoBehaviour
             HandleGameOver();
         }
     }
+
     private void FindNextAlivePlayer()
     {
         foreach (var unit in unitControllers)
@@ -250,6 +321,7 @@ public class TurnManager : MonoBehaviour
 
         // 显示游戏结束界面
     }
+
     public void HandleGameOver()
     {
         Gameover.gameObject.SetActive(true);
@@ -324,20 +396,30 @@ public class TurnManager : MonoBehaviour
                 case TurnPhase.EnemyTurn:
                     // 进入敌人回合前再次检查
                     enemies = FindObjectsOfType<EnemyUnit>();
-                    if (enemies.Length == 0 && !isWin)
+                    if (enemies.Length == 0 && !isWin && !explorationTriggered)
                     {
-                        StartCoroutine(HandleVictory());
-                        yield break; // 退出敌人回合
+                        // 检查是否满足探索条件
+                        if (CheckExplorationConditions())
+                        {
+                            explorationTriggered = true;
+                            StartCoroutine(HandleVictory());
+                            yield break;
+                        }
                     }
 
                     yield return StartCoroutine(EnemyTurn());
 
                     // 敌人回合结束后检查
                     enemies = FindObjectsOfType<EnemyUnit>();
-                    if (enemies.Length == 0 && !isWin)
+                    if (enemies.Length == 0 && !isWin && !explorationTriggered)
                     {
-                        StartCoroutine(HandleVictory());
-                        yield break;
+                        // 检查是否满足探索条件
+                        if (CheckExplorationConditions())
+                        {
+                            explorationTriggered = true;
+                            StartCoroutine(HandleVictory());
+                            yield break;
+                        }
                     }
 
                     OnTurnEnd?.Invoke(turnIndex);
@@ -348,15 +430,26 @@ public class TurnManager : MonoBehaviour
             yield return null;
         }
     }
+    private void ClearAllPlayerVFX()
+    {
+        UnitController[] allPlayers = FindObjectsOfType<UnitController>();
+        Debug.Log($"找到 {allPlayers.Length} 个玩家单位，准备清理VFX");
 
+        foreach (UnitController player in allPlayers)
+        {
+            if (player != null && !player.IsDead())
+            {
+                player.ClearAllVFX();
+            }
+        }
 
-
-
+        Debug.Log("所有玩家VFX已清理");
+    }
     private IEnumerator HandleVictory()
     {
         isWin = true;
         Debug.Log("战斗胜利，准备进入探索模式");
-
+        ClearAllPlayerVFX();
         // 确保当前是玩家回合
         phase = TurnPhase.Exploration;
 
@@ -379,6 +472,7 @@ public class TurnManager : MonoBehaviour
         }
 
         isCheckingForWin = false;
+        explorationTriggered = false; // 重置触发标志
     }
 
     public void EndPlayerTurn()
@@ -388,10 +482,15 @@ public class TurnManager : MonoBehaviour
 
         // 检查是否还有敌人
         enemies = FindObjectsOfType<EnemyUnit>();
-        if (enemies.Length == 0 && !isWin)
+        if (enemies.Length == 0 && !isWin && !explorationTriggered)
         {
-            StartCoroutine(HandleVictory());
-            return;
+            // 检查是否满足探索条件
+            if (CheckExplorationConditions())
+            {
+                explorationTriggered = true;
+                StartCoroutine(HandleVictory());
+                return;
+            }
         }
 
         phase = TurnPhase.EnemyTurn;
@@ -645,10 +744,10 @@ public class TurnManager : MonoBehaviour
                 //    // 停止其他动画
                 //    tween.DOPause();
                 //}
-
             }
         }
     }
+
     private void OnDestroy()
     {
         foreach (var unit in unitControllers)
@@ -664,7 +763,6 @@ public class TurnManager : MonoBehaviour
         }
     }
 }
-
 
 // ✅ 状态组件，用来记录卡片当前是否选中
 public class CardFocusState : MonoBehaviour

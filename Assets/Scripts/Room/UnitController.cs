@@ -562,6 +562,65 @@ public class UnitController : MonoBehaviour
         if (RunOutActionPoint != null) RunOutActionPoint.Stop();
         // 停止其他VFX...
     }
+
+    public void ClearAllVFX()
+    {
+        Debug.Log($"清理 {name} 身上的所有VFX效果");
+
+        // 停止并隐藏所有VFX
+        if (MoveVFX != null)
+        {
+            MoveVFX.Stop();
+            MoveVFX.gameObject.SetActive(false);
+        }
+
+        if (RunOutActionPoint != null)
+        {
+            RunOutActionPoint.Stop();
+            RunOutActionPoint.gameObject.SetActive(false);
+        }
+
+        if (XN != null)
+        {
+            XN.Stop();
+            XN.gameObject.SetActive(false);
+        }
+
+        if (Attacked != null)
+        {
+            Attacked.Stop();
+            Attacked.gameObject.SetActive(false);
+        }
+
+        if (AttackedByArrow != null)
+        {
+            AttackedByArrow.Stop();
+            AttackedByArrow.gameObject.SetActive(false);
+        }
+
+        if (Attack1 != null)
+        {
+            Attack1.Stop();
+            Attack1.gameObject.SetActive(false);
+        }
+
+        if (Cure != null)
+        {
+            Cure.Stop();
+            Cure.gameObject.SetActive(false);
+        }
+
+        // 重置角色颜色状态
+        if (sr != null)
+        {
+            sr.color = Color.white;
+        }
+
+        // 重置所有攻击状态
+        RecoverState();
+
+        Debug.Log($"{name} 的VFX效果已清理完毕");
+    }
     private void UpdateDirectionSprite(Vector2Int from, Vector2Int to)
     {
         Vector2Int dir = to - from;

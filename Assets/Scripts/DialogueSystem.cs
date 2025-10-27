@@ -1,5 +1,6 @@
 ﻿using DG.Tweening; // 记得引用DoTween命名空间
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,13 +52,22 @@ public class DialogueSystem : MonoBehaviour
     public Button[] optionButtons; // Inspector 里拖 3 个按钮进来
     public TMP_Text[] optionTexts; // 每个按钮上的文字
     public bool isChoosing = false; // 是否正在显示选项中
+    private Coroutine typingCoroutine;
+    private bool isTyping;
 
     [Header("触发器支持")]
     public bool allowMultipleDialogs = false; // 是否允许多个对话同时触发
     private Queue<TextAsset> dialogQueue = new Queue<TextAsset>(); // 对话队列
 
+    [Header("点击控制")]
+    public Button nextDialogueButton; // 用于触发下一句对话的UI按钮
+    public Button skipAllButton; // 跳过所有对话的按钮
+    public Image overlayBlock;
+    [Header("探索模式集成")]
+    public bool canTriggerExploration = true; // 是否允许通过对话触发探索模式
     // 添加一个静态实例以便全局访问
     public static DialogueSystem Instance { get; private set; }
+
     void Start()
     {
         if (Instance == null)
@@ -69,6 +79,20 @@ public class DialogueSystem : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        // 初始化按钮事件
+        if (nextDialogueButton != null)
+        {
+            nextDialogueButton.onClick.RemoveAllListeners();
+            nextDialogueButton.onClick.AddListener(OnNextDialogueButtonClick);
+        }
+
+        if (skipAllButton != null)
+        {
+            skipAllButton.onClick.RemoveAllListeners();
+            skipAllButton.onClick.AddListener(SkipAllDialogues);
+        }
+
         if (dialogDataFile == null)
         {
             FadeOutUI();
@@ -102,11 +126,17 @@ public class DialogueSystem : MonoBehaviour
 
         ShowDialogue(currentIndex);
     }
+
     void Update()
-    
     {
-        // 点击鼠标左键（或触屏）时跳下一句
-        if (isLoaded && !isChoosing && Input.GetMouseButtonDown(0))
+        // 移除了原来的鼠标点击触发下一句对话的逻辑
+        // 现在只能通过UI按钮触发
+    }
+
+    // UI按钮点击事件
+    public void OnNextDialogueButtonClick()
+    {
+        if (isLoaded && !isChoosing)
         {
             NextDialogue();
         }
@@ -148,13 +178,25 @@ public class DialogueSystem : MonoBehaviour
         isDialoguing = true;
     }
 
-
     void ShowDialogue(int index)
     {
+        if (index < 0 || index >= dialogues.Count)
+        {
+            Debug.LogWarning($"对话索引超出范围: {index}");
+            FadeOutUI();
+            return;
+        }
+
         Dialogue d = dialogues[index];
         nameTMP.text = d.Speaker;
         dialogTMP.text = "";
+        if (d.Type == "Exploration" || d.Text.Contains("[探索模式]"))
+        {
+            TriggerExplorationFromDialogue();
+            return;
+        }
 
+        
         if (!string.IsNullOrEmpty(d.Condition) && !CheckCondition(d.Condition))
         {
             // 条件不满足，跳过这句对话
@@ -255,7 +297,7 @@ public class DialogueSystem : MonoBehaviour
 
     void ShowOptions(int startIndex)
     {
-        
+
         HideOptions(); // 先隐藏所有按钮
         int count = 0;
         isChoosing = true; // 进入选项状态
@@ -275,10 +317,10 @@ public class DialogueSystem : MonoBehaviour
                 optionButtons[count].onClick.RemoveAllListeners();
                 optionButtons[count].onClick.AddListener(() =>
                 {
-                    
+
                     HideOptions();
                     isChoosing = false; // 选完恢复正常点击
-                    
+
                     JumpToDialogueByID(next);
                 });
 
@@ -303,7 +345,6 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-
     void HideOptions()
     {
         foreach (var btn in optionButtons)
@@ -325,7 +366,7 @@ public class DialogueSystem : MonoBehaviour
 
         // 否则跳到下一句
         int nextIndex = dialogues[currentIndex].NextID;
-        if(nextIndex == -1)
+        if (nextIndex == -1)
         {
             Debug.Log("对话结束。");
             FadeOutUI();
@@ -343,8 +384,10 @@ public class DialogueSystem : MonoBehaviour
             isDialoguing = false;
         }
     }
+
     void FadeOutUI()
     {
+        
         if (UIGroup != null)
         {
             UIGroup.DOFade(0f, fadeDuration).OnComplete(() => {
@@ -360,10 +403,6 @@ public class DialogueSystem : MonoBehaviour
                     FindAnyObjectByType<NextSceneManager>().EnemySpawn();
                 }
                 CheckDialogQueue();
-
-
-
-
             });
         }
         else
@@ -372,6 +411,61 @@ public class DialogueSystem : MonoBehaviour
             CheckDialogQueue();
         }
     }
+    private void ClearAllPlayerVFX()
+    {
+        UnitController[] allPlayers = FindObjectsOfType<UnitController>();
+        Debug.Log($"找到 {allPlayers.Length} 个玩家单位，准备清理VFX");
+
+        foreach (UnitController player in allPlayers)
+        {
+            if (player != null && !player.IsDead())
+            {
+                player.ClearAllVFX();
+            }
+        }
+
+        Debug.Log("所有玩家VFX已清理");
+    }
+    public void TriggerExplorationFromDialogue()
+    {
+        if (!canTriggerExploration) return;
+
+        Debug.Log("从对话系统触发探索模式");
+        ClearAllEnemies();
+        ClearAllPlayerVFX();
+        // 确保TurnManager存在
+        if (TurnManager.instance != null)
+        {
+            
+
+            // 直接进入探索模式
+            TurnManager.instance.StartExplorationMode(true);
+        }
+        else
+        {
+            Debug.LogError("TurnManager instance 未找到！");
+        }
+
+        // 结束当前对话
+        ForceEndDialogue();
+    }
+
+    private void ClearAllEnemies()
+    {
+        EnemyUnit[] allEnemies = FindObjectsOfType<EnemyUnit>();
+        Debug.Log($"找到 {allEnemies.Length} 个敌人，准备清除");
+
+        foreach (EnemyUnit enemy in allEnemies)
+        {
+            if (enemy != null)
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
+
+        Debug.Log("所有敌人已清除");
+    }
+
     private void CheckDialogQueue()
     {
         if (dialogQueue.Count > 0)
@@ -383,6 +477,24 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
+    private void EnableOverlay()
+    {
+        if (overlayBlock != null)
+        {
+            overlayBlock.raycastTarget = true;
+            overlayBlock.color = new Color(0, 0, 0, 0.01f);
+        }
+    }
+
+    // 禁用覆盖层
+    private void DisableOverlay()
+    {
+        if (overlayBlock != null)
+        {
+            overlayBlock.raycastTarget = false;
+            overlayBlock.color = new Color(0, 0, 0, 0f);
+        }
+    }
     // 清空对话队列
     public void ClearDialogQueue()
     {
@@ -403,6 +515,60 @@ public class DialogueSystem : MonoBehaviour
         FadeOutUI();
         ClearDialogQueue();
     }
+
+    // 跳过所有对话
+    // 跳过所有对话
+    public void SkipAllDialogues()
+    {
+        // 检查对话系统是否正在运行，而不是只检查isDialoguing标志
+        bool hasActiveDialogues = (dialogues != null && dialogues.Count > 0) ||
+                                 isDialoguing ||
+                                 (UIGroup != null && UIGroup.gameObject.activeInHierarchy);
+
+        if (!hasActiveDialogues)
+        {
+            Debug.Log("没有可跳过的对话。");
+            return;
+        }
+
+        // 终止当前打字机效果
+        if (typingTween != null && typingTween.IsActive())
+        {
+            typingTween.Kill();
+        }
+
+        // 清除所有选项按钮
+        HideOptions();
+
+        bool hasExplorationTrigger = dialogues.Any(d => d.Type == "Exploration" || d.Text.Contains("[探索模式]"));
+        if (hasExplorationTrigger && canTriggerExploration)
+        {
+            Debug.Log("跳过对话时检测到探索模式触发");
+            TriggerExplorationFromDialogue();
+            return;
+        }   // 标记所有对话为已观看（如果对话列表存在）
+            if (dialogues != null)
+            {
+                foreach (var d in dialogues)
+                {
+                    d.IsWatched = true;
+                }
+            }
+
+            Debug.Log("已跳过所有对话。");
+
+            // 直接淡出UI并结束当前对话
+            FadeOutUI();
+
+            // 清除对话状态
+            isDialoguing = false;
+            isLoaded = false;
+            currentIndex = 0;
+
+            // 清空对话队列
+            ClearDialogQueue();
+        }
+    
     private bool CheckCondition(string condition)
     {
         if (string.IsNullOrEmpty(condition)) return true;
@@ -519,7 +685,6 @@ public class DialogueSystem : MonoBehaviour
         return false;
     }
 
-
     // ✅ 新增：检查血量条件
     // ✅ 修改：检查血量条件（使用GameObject名称）
     private bool CheckHealthCondition(string target, string conditionType)
@@ -631,12 +796,11 @@ public class DialogueSystem : MonoBehaviour
         return false;
     }
 
-   
-
     void OnClickNext()
     {
         ShowDialogue(currentID);
     }
+
     /// <summary>
     /// 加载并解析对话文本（支持逗号或制表符分隔，支持引号内含分隔符）
     /// </summary>
@@ -701,7 +865,7 @@ public class DialogueSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// 将整个文本拆为“逻辑行”，考虑引号内的换行
+    /// 将整个文本拆为"逻辑行"，考虑引号内的换行
     /// </summary>
     List<string> SplitCsvRows(string text)
     {
@@ -759,7 +923,6 @@ public class DialogueSystem : MonoBehaviour
         List<string> cells = new List<string>();
         StringBuilder cur = new StringBuilder();
         bool inQuotes = false;
-
 
         for (int i = 0; i < line.Length; i++)
         {
