@@ -232,6 +232,10 @@ public class CardVisual : MonoBehaviour
             IsoGrid2D.instance.HighlightHealArea(playerPos, parentCard.data.attackRange);
 
         }
+        else if (parentCard.data.effectType == CardData.CardEffectType.Change)
+        {
+            IsoGrid2D.instance.HighlightArea(playerPos, parentCard.data.attackRange);
+        }
         else
         {
             IsoGrid2D.instance.HighlightSingleTile(playerPos);
@@ -289,6 +293,10 @@ public class CardVisual : MonoBehaviour
         {
             IsoGrid2D.instance.HighlightHealArea(playerPos, parentCard.data.attackRange);
         }
+        else if (parentCard.data.effectType == CardData.CardEffectType.Change)
+        {
+            IsoGrid2D.instance.HighlightArea(playerPos, parentCard.data.attackRange);
+        }
         else
         {
             IsoGrid2D.instance.HighlightSingleTile(playerPos);
@@ -304,12 +312,15 @@ public class CardVisual : MonoBehaviour
         if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         if (horizontalCardHolder.isDraging) return;
         if (TurnManager.instance.currentController.isMoving == true) return;
+        Debug.Log(1);
         if (!parentCard.wasDragged)
         {
             transform.DOScale(1, scaleTransition).SetEase(scaleEase);
         }
         if (cardAssetsPreview != null)
             cardAssetsPreview.SetActive(false);
+        IsoGrid2D.instance.ClearHighlight();
+        TurnManager.instance.currentController.Move();
         TurnManager.instance.ChangePlayer(TurnManager.instance.currentController);
 
     }
@@ -350,11 +361,17 @@ public class CardVisual : MonoBehaviour
         {
             IsoGrid2D.instance.MarkEditableArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
 
-        } 
+        }
+        else if (parentCard.data.effectType == CardData.CardEffectType.Change)
+        {
+            IsoGrid2D.instance.HighlightArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
+        }
         else
         {
             IsoGrid2D.instance.ClearHighlight();
         }
+        
+        horizontalCardHolder.isDraging = false;
     }
 
 

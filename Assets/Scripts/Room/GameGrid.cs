@@ -222,6 +222,24 @@ public class GameGrid : MonoBehaviour
                 IsoGrid2D.instance.ResetWaiting();
                 return;
             }
+            if(playerController.isNextAttackChange)
+            {
+                if(occupiedPlayer != null || currentEnemy!=null)
+                {
+                    if(occupiedPlayer != null)
+                    {
+                        IsoGrid2D.instance.SwapUnitPositions(playerController, occupiedPlayer);
+                    }
+                    else if(currentEnemy != null)
+                    {
+                        IsoGrid2D.instance.SwapUnitPositions(playerController, currentEnemy);
+                    }
+                    playerController.isNextAttackChange = false;
+                    IsoGrid2D.instance.ClearHighlight();
+                    FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                    IsoGrid2D.instance.ResetWaiting();
+                }
+            }
 
             if (playerController.isNextAttackDizziness)
             {
@@ -237,6 +255,9 @@ public class GameGrid : MonoBehaviour
             else if (playerController.isNextAttackPull)
             {
                 playerController.Attack(this);
+
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                IsoGrid2D.instance.ResetWaiting();
                 currentEnemy.BePulled(playerController.currentGridPos, playerController.PullDistance);
                 playerController.PullDistance = 0;
                 playerController.isNextAttackPull = false;
@@ -250,6 +271,8 @@ public class GameGrid : MonoBehaviour
                 }
                 playerController.Attack(this);
 
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                IsoGrid2D.instance.ResetWaiting();
                 playerController.isNextAttackFire = false;
             }
             else if (playerController.isNextAttackIce)
@@ -262,16 +285,23 @@ public class GameGrid : MonoBehaviour
 
                 playerController.Attack(this);
 
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                IsoGrid2D.instance.ResetWaiting();
                 playerController.isNextAttackIce = false;
             }
             else
             {
-                playerController.Attack(this);
-                
+                if(currentEnemy!=null)
+                {
+                    playerController.Attack(this);
+
+                    FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                    IsoGrid2D.instance.ResetWaiting();
+                }
+
+
             }
 
-            FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
-            IsoGrid2D.instance.ResetWaiting();
         }
     }
 

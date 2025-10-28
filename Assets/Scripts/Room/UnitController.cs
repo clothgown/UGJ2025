@@ -79,6 +79,9 @@ public class UnitController : MonoBehaviour
     public string characterName; // 角色名称（用于显示）
 
     public GameGrid currentGrid;
+
+    public bool isNextAttackChange;
+    public GameObject changeTarget;
     private void Start()
     {
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
