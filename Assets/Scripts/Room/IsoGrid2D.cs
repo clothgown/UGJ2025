@@ -25,6 +25,11 @@ public class IsoGrid2D : MonoBehaviour
     public GridState gridStateToChange = GridState.None;
     public bool isExploreScene;
     public string exploringSceneName;
+
+    public bool isFortune;
+    public bool isLocate;
+    public GameObject column;
+    public ItemCard locateCard;
     private void Awake()
     {
         if (instance == null)
@@ -806,6 +811,101 @@ public class IsoGrid2D : MonoBehaviour
         goB.transform.DOMove(worldPosA, moveDuration).SetEase(Ease.OutQuad);
 
         Debug.Log($"SwapUnitPositions：{unitA.name} <-> {unitB.name} 交换完成");
+    }
+
+    /// <summary>
+    /// 获取指定范围内的所有格子，并高亮单位或空格
+    /// </summary>
+    /// <param name="centerPos">中心格坐标</param>
+    /// <param name="range">范围半径（曼哈顿距离）</param>
+    /// <returns>范围内的所有 GameObject（格子）</returns>
+    public List<GameObject> GetAndHighlightUnitsInRange(Vector2Int centerPos, int range)
+    {
+        List<GameObject> result = new List<GameObject>();
+        ClearHighlight(); // 清除之前的高亮
+
+        for (int dx = -range; dx <= range; dx++)
+        {
+            for (int dy = -range; dy <= range; dy++)
+            {
+                int distance = Mathf.Abs(dx) + Mathf.Abs(dy);
+                if (distance > range) continue;
+
+                Vector2Int pos = centerPos + new Vector2Int(dx, dy);
+                GameObject tileObj = GetTile(pos.x, pos.y);
+                if (tileObj == null) continue;
+
+                GameGrid gridComp = tileObj.GetComponent<GameGrid>();
+                if (gridComp == null) continue;
+
+                // 检查单位
+                UnitController player = tileObj.GetComponentInChildren<UnitController>();
+                EnemyUnit enemy = tileObj.GetComponentInChildren<EnemyUnit>();
+
+                // 只对有单位的格子进行高亮并加入返回列表
+                if ((player != null && player != controller.GetComponent<UnitController>()) || enemy != null)
+                {
+                    // 深红色高亮
+                    gridComp.SetColor(new Color(1f, 0.2f, 0.2f, 1f));
+                    gridComp.isAttackTarget = true;
+
+                    result.Add(tileObj);
+                }
+                else
+                {
+                    // 空格子仍然可以高亮浅红色（可选）
+                    gridComp.SetColor(new Color(1f, 0.5f, 0.5f, 0.3f));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// 高亮指定范围内的格子，根据是否被占用显示深色或浅色
+    /// </summary>
+    /// <param name="centerPos">中心格子坐标</param>
+    /// <param name="range">曼哈顿范围</param>
+    public void HighlightEditableTiles(Vector2Int centerPos, int range)
+    {
+        ClearHighlight(); // 先清空已有高亮
+
+        for (int dx = -range; dx <= range; dx++)
+        {
+            for (int dy = -range; dy <= range; dy++)
+            {
+                int distance = Mathf.Abs(dx) + Mathf.Abs(dy);
+                if (distance > range) continue;
+
+                Vector2Int pos = centerPos + new Vector2Int(dx, dy);
+                GameObject tileObj = GetTile(pos.x, pos.y);
+                if (tileObj == null) continue;
+
+                GameGrid gridComp = tileObj.GetComponent<GameGrid>();
+                if (gridComp == null) continue;
+
+                if (!gridComp.isOccupied)
+                {
+                    gridComp.isAttackTarget = true;
+                    // 空格 → 深色高亮
+                    gridComp.SetColor(new Color(0.3f, 0.6f, 1f, 1f));
+                }
+                else
+                {
+                    // 已占用 → 浅色高亮
+                    gridComp.SetColor(new Color(0.6f, 0.8f, 1f, 0.5f));
+                }
+            }
+        }
+
+        // 中心格子单独标记为黄色（可选）
+        GameObject centerTile = GetTile(centerPos.x, centerPos.y);
+        if (centerTile != null)
+        {
+            GameGrid centerGrid = centerTile.GetComponent<GameGrid>();
+            centerGrid.SetColor(new Color(1f, 1f, 0.4f, 1f));
+        }
     }
 
 }
