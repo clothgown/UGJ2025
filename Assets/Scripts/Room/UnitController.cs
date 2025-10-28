@@ -563,7 +563,10 @@ public class UnitController : MonoBehaviour
         isNextAttackBloodSucking = false;
         isNextAttackDouble = false;
         isNextAttackMass = false;
-        XN.gameObject.SetActive(false);
+        if(XN!=null)
+        {
+            XN.gameObject.SetActive(false);
+        }
         sr.color = Color.white;
     }
     public string vectorPropertyName = "哪个攻击"; // 属性名称

@@ -119,6 +119,22 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                     SceneManager.sceneLoaded += OnSceneLoaded;
                     SceneManager.LoadScene(sceneToLoad);
                 }
+                else if(normalType == 3)
+                {
+                    // 从 sceneNames 列表中随机选择一个场景
+                    if (MapGridManager.instance.exploreSceneNames != null && MapGridManager.instance.exploreSceneNames.Count > 0)
+                    {
+                        int randomIndex = Random.Range(0, MapGridManager.instance.exploreSceneNames.Count);
+                        string sceneToLoad = MapGridManager.instance.exploreSceneNames[randomIndex];
+                        // 监听加载完成事件
+                        SceneManager.sceneLoaded += OnSceneLoaded;
+                        SceneManager.LoadScene(sceneToLoad);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("sceneNames 列表为空，无法加载随机场景！");
+                    }
+                }
                 else
                 {
                     ShowNextGrids();
