@@ -400,6 +400,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headUIButtons: []
+  unitControllers: []
+  windowObjects: []
+  characterInfos:
+  - id: 0
+    characterName: Player
+    buttonName: 1-heart_head
+    isUnlocked: 1
+  - id: 1
+    characterName: Maid
+    buttonName: 2-maid_head
+    isUnlocked: 0
+  - id: 2
+    characterName: Spade
+    buttonName: 3-spade_head
+    isUnlocked: 0
+  - id: 3
+    characterName: Diamond
+    buttonName: 4-diamond_head
+    isUnlocked: 0
 --- !u!4 &215973379
 Transform:
   m_ObjectHideFlags: 0
@@ -797,7 +816,7 @@ MonoBehaviour:
     isActive: 0
   currentUnitController: {fileID: 0}
   currentIndex: 0
-  currentUnitGrid: {x: 0, y: 0}
+  currentUnitGrid: {x: 5, y: 10}
   enemyUnits: []
   isChoosing: 0
   virtualCamera: {fileID: 1047557041}
@@ -2828,13 +2847,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0.000030517578
       objectReference: {fileID: 0}
+    - target: {fileID: 4833354151820101678, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}
+      propertyPath: startPoint.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4833354151820101678, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}
+      propertyPath: startPoint.y
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5084986422234508334, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}
       propertyPath: m_Name
       value: Believer
       objectReference: {fileID: 0}
     - target: {fileID: 5084986422234508334, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5822160426406325450, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4436,8 +4463,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 872775324}
     - target: {fileID: 1160174143663818729, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_Name
-      value: 3-spade_head
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2249285554888983352, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4500,10 +4527,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 872775324}
     - target: {fileID: 3011247278623294422, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_Name
-      value: 2-maid_head
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011247278623294422, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -4538,10 +4561,6 @@ PrefabInstance:
     - target: {fileID: 5120087319477829743, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5195864681091340225, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_Name
-      value: 1-heart_head
       objectReference: {fileID: 0}
     - target: {fileID: 5279949551005000416, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4604,8 +4623,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1987601304}
     - target: {fileID: 7691980365842898332, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_Name
-      value: 4-diamond_head
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7902329851521180329, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4774,7 +4793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3433675322087506947, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3437202966844542116, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.size
@@ -4892,9 +4911,21 @@ PrefabInstance:
       propertyPath: XN
       value: 
       objectReference: {fileID: 7125633538380980815}
+    - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: currentGridPos.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: currentGridPos.y
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5084986422234508334, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5084986422234508334, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5471558585402360791, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: m_FlipX

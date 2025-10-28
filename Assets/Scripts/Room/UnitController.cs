@@ -120,6 +120,21 @@ public class UnitController : MonoBehaviour
             healthSystem.SetShield(shield);
             //PlayerSwitchManager.instance.currentUnitController = this;
         }
+        // ✅ 从 AllPlayerState 恢复血量
+        AllPlayerState aps = FindAnyObjectByType<AllPlayerState>();
+        if (aps != null)
+        {
+            float savedHealth = aps.GetHealthByName(gameObject.name); // 或者 unit.characterName
+            if (savedHealth > 0f) // 找到有效血量
+            {
+                currentHealth = savedHealth;
+                if (healthSystem != null)
+                {
+                    healthSystem.SetHealth(savedHealth); // 假设 HealthSystem 有 SetHealth 方法
+                }
+                
+            }
+        }
     }
 
     private void Update()

@@ -387,7 +387,7 @@ public class DialogueSystem : MonoBehaviour
         HideOptions(); // 先隐藏所有按钮
         int count = 0;
         isChoosing = true; // 进入选项状态
-
+        int optionIndex = count; // 捕获当前按钮编号
         // 遍历接下来的几行，把 Type 仍是 @ 的当成选项
         for (int i = startIndex; i < dialogues.Count && count < 3; i++)
         {
@@ -408,6 +408,49 @@ public class DialogueSystem : MonoBehaviour
                     isChoosing = false; // 选完恢复正常点击
 
                     JumpToDialogueByID(next);
+
+                    Scene currentScene = SceneManager.GetActiveScene();
+                    string sceneName = currentScene.name;
+                    // 如果当前场景是 "1-0" 且当前对话文件名是 "1-0-talk3"
+                    if (sceneName == "1-0" && battleDialogDataFile != null && battleDialogDataFile.name == "1-0-talk3")
+                    {
+                        optionIndex = count;
+                        Debug.Log(45);
+                        Debug.Log(optionIndex);
+                        if (optionIndex == 2) // 第二个按钮
+                        {
+                            TeamManager teamManager = FindAnyObjectByType<TeamManager>();
+                            if (teamManager != null)
+                            {
+                                // 找到 id=1 的角色
+                                CharacterInfo targetInfo = teamManager.characterInfos.Find(c => c.id == 1);
+                                if (targetInfo != null)
+                                {
+                                    targetInfo.isUnlocked = true;
+                                    Debug.Log("✅ 已解锁角色 ID=1！");
+
+                                    // 同步按钮和角色显示
+                                    // 找到对应按钮
+                                    Button matchedButton = teamManager.headUIButtons.Find(b => b.name == targetInfo.buttonName);
+                                    if (matchedButton != null)
+                                        matchedButton.gameObject.SetActive(true);
+
+                                    // 找到对应角色
+                                    UnitController matchedUnit = teamManager.unitControllers.Find(u => u.name == targetInfo.characterName);
+                                    if (matchedUnit != null)
+                                        matchedUnit.gameObject.SetActive(true);
+                                }
+                                else
+                                {
+                                    Debug.LogWarning("⚠️ 未找到 ID=1 的角色信息。");
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogWarning("⚠️ 未找到 TeamManager 实例。");
+                            }
+                        }
+                    }
                 });
 
                 count++;
