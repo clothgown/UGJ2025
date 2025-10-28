@@ -759,6 +759,8 @@ public class IsoGrid2D : MonoBehaviour
         goA.transform.SetParent(gridB.transform);
         goB.transform.SetParent(gridA.transform);
 
+        int sortA = unitA.GetComponentInChildren<SpriteRenderer>().sortingOrder;
+        int sortB = unitB.GetComponentInChildren<SpriteRenderer>().sortingOrder;
         // 重新绑定新格子引用
         if (unitA is UnitController playerA)
         {
@@ -809,6 +811,9 @@ public class IsoGrid2D : MonoBehaviour
         float moveDuration = 0.4f;
         goA.transform.DOMove(worldPosB, moveDuration).SetEase(Ease.OutQuad);
         goB.transform.DOMove(worldPosA, moveDuration).SetEase(Ease.OutQuad);
+
+        unitA.GetComponentInChildren<SpriteRenderer>().sortingOrder = sortB;
+        unitB.GetComponentInChildren<SpriteRenderer>().sortingOrder= sortA;
 
         Debug.Log($"SwapUnitPositions：{unitA.name} <-> {unitB.name} 交换完成");
     }
