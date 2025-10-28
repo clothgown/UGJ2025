@@ -118,15 +118,22 @@ public class GameGrid : MonoBehaviour
 
                     IsoGrid2D.instance.isWaitingForGridClick = false;
                     IsoGrid2D.instance.isLocate = false;
-                    CanvasGroup canvasGroup = IsoGrid2D.instance.locateCard.GetComponent<CanvasGroup>();
-                    if (canvasGroup != null)
+
+                    ItemCardManager.instance.DecreaseCard(2);
+                    if (ItemCardManager.instance.GetCardCount(2) <= 0)
                     {
-                        canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+                        CanvasGroup canvasGroup = IsoGrid2D.instance.locateCard.GetComponent<CanvasGroup>();
+                        if (canvasGroup != null)
                         {
-                            IsoGrid2D.instance.locateCard.gameObject.SetActive(false);
-                            IsoGrid2D.instance.controller.GetComponent<UnitController>().Move();
-                        });
+                            canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+                            {
+                                IsoGrid2D.instance.locateCard.gameObject.SetActive(false);
+                                IsoGrid2D.instance.controller.GetComponent<UnitController>().Move();
+                            });
+                        }
                     }
+
+                    
                     
 
                 }

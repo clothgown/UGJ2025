@@ -23,7 +23,6 @@ public class CameraMove : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-
         }
         else
         {

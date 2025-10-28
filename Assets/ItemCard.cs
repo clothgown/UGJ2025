@@ -98,15 +98,21 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (itemType == ItemType.fortune && IsoGrid2D.instance.isFortune != true)
         {
             IsoGrid2D.instance.isFortune = true;
-            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
-            if (canvasGroup != null)
+
+            ItemCardManager.instance.DecreaseCard(0);
+            if (ItemCardManager.instance.GetCardCount(0)<=0)
             {
-                canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+                CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+                if (canvasGroup != null)
                 {
-                    // 渐隐完成后可以选择销毁物体或隐藏
-                    gameObject.SetActive(false);
-                });
+                    canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+                    {
+                        // 渐隐完成后可以选择销毁物体或隐藏
+                        gameObject.SetActive(false);
+                    });
+                }
             }
+
         }
         else if(itemType == ItemType.god)
         {
@@ -140,13 +146,20 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 }
             }
 
-            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
-            if (canvasGroup != null)
+
+
+            ItemCardManager.instance.DecreaseCard(1);
+            if (ItemCardManager.instance.GetCardCount(1) <= 0)
             {
-                canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+                CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+                if (canvasGroup != null)
                 {
-                    gameObject.SetActive(false);
-                });
+                    canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+                    {
+                        // 渐隐完成后可以选择销毁物体或隐藏
+                        gameObject.SetActive(false);
+                    });
+                }
             }
 
         }
