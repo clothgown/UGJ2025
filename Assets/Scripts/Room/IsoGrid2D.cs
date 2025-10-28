@@ -653,6 +653,159 @@ public class IsoGrid2D : MonoBehaviour
         Debug.Log($"Mass Heal：为范围内所有角色回复 {healAmount} 点生命值！");
     }
 
-    
+    /// <summary>
+    /// 高亮指定范围内的所有单位（玩家与敌人）
+    /// </summary>
+    /// <param name="centerPos">中心格坐标</param>
+    /// <param name="range">范围半径（曼哈顿距离）</param>
+    /// <returns>范围内是否存在任何单位</returns>
+    public bool HighlightArea(Vector2Int centerPos, int range)
+    {
+        ClearHighlight(); // 清除旧高亮
+        bool hasAnyUnit = false;
+
+        for (int dx = -range; dx <= range; dx++)
+        {
+            for (int dy = -range; dy <= range; dy++)
+            {
+                int distance = Mathf.Abs(dx) + Mathf.Abs(dy);
+                if (distance > range) continue; // 超出范围
+
+                Vector2Int pos = centerPos + new Vector2Int(dx, dy);
+                GameObject tile = GetTile(pos.x, pos.y);
+                if (tile == null) continue;
+
+                GameGrid gridComp = tile.GetComponent<GameGrid>();
+                if (gridComp == null) continue;
+
+                // 默认半透明蓝色高亮（空格）
+                Color highlightColor = new Color(0.5f, 0.8f, 1f, 0.3f);
+
+                // 检查单位
+                UnitController player = tile.GetComponentInChildren<UnitController>();
+                EnemyUnit enemy = tile.GetComponentInChildren<EnemyUnit>();
+
+                if (player != null)
+                {
+                    highlightColor = new Color(0.5f, 1f, 0.5f, 1f); // 玩家 → 绿色
+                    hasAnyUnit = true;
+                }
+                else if (enemy != null)
+                {
+                    highlightColor = new Color(1f, 0.5f, 0.5f, 1f); // 敌人 → 红色
+                    hasAnyUnit = true;
+                }
+
+                gridComp.SetColor(highlightColor);
+                gridComp.isAttackTarget = true;
+            }
+        }
+
+        // 中心格子特殊高亮（黄色）
+        GameObject centerTile = GetTile(centerPos.x, centerPos.y);
+        if (centerTile != null)
+        {
+            GameGrid gridComp = centerTile.GetComponent<GameGrid>();
+            gridComp.SetColor(new Color(1f, 1f, 0.4f, 1f));
+        }
+
+        return hasAnyUnit;
+    }
+
+    /// <summary>
+    /// 交换两个单位（玩家或敌人）的位置与父子关系
+    /// </summary>
+    public void SwapUnitPositions(MonoBehaviour unitA, MonoBehaviour unitB)
+    {
+        if (unitA == null || unitB == null)
+        {
+            Debug.LogWarning("SwapUnitPositions：传入的单位为空！");
+            return;
+        }
+
+        GameObject goA = unitA.gameObject;
+        GameObject goB = unitB.gameObject;
+
+        // 获取两个单位所在的格子（父物体）
+        GameGrid gridA = goA.GetComponentInParent<GameGrid>();
+        GameGrid gridB = goB.GetComponentInParent<GameGrid>();
+
+        if (gridA == null || gridB == null)
+        {
+            Debug.LogWarning("SwapUnitPositions：无法找到单位所在的格子！");
+            return;
+        }
+
+        // 保存原始位置
+        Vector3 worldPosA = goA.transform.position;
+        Vector3 worldPosB = goB.transform.position;
+
+        // 清除旧格子占用状态
+        if (unitA is UnitController)
+            gridA.occupiedPlayer = null;
+        if (unitB is UnitController)
+            gridB.occupiedPlayer = null;
+        if (unitA is EnemyUnit)
+            gridA.isOccupied = false;
+        if (unitB is EnemyUnit)
+            gridB.isOccupied = false;
+
+        // 交换父对象
+        goA.transform.SetParent(gridB.transform);
+        goB.transform.SetParent(gridA.transform);
+
+        // 重新绑定新格子引用
+        if (unitA is UnitController playerA)
+        {
+            gridB.occupiedPlayer = null;
+            gridB.currentEnemy = null;
+            gridB.occupiedPlayer = playerA;
+            playerA.startGrid = gridB.gameObject;
+            playerA.startPoint = gridB.gridPos;
+            playerA.currentGrid = gridB;
+            playerA.currentGridPos = gridB.gridPos;
+            gridB.isOccupied = true;
+            currentPlayerGrid = gridB;
+        }
+        else if (unitA is EnemyUnit enemyA)
+        {
+            gridB.occupiedPlayer = null;
+            gridB.currentEnemy = null;
+            gridB.currentEnemy = enemyA;
+            gridB.isOccupied = true;
+            enemyA.startPoint = gridB.gridPos;
+            enemyA.startGrid = gridB.gameObject;
+
+        }
+
+        if (unitB is UnitController playerB)
+        {
+            gridA.occupiedPlayer = null;
+            gridA.currentEnemy = null;
+            gridA.occupiedPlayer = playerB;
+            playerB.currentGrid = gridA;
+            playerB.startGrid = gridA.gameObject;
+            playerB.startPoint = gridA.gridPos;
+            playerB.currentGridPos = gridA.gridPos;
+            gridA.isOccupied = true;
+            currentPlayerGrid = gridA;
+        }
+        else if (unitB is EnemyUnit enemyB)
+        {
+            gridA.occupiedPlayer = null;
+            gridA.currentEnemy = null;
+            gridA.currentEnemy = enemyB;
+            gridA.isOccupied = true;
+            enemyB.startPoint = gridA.gridPos;
+            enemyB.startGrid = gridA.gameObject;
+        }
+
+        // 平滑移动动画（使用世界坐标）
+        float moveDuration = 0.4f;
+        goA.transform.DOMove(worldPosB, moveDuration).SetEase(Ease.OutQuad);
+        goB.transform.DOMove(worldPosA, moveDuration).SetEase(Ease.OutQuad);
+
+        Debug.Log($"SwapUnitPositions：{unitA.name} <-> {unitB.name} 交换完成");
+    }
 
 }

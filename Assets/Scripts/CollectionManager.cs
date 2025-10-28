@@ -7,7 +7,6 @@ public class CollectionManager : MonoBehaviour
 {
     public static CollectionManager instance;
     public int coins=0;
-    public TextMeshProUGUI coinText;
     public int thisLevelGetCoins;
     private void Awake()
     {
@@ -23,10 +22,7 @@ public class CollectionManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        coinText.text = coins.ToString();
-    }
+
 
     // Update is called once per frame
     void Update()

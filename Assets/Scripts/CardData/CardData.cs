@@ -39,7 +39,8 @@ public class CardData : ScriptableObject
         StraightAttack,
         ChangeGridState,
         Double,
-        Mass
+        Mass,
+        Change
     }
 
     // π•ª˜ Ù–‘£®ø…¿©’π£©

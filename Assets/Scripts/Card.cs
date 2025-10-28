@@ -313,6 +313,19 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                     }
                 }
                 break;
+            case CardData.CardEffectType.Change:
+                bool hasChangeTarget = IsoGrid2D.instance.HighlightArea(playerUnit.currentGridPos, data.attackRange);
+                Debug.Log(hasChangeTarget);
+                if(hasChangeTarget)
+                {
+                    playerUnit.isNextAttackChange = true;
+                    IsoGrid2D.instance.isWaitingForGridClick = true;
+                    IsoGrid2D.instance.waitingCard = this;
+                    effectExecuted = true;
+                    Debug.Log($"Change");
+                }
+                
+                break;
             case CardData.CardEffectType.Heal:
                 {
                     // ∏ﬂ¡¡÷Œ¡∆∑∂Œß£®∏¥”√π•ª˜∑∂Œß¬ﬂº≠£©

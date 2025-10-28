@@ -222,6 +222,24 @@ public class GameGrid : MonoBehaviour
                 IsoGrid2D.instance.ResetWaiting();
                 return;
             }
+            if(playerController.isNextAttackChange)
+            {
+                if(occupiedPlayer != null ||currentEnemy!=null)
+                {
+                    if(occupiedPlayer != null)
+                    {
+                        IsoGrid2D.instance.SwapUnitPositions(playerController, occupiedPlayer);
+                    }
+                    else if(currentEnemy != null)
+                    {
+                        IsoGrid2D.instance.SwapUnitPositions(playerController, currentEnemy);
+                    }
+                    playerController.isNextAttackChange = false;
+                    IsoGrid2D.instance.ClearHighlight();
+                    FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                    IsoGrid2D.instance.ResetWaiting();
+                }
+            }
 
             if (playerController.isNextAttackDizziness)
             {

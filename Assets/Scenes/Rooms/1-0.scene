@@ -2424,7 +2424,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coins: 0
-  coinText: {fileID: 0}
   thisLevelGetCoins: 0
 --- !u!4 &1488886200
 Transform:
@@ -3623,6 +3622,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.size
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[21]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e09ded286f4e174b87f68c8b0bc1e7d, type: 2}
+    - target: {fileID: 8079290403386303200, guid: de38e62fa08f0b24ca3edb636716daa1, type: 3}
+      propertyPath: initialDeck.Array.data[22]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e09ded286f4e174b87f68c8b0bc1e7d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
