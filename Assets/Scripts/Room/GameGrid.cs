@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;   // 引入 DOTween 命名空间
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -42,6 +43,7 @@ public class GameGrid : MonoBehaviour
 
     public bool isLeaveGrid = false;
     public Color LeaveColor = new Color(00f, 0.5f, 0f, 0.8f);
+    
     private void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
@@ -96,6 +98,40 @@ public class GameGrid : MonoBehaviour
         if (FindAnyObjectByType<DialogueSystem>().isDialoguing == true) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
+        if(IsoGrid2D.instance.isLocate)
+        {
+            if(isAttackTarget)
+            {
+                if (IsoGrid2D.instance.column != null)
+                {
+                    // 生成 column 的预制体
+                    GameObject newObj = Instantiate(IsoGrid2D.instance.column);
+
+                    // 设置父物体为 column
+                    newObj.transform.SetParent(this.transform);
+                    newObj.GetComponent<ItemInGrid>().cornerA = gridPos;
+                    // 重置本地位置、旋转和缩放
+                    newObj.transform.localPosition = new Vector3(0,1.4f,0);
+                    newObj.transform.localRotation = Quaternion.identity;
+                    newObj.transform.localScale = Vector3.one;
+
+
+                    IsoGrid2D.instance.isWaitingForGridClick = false;
+                    IsoGrid2D.instance.isLocate = false;
+                    CanvasGroup canvasGroup = IsoGrid2D.instance.locateCard.GetComponent<CanvasGroup>();
+                    if (canvasGroup != null)
+                    {
+                        canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+                        {
+                            IsoGrid2D.instance.locateCard.gameObject.SetActive(false);
+                            IsoGrid2D.instance.controller.GetComponent<UnitController>().Move();
+                        });
+                    }
+                    
+
+                }
+            }
+        }
         Debug.Log($"点击格子: {gridPos}, 探索模式: {ExplorationManager.IsInExploration()}, canDialogue: {canDialogue}, ocuupiedItem: {ocuupiedItem != null}");
 
         // 优先处理探索模式下的物品交互
@@ -194,7 +230,7 @@ public class GameGrid : MonoBehaviour
 
         UnitController playerController = IsoGrid2D.instance.controller.GetComponent<UnitController>();
 
-        if (isInRange)
+        if (isInRange && IsoGrid2D.instance.isLocate!=true)
         {
             playerController.MoveToGrid(this);
             IsoGrid2D.instance.ResetWaiting();

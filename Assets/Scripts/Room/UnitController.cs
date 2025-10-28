@@ -434,8 +434,23 @@ public class UnitController : MonoBehaviour
             Debug.Log($"��ҹ��� {enemy.name}����� {attackDamage} �˺���");
             Attack1.gameObject.SetActive(true);
             Attack1.Play();
-            enemy.TakeDamage(attackDamage);
-           
+
+            float finalDamage = attackDamage;
+
+            if (IsoGrid2D.instance.isFortune)
+            {
+                // 50% 几率造成双倍伤害
+                if (Random.value < 0.5f) // Random.value 返回 [0,1) 的浮点数
+                {
+                    finalDamage *= 2;
+                    Debug.Log("幸运触发！造成双倍伤害！");
+                }
+            }
+
+            Debug.Log($"{enemy.name} 受到 {finalDamage} 点伤害");
+            enemy.TakeDamage(finalDamage);
+
+
         }
         
     }
