@@ -2264,7 +2264,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1824900825736178728, guid: a6f7f73a7302a0146be295805fe06a19, type: 3}
       propertyPath: m_Name
-      value: spade_head
+      value: 3-spade_head
       objectReference: {fileID: 0}
     - target: {fileID: 1824900825736178728, guid: a6f7f73a7302a0146be295805fe06a19, type: 3}
       propertyPath: m_IsActive
@@ -2669,7 +2669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4591715456569924147, guid: 30b635dc459f0b647a748a97f093de5a, type: 3}
       propertyPath: m_Name
-      value: maid_head
+      value: 2-maid_head
       objectReference: {fileID: 0}
     - target: {fileID: 4591715456569924147, guid: 30b635dc459f0b647a748a97f093de5a, type: 3}
       propertyPath: m_IsActive
@@ -2970,6 +2970,7 @@ MonoBehaviour:
   animEase: 27
   cardToSell: {fileID: 0}
   cardImage: {fileID: 0}
+  canInteract: 1
 --- !u!114 &5549778033735129688 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 434612561075999944, guid: f46ffd217d4499d4684e7d486992d912, type: 3}
@@ -3162,7 +3163,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655722902897790977, guid: fbe251e132bfda44c9b7b5cb06aa0838, type: 3}
       propertyPath: m_Name
-      value: diamond_head
+      value: 4-diamond_head
       objectReference: {fileID: 0}
     - target: {fileID: 655722902897790977, guid: fbe251e132bfda44c9b7b5cb06aa0838, type: 3}
       propertyPath: m_IsActive
@@ -3447,7 +3448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4238420088579884289, guid: ec037662cec058c42b2f8f9c5a9d4a72, type: 3}
       propertyPath: m_Name
-      value: heart_head
+      value: 1-heart_head
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
