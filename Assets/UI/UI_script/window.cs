@@ -17,6 +17,7 @@ public class Window : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     public Ease animEase = Ease.OutBack; // 缩放曲线（可以换成 Ease.OutElastic）
     public CardData cardToSell;
     public Image cardImage;
+    public bool canInteract = true;
     private void Awake()
     {
         if(cardImage!=null && cardToSell!=null)
@@ -40,16 +41,19 @@ public class Window : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (canInteract == false) return;
         PlayScaleAnim(originalScale * hoverScale);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (canInteract == false) return;
         PlayScaleAnim(originalScale);
     }
 
     public void Click()
     {
+        if (canInteract == false) return;
         // 点击动画：快速缩小后恢复到悬浮状态
         if (currentTween != null) currentTween.Kill();
         Sequence seq = DOTween.Sequence();
@@ -60,6 +64,7 @@ public class Window : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (canInteract == false) return;
         // 点击动画：快速缩小后恢复到悬浮状态
         if (currentTween != null) currentTween.Kill();
         Sequence seq = DOTween.Sequence();
