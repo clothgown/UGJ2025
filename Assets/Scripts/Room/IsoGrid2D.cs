@@ -685,7 +685,7 @@ public class IsoGrid2D : MonoBehaviour
                 UnitController player = tile.GetComponentInChildren<UnitController>();
                 EnemyUnit enemy = tile.GetComponentInChildren<EnemyUnit>();
 
-                if (player != null)
+                if (player != null && player != controller.GetComponent<UnitController>())
                 {
                     highlightColor = new Color(0.5f, 1f, 0.5f, 1f); // 玩家 → 绿色
                     hasAnyUnit = true;

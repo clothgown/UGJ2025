@@ -224,7 +224,7 @@ public class GameGrid : MonoBehaviour
             }
             if(playerController.isNextAttackChange)
             {
-                if(occupiedPlayer != null ||currentEnemy!=null)
+                if(occupiedPlayer != null || currentEnemy!=null)
                 {
                     if(occupiedPlayer != null)
                     {
@@ -255,6 +255,9 @@ public class GameGrid : MonoBehaviour
             else if (playerController.isNextAttackPull)
             {
                 playerController.Attack(this);
+
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                IsoGrid2D.instance.ResetWaiting();
                 currentEnemy.BePulled(playerController.currentGridPos, playerController.PullDistance);
                 playerController.PullDistance = 0;
                 playerController.isNextAttackPull = false;
@@ -268,6 +271,8 @@ public class GameGrid : MonoBehaviour
                 }
                 playerController.Attack(this);
 
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                IsoGrid2D.instance.ResetWaiting();
                 playerController.isNextAttackFire = false;
             }
             else if (playerController.isNextAttackIce)
@@ -280,16 +285,23 @@ public class GameGrid : MonoBehaviour
 
                 playerController.Attack(this);
 
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                IsoGrid2D.instance.ResetWaiting();
                 playerController.isNextAttackIce = false;
             }
             else
             {
-                playerController.Attack(this);
-                
+                if(currentEnemy!=null)
+                {
+                    playerController.Attack(this);
+
+                    FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                    IsoGrid2D.instance.ResetWaiting();
+                }
+
+
             }
 
-            FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
-            IsoGrid2D.instance.ResetWaiting();
         }
     }
 
