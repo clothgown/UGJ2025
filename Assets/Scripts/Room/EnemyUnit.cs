@@ -279,11 +279,6 @@ public class EnemyUnit : MonoBehaviour
     }
 
 
-    public void Move()
-    {
-        
-        IsoGrid2D.instance.HighlightMoveRange(startPoint, moveRange);
-    }
 
     public void MoveToGrid(GameGrid targetGrid)
     {
