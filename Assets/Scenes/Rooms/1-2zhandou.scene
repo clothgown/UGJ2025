@@ -124,6 +124,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &42637065 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5195864681091340225, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1246350145}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &42637066 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3011247278623294422, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1246350145}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &42919565
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +178,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &42919567
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -625,6 +636,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &208376285
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -701,7 +713,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5279949551005000416, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
   m_PrefabInstance: {fileID: 1246350145}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 42637065}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -976,6 +988,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &465439159
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1091,6 +1104,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &475451080
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1405,16 +1419,21 @@ MonoBehaviour:
   turnIndex: 1
   playerCardHolder: {fileID: 1246350147}
   actionPointText: {fileID: 958129581}
-  unitControllers: []
-  playerCards: []
+  unitControllers:
+  - {fileID: 1559083429}
+  - {fileID: 696274962}
+  playerCards:
+  - {fileID: 42637066}
+  - {fileID: 42637065}
   deadCardColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.7}
   aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
   enemies: []
   isWin: 0
   Gameover: {fileID: 0}
-  criticalCharacters: []
+  criticalCharacters:
+  - {fileID: 696274962}
   gameOverOnCriticalDeath: 1
-  explorationManager: {fileID: 0}
+  explorationManager: {fileID: 1866456407}
   isMaidDead: 0
   allowDirectExploration: 1
 --- !u!4 &598813609
@@ -1761,6 +1780,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &694953194
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1892,6 +1912,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &750670549
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2574,6 +2595,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &880004527
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3049,6 +3071,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &1013049976
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3310,6 +3333,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1191703872
 GameObject:
   m_ObjectHideFlags: 0
@@ -3354,6 +3378,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &1191703874
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3598,6 +3623,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &1230688374
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3814,66 +3840,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2000535286}
-    - target: {fileID: 3539640267439134990, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3539640267439134990, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4544495223087645933, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 5279949551005000416, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5279949551005000416, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5279949551005000416, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
-      value: 
-      objectReference: {fileID: 936097980}
-    - target: {fileID: 5279949551005000416, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5805377551697507233, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: dialogDataFile
-      value: 
-      objectReference: {fileID: 4900000, guid: 6855ba094d07c0d48a25c4c4f860cd8f, type: 3}
-    - target: {fileID: 6059630909441997010, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6059630909441997010, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6059630909441997010, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 936097980}
     - target: {fileID: 6059630909441997010, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278401142097771872, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278401142097771872, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278401142097771872, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 936097980}
     - target: {fileID: 7461219631627072144, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3882,10 +3860,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 936097980}
-    - target: {fileID: 7461219631627072144, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EndPlayerTurn
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3966,6 +3940,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &1273907385
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4725,6 +4700,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &1840465578
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4891,6 +4867,11 @@ PrefabInstance:
       addedObject: {fileID: 675870221}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+--- !u!1 &1858999433 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5334065157313415013, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+  m_PrefabInstance: {fileID: 1858999432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1866456406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4918,15 +4899,23 @@ PrefabInstance:
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: healthBarsHolder
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1858999433}
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: playerCardHolder
       value: 
       objectReference: {fileID: 1246350147}
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: stelse.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: stelse.Array.data[0]
       value: 
       objectReference: {fileID: 1246350149}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: stelse.Array.data[1]
+      value: 
+      objectReference: {fileID: 42637066}
     - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: m_LocalPosition.x
       value: 24.542385
@@ -4972,6 +4961,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+--- !u!114 &1866456407 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+  m_PrefabInstance: {fileID: 1866456406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15149c981adc3254d9a2537b72ea7559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1894477965
 GameObject:
   m_ObjectHideFlags: 0
@@ -5016,6 +5016,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &1894477967
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5494,7 +5495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1366507481422452203, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7754829141520739801, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_Camera
@@ -5589,6 +5590,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &2010022445
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5665,7 +5667,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6059630909441997010, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
   m_PrefabInstance: {fileID: 1246350145}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 42637066}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -6073,6 +6075,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &2052825461
 SpriteRenderer:
   m_ObjectHideFlags: 0

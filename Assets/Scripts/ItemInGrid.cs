@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System.Collections;
+using UnityEngine.TextCore.Text;
 
 public class ItemInGrid : MonoBehaviour
 {
@@ -12,7 +15,7 @@ public class ItemInGrid : MonoBehaviour
 
     public List<GameGrid> occupiedGrids = new List<GameGrid>();
     public bool isInterable = false;
-    public bool isBattleInterable = true;
+    public bool isBattleInterable = false; // 是否在战斗状态下可交互
     public SpriteRenderer sr;
 
     // 新增部分
@@ -25,8 +28,9 @@ public class ItemInGrid : MonoBehaviour
     public LayerMask blockingLayer;  // Item 所在 Layer
 
     [Header("对话设置")]
-    public TextAsset dialogueFile; // 关联的对话文件
+    public UnityEngine.TextAsset dialogueFile; // 关联的对话文件
     public bool triggerDialogueOnInteract = true; // 是否触发对话
+    public TMP_FontAsset customFont;
 
     void Start()
     {
@@ -110,7 +114,6 @@ public class ItemInGrid : MonoBehaviour
         }
     }
 
-
     void SetAlpha(float a)
     {
         Color c = sr.color;
@@ -136,7 +139,7 @@ public class ItemInGrid : MonoBehaviour
                     GameGrid gridComp = tileObj.GetComponent<GameGrid>();
                     gridComp.isOccupied = true;
                     gridComp.ocuupiedItem = this;
-                    
+
                     occupiedGrids.Add(gridComp);
                 }
             }
@@ -179,6 +182,36 @@ public class ItemInGrid : MonoBehaviour
             }
         }
     }
+
+    // 检查是否处于战斗状态
+    private bool IsInBattleState()
+    {
+        // 方法1: 检查TurnManager的战斗状态
+        TurnManager turnManager = FindObjectOfType<TurnManager>();
+        if (turnManager != null)
+        {
+            return turnManager.phase != TurnPhase.Exploration;
+        }
+
+        // 方法2: 检查ExplorationManager（修复了静态方法调用问题）
+        ExplorationManager explorationManager = FindObjectOfType<ExplorationManager>();
+        if (explorationManager != null)
+        {
+            // 使用实例方法而不是静态方法
+            return !ExplorationManager.IsInExploration();
+        }
+
+        // 方法3: 检查是否有敌人存在
+        EnemyUnit[] enemies = FindObjectsOfType<EnemyUnit>();
+        if (enemies != null && enemies.Length > 0)
+        {
+            return true;
+        }
+
+        // 默认返回非战斗状态
+        return false;
+    }
+
     public virtual void Interact()
     {
         if (!isInterable)
@@ -187,7 +220,18 @@ public class ItemInGrid : MonoBehaviour
             return;
         }
 
-        Debug.Log($"与物品交互: {gameObject.name}");
+        // 新增：检查战斗状态
+        bool inBattle = IsInBattleState();
+        if (inBattle && !isBattleInterable)
+        {
+            Debug.LogWarning($"战斗状态下无法与物品 {name} 交互，isBattleInterable = {isBattleInterable}");
+
+            // 可选：显示战斗状态下无法交互的提示
+            ShowCannotInteractInBattleMessage();
+            return;
+        }
+
+        Debug.Log($"与物品交互: {gameObject.name} (战斗状态: {inBattle})");
 
         // 触发对话
         if (triggerDialogueOnInteract && dialogueFile != null)
@@ -197,6 +241,55 @@ public class ItemInGrid : MonoBehaviour
 
         // 可以在这里添加其他交互逻辑
         // 例如：获得物品、触发事件等
+    }
+
+    // 显示战斗状态下无法交互的提示
+    private void ShowCannotInteractInBattleMessage()
+    {
+        // 方法1: 使用Debug.Log显示消息
+        Debug.Log("战斗状态下无法与此物品交互！");
+
+        // 方法2: 如果你有UI提示系统，可以在这里调用
+        // UIManager.Instance.ShowMessage("战斗状态下无法交互！");
+
+        // 方法3: 在屏幕上显示临时文本
+        StartCoroutine(ShowTemporaryMessage("Cannot interact in BattleMode!", 2f));
+    }
+
+    // 显示临时消息的协程
+    private System.Collections.IEnumerator ShowTemporaryMessage(string message, float duration)
+    {
+        // 这里可以创建或显示一个UI文本
+        // 例如：创建一个临时的TextMeshPro对象
+        GameObject messageObj = new GameObject("TempMessage");
+        messageObj.transform.position = transform.position + Vector3.up * 2f;
+
+        TextMeshPro tmp = messageObj.AddComponent<TextMeshPro>();
+        tmp.text = message;
+        tmp.fontSize = 3;
+        tmp.alignment = TextAlignmentOptions.Center;
+        tmp.color = Color.black;
+
+        // 尝试设置字体
+        if (customFont != null)
+        {
+            tmp.font = customFont;
+        }
+
+        // 添加淡出效果
+        float elapsed = 0f;
+        Color startColor = tmp.color;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            tmp.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+            messageObj.transform.position += Vector3.up * Time.deltaTime * 0.5f;
+            yield return null;
+        }
+
+        Destroy(messageObj);
     }
 
     private void TriggerDialogue()
@@ -212,5 +305,33 @@ public class ItemInGrid : MonoBehaviour
         {
             Debug.LogWarning("未找到对话系统！");
         }
+    }
+
+    // 新增：在Inspector中快速设置战斗交互属性的方法
+    [ContextMenu("设置为战斗可交互")]
+    public void SetBattleInterable()
+    {
+        isBattleInterable = true;
+        Debug.Log($"物品 {name} 已设置为战斗可交互");
+    }
+
+    [ContextMenu("设置为战斗不可交互")]
+    public void SetNotBattleInterable()
+    {
+        isBattleInterable = false;
+        Debug.Log($"物品 {name} 已设置为战斗不可交互");
+    }
+
+    // 新增：获取当前交互状态的调试信息
+    public string GetInteractStatus()
+    {
+        bool inBattle = IsInBattleState();
+        bool canInteract = isInterable && (!inBattle || (inBattle && isBattleInterable));
+
+        return $"物品: {name}\n" +
+               $"可交互: {isInterable}\n" +
+               $"战斗可交互: {isBattleInterable}\n" +
+               $"当前状态: {(inBattle ? "战斗" : "探索")}\n" +
+               $"能否交互: {canInteract}";
     }
 }
