@@ -202,6 +202,7 @@ public class TurnManager : MonoBehaviour
         UpdateActionPointUI(player.actionPoints);
 
         CameraMove.instance.ChangeFollow(player.gameObject);
+        Debug.Log(123);
         player.Move();
         PlayerSwitchManager.instance.currentUnitController = player;
 

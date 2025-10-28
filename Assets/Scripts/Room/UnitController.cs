@@ -193,7 +193,7 @@ public class UnitController : MonoBehaviour
         if (FindAnyObjectByType<DialogueSystem>().isDialoguing == true) return;
         if (IsoGrid2D.instance.isWaitingForGridClick) return;
         if(actionPoints == 0) return;
-        IsoGrid2D.instance.HighlightMoveRange(startPoint, moveRange);
+        IsoGrid2D.instance.HighlightMoveRange(currentGridPos, moveRange);
         if (IsDead())
         {
             Debug.Log("单位已死亡，无法移动");
@@ -203,7 +203,7 @@ public class UnitController : MonoBehaviour
         {
             if (actionPoints <= 0) return;
         }
-        else IsoGrid2D.instance.HighlightMoveRange(startPoint, moveRange);
+        else IsoGrid2D.instance.HighlightMoveRange(currentGridPos, moveRange);
 
     }
 

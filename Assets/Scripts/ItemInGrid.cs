@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
-using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.TextCore.Text;
 
 public class ItemInGrid : MonoBehaviour
@@ -58,6 +59,10 @@ public class ItemInGrid : MonoBehaviour
                 transform.GetComponent<SpriteRenderer>().sortingOrder = average + 3;
         }
 
+        if(isSingleCell)
+        {
+            transform.GetComponent<SpriteRenderer>().sortingOrder = -(cornerA.x+cornerA.y)+2;
+        }
         if (isInterable)
         {
             foreach (var grid in occupiedGrids)

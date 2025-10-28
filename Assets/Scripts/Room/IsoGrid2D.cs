@@ -126,6 +126,8 @@ public class IsoGrid2D : MonoBehaviour
 
     public void HighlightMoveRange(Vector2Int playerPos, int moveRange)
     {
+
+        Debug.Log(playerPos);
         ClearHighlight();
 
         // 检查当前模式

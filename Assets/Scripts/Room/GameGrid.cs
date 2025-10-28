@@ -47,6 +47,7 @@ public class GameGrid : MonoBehaviour
     private void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
+        originalColor = rend.color;
     }
 
     void Start()
@@ -56,7 +57,7 @@ public class GameGrid : MonoBehaviour
             selectGrid.sortingOrder = -sortingOrder +1;
         if (stateGrid != null)
             stateGrid.sortingOrder = -501;
-        originalColor = rend.color;
+        
         selectGrid.enabled = false;
         stateGrid.enabled = false;
         // 初始化时刷新一次外观

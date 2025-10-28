@@ -276,6 +276,7 @@ public class CardVisual : MonoBehaviour
             return;
 
         Vector2Int playerPos = TurnManager.instance.currentController.currentGridPos;
+        Debug.Log(playerPos);
         if (parentCard.data.effectType == CardData.CardEffectType.Attack || parentCard.data.effectType == CardData.CardEffectType.RemoteAttack)
         {
             IsoGrid2D.instance.HighlightAttackArea(playerPos, parentCard.data.attackRange);
@@ -321,7 +322,7 @@ public class CardVisual : MonoBehaviour
             cardAssetsPreview.SetActive(false);
         IsoGrid2D.instance.ClearHighlight();
         TurnManager.instance.currentController.Move();
-        TurnManager.instance.ChangePlayer(TurnManager.instance.currentController);
+        
 
     }
 
