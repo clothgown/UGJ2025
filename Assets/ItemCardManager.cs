@@ -193,4 +193,31 @@ public class ItemCardManager : MonoBehaviour
         HideAllItems();
         Debug.Log("所有卡牌已清空。");
     }
+
+
+    /// <summary>
+    /// 尝试减少指定 index 的卡牌数量
+    /// </summary>
+    /// <param name="index">卡牌索引</param>
+    /// <param name="amount">减少数量</param>
+    /// <returns>如果减少成功返回 true，否则返回 false</returns>
+    public bool DecreaseCard(int index, int amount = 1)
+    {
+        ItemCardData card = itemCards.Find(c => c.index == index);
+        if (card == null)
+        {
+            Debug.LogWarning($"减少失败：没有 Index {index} 的卡牌。");
+            return false;
+        }
+
+       
+            card.count -= amount;
+            Debug.Log($"使用卡牌：Index {index} × {amount}，剩余：{card.count}");
+        
+
+        // 刷新显示
+        RefreshItemDisplay();
+        return true;
+    }
+
 }
