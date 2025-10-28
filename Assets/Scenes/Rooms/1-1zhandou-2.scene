@@ -300,6 +300,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &84549989
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +416,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1001 &165282430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -442,15 +444,23 @@ PrefabInstance:
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: healthBarsHolder
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1712550916}
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: playerCardHolder
       value: 
       objectReference: {fileID: 1377862605}
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: stelse.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: stelse.Array.data[0]
       value: 
       objectReference: {fileID: 2137418948}
+    - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+      propertyPath: stelse.Array.data[1]
+      value: 
+      objectReference: {fileID: 216671270}
     - target: {fileID: 6470288680607308855, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: m_LocalPosition.x
       value: 24.542385
@@ -776,7 +786,7 @@ PrefabInstance:
     - target: {fileID: 5805377551697507233, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: dialogDataFile
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4900000, guid: b8d6f2401d77d66428ed7234aa270536, type: 3}
     - target: {fileID: 6059630909441997010, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -826,6 +836,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+--- !u!1 &216671270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3011247278623294422, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 216671269}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &294922846 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3417301197879151901, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
@@ -1222,6 +1237,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &389209393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1713,6 +1729,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &487116853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,6 +1845,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &506946814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,6 +1961,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!4 &536810744 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7889063217884855703, guid: c9e9d3684448c1840a9a439f1db23fca, type: 3}
@@ -2063,6 +2082,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1001 &722605298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2586,6 +2606,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!114 &888117715 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9072935683767121981, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
@@ -2759,6 +2780,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &927778853
 GameObject:
   m_ObjectHideFlags: 0
@@ -2874,6 +2896,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &946306871 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5084986422234508334, guid: 2fcb8a4a562077940bc8d3948199fee8, type: 3}
@@ -3015,6 +3038,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1011775210
 GameObject:
   m_ObjectHideFlags: 0
@@ -3130,6 +3154,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1001 &1029112062
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3558,7 +3583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1366507481422452203, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7754829141520739801, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_Camera
@@ -3953,6 +3978,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &1204903332
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4139,6 +4165,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!4 &1256530290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5822160426406325450, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
@@ -4321,7 +4348,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6059630909441997010, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
   m_PrefabInstance: {fileID: 216671269}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 216671270}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -4553,6 +4580,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1390244601
 GameObject:
   m_ObjectHideFlags: 0
@@ -5012,6 +5040,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1438913336
 GameObject:
   m_ObjectHideFlags: 0
@@ -5278,6 +5307,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1472413976
 GameObject:
   m_ObjectHideFlags: 0
@@ -5393,6 +5423,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1531060884
 GameObject:
   m_ObjectHideFlags: 0
@@ -5561,6 +5592,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1001 &1601081360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5945,6 +5977,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1647148436 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5985879802929581927, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
@@ -6065,6 +6098,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1001 &1666325010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6265,6 +6299,11 @@ PrefabInstance:
       addedObject: {fileID: 536810744}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+--- !u!1 &1712550916 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5334065157313415013, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+  m_PrefabInstance: {fileID: 1712550915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1814644556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6437,6 +6476,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1929846757
 GameObject:
   m_ObjectHideFlags: 0
@@ -6646,6 +6686,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!4 &1976108886 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5822160426406325450, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}
@@ -6907,6 +6948,7 @@ MonoBehaviour:
     m_Bits: 0
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &2137418948 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7074371361413133234, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}

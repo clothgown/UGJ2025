@@ -222,7 +222,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &894227919444947554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +276,10 @@ MonoBehaviour:
   - {fileID: 6231210514969272071}
   - {fileID: 8919756395453296279}
   isChoosing: 0
+  bookPanel: {fileID: 0}
+  bookText: {fileID: 0}
+  bookCloseButton: {fileID: 0}
+  isBookDialogActive: 0
   allowMultipleDialogs: 1
   nextDialogueButton: {fileID: 870674682983490014}
   skipAllButton: {fileID: 5677656240536580993}

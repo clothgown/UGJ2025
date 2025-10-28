@@ -55,6 +55,13 @@ public class DialogueSystem : MonoBehaviour
     private Coroutine typingCoroutine;
     private bool isTyping;
 
+    [Header("书本对话设置")]
+    public GameObject bookPanel; // 书本对话面板
+    public TMP_Text bookText;    // 书本对话文本
+    public Button bookCloseButton; // 书本关闭按钮
+    public bool isBookDialogActive = false; // 是否正在显示书本对话
+
+
     [Header("触发器支持")]
     public bool allowMultipleDialogs = false; // 是否允许多个对话同时触发
     private Queue<TextAsset> dialogQueue = new Queue<TextAsset>(); // 对话队列
@@ -79,6 +86,8 @@ public class DialogueSystem : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        // 初始化书本对话系统
+        InitializeBookDialog();
 
         // 初始化按钮事件
         if (nextDialogueButton != null)
@@ -136,12 +145,83 @@ public class DialogueSystem : MonoBehaviour
     // UI按钮点击事件
     public void OnNextDialogueButtonClick()
     {
+        if (isBookDialogActive) return;
         if (isLoaded && !isChoosing)
         {
             NextDialogue();
         }
     }
+    private void InitializeBookDialog()
+    {
+        if (bookPanel != null)
+        {
+            bookPanel.SetActive(false);
+        }
 
+        if (bookCloseButton != null)
+        {
+            bookCloseButton.onClick.RemoveAllListeners();
+            bookCloseButton.onClick.AddListener(OnBookCloseClicked);
+        }
+    }
+
+    // 书本关闭按钮点击事件
+    private void OnBookCloseClicked()
+    {
+        Debug.Log("书本对话关闭按钮被点击");
+        HideBookDialog();
+        ContinueAfterBookDialog();
+    }
+
+    // 显示书本对话
+    private void ShowBookDialog(string text)
+    {
+        Debug.Log($"显示书本对话: {text}");
+
+        if (bookPanel != null)
+        {
+            bookPanel.SetActive(true);
+        }
+
+        if (bookText != null)
+        {
+            bookText.text = text;
+        }
+
+        if (bookCloseButton != null)
+        {
+            bookCloseButton.gameObject.SetActive(true);
+        }
+
+        isBookDialogActive = true;
+
+        // 隐藏常规对话UI
+        
+    }
+
+    // 隐藏书本对话
+    private void HideBookDialog()
+    {
+        Debug.Log("隐藏书本对话");
+
+        if (bookPanel != null)
+        {
+            bookPanel.SetActive(false);
+        }
+
+        isBookDialogActive = false;
+    }
+
+    // 书本对话结束后继续
+    private void ContinueAfterBookDialog()
+    {
+        Debug.Log("书本对话结束，继续下一段对话");
+
+        
+
+        // 继续下一段对话
+        NextDialogue();
+    }
     public void StartNewDialogue(TextAsset dialogFile = null)
     {
         // 如果指定了对话文件，使用它
@@ -211,6 +291,12 @@ public class DialogueSystem : MonoBehaviour
                 ShowDialogue(nextIndex);
                 currentIndex = nextIndex;
             }
+            return;
+        }
+        if (d.Type == "&")
+        {
+            Debug.Log("检测到书本对话类型");
+            ShowBookDialog(d.Text);
             return;
         }
 
@@ -357,6 +443,11 @@ public class DialogueSystem : MonoBehaviour
 
     void NextDialogue()
     {
+        if (isBookDialogActive)
+        {
+            Debug.Log("正在显示书本对话，请先关闭书本");
+            return;
+        }
         // 如果当前打字还没结束，直接跳完本句
         if (typingTween != null && typingTween.IsActive() && typingTween.IsPlaying())
         {
@@ -513,6 +604,7 @@ public class DialogueSystem : MonoBehaviour
     {
         typingTween?.Kill();
         FadeOutUI();
+        Debug.Log("overover");
         ClearDialogQueue();
     }
 
