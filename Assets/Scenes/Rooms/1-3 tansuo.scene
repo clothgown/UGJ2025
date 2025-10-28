@@ -4226,6 +4226,7 @@ GameObject:
   - component: {fileID: 1614550787}
   - component: {fileID: 1614550786}
   - component: {fileID: 1614550788}
+  - component: {fileID: 1614550789}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: "poker-house_0001s_0017_\u95E8-\u526F\u672C-3"
@@ -4331,6 +4332,21 @@ MonoBehaviour:
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
   customFont: {fileID: 0}
+--- !u!114 &1614550789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614550785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be502eab663da0b4588b2af74d007dd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameGridsPos: []
+  choosePanel: {fileID: 8066115391996660268, guid: 7f7f345641289674ba53f8f7a59692d8, type: 3}
+  canvas: {fileID: 1750579474}
 --- !u!4 &1637418730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5822160426406325450, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}
@@ -4521,6 +4537,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+--- !u!223 &1750579474 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2748405385705231468, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1319980381}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1796939553
 GameObject:
   m_ObjectHideFlags: 0
@@ -4891,6 +4912,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1864635748
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4372262316868694517, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_Name
+      value: CursorManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 104.055984
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 73.335464
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 91.66424
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
 --- !u!1 &1867512328
 GameObject:
   m_ObjectHideFlags: 0
@@ -6348,3 +6426,4 @@ SceneRoots:
   - {fileID: 1967346419}
   - {fileID: 1319980381}
   - {fileID: 1698186394}
+  - {fileID: 1864635748}

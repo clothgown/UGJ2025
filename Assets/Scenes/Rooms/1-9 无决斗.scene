@@ -641,12 +641,17 @@ MonoBehaviour:
   cornerA: {x: 18, y: 8}
   cornerB: {x: 22, y: 12}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &199946716
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,12 +887,17 @@ MonoBehaviour:
   cornerA: {x: 15, y: 6}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &262352603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,12 +1252,17 @@ MonoBehaviour:
   cornerA: {x: 23, y: 1}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1001 &346573256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1342,11 +1357,20 @@ MonoBehaviour:
   currentController: {fileID: 67349446}
   phase: 0
   turnIndex: 1
-  enemyUnit: {fileID: 0}
   playerCardHolder: {fileID: 437817508}
-  actionPoints: 0
   actionPointText: {fileID: 1823837920}
   unitControllers: []
+  playerCards: []
+  deadCardColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.7}
+  aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
+  enemies: []
+  isWin: 0
+  Gameover: {fileID: 0}
+  criticalCharacters: []
+  gameOverOnCriticalDeath: 1
+  explorationManager: {fileID: 0}
+  isMaidDead: 0
+  allowDirectExploration: 1
 --- !u!4 &350306918
 Transform:
   m_ObjectHideFlags: 0
@@ -2105,12 +2129,17 @@ MonoBehaviour:
   cornerA: {x: 32, y: 1}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1001 &452359036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3054,12 +3083,17 @@ MonoBehaviour:
   cornerA: {x: 38, y: 2}
   cornerB: {x: 38, y: 3}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &560351572
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3795,12 +3829,17 @@ MonoBehaviour:
   cornerA: {x: 38, y: 14}
   cornerB: {x: 38, y: 15}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &598611510
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3977,12 +4016,17 @@ MonoBehaviour:
   cornerA: {x: 13, y: 20}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &694345719
 GameObject:
   m_ObjectHideFlags: 0
@@ -4093,12 +4137,17 @@ MonoBehaviour:
   cornerA: {x: 38, y: 5}
   cornerB: {x: 38, y: 6}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &712443454
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4275,12 +4324,17 @@ MonoBehaviour:
   cornerA: {x: 36, y: 13}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &752191615
 GameObject:
   m_ObjectHideFlags: 0
@@ -4337,6 +4391,8 @@ MonoBehaviour:
   isWaitingForGridClick: 0
   waitingCard: {fileID: 0}
   gridStateToChange: 0
+  isExploreScene: 0
+  exploringSceneName: 
 --- !u!1 &797390777
 GameObject:
   m_ObjectHideFlags: 0
@@ -4442,12 +4498,17 @@ MonoBehaviour:
   cornerA: {x: 25, y: 6}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &808497836
 GameObject:
   m_ObjectHideFlags: 0
@@ -4553,12 +4614,17 @@ MonoBehaviour:
   cornerA: {x: 36, y: 10}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &814867885
 GameObject:
   m_ObjectHideFlags: 0
@@ -4593,12 +4659,17 @@ MonoBehaviour:
   cornerA: {x: 38, y: 11}
   cornerB: {x: 38, y: 12}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &814867887
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4940,12 +5011,17 @@ MonoBehaviour:
   cornerA: {x: 38, y: 17}
   cornerB: {x: 38, y: 18}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &838513309
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5122,12 +5198,17 @@ MonoBehaviour:
   cornerA: {x: 23, y: 20}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &879305537
 GameObject:
   m_ObjectHideFlags: 0
@@ -5233,12 +5314,17 @@ MonoBehaviour:
   cornerA: {x: 15, y: 14}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &920095523
 GameObject:
   m_ObjectHideFlags: 0
@@ -5529,12 +5615,17 @@ MonoBehaviour:
   cornerA: {x: 36, y: 16}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &982667075
 GameObject:
   m_ObjectHideFlags: 0
@@ -6863,12 +6954,17 @@ MonoBehaviour:
   cornerA: {x: 28, y: 20}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1144777907
 GameObject:
   m_ObjectHideFlags: 0
@@ -7284,12 +7380,17 @@ MonoBehaviour:
   cornerA: {x: 36, y: 7}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1265256810
 GameObject:
   m_ObjectHideFlags: 0
@@ -7395,12 +7496,17 @@ MonoBehaviour:
   cornerA: {x: 14, y: 1}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1283362141
 GameObject:
   m_ObjectHideFlags: 0
@@ -7799,12 +7905,17 @@ MonoBehaviour:
   cornerA: {x: 38, y: 8}
   cornerB: {x: 38, y: 9}
   isSingleCell: 0
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!212 &1391517378
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8013,12 +8124,17 @@ MonoBehaviour:
   cornerA: {x: 18, y: 20}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1461300545
 GameObject:
   m_ObjectHideFlags: 0
@@ -8188,12 +8304,17 @@ MonoBehaviour:
   cornerA: {x: 33, y: 20}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1498275636
 GameObject:
   m_ObjectHideFlags: 0
@@ -8503,7 +8624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coins: 0
-  coinText: {fileID: 0}
+  thisLevelGetCoins: 0
 --- !u!4 &1569579881
 Transform:
   m_ObjectHideFlags: 0
@@ -8624,12 +8745,17 @@ MonoBehaviour:
   cornerA: {x: 36, y: 4}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1659009710
 GameObject:
   m_ObjectHideFlags: 0
@@ -8824,12 +8950,17 @@ MonoBehaviour:
   cornerA: {x: 3, y: 20}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1677956582
 GameObject:
   m_ObjectHideFlags: 0
@@ -8935,12 +9066,17 @@ MonoBehaviour:
   cornerA: {x: 8, y: 20}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &1710064358
 GameObject:
   m_ObjectHideFlags: 0
@@ -9512,6 +9648,63 @@ RectTransform:
   m_AnchoredPosition: {x: -833, y: -209}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1899905437
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4372262316868694517, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_Name
+      value: CursorManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 104.055984
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 73.335464
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 91.66424
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063997372057304025, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
 --- !u!1 &1900275627
 GameObject:
   m_ObjectHideFlags: 0
@@ -9837,12 +10030,17 @@ MonoBehaviour:
   cornerA: {x: 5, y: 1}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &2037310380
 GameObject:
   m_ObjectHideFlags: 0
@@ -9948,12 +10146,17 @@ MonoBehaviour:
   cornerA: {x: 25, y: 14}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
+  occupiedGrids: []
   isInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!1 &2040611801
 GameObject:
   m_ObjectHideFlags: 0
@@ -10262,6 +10465,7 @@ SceneRoots:
   - {fileID: 1461300547}
   - {fileID: 1761595631}
   - {fileID: 1102784056}
+  - {fileID: 1899905437}
   - {fileID: 1020461767}
   - {fileID: 117835548}
   - {fileID: 1810703025}

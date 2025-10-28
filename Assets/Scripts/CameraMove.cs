@@ -65,8 +65,7 @@ public class CameraMove : MonoBehaviour
         }
         else
         {
-            // ✅ 无输入时平滑回归初始 offset
-            currentOffset = Vector3.Lerp(currentOffset, initialOffset, returnSpeed * Time.deltaTime);
+            
         }
 
         // 应用 offset 到相机
