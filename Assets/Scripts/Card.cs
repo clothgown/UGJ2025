@@ -227,6 +227,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         UnitController playerUnit = IsoGrid2D.instance.controller.GetComponent<UnitController>();
         
         playerUnit.attackType = data.attackType;
+        playerUnit.attackAttribute = data.attackAttribute;
         switch (data.effectType)
         {
             case CardData.CardEffectType.MoveUnit:
@@ -277,10 +278,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                         else if (data.attackAttribute == CardData.AttackAttribute.Fire)
                         {
                             playerUnit.isNextAttackFire = true;
+                            AudioManager.Instance.PlaySFX("fire");
                         }
                         else if (data.attackAttribute == CardData.AttackAttribute.Ice)
                         {
                             playerUnit.isNextAttackIce = true;
+                            AudioManager.Instance.PlaySFX("ice");
                         }
 
                         IsoGrid2D.instance.isWaitingForGridClick = true;

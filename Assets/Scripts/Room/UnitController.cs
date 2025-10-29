@@ -73,6 +73,7 @@ public class UnitController : MonoBehaviour
     public Color deadColor = new Color(0.3f, 0.3f, 0.3f, 1f);
 
     public int attackType = -1;
+    public CardData.AttackAttribute attackAttribute;
 
     [Header("关键角色设置")]
     public bool isCriticalCharacter = false; // 如果这个角色死亡，游戏直接结束
@@ -83,7 +84,14 @@ public class UnitController : MonoBehaviour
     public bool isNextAttackChange;
     public GameObject changeTarget;
 
-    public bool man;
+    public enum Who
+    {
+        Heart,
+        Female,
+        Insert,
+        Male,
+    }
+    public Who who; 
 
     private void Start()
     {
@@ -273,8 +281,8 @@ public class UnitController : MonoBehaviour
         float elapsed = 0f;
 
         float jumpHeight = 0.1f; // 跳跃高度，可调
-
-        while (elapsed < travelTime)
+            AudioManager.Instance.PlaySFX("move");
+            while (elapsed < travelTime)
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / travelTime);
@@ -291,7 +299,7 @@ public class UnitController : MonoBehaviour
 
             yield return null;
         }
-            AudioManager.Instance.PlaySFX("move");
+            
             // 最终落地到格子
             transform.position = endPos;
             
@@ -344,13 +352,14 @@ public class UnitController : MonoBehaviour
         Move();
     }
 
-
+   
 
     public void TakeDamage(float amount)
     {
         if (Random.value < dodgeChance)
         {
             Debug.Log($"{name} 闪避了这次攻击！");
+            AudioManager.Instance.PlaySFX("change");
             return;
         }
         DOTweenAnimation attackedTween = GetComponent<DOTweenAnimation>();
@@ -365,6 +374,15 @@ public class UnitController : MonoBehaviour
             Attacked.gameObject.SetActive(true);
 
             Attacked.SendEvent("OnPlay");
+            if (who == Who.Heart)
+            {
+                AudioManager.Instance.PlaySFX("hearthurt");
+            }
+            if (who == Who.Female)
+            {
+                AudioManager.Instance.PlaySFX("fhurt");
+            }
+
         }
 
         if (shield > 0)
@@ -373,6 +391,7 @@ public class UnitController : MonoBehaviour
             {
                 shield -= amount;
                 amount = 0f;
+                AudioManager.Instance.PlaySFX("sheild");
             }
             else
             {
@@ -381,6 +400,7 @@ public class UnitController : MonoBehaviour
                 Attacked.gameObject.SetActive(true);
 
                 Attacked.SendEvent("OnPlay");
+
             }
 
             // ���»�������ʾ��ǰֵ
@@ -398,6 +418,14 @@ public class UnitController : MonoBehaviour
                 currentHealth = 0;
                 Debug.Log("Player is dead!");
                 // TODO: ��Ϸʧ���߼�
+                if (who == Who.Heart)
+                {
+                    AudioManager.Instance.PlaySFX("hearthurt2");
+                }
+                if (who == Who.Female)
+                {
+                    AudioManager.Instance.PlaySFX("fdie");
+                }
             }
         }
         DialogueTrigger[] triggers = GetComponents<DialogueTrigger>();
@@ -456,6 +484,22 @@ public class UnitController : MonoBehaviour
             Debug.Log($"��ҹ��� {enemy.name}����� {attackDamage} �˺���");
             Attack1.gameObject.SetActive(true);
             Attack1.Play();
+            if (attackType == 1)
+            {
+                AudioManager.Instance.PlaySFX("sword");
+            }
+            if (attackType == 2 && attackAttribute == CardData.AttackAttribute.None)
+            {
+                AudioManager.Instance.PlaySFX("arrow");
+            }
+            if (attackType == 2 && attackAttribute == CardData.AttackAttribute.Fire)
+            {
+                AudioManager.Instance.PlaySFX("firearrow");
+            }
+            if (attackType == 2 && attackAttribute == CardData.AttackAttribute.Ice)
+            {
+                AudioManager.Instance.PlaySFX("icearrow");
+            }
 
             float finalDamage = attackDamage;
 

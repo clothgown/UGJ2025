@@ -327,10 +327,10 @@ public class AudioManager : MonoBehaviour
     // UIÒôÐ§
     public void PlayBeginDrag() => PlaySFX("begindrag");
     public void PlayEndDrag() => PlaySFX("enddrag");
-    public void PlayClick() => PlaySFX("nextturn");
+    public void PlayClick() => PlaySFX("click");
     public void PlayChangeTurn() => PlaySFX("changeturn");
-    public void PlayOff() => PlaySFX("off");
-    public void PlayNextTurn() => PlaySFX("next");
+    public void PlayOff() => PlaySFX("close");
+    public void PlayNextTurn() => PlaySFX("nextturn");
 
     // ¹¥»÷ÒôÐ§
     public void PlayChangJian() => PlaySFX("changjianattack");

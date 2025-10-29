@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+using static UnitController;
 
 public enum EnemyType
 {
@@ -46,6 +47,8 @@ public class EnemyUnit : MonoBehaviour
     public VisualEffect Dizzy;
 
     public bool isMaid = false;
+
+    public UnitController.Who who;
 
     public int coin;
     private void Start()
@@ -393,7 +396,20 @@ public class EnemyUnit : MonoBehaviour
         if(Attacked!=null)
         {
             Attacked.gameObject.SetActive(true);
+            
             Attacked.SendEvent("OnPlay");
+            if (who == Who.Insert)
+            {
+                AudioManager.Instance.PlaySFX("insecthurt");
+            }
+            if (who == Who.Female)
+            {
+                AudioManager.Instance.PlaySFX("fhurt");
+            }
+            if (who == Who.Male)
+            {
+                AudioManager.Instance.PlaySFX("soldier");
+            }
         }
         
         
@@ -468,6 +484,18 @@ public class EnemyUnit : MonoBehaviour
         {
             currentHealth = 0;
             Debug.Log($"{name} is dead!");
+            if (who == Who.Insert)
+            {
+                AudioManager.Instance.PlaySFX("insectdie");
+            }
+            if (who == Who.Female)
+            {
+                AudioManager.Instance.PlaySFX("fdie");
+            }
+            if (who == Who.Male)
+            {
+                AudioManager.Instance.PlaySFX("soldierdie");
+            }
             Die();
         }
     }
