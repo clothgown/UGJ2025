@@ -61,9 +61,6 @@ public class TurnManager : MonoBehaviour
     {
         unitControllers = FindObjectsOfType<UnitController>();
 
-        // 确保ExplorationManager引用
-        if (explorationManager == null)
-        {
             explorationManager = FindObjectOfType<ExplorationManager>();
             if (explorationManager == null)
             {
@@ -73,7 +70,8 @@ public class TurnManager : MonoBehaviour
             {
                 Debug.Log($"找到ExplorationManager: {explorationManager.gameObject.name}");
             }
-        }
+
+
         // 为所有单位订阅死亡事件
         foreach (var unit in unitControllers)
         {
@@ -122,7 +120,7 @@ public class TurnManager : MonoBehaviour
 
         // 条件2：如果允许直接进入探索模式，可以通过其他方式触发
         // 这个条件可以由对话系统或其他触发器设置
-        if (allowDirectExploration && ShouldForceExploration())
+        if (allowDirectExploration)
         {
             return true;
         }
