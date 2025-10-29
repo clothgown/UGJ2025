@@ -253,8 +253,13 @@ MonoBehaviour:
     pitch: 0.1
     loop: 0
   ambientSounds:
-  - name: hall
+  - name: Ambient
     clip: {fileID: 8300000, guid: 3d8b7df356fe80649ad388bf14db1a12, type: 3}
-    volume: 0
+    volume: 1
+    pitch: 0.1
+    loop: 1
+  - name: Ambient2
+    clip: {fileID: 8300000, guid: 34a01639d75ea2343ab253cc083c0b79, type: 3}
+    volume: 0.272
     pitch: 0
     loop: 1
