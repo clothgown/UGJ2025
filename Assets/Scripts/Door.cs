@@ -8,39 +8,44 @@ public class Door : MonoBehaviour
     public Vector2Int[] gameGridsPos;
 
     private UnitController[] allUnits;
-    private bool hasTriggered = false;
-    private Vector2Int? lastTriggeredGrid = null; // 记录上一次触发 UI 的格子
 
     public GameObject choosePanel;
-    private GameObject instantiatedPanel; // 生成的面板实例
+    private GameObject instantiatedPanel;
     public Canvas canvas;
 
-    
+    private Vector2Int? lastTriggeredGrid = null; // 上一次触发的格子
+    private UnitController lastTriggerUnit = null; // 哪个单位触发的
 
     private void Start()
     {
-        allUnits = FindObjectsOfType<UnitController>();
-        // 找到场景中所有 GameGrid
-        GameGrid[] allGrids = FindObjectsOfType<GameGrid>();
+        StartCoroutine(InitAfterDelay());
+    }
 
+    private IEnumerator InitAfterDelay()
+    {
+        // 等待一帧，确保场景内对象都初始化完毕
+        yield return null;
+
+        allUnits = FindObjectsOfType<UnitController>();
+
+        // 初始化门格子的视觉效果
+        GameGrid[] allGrids = FindObjectsOfType<GameGrid>();
         foreach (var grid in allGrids)
         {
             foreach (var pos in gameGridsPos)
             {
                 if (grid.gridPos == pos)
                 {
-                    // 设置为离开格子
+                    Debug.Log(123456);
                     grid.isLeaveGrid = true;
                     grid.normalColor = grid.LeaveColor;
-
-                    // 立即刷新外观
                     grid.UpdateGridAppearance();
-
-                    break; // 匹配到就跳出内层循环
+                    break;
                 }
             }
         }
     }
+
 
     void Update()
     {
@@ -48,76 +53,77 @@ public class Door : MonoBehaviour
         {
             if (unit == null) continue;
 
-            bool isOnDoorGrid = false;
-            Vector2Int? currentGrid = null;
+            Vector2Int? currentDoorGrid = null;
 
-            // 检查单位是否在任意门格子上
+            // 检查该单位是否在门格子上
             foreach (var gridPos in gameGridsPos)
             {
                 if (unit.currentGridPos == gridPos)
                 {
-                    isOnDoorGrid = true;
-                    currentGrid = gridPos;
+                    currentDoorGrid = gridPos;
                     break;
                 }
             }
 
-            if (isOnDoorGrid)
+            if (currentDoorGrid.HasValue)
             {
-                // 如果单位在门格子上，且与上一次触发的格子不同
-                if (!hasTriggered || (currentGrid != lastTriggeredGrid))
+                // 如果踏上不同的门格子，则触发新的UI
+                if (currentDoorGrid != lastTriggeredGrid)
                 {
-                    OnAnyUnitReachDoor(unit, currentGrid.Value);
+                    OnUnitEnterNewDoor(unit, currentDoorGrid.Value);
                 }
             }
-            else if (hasTriggered)
+            else
             {
-                // 单位不在任何门格子上，重置触发状态
-                ResetTrigger();
+                // 离开所有门格子
+                if (lastTriggerUnit == unit)
+                {
+                    OnUnitLeaveDoor(unit);
+                }
             }
         }
     }
 
     /// <summary>
-    /// 任意单位到达门格子时触发
+    /// 当单位进入新的门格子
     /// </summary>
-    private void OnAnyUnitReachDoor(UnitController triggeringUnit, Vector2Int gridPos)
+    private void OnUnitEnterNewDoor(UnitController unit, Vector2Int gridPos)
     {
-        hasTriggered = true;
-        lastTriggeredGrid = gridPos; // 记录当前触发格子
-        Debug.Log($"单位 {triggeringUnit.name} 到达门格子 {gridPos}，准备触发UI面板");
+        lastTriggeredGrid = gridPos;
+        lastTriggerUnit = unit;
 
-        // 销毁旧的面板（如果存在）
+        Debug.Log($"单位 {unit.name} 到达门格子 {gridPos}，触发UI面板");
+
         if (instantiatedPanel != null)
         {
             Destroy(instantiatedPanel);
             instantiatedPanel = null;
         }
 
-        if (choosePanel != null)
+        if (choosePanel != null && canvas != null)
         {
-            // 实例化新的 UI 面板
             instantiatedPanel = Instantiate(choosePanel, canvas.transform);
             instantiatedPanel.SetActive(true);
         }
         else
         {
-            Debug.LogWarning("Door: choosePanel 未设置！");
+            Debug.LogWarning("Door: choosePanel 或 canvas 未设置！");
         }
     }
 
     /// <summary>
-    /// 允许再次触发门逻辑
+    /// 当单位离开门格子
     /// </summary>
-    public void ResetTrigger()
+    private void OnUnitLeaveDoor(UnitController unit)
     {
-        hasTriggered = false;
-        lastTriggeredGrid = null; // 清空上一次触发的格子
+        Debug.Log($"单位 {unit.name} 离开门格子，UI面板关闭");
+        lastTriggeredGrid = null;
+        lastTriggerUnit = null;
+
         if (instantiatedPanel != null)
         {
-            Destroy(instantiatedPanel); // 销毁面板
+            Destroy(instantiatedPanel);
             instantiatedPanel = null;
         }
-        Debug.Log("门触发状态已重置");
     }
 }

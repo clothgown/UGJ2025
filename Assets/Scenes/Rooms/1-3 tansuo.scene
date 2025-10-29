@@ -419,9 +419,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 694592932293885821, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 694592932293885821, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 694592932293885821, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1366507481422452203, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_Name
       value: Guochang
+      objectReference: {fileID: 0}
+    - target: {fileID: 1366507481422452203, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8377023261743829797, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4168,7 +4184,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1614550787}
   - component: {fileID: 1614550786}
-  - component: {fileID: 1614550788}
   - component: {fileID: 1614550789}
   m_Layer: 0
   m_HasEditorInfo: 1
@@ -4222,7 +4237,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -800
   m_Sprite: {fileID: 21300000, guid: 4a2de2a9ef8355948a63ece9529497e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4249,32 +4264,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 580913525}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1614550788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614550785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerA: {x: 21, y: 16}
-  cornerB: {x: 22, y: 16}
-  isSingleCell: 0
-  occupiedGrids: []
-  isInterable: 1
-  isBattleInterable: 0
-  sr: {fileID: 0}
-  transparentAlpha: 0.75
-  blockingLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  dialogueFile: {fileID: 0}
-  triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
 --- !u!114 &1614550789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4287,7 +4276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be502eab663da0b4588b2af74d007dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameGridsPos: []
+  gameGridsPos:
+  - {x: 21, y: 16}
+  - {x: 22, y: 16}
   choosePanel: {fileID: 8066115391996660268, guid: 7f7f345641289674ba53f8f7a59692d8, type: 3}
   canvas: {fileID: 1750579474}
 --- !u!4 &1637418730 stripped

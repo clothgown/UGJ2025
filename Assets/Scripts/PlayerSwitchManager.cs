@@ -60,7 +60,7 @@ public class PlayerSwitchManager : MonoBehaviour
         for (int i = 0; i < allSlots.Count; i++)
         {
             allSlots[i].unit.isActive = allSlots[i].isActive;
-            allSlots[i].unit.gameObject.SetActive(allSlots[i].isActive);
+            
         }
 
         // 默认选择第一个在场角色

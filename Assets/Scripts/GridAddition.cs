@@ -22,7 +22,7 @@ public class GridAddition : MonoBehaviour
     private IsoGrid2D gridSystem;
     public bool triggered = false; // 防止重复触发
 
-    void Start()
+    private void Awake()
     {
         gridSystem = IsoGrid2D.instance;
         if (gridSystem == null)
@@ -34,6 +34,10 @@ public class GridAddition : MonoBehaviour
         if (targetParent != null)
             targetParent.SetActive(false); // 初始关闭
 
+        
+    }
+    void Start()
+    {
         if (generateOnStart)
             GenerateExtraArea();
     }
