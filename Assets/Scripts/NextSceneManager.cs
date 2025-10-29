@@ -8,7 +8,8 @@ public class NextSceneManager : MonoBehaviour
     public string nextSceneName;
     public bool canChange;
     public EnemyUnit enemyMaid;
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,7 @@ public class NextSceneManager : MonoBehaviour
                 }
                 
                 SceneManager.LoadScene(nextSceneName);
+                FindAnyObjectByType<LevelSelectRoot>().SetGridManagerTrue();
             }
             
         }

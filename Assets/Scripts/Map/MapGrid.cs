@@ -81,6 +81,12 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 player.transform.localRotation = Quaternion.identity;
                 player.currentPos = gridPos;
                 MapGridManager.instance.currentGrid = this;
+                if(gridType==MapGridType.Store)
+                {
+                    string sceneToLoad = "Store";
+                    SceneManager.sceneLoaded += OnSceneLoaded;
+                    SceneManager.LoadScene(sceneToLoad);
+                }
                 if (normalType == 0 && gridType == MapGridType.Normal)
                 {
                     // 从 sceneNames 列表中随机选择一个场景
