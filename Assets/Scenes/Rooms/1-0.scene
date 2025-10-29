@@ -3058,6 +3058,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7350943317629776874, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7754829141520739801, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_Camera
       value: 
@@ -4915,6 +4919,354 @@ PrefabInstance:
     - target: {fileID: 7902329851521180329, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.size
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[1].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 6d9b42a785c95d640885721395b930a2, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[2].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: d2db837762448674f887f34d43fc74a9, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[3].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 94ca2cbe5aa85f248a8475207a7b0086, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[4].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: f07abe960be4a594cae1e4aa954a61f8, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[5].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ed45cba25c95f24697f3b689da18363, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[6].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 0585604375f17824ba81c314c449683a, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[7].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: f1a7b5cd5b12720449940524a8ddfa0c, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[8].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 1ad347d1cbe03e040ae34c4c29c20f3a, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[9].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 7a91d11e41b5f554cb8460835f09196a, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[1].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: e1ccd42550720394ca3cccca82f2a886, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[2].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: ebaaa2e9dcb04a04aa4daef8dbf6380c, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[3].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: c084c74f9d7260a40bf15f8a0abfbe25, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[4].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: ee68d0dd86e746c42a3a01f92d691723, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[5].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 9487447f915a8f843aa5b4942cefd1f9, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[6].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: a3d5ffa231406a7449bef505c612b483, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[7].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: bec0c87bddfdbbf4cbfedfd3ee542c78, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[8].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 74d306d569ced394381ec51531843f8e, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[9].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: d3bb97518ba3aee409062c497c124fae, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[1].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 5825911e0784b8142928400c9af150f5, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[2].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 3259650951d5a074c8b23a24a3bdb38b, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[3].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 9d9f3c07066199f488e0cc85c76ad63d, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[4].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 28a9265399fd5464b87b654896dda33a, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[5].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: ebd25c4af3491ba41a40751bdc789402, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[6].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 8c33cf83e2e7a404fa32d65af39edd87, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[7].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 72e4c85e85e04894abbca480b818a700, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[1].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: a19e2f5f4cf4759468d64f9beec47d4e, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[2].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 11f4a29574b0f514098c399e6e71d295, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[3].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 2673320297ead56438cc3bc5a812679d, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[4].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 7663a0974b9e33c4ca5eff2f41bdfe4c, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[5].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 0c89499d6830ab54580ffbdd16f50a6a, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[10].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: cebfbd1f9870aed4fa683351f474d5ae, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[11].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: cbf80491f4c0a91438fbcb4472863623, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[12].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: e91f369296768fc47b6dfbcabdffd922, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[13].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 3e4b62b803cc119498810eb342928b39, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[14].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 4805dfc80eec687489574e592218dae8, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[15].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 9c987f0505016c542bda3354e47595b7, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[16].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: d2ff859480ca242458b6d5eaa02c0770, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[10].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 7a91d11e41b5f554cb8460835f09196a, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[10].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: fdd03c0878455c04fbada0585fab911a, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[11].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 28780084e58593742ad05d9c2df94e1b, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[12].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: c593a991bf932264f85b6db6bff6f885, type: 3}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[1].expressionName
+      value: shangby
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[2].expressionName
+      value: biyan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[3].expressionName
+      value: yansu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[4].expressionName
+      value: weixiao
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[5].expressionName
+      value: weixiao2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[6].expressionName
+      value: yansu2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[7].expressionName
+      value: jinzhang
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[8].expressionName
+      value: yansu3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[9].expressionName
+      value: shang
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[1].expressionName
+      value: angry
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[2].expressionName
+      value: black
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[3].expressionName
+      value: happy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[4].expressionName
+      value: jingya
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[5].expressionName
+      value: sadblack
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[6].expressionName
+      value: smile
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[7].expressionName
+      value: uncom
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[8].expressionName
+      value: unhappy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[9].expressionName
+      value: weiqu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[1].expressionName
+      value: qingmiexiao
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[2].expressionName
+      value: qingmie
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[3].expressionName
+      value: shengqi
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[4].expressionName
+      value: beifen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[5].expressionName
+      value: yansu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[6].expressionName
+      value: fanbaiyan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[3].expressions.Array.data[7].expressionName
+      value: huaiyi
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[1].expressionName
+      value: biyan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[2].expressionName
+      value: smile
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[3].expressionName
+      value: sikao
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[4].expressionName
+      value: yansu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[4].expressions.Array.data[5].expressionName
+      value: yansu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[10].expressionName
+      value: bianren
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[11].expressionName
+      value: biyan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[12].expressionName
+      value: jiqie
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[13].expressionName
+      value: gaxiao
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[14].expressionName
+      value: fanbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[15].expressionName
+      value: shengqi2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[0].expressions.Array.data[16].expressionName
+      value: shengqi
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[1].expressions.Array.data[10].expressionName
+      value: shang
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[10].expressionName
+      value: fazuo
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[11].expressionName
+      value: sikao
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921941565842624523, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: characters.Array.data[2].expressions.Array.data[12].expressionName
+      value: pibei
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
