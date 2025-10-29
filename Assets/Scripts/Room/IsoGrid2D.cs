@@ -70,8 +70,22 @@ public class IsoGrid2D : MonoBehaviour
     }
     void Start()
     {
-        controller = FindAnyObjectByType<UnitController>().gameObject;
+        UnitController[] allControllers = FindObjectsOfType<UnitController>();
+        foreach (var c in allControllers)
+        {
+            if (c.gameObject.name == "Player")
+            {
+                controller = c.gameObject;
+                break;
+            }
+        }
+
+        if (controller == null)
+        {
+            Debug.LogWarning("❌ 没有找到名为 'Player' 的 UnitController！");
+        }
     }
+
 
     public GridNode[,] nodes;
 
