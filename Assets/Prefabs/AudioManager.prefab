@@ -1,0 +1,260 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!1 &7388709353937830852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 7
+  m_Component:
+  - component: {fileID: 5040612711342930444}
+  - component: {fileID: 6091475132431429933}
+  m_Layer: 0
+  m_HasEditorInfo: 1
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5040612711342930444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388709353937830852}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6091475132431429933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388709353937830852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3571bdf6356d6484fb0317bcfd828c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterVolume: 1
+  bgmVolume: 1
+  sfxVolume: 1
+  ambientVolume: 1
+  bgmSounds:
+  - name: Acrostic
+    clip: {fileID: 8300000, guid: 0922fce827939164992f2061d56e7cd0, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: Alichemy
+    clip: {fileID: 8300000, guid: 2f0b38d48e7f1b84b9d52025c9abf7b3, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: Allegory
+    clip: {fileID: 8300000, guid: 915f851459936b342ae105cac74451a6, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: Archaeology
+    clip: {fileID: 8300000, guid: 3574e506b81e2744fba91dea34c29686, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: Ares
+    clip: {fileID: 8300000, guid: 9668a8d175683f246bc8bb10c418fa7a, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: Astrology
+    clip: {fileID: 8300000, guid: 6212463dd143ebe4084312ad7da0cd1c, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: ForcedMarch
+    clip: {fileID: 8300000, guid: acef7399d94719c429c38f8c64ff1422, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: WelcomeToTheKingdom
+    clip: {fileID: 8300000, guid: 22a660e9af49cc4469f46a8f55c3ba88, type: 3}
+    volume: 0
+    pitch: 0.1
+    loop: 0
+  bgmCrossfadeTime: 5
+  sfxSounds:
+  - name: soldierdie
+    clip: {fileID: 8300000, guid: 94701e93e41f0dc43b636019083d644d, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: drag
+    clip: {fileID: 8300000, guid: 0dc24bc03aea56342a6a843e29c3825c, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: soldier
+    clip: {fileID: 8300000, guid: 2b7786f3fa585a54dba77cb74e71fbdf, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: enddrag
+    clip: {fileID: 8300000, guid: cac2685b886423a408765ccaec58e85e, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: sword
+    clip: {fileID: 8300000, guid: ead4ac5d14cfd6c40adc4ee4924fee6f, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: fhurt
+    clip: {fileID: 8300000, guid: c7eba227ccb52e54cbf88788b596f536, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: mass
+    clip: {fileID: 8300000, guid: f69be27c888b6d74cb141d41cf3d17e5, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: fdie
+    clip: {fileID: 8300000, guid: 24f68de8c313b204f9f38d8060ac7c41, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: hearthurt
+    clip: {fileID: 8300000, guid: aeb119010743d8142a03ccc6b8da3435, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+  - name: arrow
+    clip: {fileID: 8300000, guid: cc53486719cf24f48b2f3dd845588f18, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: heal
+    clip: {fileID: 8300000, guid: 1dd84e44864660a448d367bfab17afab, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: hearthurt2
+    clip: {fileID: 8300000, guid: bcbc949ea9aa6314aa7ae8e540055f81, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: close
+    clip: {fileID: 8300000, guid: 322f2d87b0c8af942a7246aeb7ee9c7d, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: confirm
+    clip: {fileID: 8300000, guid: 175604ac4ee8ad14db6f94176a3f7b68, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: nextturn
+    clip: {fileID: 8300000, guid: c19e6b01037580345bb5b5ae3b18ff9b, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: myturn
+    clip: {fileID: 8300000, guid: 08458a81bf6ef504e8cfe3ccdbaeedca, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: locate
+    clip: {fileID: 8300000, guid: d3f6e1205c6bf3b409ba4c2ac67448b3, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: move
+    clip: {fileID: 8300000, guid: bc0fd5ca277599644b2c9b2a52f278e2, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: firearrow
+    clip: {fileID: 8300000, guid: a9082e9cfe6674c40a8226bb1deed871, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: fire
+    clip: {fileID: 8300000, guid: 50eba72b03ecb4f4aa476b666609a929, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: icearrow
+    clip: {fileID: 8300000, guid: 90479d78ed5640d44ad2487cabb49b3e, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: ice
+    clip: {fileID: 8300000, guid: 94b486417d3273a48881f3141ea1ccc7, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: insectdie
+    clip: {fileID: 8300000, guid: 3cead1d77c6a12647a2a529ab0288b94, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: insecthurt
+    clip: {fileID: 8300000, guid: a8d46e1ea4311ba46984c90dc4bb6726, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: oil
+    clip: {fileID: 8300000, guid: 6e48f5e541bb9a44f92dcd6ee5fee486, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: pull
+    clip: {fileID: 8300000, guid: 857fb479c7cc37a44a8de606d4fa2323, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: push
+    clip: {fileID: 8300000, guid: 356503696ad83b4418a58815acc11cd0, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: sheild
+    clip: {fileID: 8300000, guid: 7a7fe8130f7732440a4d120b82b53861, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: summon
+    clip: {fileID: 8300000, guid: 9dbad8a6fe85f6b40ac7f53ced3922f7, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: change
+    clip: {fileID: 8300000, guid: d6fb8f2aad5346d459ed95a3ca3ac7e5, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: changeway
+    clip: {fileID: 8300000, guid: a7e2c646d64c9e14283d027957072450, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: water
+    clip: {fileID: 8300000, guid: b01180bfaad154946aa2954e907aafcd, type: 3}
+    volume: 0.98
+    pitch: 0.1
+    loop: 0
+  ambientSounds:
+  - name: hall
+    clip: {fileID: 8300000, guid: 3d8b7df356fe80649ad388bf14db1a12, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 1

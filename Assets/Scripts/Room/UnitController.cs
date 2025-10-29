@@ -82,6 +82,9 @@ public class UnitController : MonoBehaviour
 
     public bool isNextAttackChange;
     public GameObject changeTarget;
+
+    public bool man;
+
     private void Start()
     {
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -282,16 +285,19 @@ public class UnitController : MonoBehaviour
             // 在 Y 上叠加跳跃（抛物线/正弦曲线都行）
             float jumpOffset = Mathf.Sin(t * Mathf.PI) * jumpHeight;
 
-            transform.position = new Vector3(basePos.x, basePos.y + jumpOffset, basePos.z);
+                
+
+                transform.position = new Vector3(basePos.x, basePos.y + jumpOffset, basePos.z);
 
             yield return null;
         }
+            AudioManager.Instance.PlaySFX("move");
+            // 最终落地到格子
+            transform.position = endPos;
+            
 
-        // 最终落地到格子
-        transform.position = endPos;
-
-        // 更新格子占用
-        if (startGrid != null)
+            // 更新格子占用
+            if (startGrid != null)
         {
             var oldGrid = startGrid.GetComponent<GameGrid>();
             oldGrid.isOccupied = false;
@@ -414,6 +420,7 @@ public class UnitController : MonoBehaviour
         shield += amount;
         Debug.Log($"��һ�û��� {amount}����ǰ����ֵ: {shield}");
         healthSystem.SetShield(shield);
+        AudioManager.Instance.PlaySFX("shield");
     }
 
     
@@ -428,7 +435,7 @@ public class UnitController : MonoBehaviour
         }
         Cure.gameObject.SetActive(true);
         Cure.Play();
-        SoundManager.Instance.PlayhealAudio();
+        AudioManager.Instance.PlaySFX("heal");
         if (currentHealth>=maxHealth)
         {
             currentHealth=maxHealth;
@@ -542,7 +549,7 @@ public class UnitController : MonoBehaviour
         isNextAttackDouble = true;
         XN.SetBool(Shader.PropertyToID("isxn"), false);
         XN.gameObject.SetActive(true);
-        SoundManager.Instance.PlaydoubleAudio();
+        AudioManager.Instance.PlaySFX("double");
 
     }
     public void SetNextAttackMass()
@@ -550,7 +557,7 @@ public class UnitController : MonoBehaviour
         isNextAttackMass = true;
         XN.SetBool(Shader.PropertyToID("isxn"), true);
         XN.gameObject.SetActive(true);
-        SoundManager.Instance.PlaymassAudio();
+        AudioManager.Instance.PlaySFX("mass");
 
     }
     public void SetNextAttackBloodSuck()

@@ -120,7 +120,7 @@ public class HorizontalCardHolder : MonoBehaviour
         }
 
         selectedCard = null;
-        SoundManager.Instance.PlayenddragAudio();
+        AudioManager.Instance.PlaySFX("enddrag");
 
     }
 

@@ -90,6 +90,9 @@ public class TurnManager : MonoBehaviour
         StartCoroutine(RunTurnLoop());
 
         enemies = FindObjectsOfType<EnemyUnit>();
+
+        
+
     }
 
     private void Update()
@@ -219,6 +222,7 @@ public class TurnManager : MonoBehaviour
 
         // 更新卡片 UI 状态
         UpdateCardSelectionUI(player);
+        AudioManager.Instance.PlaySFX("change");
     }
 
     private void OnUnitDeath(UnitController deadUnit)
@@ -551,7 +555,7 @@ public class TurnManager : MonoBehaviour
 
             // 给一点间隔让玩家看清楚
             yield return new WaitForSeconds(0.5f);
-            SoundManager.Instance.PlaychangeturnAudio();
+            AudioManager.Instance.PlaySFX("myturn");
         }
 
         if (!hasEnemyActed)
