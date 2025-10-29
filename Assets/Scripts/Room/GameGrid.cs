@@ -315,7 +315,7 @@ public class GameGrid : MonoBehaviour
                     playerController.attackDamage *= 2;
                     playerController.RecoverState();
                 }
-                OnFireAttackHit();
+                
                 playerController.Attack(this);
 
                 FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
@@ -385,7 +385,9 @@ public class GameGrid : MonoBehaviour
             originalColor = normalColor;
             stateGrid.color = normalColor;
             return;
+
         }
+
         switch (currentState)
         {
             case GridState.None:
@@ -404,97 +406,10 @@ public class GameGrid : MonoBehaviour
 
                 break;
         }
+
     }
-
-    public void OnFireAttackHit()
-    {
-        GameObject vfxPrefab = null;
-        float destroyTime = 3f;
-        // 根据格子状态播放不同的VFX
-        switch (currentState)
-        {
-            case GridState.Water:
-                ClearStateAfterVFX();
-                break;
-            default:
-                vfxPrefab = Resources.Load<GameObject>("VFX/fireVFX");
-                StartCoroutine(ClearStateAfterVFX());
-                break;
-        }
-        if (vfxPrefab != null)
-        {
-            GameObject vfx = Instantiate(vfxPrefab, transform.position, Quaternion.identity);
-            vfx.transform.SetParent(transform);
-
-            // 设置 VFX 的排序层级
-            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
-            if (vfxRenderer != null)
-            {
-                vfxRenderer.sortingOrder = -sortingOrder + 1000;
-            }
-
-            // 自动销毁 VFX
-            Destroy(vfx, destroyTime);
-        }
-        else
-        {
-            Debug.LogWarning($"VFX 预制体加载失败，请检查 Resources路径下的文件");
-        }
-    }
-
-        public void OnIceAttackHit()
-    {
-        GameObject vfxPrefab = null;
-        float destroyTime = 3f;
-        // 根据格子状态播放不同的VFX
-        switch (currentState)
-        {
-            case GridState.Oil:
-                ClearStateAfterVFX();
-                break;
-            default:
-                vfxPrefab = Resources.Load<GameObject>("VFX/iceVFX");
-                StartCoroutine(ClearStateAfterVFX());
-                break;
-        }
-        if (vfxPrefab != null)
-        {
-            Vector3 vfxPosition = transform.position + new Vector3(0, 0.3f, 0);
-
-            GameObject vfx = Instantiate(vfxPrefab, vfxPosition, Quaternion.identity);
-            
-
-            // 🎯 设置统一缩放为 0.5
-            vfx.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
-            vfx.transform.SetParent(transform);
-
-            // 设置 VFX 的排序层级
-            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
-            if (vfxRenderer != null)
-            {
-                vfxRenderer.sortingOrder = -sortingOrder + 1000;
-            }
-
-            // 自动销毁 VFX
-            Destroy(vfx, destroyTime);
-        }
-        else
-        {
-            Debug.LogWarning($"VFX 预制体加载失败，请检查 Resources路径下的文件");
-        }
-    }
-
     
 
-    private IEnumerator ClearStateAfterVFX()
-    {
-        // 等待VFX播放一段时间后再清除油状态
-        yield return new WaitForSeconds(1.5f);
-
-        // 清除油状态
-        SetState(GridState.None);
-        Debug.Log("油格状态已清除");
-    }
+    
 }
 

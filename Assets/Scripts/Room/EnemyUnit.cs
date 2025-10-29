@@ -46,11 +46,18 @@ public class EnemyUnit : MonoBehaviour
     public VisualEffect Attacked;
     public VisualEffect Dizzy;
 
+    // 🎯 新增：火属性箭和冰属性箭 VFX
+    public VisualEffect FireArrowHitVFX;
+    public VisualEffect IceArrowHitVFX;
+
     public bool isMaid = false;
 
     public UnitController.Who who;
 
     public int coin;
+
+    // 🎯 新增：VFX 自动隐藏协程引用
+    private Coroutine hideVFxCoroutine;
     private void Start()
     {
         if (Attacked != null)
@@ -94,6 +101,208 @@ public class EnemyUnit : MonoBehaviour
         if (enemyType == EnemyType.Passive)
         {
             hasBeenAttacked = false;
+        }
+    }
+    // 🎯 新增：处理属性攻击VFX的方法
+    public void PlayAttributeAttackVFX(CardData.AttackAttribute attackAttribute)
+    {
+        // 先停止之前的隐藏协程
+        if (hideVFxCoroutine != null)
+        {
+            StopCoroutine(hideVFxCoroutine);
+        }
+
+        // 先关闭所有属性攻击VFX
+        if (FireArrowHitVFX != null)
+        {
+            FireArrowHitVFX.Stop();
+            FireArrowHitVFX.gameObject.SetActive(false);
+        }
+        if (IceArrowHitVFX != null)
+        {
+            IceArrowHitVFX.Stop();
+            IceArrowHitVFX.gameObject.SetActive(false);
+        }
+
+        // 根据攻击属性播放对应的VFX
+        switch (attackAttribute)
+        {
+            case CardData.AttackAttribute.Fire:
+                if (FireArrowHitVFX != null)
+                {
+                    FireArrowHitVFX.gameObject.SetActive(true);
+                    FireArrowHitVFX.Play();
+                    Debug.Log("🔥 播放火焰箭命中VFX");
+
+                    // 设置VFX的排序层级
+                    Renderer vfxRenderer = FireArrowHitVFX.GetComponent<Renderer>();
+                    if (vfxRenderer != null)
+                    {
+                        vfxRenderer.sortingOrder = sr.sortingOrder + 1;
+                    }
+                }
+                break;
+
+            case CardData.AttackAttribute.Ice:
+                if (IceArrowHitVFX != null)
+                {
+                    IceArrowHitVFX.gameObject.SetActive(true);
+                    IceArrowHitVFX.Play();
+                    Debug.Log("❄️ 播放冰箭命中VFX");
+
+                    // 设置VFX的排序层级
+                    Renderer vfxRenderer = IceArrowHitVFX.GetComponent<Renderer>();
+                    if (vfxRenderer != null)
+                    {
+                        vfxRenderer.sortingOrder = sr.sortingOrder + 1;
+                    }
+                }
+                break;
+
+            default:
+                // 普通攻击，不播放特殊属性VFX
+                break;
+        }
+
+        // 🎯 自动隐藏VFX（2秒后）
+        hideVFxCoroutine = StartCoroutine(HideAttributeVFXAfterDelay(2f));
+    }
+
+    // 🎯 新增：延迟隐藏属性VFX的协程
+    private IEnumerator HideAttributeVFXAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (FireArrowHitVFX != null)
+        {
+            FireArrowHitVFX.Stop();
+            FireArrowHitVFX.gameObject.SetActive(false);
+        }
+        if (IceArrowHitVFX != null)
+        {
+            IceArrowHitVFX.Stop();
+            IceArrowHitVFX.gameObject.SetActive(false);
+        }
+
+        Debug.Log("属性攻击VFX已自动隐藏");
+    }
+
+    // 🎯 修改 TakeDamage 方法，添加攻击属性检测
+    public void TakeDamage(float amount, CardData.AttackAttribute attackAttribute = CardData.AttackAttribute.None)
+    {
+        currentHealth -= amount;
+
+        // 🎯 播放属性攻击VFX
+        if (attackAttribute != CardData.AttackAttribute.None)
+        {
+            PlayAttributeAttackVFX(attackAttribute);
+        }
+        else
+        {
+            // 普通攻击播放原来的Attacked VFX
+            if (Attacked != null)
+            {
+                Attacked.gameObject.SetActive(true);
+                Attacked.SendEvent("OnPlay");
+            }
+        }
+
+        // 播放音效
+        if (who == Who.Insert)
+        {
+            AudioManager.Instance.PlaySFX("insecthurt");
+        }
+        if (who == Who.Female)
+        {
+            AudioManager.Instance.PlaySFX("fhurt");
+        }
+        if (who == Who.Male)
+        {
+            AudioManager.Instance.PlaySFX("soldier");
+        }
+
+        DOTweenAnimation attackedTween = GetComponent<DOTweenAnimation>();
+        if (attackedTween != null && attackedTween.id == "Attacked")
+        {
+            attackedTween.DORestart();
+        }
+        FindObjectOfType<CameraShake>().Shake();
+        healthSystem.SetHealth(currentHealth);
+
+        DialogueTrigger[] triggers = GetComponents<DialogueTrigger>();
+        foreach (DialogueTrigger trigger in triggers)
+        {
+            if (trigger.triggerType == DialogueTriggerType.EnemyHealthBelow)
+            {
+                // 血量条件在触发器的Update中自动检查
+            }
+            else if (trigger.triggerType == DialogueTriggerType.CustomEvent &&
+                     trigger.customEventName == "OnTakeDamage")
+            {
+                trigger.TriggerManually();
+            }
+        }
+
+        // Passive: 第一次被攻击后激活行动
+        if (enemyType == EnemyType.Passive && !hasBeenAttacked)
+        {
+            hasBeenAttacked = true;
+            Debug.Log("Passive enemy is now active!");
+        }
+
+        // ✅ Passive: 血量第一次低于30%时触发吸血事件
+        if (enemyType == EnemyType.Passive && !hasTriggeredLifeAbsorb && currentHealth / maxHealth <= 0.3f)
+        {
+            hasTriggeredLifeAbsorb = true;
+            sr.color = Color.red;
+            Debug.Log("Passive enemy triggers life absorption!");
+
+            // 吸收所有我方在场角色生命值
+            UnitController[] players = FindObjectsOfType<UnitController>();
+            float totalAbsorbed = 0f;
+            foreach (var p in players)
+            {
+                float absorbAmount = Mathf.Min(5f, p.currentHealth - 1f); // 最多吸5，保留1点血
+                if (absorbAmount > 0)
+                {
+                    p.TakeDamage(absorbAmount);
+                    totalAbsorbed += absorbAmount;
+                }
+            }
+
+            // 敌人回满当前吸收量的血
+            currentHealth += totalAbsorbed;
+            if (currentHealth > maxHealth) currentHealth = maxHealth;
+            healthSystem.SetHealth(currentHealth);
+
+            // 下一回合开始后，所有造成的伤害 ×1.5
+            damageBoostActive = true;
+            attackDamage *= 1.5f;
+        }
+
+        if (IsoGrid2D.instance.controller.GetComponent<UnitController>().isNextAttackBloodSucking == true)
+        {
+            IsoGrid2D.instance.controller.GetComponent<UnitController>().Heal(amount);
+            IsoGrid2D.instance.controller.GetComponent<UnitController>().RecoverState();
+        }
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Debug.Log($"{name} is dead!");
+            if (who == Who.Insert)
+            {
+                AudioManager.Instance.PlaySFX("insectdie");
+            }
+            if (who == Who.Female)
+            {
+                AudioManager.Instance.PlaySFX("fdie");
+            }
+            if (who == Who.Male)
+            {
+                AudioManager.Instance.PlaySFX("soldierdie");
+            }
+            Die();
         }
     }
 
@@ -392,6 +601,7 @@ public class EnemyUnit : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        TakeDamage(amount, CardData.AttackAttribute.None);
         currentHealth -= amount;
         if(Attacked!=null)
         {

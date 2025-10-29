@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)] public float masterVolume = 1f;
     [Range(0f, 1f)] public float bgmVolume = 1f;
     [Range(0f, 1f)] public float sfxVolume = 1f;
-    [Range(0f, 1f)] public float ambientVolume = 5f;
+    [Range(0f, 1f)] public float ambientVolume = 1f; // 改为 0-1 范围
 
     [Header("背景音乐")]
     [SerializeField] private Sound[] bgmSounds;
@@ -66,7 +66,7 @@ public class AudioManager : MonoBehaviour
         SetSFXVolume(sfxVolume);
         SetAmbientVolume(ambientVolume);
 
-        Debug.Log($"AudioManager初始化完成 - SFX音量: {sfxSource.volume}");
+        Debug.Log($"AudioManager初始化完成 - SFX音量: {sfxSource.volume}，ambient音量：{ambientSource.volume}");
     }
     private void InitializeAudioSources()
     {
@@ -77,8 +77,19 @@ public class AudioManager : MonoBehaviour
         // 创建音效音源
         sfxSource = CreateAudioSource("SFX Source", false);
 
-        // 创建环境音源
+        // 创建环境音源 - 确保正确配置
         ambientSource = CreateAudioSource("Ambient Source", true);
+        ConfigureAmbientSource(ambientSource);
+    }
+
+    private void ConfigureAmbientSource(AudioSource source)
+    {
+        source.loop = true;
+        source.playOnAwake = false;
+        source.spatialBlend = 0f; // 2D音效
+        source.volume = ambientVolume * masterVolume;
+
+        Debug.Log($"环境音源配置完成: 循环={source.loop}, 空间混合={source.spatialBlend}");
     }
 
     private AudioSource CreateAudioSource(string name, bool loop)
@@ -289,18 +300,36 @@ public class AudioManager : MonoBehaviour
         if (soundDictionary.ContainsKey(ambientName))
         {
             Sound sound = soundDictionary[ambientName];
+            if (sound.clip == null)
+            {
+                Debug.LogError($"环境音 '{ambientName}' 的AudioClip为null！");
+                return;
+            }
+
             ambientSource.clip = sound.clip;
             ambientSource.volume = sound.volume * ambientVolume * masterVolume;
             ambientSource.pitch = sound.pitch;
+            ambientSource.loop = true; // 确保环境音循环
             ambientSource.Play();
+
+            Debug.Log($"播放环境音: {ambientName}, 音量: {ambientSource.volume}, 循环: {ambientSource.loop}, 时长: {sound.clip.length}秒");
+        }
+        else
+        {
+            Debug.LogWarning($"找不到名为 {ambientName} 的环境音");
         }
     }
 
     public void StopAmbient()
     {
-        ambientSource.Stop();
+        if (ambientSource != null)
+        {
+            ambientSource.Stop();
+            Debug.Log("停止环境音");
+        }
     }
-    #endregion
+
+   
 
     #region 音量控制
     public void SetMasterVolume(float volume)
@@ -348,3 +377,4 @@ public class AudioManager : MonoBehaviour
     public void PlayMass() => PlaySFX("xmass");
     #endregion
 }
+#endregion

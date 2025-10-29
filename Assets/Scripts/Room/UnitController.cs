@@ -68,6 +68,7 @@ public class UnitController : MonoBehaviour
     public int attackway;
     public VisualEffect Attack1;
     public VisualEffect Cure;
+    public VisualEffect sheild;
 
     [Header("死亡效果")]
     public Color deadColor = new Color(0.3f, 0.3f, 0.3f, 1f);
@@ -449,6 +450,8 @@ public class UnitController : MonoBehaviour
         shield += amount;
         Debug.Log($"��һ�û��� {amount}����ǰ����ֵ: {shield}");
         healthSystem.SetShield(shield);
+        sheild.gameObject.SetActive(true);
+        sheild.Play();
         AudioManager.Instance.PlaySFX("shield");
     }
 
@@ -505,15 +508,13 @@ public class UnitController : MonoBehaviour
             float finalDamage = attackDamage;
             if (isNextAttackFire)
             {
-                // 触发格子的火焰攻击效果
-                targetGrid.OnFireAttackHit();
+                
 
                 
             }
             if (isNextAttackIce)
             {
-                // 触发格子的火焰攻击效果
-                targetGrid.OnIceAttackHit();
+                
 
                 
             }
@@ -528,7 +529,7 @@ public class UnitController : MonoBehaviour
             }
 
             Debug.Log($"{enemy.name} 受到 {finalDamage} 点伤害");
-            enemy.TakeDamage(finalDamage);
+            enemy.TakeDamage(finalDamage, this.attackAttribute);
 
 
         }
@@ -709,6 +710,12 @@ public class UnitController : MonoBehaviour
         {
             Cure.Stop();
             Cure.gameObject.SetActive(false);
+        }
+
+        if (sheild != null)
+        {
+            sheild.Stop();
+            sheild.gameObject.SetActive(false);
         }
 
         // 重置角色颜色状态

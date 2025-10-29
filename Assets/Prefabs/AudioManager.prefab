@@ -48,7 +48,7 @@ MonoBehaviour:
   masterVolume: 1
   bgmVolume: 1
   sfxVolume: 1
-  ambientVolume: 1
+  ambientVolume: 5
   bgmSounds:
   - name: Acrostic
     clip: {fileID: 8300000, guid: 0922fce827939164992f2061d56e7cd0, type: 3}
@@ -57,37 +57,37 @@ MonoBehaviour:
     loop: 0
   - name: Alchemy
     clip: {fileID: 8300000, guid: 2f0b38d48e7f1b84b9d52025c9abf7b3, type: 3}
-    volume: 0
+    volume: 1
     pitch: 0
     loop: 0
   - name: Allegory
     clip: {fileID: 8300000, guid: 915f851459936b342ae105cac74451a6, type: 3}
-    volume: 0
+    volume: 1
     pitch: 0
     loop: 0
   - name: Archaeology
     clip: {fileID: 8300000, guid: 3574e506b81e2744fba91dea34c29686, type: 3}
-    volume: 0
+    volume: 1
     pitch: 0
     loop: 0
   - name: Ares
     clip: {fileID: 8300000, guid: 9668a8d175683f246bc8bb10c418fa7a, type: 3}
-    volume: 0
+    volume: 1
     pitch: 0
     loop: 0
   - name: Astrology
     clip: {fileID: 8300000, guid: 6212463dd143ebe4084312ad7da0cd1c, type: 3}
-    volume: 0
+    volume: 1
     pitch: 0
     loop: 0
   - name: ForcedMarch
     clip: {fileID: 8300000, guid: acef7399d94719c429c38f8c64ff1422, type: 3}
-    volume: 0
+    volume: 1
     pitch: 0
     loop: 0
   - name: WelcomeToTheKingdom
     clip: {fileID: 8300000, guid: 22a660e9af49cc4469f46a8f55c3ba88, type: 3}
-    volume: 0
+    volume: 1
     pitch: 0.1
     loop: 0
   bgmCrossfadeTime: 5
@@ -260,6 +260,10 @@ MonoBehaviour:
     loop: 1
   - name: Ambient2
     clip: {fileID: 8300000, guid: 34a01639d75ea2343ab253cc083c0b79, type: 3}
-    volume: 0.272
+    volume: 1
     pitch: 0
     loop: 1
+  bgmSource1: {fileID: 0}
+  bgmSource2: {fileID: 0}
+  sfxSource: {fileID: 0}
+  ambientSource: {fileID: 0}

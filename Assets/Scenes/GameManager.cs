@@ -331,7 +331,7 @@ public class GameManager : MonoBehaviour
 
         AudioManager.Instance.StopAmbient();
         // 恢复环境音音量设置
-        AudioManager.Instance.SetAmbientVolume(ambientVolumeSlider != null ? ambientVolumeSlider.value : 1f);
+        AudioManager.Instance.SetAmbientVolume(ambientVolumeSlider != null ? ambientVolumeSlider.value : 5f);
         currentAmbientTransitionCoroutine = null;
     }
 

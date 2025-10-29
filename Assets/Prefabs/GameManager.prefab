@@ -122,7 +122,7 @@ MonoBehaviour:
   gameScene: 1-0
   sceneBGMConfigs:
   - sceneName: Start
-    bgmName: WelcomeToTheKingdom
+    bgmName: Archaeology
     stopOnExit: 1
     fadeOutTime: 2
   - sceneName: 1-0
@@ -165,7 +165,25 @@ MonoBehaviour:
     bgmName: ForcedMarch
     stopOnExit: 1
     fadeOutTime: 2
-  sceneAmbientConfigs: []
+  sceneAmbientConfigs:
+  - sceneName: 1-0
+    ambientName: Ambient2
+    stopOnExit: 0
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
+  - sceneName: 1-1zhandou
+    ambientName: Ambient2
+    stopOnExit: 0
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
+  - sceneName: 1-1zhandou-2
+    ambientName: Ambient2
+    stopOnExit: 0
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
   settingsPanel: {fileID: 7993815995173932771}
   loadingPanel: {fileID: 6419676068936256627}
   loadingProgressBar: {fileID: 0}

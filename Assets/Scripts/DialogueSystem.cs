@@ -22,7 +22,30 @@ public class Dialogue
     public string CG;          // CG名（可选）
     public bool IsWatched;     // 是否已观看
     public string Condition;
+    // 新增：随机分支支持
+    [NonSerialized] public List<RandomBranch> randomBranches = new List<RandomBranch>();
+    public string RandomBranchesData; // 用于存储CSV中的随机分支数据
+
+    // 新增：效果支持
+    public string Effects; // 效果字符串，格式：effect1:param1,param2;effect2:param1
 }
+
+// 新增：随机分支类
+[Serializable]
+public class RandomBranch
+{
+    public int nextID;         // 跳转到的对话ID
+    public int probability;    // 概率（百分比）
+    public string condition;   // 额外条件（可选）
+
+    public RandomBranch(int nextID, int probability, string condition = "")
+    {
+        this.nextID = nextID;
+        this.probability = probability;
+        this.condition = condition;
+    }
+}
+
 public class DialogueSystem : MonoBehaviour
 {
     public bool isDialoguing;
@@ -72,8 +95,19 @@ public class DialogueSystem : MonoBehaviour
     public Image overlayBlock;
     [Header("探索模式集成")]
     public bool canTriggerExploration = true; // 是否允许通过对话触发探索模式
+
+    [Header("随机分支设置")]
+    public bool enableRandomBranches = true;
+
+    [Header("立绘设置")]
+    public bool autoSetNativeSize = true; // 自动设置为图片原生大小
+    public Vector2 maxPortraitSize = new Vector2(400, 400); // 最大立绘尺寸限制
+    public bool maintainAspectRatio = true; // 保持宽高比
+
     // 添加一个静态实例以便全局访问
     public static DialogueSystem Instance { get; private set; }
+
+
 
     void Start()
     {
@@ -280,8 +314,8 @@ public class DialogueSystem : MonoBehaviour
         if (!string.IsNullOrEmpty(d.Condition) && !CheckCondition(d.Condition))
         {
             // 条件不满足，跳过这句对话
-            int nextIndex = d.NextID;
-            if (nextIndex == -1 || nextIndex >= dialogues.Count)
+            int nextIndex = dialogues.FindIndex(dial => dial.ID == d.NextID);
+            if (nextIndex == -1)
             {
                 FadeOutUI();
                 isDialoguing = false;
@@ -291,6 +325,12 @@ public class DialogueSystem : MonoBehaviour
                 ShowDialogue(nextIndex);
                 currentIndex = nextIndex;
             }
+            return;
+        }
+        if (d.Type == "R" && enableRandomBranches)
+        {
+            Debug.Log("检测到随机分支对话类型");
+            HandleRandomBranch(d);
             return;
         }
         if (d.Type == "&")
@@ -306,15 +346,30 @@ public class DialogueSystem : MonoBehaviour
         {
             if (d.Position == "左" && leftImage != null)
             {
-                leftImage.sprite = s;
+                SetPortraitImage(leftImage, s, d.Position);
                 leftImage.DOFade(1f, fadeDuration);
+
+                // 淡出另一侧的立绘
+                if (rightImage != null)
+                    rightImage.DOFade(0.6f, fadeDuration);
             }
             else if (d.Position == "右" && rightImage != null)
             {
-                rightImage.sprite = s;
+                SetPortraitImage(rightImage, s, d.Position);
                 rightImage.DOFade(1f, fadeDuration);
+
+                // 淡出另一侧的立绘
+                if (leftImage != null)
+                    leftImage.DOFade(0.6f, fadeDuration);
             }
         }
+        else
+        {
+            // 如果没有立绘，淡出所有立绘
+            if (leftImage != null) leftImage.DOFade(0f, fadeDuration);
+            if (rightImage != null) rightImage.DOFade(0f, fadeDuration);
+        }
+
 
         // CG处理
         if (cgImage != null)
@@ -332,7 +387,7 @@ public class DialogueSystem : MonoBehaviour
             {
                 // 没CG → 渐隐
                 cgImage.DOKill();
-                cgImage.DOFade(0f, cgFadeDuration);
+                cgImage.DOFade(0.5f, cgFadeDuration);
                 cgImage.gameObject.SetActive(false);
             }
         }
@@ -379,6 +434,57 @@ public class DialogueSystem : MonoBehaviour
             isDialoguing = false;
             return;
         }
+    }
+    private void SetPortraitImage(Image image, Sprite sprite, string position)
+    {
+        if (image == null || sprite == null) return;
+
+        image.sprite = sprite;
+        image.gameObject.SetActive(true);
+
+        // 自动设置原生大小
+        if (autoSetNativeSize)
+        {
+            SetImageNativeSize(image, maxPortraitSize);
+        }
+
+        // 根据位置调整一些额外设置（可选）
+       
+
+        Debug.Log($"设置立绘: {sprite.name}, 尺寸: {image.rectTransform.sizeDelta}, 位置: {position}");
+    }
+
+    // 设置图片为原生大小，带最大尺寸限制
+    private void SetImageNativeSize(Image image, Vector2 maxSize)
+    {
+        if (image.sprite == null) return;
+
+        RectTransform rectTransform = image.rectTransform;
+        Sprite sprite = image.sprite;
+
+        // 获取精灵的原始尺寸
+        Vector2 nativeSize = new Vector2(sprite.rect.width, sprite.rect.height);
+
+        // 如果启用了保持宽高比，并且有最大尺寸限制
+        if (maintainAspectRatio && maxSize.x > 0 && maxSize.y > 0)
+        {
+            // 计算缩放比例，确保图片不超过最大尺寸
+            float widthRatio = maxSize.x / nativeSize.x;
+            float heightRatio = maxSize.y / nativeSize.y;
+            float scaleRatio = Mathf.Min(widthRatio, heightRatio, 1f); // 不超过1，即不超过原始大小
+
+            // 应用缩放后的尺寸
+            rectTransform.sizeDelta = nativeSize * scaleRatio;
+        }
+        else
+        {
+            // 直接使用原始尺寸
+            rectTransform.sizeDelta = nativeSize;
+        }
+
+        
+
+        Debug.Log($"图片原生尺寸设置: {sprite.name} -> 原始: {nativeSize}, 最终: {rectTransform.sizeDelta}");
     }
 
     void ShowOptions(int startIndex)
@@ -935,7 +1041,322 @@ public class DialogueSystem : MonoBehaviour
     {
         ShowDialogue(currentID);
     }
+    private void HandleRandomBranch(Dialogue d)
+    {
+        if (d.randomBranches.Count == 0)
+        {
+            Debug.LogError($"随机分支对话 {d.ID} 没有配置分支选项！");
+            FadeOutUI();
+            isDialoguing = false;
+            return;
+        }
 
+        // 计算总概率并筛选满足条件的分支
+        var validBranches = new List<RandomBranch>();
+        int totalProbability = 0;
+
+        foreach (var branch in d.randomBranches)
+        {
+            // 检查分支条件
+            if (string.IsNullOrEmpty(branch.condition) || CheckCondition(branch.condition))
+            {
+                validBranches.Add(branch);
+                totalProbability += branch.probability;
+            }
+        }
+
+        if (validBranches.Count == 0)
+        {
+            Debug.LogWarning($"随机分支对话 {d.ID} 没有满足条件的分支！");
+            FadeOutUI();
+            isDialoguing = false;
+            return;
+        }
+
+        // 随机选择分支
+        int randomValue = UnityEngine.Random.Range(0, totalProbability);
+        int accumulatedProbability = 0;
+        RandomBranch selectedBranch = null;
+
+        foreach (var branch in validBranches)
+        {
+            accumulatedProbability += branch.probability;
+            if (randomValue < accumulatedProbability)
+            {
+                selectedBranch = branch;
+                break;
+            }
+        }
+
+        if (selectedBranch == null)
+        {
+            selectedBranch = validBranches[0]; // 保底选择第一个
+        }
+
+        Debug.Log($"随机分支选择: 从 {validBranches.Count} 个分支中选择 ID={selectedBranch.nextID}, 概率={selectedBranch.probability}%");
+
+        // 跳转到选中的分支
+        int nextIndex = dialogues.FindIndex(dial => dial.ID == selectedBranch.nextID);
+        if (nextIndex >= 0)
+        {
+            currentIndex = nextIndex;
+            ShowDialogue(nextIndex);
+        }
+        else
+        {
+            Debug.LogError($"找不到随机分支目标对话 ID: {selectedBranch.nextID}");
+            FadeOutUI();
+            isDialoguing = false;
+        }
+    }
+
+    // 执行效果
+    private void ExecuteEffects(string effectsString)
+    {
+        Debug.Log($"执行效果: {effectsString}");
+
+        // 格式: effect1:param1,param2;effect2:param1,param2
+        string[] effectGroups = effectsString.Split(';');
+
+        foreach (string effectGroup in effectGroups)
+        {
+            if (string.IsNullOrEmpty(effectGroup.Trim())) continue;
+
+            string[] parts = effectGroup.Split(':');
+            if (parts.Length < 2) continue;
+
+            string effectType = parts[0].Trim().ToLower();
+            string parameters = parts[1].Trim();
+
+            ExecuteSingleEffect(effectType, parameters);
+        }
+    }
+
+    // 执行单个效果
+    private void ExecuteSingleEffect(string effectType, string parameters)
+    {
+        string[] paramArray = parameters.Split(',');
+
+        switch (effectType)
+        {
+            case "heal":
+                HandleHealEffect(paramArray);
+                break;
+            case "damage":
+                HandleDamageEffect(paramArray);
+                break;
+            case "coin":
+                HandleCoinEffect(paramArray);
+                break;
+            case "maxhealth":
+                HandleMaxHealthEffect(paramArray);
+                break;
+            case "sethealth":
+                HandleSetHealthEffect(paramArray);
+                break;
+            default:
+                Debug.LogWarning($"未知的效果类型: {effectType}");
+                break;
+        }
+    }
+
+    // 治疗效果
+    private void HandleHealEffect(string[] parameters)
+    {
+        if (parameters.Length < 2) return;
+
+        string target = parameters[0].Trim();
+        if (float.TryParse(parameters[1], out float healAmount))
+        {
+            if (target == "all")
+            {
+                // 治疗所有玩家
+                foreach (var unit in FindObjectsOfType<UnitController>())
+                {
+                    if (!unit.IsDead())
+                    {
+                        unit.Heal(healAmount);
+                        Debug.Log($"治疗 {unit.characterName}: +{healAmount} HP");
+                    }
+                }
+            }
+            else
+            {
+                // 治疗特定玩家
+                var unit = FindUnitByName(target);
+                if (unit != null && !unit.IsDead())
+                {
+                    unit.Heal(healAmount);
+                    Debug.Log($"治疗 {unit.characterName}: +{healAmount} HP");
+                }
+            }
+
+            // 更新全局状态
+            if (AllPlayerState.Instance != null)
+            {
+                AllPlayerState.Instance.UpdateUnitStates();
+            }
+        }
+    }
+
+    // 伤害效果
+    private void HandleDamageEffect(string[] parameters)
+    {
+        if (parameters.Length < 2) return;
+
+        string target = parameters[0].Trim();
+        if (float.TryParse(parameters[1], out float damageAmount))
+        {
+            if (target == "all")
+            {
+                // 伤害所有玩家
+                foreach (var unit in FindObjectsOfType<UnitController>())
+                {
+                    if (!unit.IsDead())
+                    {
+                        unit.TakeDamage(damageAmount);
+                        Debug.Log($"对 {unit.characterName} 造成伤害: -{damageAmount} HP");
+                    }
+                }
+            }
+            else
+            {
+                // 伤害特定玩家
+                var unit = FindUnitByName(target);
+                if (unit != null && !unit.IsDead())
+                {
+                    unit.TakeDamage(damageAmount);
+                    Debug.Log($"对 {unit.characterName} 造成伤害: -{damageAmount} HP");
+                }
+            }
+
+            // 更新全局状态
+            if (AllPlayerState.Instance != null)
+            {
+                AllPlayerState.Instance.UpdateUnitStates();
+            }
+        }
+    }
+
+    // 金币效果
+    private void HandleCoinEffect(string[] parameters)
+    {
+        if (parameters.Length < 2) return;
+
+        string operation = parameters[0].Trim();
+        if (int.TryParse(parameters[1], out int coinAmount))
+        {
+            if (CollectionManager.instance != null)
+            {
+                switch (operation.ToLower())
+                {
+                    case "add":
+                        CollectionManager.instance.AddCoin(coinAmount);
+                        Debug.Log($"获得金币: +{coinAmount}");
+                        break;
+                    case "remove":
+                        CollectionManager.instance.AddCoin(-coinAmount);
+                        Debug.Log($"失去金币: -{coinAmount}");
+                        break;
+                    case "set":
+                        // 如果需要设置金币，可能需要扩展 CollectionManager
+                        Debug.LogWarning("设置金币功能需要扩展 CollectionManager");
+                        break;
+                }
+            }
+        }
+    }
+
+    // 最大血量效果
+    private void HandleMaxHealthEffect(string[] parameters)
+    {
+        if (parameters.Length < 2) return;
+
+        string target = parameters[0].Trim();
+        if (float.TryParse(parameters[1], out float maxHealthChange))
+        {
+            if (target == "all")
+            {
+                // 修改所有玩家最大血量
+                foreach (var unit in FindObjectsOfType<UnitController>())
+                {
+                    unit.maxHealth += maxHealthChange;
+                    unit.currentHealth = Mathf.Min(unit.currentHealth, unit.maxHealth);
+                    Debug.Log($"修改 {unit.characterName} 最大血量: {unit.maxHealth}");
+                }
+            }
+            else
+            {
+                // 修改特定玩家最大血量
+                var unit = FindUnitByName(target);
+                if (unit != null)
+                {
+                    unit.maxHealth += maxHealthChange;
+                    unit.currentHealth = Mathf.Min(unit.currentHealth, unit.maxHealth);
+                    Debug.Log($"修改 {unit.characterName} 最大血量: {unit.maxHealth}");
+                }
+            }
+
+            // 更新全局状态
+            if (AllPlayerState.Instance != null)
+            {
+                AllPlayerState.Instance.UpdateUnitStates();
+            }
+        }
+    }
+
+    // 设置血量效果
+    private void HandleSetHealthEffect(string[] parameters)
+    {
+        if (parameters.Length < 2) return;
+
+        string target = parameters[0].Trim();
+        if (float.TryParse(parameters[1], out float healthValue))
+        {
+            if (target == "all")
+            {
+                // 设置所有玩家血量
+                foreach (var unit in FindObjectsOfType<UnitController>())
+                {
+                    if (!unit.IsDead())
+                    {
+                        unit.currentHealth = Mathf.Clamp(healthValue, 1, unit.maxHealth);
+                        Debug.Log($"设置 {unit.characterName} 血量: {unit.currentHealth}");
+                    }
+                }
+            }
+            else
+            {
+                // 设置特定玩家血量
+                var unit = FindUnitByName(target);
+                if (unit != null && !unit.IsDead())
+                {
+                    unit.currentHealth = Mathf.Clamp(healthValue, 1, unit.maxHealth);
+                    Debug.Log($"设置 {unit.characterName} 血量: {unit.currentHealth}");
+                }
+            }
+
+            // 更新全局状态
+            if (AllPlayerState.Instance != null)
+            {
+                AllPlayerState.Instance.UpdateUnitStates();
+            }
+        }
+    }
+
+    // 根据名字查找单位
+    private UnitController FindUnitByName(string unitName)
+    {
+        UnitController[] units = FindObjectsOfType<UnitController>();
+        foreach (var unit in units)
+        {
+            if (unit.characterName == unitName || unit.gameObject.name == unitName)
+            {
+                return unit;
+            }
+        }
+        return null;
+    }
     /// <summary>
     /// 加载并解析对话文本（支持逗号或制表符分隔，支持引号内含分隔符）
     /// </summary>
@@ -996,9 +1417,47 @@ public class DialogueSystem : MonoBehaviour
             d.IsWatched = false;
 
             dialogues.Add(d);
+
+        }
+        ProcessRandomBranches();
+
+        Debug.Log($"对话加载完成，总计 {dialogues.Count} 条对话，包含随机分支和效果");
+    }
+    private void ProcessRandomBranches()
+    {
+        foreach (var dialogue in dialogues)
+        {
+            // 解析随机分支数据（如果存在）
+            if (!string.IsNullOrEmpty(dialogue.RandomBranchesData))
+            {
+                ParseRandomBranches(dialogue);
+            }
         }
     }
 
+    // 解析随机分支
+    private void ParseRandomBranches(Dialogue dialogue)
+    {
+        // 格式: nextID1:probability1:condition1;nextID2:probability2:condition2
+        string[] branchStrings = dialogue.RandomBranchesData.Split(';');
+
+        foreach (string branchString in branchStrings)
+        {
+            if (string.IsNullOrEmpty(branchString.Trim())) continue;
+
+            string[] parts = branchString.Split(':');
+            if (parts.Length >= 2)
+            {
+                if (int.TryParse(parts[0], out int nextID) && int.TryParse(parts[1], out int probability))
+                {
+                    string condition = parts.Length > 2 ? parts[2] : "";
+                    dialogue.randomBranches.Add(new RandomBranch(nextID, probability, condition));
+                }
+            }
+        }
+
+        Debug.Log($"对话 {dialogue.ID} 解析到 {dialogue.randomBranches.Count} 个随机分支");
+    }
     /// <summary>
     /// 将整个文本拆为"逻辑行"，考虑引号内的换行
     /// </summary>

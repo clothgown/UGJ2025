@@ -222,7 +222,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &894227919444947554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d025f6ad2da404a95c9d2975af897f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDialoguing: 0
+  isDialoguing: 1
   dialogDataFile: {fileID: 4900000, guid: 0329a1c0fe4bafa4eb00647285df80e3, type: 3}
   dialogues: []
   nameTMP: {fileID: 1723306654313891733}
@@ -276,15 +276,19 @@ MonoBehaviour:
   - {fileID: 6231210514969272071}
   - {fileID: 8919756395453296279}
   isChoosing: 0
-  bookPanel: {fileID: 0}
-  bookText: {fileID: 0}
-  bookCloseButton: {fileID: 0}
+  bookPanel: {fileID: 1345711562770920442}
+  bookText: {fileID: 434612561075999944}
+  bookCloseButton: {fileID: 5403729218043049100}
   isBookDialogActive: 0
   allowMultipleDialogs: 1
   nextDialogueButton: {fileID: 870674682983490014}
   skipAllButton: {fileID: 5677656240536580993}
   overlayBlock: {fileID: 0}
   canTriggerExploration: 1
+  enableRandomBranches: 1
+  autoSetNativeSize: 1
+  maxPortraitSize: {x: 2000, y: 4000}
+  maintainAspectRatio: 1
 --- !u!114 &2809308851762126491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,7 +341,7 @@ MonoBehaviour:
   - characterName: Maid
     expressions:
     - expressionName: normal
-      portrait: {fileID: 21300000, guid: fe867200e604f1a4183b56f1511026b0, type: 3}
+      portrait: {fileID: 21300000, guid: 1e4a1e50972e6d047bf5b7ff07cff38b, type: 3}
     - expressionName: shangby
       portrait: {fileID: 21300000, guid: 6d9b42a785c95d640885721395b930a2, type: 3}
     - expressionName: biyan
@@ -359,25 +363,25 @@ MonoBehaviour:
   - characterName: Diamond
     expressions:
     - expressionName: normal
-      portrait: {fileID: 21300000, guid: c545b79daa7d7c947be4ebe47f4abc58, type: 3}
+      portrait: {fileID: 21300000, guid: 5726712845abfd04ca9d2e6de114ec0b, type: 3}
     - expressionName: angry
-      portrait: {fileID: 21300000, guid: e1ccd42550720394ca3cccca82f2a886, type: 3}
+      portrait: {fileID: 21300000, guid: 40389be5f19061d46b047100102e46a8, type: 3}
     - expressionName: black
-      portrait: {fileID: 21300000, guid: ebaaa2e9dcb04a04aa4daef8dbf6380c, type: 3}
+      portrait: {fileID: 21300000, guid: 379a7fd8d133cd34aab98176c42f8a18, type: 3}
     - expressionName: happy
-      portrait: {fileID: 21300000, guid: c084c74f9d7260a40bf15f8a0abfbe25, type: 3}
+      portrait: {fileID: 21300000, guid: 4a4c6ec20854e954da36890ebee44461, type: 3}
     - expressionName: jingya
-      portrait: {fileID: 21300000, guid: ee68d0dd86e746c42a3a01f92d691723, type: 3}
+      portrait: {fileID: 21300000, guid: 631d0e0098d4ada4391288e1a178318a, type: 3}
     - expressionName: sadblack
-      portrait: {fileID: 21300000, guid: 9487447f915a8f843aa5b4942cefd1f9, type: 3}
+      portrait: {fileID: 21300000, guid: 50eff9c1bf7c85f499cc5aea751defd4, type: 3}
     - expressionName: smile
-      portrait: {fileID: 21300000, guid: a3d5ffa231406a7449bef505c612b483, type: 3}
+      portrait: {fileID: 21300000, guid: 846535cafe2a56344b063b482c983134, type: 3}
     - expressionName: uncom
-      portrait: {fileID: 21300000, guid: bec0c87bddfdbbf4cbfedfd3ee542c78, type: 3}
+      portrait: {fileID: 21300000, guid: 9c3c50aa3951cd3429d5fbb5da13eced, type: 3}
     - expressionName: unhappy
-      portrait: {fileID: 21300000, guid: 74d306d569ced394381ec51531843f8e, type: 3}
+      portrait: {fileID: 21300000, guid: 3c09c5c61cb9fcc47b4292719beb6398, type: 3}
     - expressionName: weiqu
-      portrait: {fileID: 21300000, guid: d3bb97518ba3aee409062c497c124fae, type: 3}
+      portrait: {fileID: 21300000, guid: 6391c6b7cdb2a81479914145352c5e9b, type: 3}
     - expressionName: fazuo
       portrait: {fileID: 21300000, guid: fdd03c0878455c04fbada0585fab911a, type: 3}
     - expressionName: sikao
@@ -387,7 +391,7 @@ MonoBehaviour:
   - characterName: Club
     expressions:
     - expressionName: normal
-      portrait: {fileID: 21300000, guid: ed47936a5d4f2e8469a9b93e1bf59899, type: 3}
+      portrait: {fileID: 21300000, guid: f7c68f71f97f0514589ce6cee71416ff, type: 3}
     - expressionName: qingmiexiao
       portrait: {fileID: 21300000, guid: 5825911e0784b8142928400c9af150f5, type: 3}
     - expressionName: qingmie
@@ -405,7 +409,7 @@ MonoBehaviour:
   - characterName: Spade
     expressions:
     - expressionName: normal
-      portrait: {fileID: 21300000, guid: c545b79daa7d7c947be4ebe47f4abc58, type: 3}
+      portrait: {fileID: 21300000, guid: 0c89499d6830ab54580ffbdd16f50a6a, type: 3}
     - expressionName: biyan
       portrait: {fileID: 21300000, guid: a19e2f5f4cf4759468d64f9beec47d4e, type: 3}
     - expressionName: smile
@@ -584,7 +588,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7433381381917571389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -632,7 +636,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e1ccd42550720394ca3cccca82f2a886, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 46a582869cb21554da78f42a82cb2d73, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1914,7 +1918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7510298295271403434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2731,6 +2735,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7838175995686510710}
   m_SourcePrefab: {fileID: 100100000, guid: 58616c656062b944b9fbff3da696aade, type: 3}
+--- !u!114 &434612561075999944 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7611499427588031894, guid: 58616c656062b944b9fbff3da696aade, type: 3}
+  m_PrefabInstance: {fileID: 8046093827215380830}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1345711562770920442 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9008776220262425252, guid: 58616c656062b944b9fbff3da696aade, type: 3}
@@ -2972,3 +2987,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5026609710613381830, guid: 58616c656062b944b9fbff3da696aade, type: 3}
   m_PrefabInstance: {fileID: 8046093827215380830}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5403729218043049100 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2689933908400154066, guid: 58616c656062b944b9fbff3da696aade, type: 3}
+  m_PrefabInstance: {fileID: 8046093827215380830}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

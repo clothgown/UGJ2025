@@ -110,12 +110,16 @@ MonoBehaviour:
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   hoverColor: {r: 0, g: 1, b: 0, a: 0.5294118}
   moveRangeColor: {r: 1, g: 0.5, b: 0, a: 0.5176471}
+  explorecolor: {r: 0.8553459, g: 0.81167674, b: 0.6697519, a: 0.5}
   isInRange: 0
   canChangeState: 0
   selectGrid: {fileID: 156214231891468627}
   isAttackTarget: 0
   isOccupied: 0
+  canHeal: 0
   occupiedPlayer: {fileID: 0}
+  ocuupiedItem: {fileID: 0}
+  canDialogue: 0
   currentEnemy: {fileID: 0}
   isInterable: 0
   playerOriginalScale: {x: 0, y: 0, z: 0}
@@ -125,6 +129,8 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   waterColor: {r: 0, g: 0.5, b: 1, a: 0.8}
   oilColor: {r: 1, g: 0.92475176, b: 0, a: 0.8}
+  isLeaveGrid: 0
+  LeaveColor: {r: 0, g: 0.5, b: 0, a: 0.8}
 --- !u!60 &7099666384777113014
 PolygonCollider2D:
   m_ObjectHideFlags: 0

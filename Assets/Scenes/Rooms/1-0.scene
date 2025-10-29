@@ -2181,6 +2181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyMaid
       objectReference: {fileID: 0}
+    - target: {fileID: 346064779538684447, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 393213673740759355, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 331.95087
@@ -2221,6 +2225,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 932263159844793546, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3406468419049815727, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
       propertyPath: who
       value: 1
@@ -2232,6 +2240,26 @@ PrefabInstance:
     - target: {fileID: 3406468419049815727, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
       propertyPath: maxHealth
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3801875423209234437, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4387029877956816931, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7080945150067227505, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304633808568027670, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463845421034863906, guid: 280620ec5c4bcee47a475ef68d13e16c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4030,15 +4058,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6091475132431429933, guid: 79e8c117b52f41f44902aca7b6119096, type: 3}
-      propertyPath: sfxSounds.Array.data[27].name
-      value: shield
-      objectReference: {fileID: 0}
-    - target: {fileID: 6091475132431429933, guid: 79e8c117b52f41f44902aca7b6119096, type: 3}
-      propertyPath: ambientSounds.Array.data[0].pitch
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6091475132431429933, guid: 79e8c117b52f41f44902aca7b6119096, type: 3}
-      propertyPath: ambientSounds.Array.data[1].volume
+      propertyPath: ambientVolume
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7388709353937830852, guid: 79e8c117b52f41f44902aca7b6119096, type: 3}
@@ -4549,6 +4569,10 @@ PrefabInstance:
       value: PlayOff
       objectReference: {fileID: 0}
     - target: {fileID: 5279949551005000416, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279949551005000416, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2069185590}
@@ -4567,6 +4591,10 @@ PrefabInstance:
     - target: {fileID: 5749055340127015344, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059630909441997010, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6059630909441997010, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4636,26 +4664,6 @@ PrefabInstance:
       propertyPath: loadingPanel
       value: 
       objectReference: {fileID: 1367734896}
-    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: sceneAmbientConfigs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: sceneAmbientConfigs.Array.data[0].loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: sceneAmbientConfigs.Array.data[0].sceneName
-      value: 1-0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: sceneAmbientConfigs.Array.data[0].stopOnExit
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-      propertyPath: sceneAmbientConfigs.Array.data[0].ambientName
-      value: Ambient2
-      objectReference: {fileID: 0}
     - target: {fileID: 7902329851521180329, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
