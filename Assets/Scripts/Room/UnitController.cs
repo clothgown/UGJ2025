@@ -83,6 +83,7 @@ public class UnitController : MonoBehaviour
 
     public bool isNextAttackChange;
     public GameObject changeTarget;
+    public VisualEffect AttackVFXPrefab;
 
     public enum Who
     {
@@ -502,7 +503,20 @@ public class UnitController : MonoBehaviour
             }
 
             float finalDamage = attackDamage;
+            if (isNextAttackFire)
+            {
+                // 触发格子的火焰攻击效果
+                targetGrid.OnFireAttackHit();
 
+                
+            }
+            if (isNextAttackIce)
+            {
+                // 触发格子的火焰攻击效果
+                targetGrid.OnIceAttackHit();
+
+                
+            }
             if (IsoGrid2D.instance.isFortune)
             {
                 // 50% 几率造成双倍伤害
@@ -520,7 +534,7 @@ public class UnitController : MonoBehaviour
         }
         
     }
-
+    
     public void TeleportToGrid(GameGrid targetGrid)
     {
         // �ͷ�ԭ���ĸ���
