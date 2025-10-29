@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,29 +17,29 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    [Header("ÒôÆµÉèÖÃ")]
+    [Header("éŸ³é¢‘è®¾ç½®")]
     [Range(0f, 1f)] public float masterVolume = 1f;
     [Range(0f, 1f)] public float bgmVolume = 1f;
     [Range(0f, 1f)] public float sfxVolume = 1f;
     [Range(0f, 1f)] public float ambientVolume = 5f;
 
-    [Header("±³¾°ÒôÀÖ")]
+    [Header("èƒŒæ™¯éŸ³ä¹")]
     [SerializeField] private Sound[] bgmSounds;
     [SerializeField] private float bgmCrossfadeTime = 2f;
 
-    [Header("ÒôĞ§")]
+    [Header("éŸ³æ•ˆ")]
     [SerializeField] private Sound[] sfxSounds;
 
-    [Header("»·¾³Òô")]
+    [Header("ç¯å¢ƒéŸ³")]
     [SerializeField] private Sound[] ambientSounds;
 
-    // ÒôÆµÔ´
-    private AudioSource bgmSource1, bgmSource2;
-    private AudioSource sfxSource;
-    private AudioSource ambientSource;
-    private Dictionary<string, AudioSource> loopedSfxSources = new Dictionary<string, AudioSource>();
+    // éŸ³é¢‘æº
+    [SerializeField] private AudioSource bgmSource1, bgmSource2;
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource ambientSource;
+    [SerializeField] private Dictionary<string, AudioSource> loopedSfxSources = new Dictionary<string, AudioSource>();
 
-    // µ±Ç°×´Ì¬
+    // å½“å‰çŠ¶æ€
     private int currentBgmSource = 1;
     private string currentBgmName = "";
     private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
@@ -60,24 +60,24 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        // ³õÊ¼»¯ÒôÁ¿
+        // åˆå§‹åŒ–éŸ³é‡
         SetMasterVolume(masterVolume);
         SetBGMVolume(bgmVolume);
         SetSFXVolume(sfxVolume);
         SetAmbientVolume(ambientVolume);
 
-        Debug.Log($"AudioManager³õÊ¼»¯Íê³É - SFXÒôÁ¿: {sfxSource.volume}");
+        Debug.Log($"AudioManageråˆå§‹åŒ–å®Œæˆ - SFXéŸ³é‡: {sfxSource.volume}");
     }
     private void InitializeAudioSources()
     {
-        // ´´½¨BGMÒôÔ´£¨ÓÃÓÚ½»²æµ­Èëµ­³ö£©
+        // åˆ›å»ºBGMéŸ³æºï¼ˆç”¨äºäº¤å‰æ·¡å…¥æ·¡å‡ºï¼‰
         bgmSource1 = CreateAudioSource("BGM Source 1", true);
         bgmSource2 = CreateAudioSource("BGM Source 2", true);
 
-        // ´´½¨ÒôĞ§ÒôÔ´
+        // åˆ›å»ºéŸ³æ•ˆéŸ³æº
         sfxSource = CreateAudioSource("SFX Source", false);
 
-        // ´´½¨»·¾³ÒôÔ´
+        // åˆ›å»ºç¯å¢ƒéŸ³æº
         ambientSource = CreateAudioSource("Ambient Source", true);
     }
 
@@ -93,7 +93,7 @@ public class AudioManager : MonoBehaviour
 
     private void BuildSoundDictionary()
     {
-        // ºÏ²¢ËùÓĞÒôÆµµ½×Öµä
+        // åˆå¹¶æ‰€æœ‰éŸ³é¢‘åˆ°å­—å…¸
         AddSoundsToDictionary(bgmSounds);
         AddSoundsToDictionary(sfxSounds);
         AddSoundsToDictionary(ambientSounds);
@@ -112,30 +112,27 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        // ÊµÊ±¸üĞÂÒôÁ¿
+        // å®æ—¶æ›´æ–°éŸ³é‡
         UpdateAllVolumes();
     }
 
     private void UpdateAllVolumes()
     {
-        // ¸üĞÂBGMÒôÁ¿
-        bgmSource1.volume = bgmVolume * masterVolume;
-        bgmSource2.volume = bgmVolume * masterVolume;
-
-        // ¸üĞÂÒôĞ§ÒôÁ¿
-        sfxSource.volume = sfxVolume * masterVolume;
-
-        // ¸üĞÂ»·¾³ÒôÒôÁ¿
-        ambientSource.volume = ambientVolume * masterVolume;
-
-        // ¸üĞÂÑ­»·ÒôĞ§ÒôÁ¿
+        // æ›´æ–°BGMéŸ³é‡
+        if (bgmSource1 != null) bgmSource1.volume = bgmVolume * masterVolume;
+        if (bgmSource2 != null) bgmSource2.volume = bgmVolume * masterVolume;
+        // æ›´æ–°éŸ³æ•ˆéŸ³é‡
+        if (sfxSource != null) sfxSource.volume = sfxVolume * masterVolume;
+        // æ›´æ–°ç¯å¢ƒéŸ³éŸ³é‡
+        if (ambientSource != null) ambientSource.volume = ambientVolume * masterVolume;
+        // æ›´æ–°å¾ªç¯éŸ³æ•ˆéŸ³é‡
         foreach (var source in loopedSfxSources.Values)
         {
-            source.volume = sfxVolume * masterVolume;
+            if (source != null) source.volume = sfxVolume * masterVolume;
         }
     }
 
-    #region ±³¾°ÒôÀÖ¹ÜÀí
+    #region èƒŒæ™¯éŸ³ä¹ç®¡ç†
     public void PlayBGM(string bgmName)
     {
         if (soundDictionary.ContainsKey(bgmName) && soundDictionary[bgmName].clip != null)
@@ -145,7 +142,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"ÕÒ²»µ½ÃûÎª {bgmName} µÄ±³¾°ÒôÀÖ");
+            Debug.LogWarning($"æ‰¾ä¸åˆ°åä¸º {bgmName} çš„èƒŒæ™¯éŸ³ä¹");
         }
     }
 
@@ -163,12 +160,12 @@ public class AudioManager : MonoBehaviour
         AudioSource currentSource = (currentBgmSource == 1) ? bgmSource1 : bgmSource2;
         AudioSource nextSource = (currentBgmSource == 1) ? bgmSource2 : bgmSource1;
 
-        // ÉèÖÃĞÂÒôÔ´
+        // è®¾ç½®æ–°éŸ³æº
         nextSource.clip = newBGM.clip;
         nextSource.volume = 0f;
         nextSource.Play();
 
-        // µ­Èëµ­³ö
+        // æ·¡å…¥æ·¡å‡º
         float timer = 0f;
         while (timer < bgmCrossfadeTime)
         {
@@ -181,7 +178,7 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
 
-        // Íê³ÉÇĞ»»
+        // å®Œæˆåˆ‡æ¢
         currentSource.Stop();
         currentBgmSource = (currentBgmSource == 1) ? 2 : 1;
     }
@@ -206,22 +203,30 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    #region ÒôĞ§¹ÜÀí
+    #region éŸ³æ•ˆç®¡ç†
     public void PlaySFX(string name)
     {
-        Sound s = Array.Find(sfxSounds, sound => sound.name == name);
-        if (s == null)
+        if (sfxSource == null)
         {
-            Debug.LogWarning("SFX: " + name + " not found!");
+            Debug.LogError("SFX AudioSource is null! Cannot play SFX.");
             return;
         }
 
-        // È·±£Ê¹ÓÃ PlayOneShot ¶ø²»ÊÇÖ±½ÓÉèÖÃ clip ºÍ play
+        Sound s = Array.Find(sfxSounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning($"SFXæœªæ‰¾åˆ°: {name}");
+            return;
+        }
+        if (s.clip == null)
+        {
+            Debug.LogWarning($"SFX '{name}' æ‰¾åˆ°äº†ä½†æœªç»‘å®š AudioClipï¼");
+            return;
+        }
         sfxSource.PlayOneShot(s.clip, s.volume);
-
-        // Ìí¼Óµ÷ÊÔĞÅÏ¢
-        Debug.Log($"²¥·ÅSFX: {name}, ÒôÁ¿: {sfxSource.volume}, Ö÷ÒôÁ¿: {masterVolume}, SFXÒôÁ¿: {sfxVolume}");
+        Debug.Log($"æ’­æ”¾SFX: {name}, éŸ³é‡: {s.volume}");
     }
+
 
     public void PlaySFXLoop(string sfxName)
     {
@@ -248,23 +253,23 @@ public class AudioManager : MonoBehaviour
             loopedSfxSources.Remove(sfxName);
         }
     }
-    // ÔÚAudioManagerÖĞÌí¼ÓÕâĞ©·½·¨
+    // åœ¨AudioManagerä¸­æ·»åŠ è¿™äº›æ–¹æ³•
     public float GetBGMVolume()
     {
-        // ·µ»Øµ±Ç°BGMÒôÁ¿
+        // è¿”å›å½“å‰BGMéŸ³é‡
         AudioSource currentSource = (currentBgmSource == 1) ? bgmSource1 : bgmSource2;
         return currentSource.volume;
     }
 
     public float GetAmbientVolume()
     {
-        // ·µ»Øµ±Ç°»·¾³ÒôÒôÁ¿
+        // è¿”å›å½“å‰ç¯å¢ƒéŸ³éŸ³é‡
         return ambientSource.volume;
     }
 
     public string GetCurrentBGMName()
     {
-        // ·µ»Øµ±Ç°²¥·ÅµÄBGMÃû³Æ
+        // è¿”å›å½“å‰æ’­æ”¾çš„BGMåç§°
         return currentBgmName;
     }
     public void StopAllLoopSFX()
@@ -278,7 +283,7 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    #region »·¾³Òô¹ÜÀí
+    #region ç¯å¢ƒéŸ³ç®¡ç†
     public void PlayAmbient(string ambientName)
     {
         if (soundDictionary.ContainsKey(ambientName))
@@ -297,7 +302,7 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    #region ÒôÁ¿¿ØÖÆ
+    #region éŸ³é‡æ§åˆ¶
     public void SetMasterVolume(float volume)
     {
         masterVolume = Mathf.Clamp01(volume);
@@ -323,8 +328,8 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    #region ±ã½İ·½·¨ - ±£ÁôÔ­SoundManagerµÄ·½·¨
-    // UIÒôĞ§
+    #region ä¾¿æ·æ–¹æ³• - ä¿ç•™åŸSoundManagerçš„æ–¹æ³•
+    // UIéŸ³æ•ˆ
     public void PlayBeginDrag() => PlaySFX("begindrag");
     public void PlayEndDrag() => PlaySFX("enddrag");
     public void PlayClick() => PlaySFX("click");
@@ -332,7 +337,7 @@ public class AudioManager : MonoBehaviour
     public void PlayOff() => PlaySFX("close");
     public void PlayNextTurn() => PlaySFX("nextturn");
 
-    // ¹¥»÷ÒôĞ§
+    // æ”»å‡»éŸ³æ•ˆ
     public void PlayChangJian() => PlaySFX("changjianattack");
     public void PlayGong() => PlaySFX("gongattack");
     public void PlayBiShou() => PlaySFX("bishouattack");

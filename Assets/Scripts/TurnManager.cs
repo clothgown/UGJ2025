@@ -61,9 +61,6 @@ public class TurnManager : MonoBehaviour
     {
         unitControllers = FindObjectsOfType<UnitController>();
 
-        // 确保ExplorationManager引用
-        if (explorationManager == null)
-        {
             explorationManager = FindObjectOfType<ExplorationManager>();
             if (explorationManager == null)
             {
@@ -73,7 +70,8 @@ public class TurnManager : MonoBehaviour
             {
                 Debug.Log($"找到ExplorationManager: {explorationManager.gameObject.name}");
             }
-        }
+
+
         // 为所有单位订阅死亡事件
         foreach (var unit in unitControllers)
         {
