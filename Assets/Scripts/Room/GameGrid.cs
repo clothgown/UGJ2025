@@ -44,11 +44,7 @@ public class GameGrid : MonoBehaviour
     public bool isLeaveGrid = false;
     public Color LeaveColor = new Color(00f, 0.5f, 0f, 0.8f);
 
-    [Header("VFX Settings")]
-    public GameObject fireAttackVFXPrefab; // 火焰攻击VFX预制体
-    public GameObject oilIgniteVFXPrefab;  // 油格点燃VFX预制体
-    public GameObject iceAttackVFXPrefab;
-    public GameObject waterIceVFXPrefab;
+    
 
     private void Awake()
     {
@@ -412,124 +408,84 @@ public class GameGrid : MonoBehaviour
 
     public void OnFireAttackHit()
     {
+        GameObject vfxPrefab = null;
+        float destroyTime = 3f;
         // 根据格子状态播放不同的VFX
         switch (currentState)
         {
-            case GridState.Oil:
-                PlayOilIgniteVFX();
-                break;
             case GridState.Water:
                 ClearStateAfterVFX();
                 break;
             default:
-                PlayFireAttackVFX();
+                vfxPrefab = Resources.Load<GameObject>("VFX/fireVFX");
+                StartCoroutine(ClearStateAfterVFX());
                 break;
         }
+        if (vfxPrefab != null)
+        {
+            GameObject vfx = Instantiate(vfxPrefab, transform.position, Quaternion.identity);
+            vfx.transform.SetParent(transform);
+
+            // 设置 VFX 的排序层级
+            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
+            if (vfxRenderer != null)
+            {
+                vfxRenderer.sortingOrder = -sortingOrder + 1000;
+            }
+
+            // 自动销毁 VFX
+            Destroy(vfx, destroyTime);
+        }
+        else
+        {
+            Debug.LogWarning($"VFX 预制体加载失败，请检查 Resources路径下的文件");
+        }
     }
+
         public void OnIceAttackHit()
     {
+        GameObject vfxPrefab = null;
+        float destroyTime = 3f;
         // 根据格子状态播放不同的VFX
         switch (currentState)
         {
-            case GridState.Water:
-                PlayWaterIceVFX();
-                break;
             case GridState.Oil:
                 ClearStateAfterVFX();
                 break;
             default:
-                PlayFireAttackVFX();
+                vfxPrefab = Resources.Load<GameObject>("VFX/iceVFX");
+                StartCoroutine(ClearStateAfterVFX());
                 break;
         }
-
-
-        // 如果格子是油状态，播放完VFX后清除油状态
-        if (currentState == GridState.Oil)
+        if (vfxPrefab != null)
         {
-            // 延迟清除油状态，让VFX播放完成
-            StartCoroutine(ClearStateAfterVFX());
-        }
-    }
+            Vector3 vfxPosition = transform.position + new Vector3(0, 0.3f, 0);
 
-    private void PlayFireAttackVFX()
-    {
-        if (fireAttackVFXPrefab != null)
-        {
-            GameObject vfx = Instantiate(fireAttackVFXPrefab, transform.position, Quaternion.identity);
+            GameObject vfx = Instantiate(vfxPrefab, vfxPosition, Quaternion.identity);
+            
+
+            // 🎯 设置统一缩放为 0.5
+            vfx.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
             vfx.transform.SetParent(transform);
 
-            // 设置VFX的排序层级，确保显示在正确的位置
+            // 设置 VFX 的排序层级
             Renderer vfxRenderer = vfx.GetComponent<Renderer>();
             if (vfxRenderer != null)
             {
-                vfxRenderer.sortingOrder = -sortingOrder + 10; // 比格子高一些
+                vfxRenderer.sortingOrder = -sortingOrder + 1000;
             }
 
-            // 自动销毁VFX
-            Destroy(vfx, 3f); // 3秒后销毁，根据你的VFX时长调整
+            // 自动销毁 VFX
+            Destroy(vfx, destroyTime);
         }
-    }
-
-    private void PlayOilIgniteVFX()
-    {
-        if (oilIgniteVFXPrefab != null)
+        else
         {
-            GameObject vfx = Instantiate(oilIgniteVFXPrefab, transform.position, Quaternion.identity);
-            vfx.transform.SetParent(transform);
-
-            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
-            if (vfxRenderer != null)
-            {
-                vfxRenderer.sortingOrder = -sortingOrder + 10;
-            }
-
-            // 油格点燃可能有更大的爆炸效果
-            Debug.Log("🔥 油格被点燃！造成爆炸效果！");
-            Destroy(vfx, 4f); // 油格爆炸可能持续时间更长
+            Debug.LogWarning($"VFX 预制体加载失败，请检查 Resources路径下的文件");
         }
     }
-    private void PlayIceAttackVFX()
-    {
-        // 如果水格被火焰攻击，可以播放蒸汽效果
-        // 这里可以添加蒸汽VFX的逻辑
-        Debug.Log("💨 水格产生蒸汽！");
-        if (iceAttackVFXPrefab != null)
-        {
-            GameObject vfx = Instantiate(iceAttackVFXPrefab, transform.position, Quaternion.identity);
-            vfx.transform.SetParent(transform);
 
-            // 设置VFX的排序层级，确保显示在正确的位置
-            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
-            if (vfxRenderer != null)
-            {
-                vfxRenderer.sortingOrder = -sortingOrder + 10; // 比格子高一些
-            }
-
-            // 自动销毁VFX
-            Destroy(vfx, 4f); // 3秒后销毁，根据你的VFX时长调整
-        }
-    }
-    private void PlayWaterIceVFX()
-    {
-        // 如果水格被火焰攻击，可以播放蒸汽效果
-        // 这里可以添加蒸汽VFX的逻辑
-        Debug.Log("💨 水格产生蒸汽！");
-        if (iceAttackVFXPrefab != null)
-        {
-            GameObject vfx = Instantiate(waterIceVFXPrefab, transform.position, Quaternion.identity);
-            vfx.transform.SetParent(transform);
-
-            // 设置VFX的排序层级，确保显示在正确的位置
-            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
-            if (vfxRenderer != null)
-            {
-                vfxRenderer.sortingOrder = -sortingOrder + 10; // 比格子高一些
-            }
-
-            // 自动销毁VFX
-            Destroy(vfx, 4f); // 3秒后销毁，根据你的VFX时长调整
-        }
-    }
+    
 
     private IEnumerator ClearStateAfterVFX()
     {
