@@ -5206,7 +5206,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1204903333}
   - component: {fileID: 1204903332}
-  - component: {fileID: 1204903331}
   - component: {fileID: 1204903334}
   m_Layer: 0
   m_HasEditorInfo: 1
@@ -5216,32 +5215,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1204903331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204903330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerA: {x: 17, y: 22}
-  cornerB: {x: 17, y: 23}
-  isSingleCell: 0
-  occupiedGrids: []
-  isInterable: 1
-  isBattleInterable: 1
-  sr: {fileID: 0}
-  transparentAlpha: 0.75
-  blockingLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  dialogueFile: {fileID: 0}
-  triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
 --- !u!212 &1204903332
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5325,9 +5298,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be502eab663da0b4588b2af74d007dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameGridsPos: []
+  gameGridsPos:
+  - {x: 17, y: 22}
+  - {x: 17, y: 23}
   choosePanel: {fileID: 8066115391996660268, guid: 7f7f345641289674ba53f8f7a59692d8, type: 3}
-  canvas: {fileID: 1486113836}
+  canvas: {fileID: 1801798319}
 --- !u!1 &1220985839
 GameObject:
   m_ObjectHideFlags: 0
@@ -6511,11 +6486,6 @@ MonoBehaviour:
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
   customFont: {fileID: 0}
---- !u!223 &1486113836 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 2748405385705231468, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-  m_PrefabInstance: {fileID: 452337380}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1486470933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7261,6 +7231,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1003950305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!223 &1801798319 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 553598767350503920, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 452337380}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1821613878
 GameObject:
   m_ObjectHideFlags: 0

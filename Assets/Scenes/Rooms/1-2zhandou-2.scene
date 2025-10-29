@@ -1091,6 +1091,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1617499813}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!223 &300579722 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 553598767350503920, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1776365392}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &355086636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3322,7 +3327,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1174152750}
   - component: {fileID: 1174152749}
-  - component: {fileID: 1174152751}
   - component: {fileID: 1174152752}
   m_Layer: 0
   m_HasEditorInfo: 1
@@ -3376,7 +3380,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -800
   m_Sprite: {fileID: 21300000, guid: c587f7a04485f3841a007227c2e46447, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3403,32 +3407,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1617499813}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1174152751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1174152748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerA: {x: 13, y: 3}
-  cornerB: {x: 13, y: 4}
-  isSingleCell: 0
-  occupiedGrids: []
-  isInterable: 1
-  isBattleInterable: 0
-  sr: {fileID: 0}
-  transparentAlpha: 0.75
-  blockingLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  dialogueFile: {fileID: 0}
-  triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
 --- !u!114 &1174152752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3441,9 +3419,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be502eab663da0b4588b2af74d007dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameGridsPos: []
+  gameGridsPos:
+  - {x: 13, y: 3}
+  - {x: 13, y: 4}
   choosePanel: {fileID: 8066115391996660268, guid: 7f7f345641289674ba53f8f7a59692d8, type: 3}
-  canvas: {fileID: 1776365397}
+  canvas: {fileID: 300579722}
 --- !u!1 &1191703872
 GameObject:
   m_ObjectHideFlags: 0
@@ -4885,11 +4865,6 @@ GameObject:
 --- !u!1 &1776365396 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1840179236572513878, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-  m_PrefabInstance: {fileID: 1776365392}
-  m_PrefabAsset: {fileID: 0}
---- !u!223 &1776365397 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 2748405385705231468, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
   m_PrefabInstance: {fileID: 1776365392}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1790558681

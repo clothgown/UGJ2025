@@ -264,9 +264,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 694592932293885821, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 694592932293885821, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 694592932293885821, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1366507481422452203, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_Name
       value: Guochang
+      objectReference: {fileID: 0}
+    - target: {fileID: 1366507481422452203, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8377023261743829797, guid: 8e34e5ed2ec4d0b449e8c8c1c2fe78db, type: 3}
       propertyPath: m_LocalPosition.x
@@ -323,7 +339,6 @@ GameObject:
   m_Component:
   - component: {fileID: 189045963}
   - component: {fileID: 189045962}
-  - component: {fileID: 189045964}
   - component: {fileID: 189045965}
   m_Layer: 0
   m_HasEditorInfo: 1
@@ -404,32 +419,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 897588940}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &189045964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189045961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerA: {x: 3, y: 23}
-  cornerB: {x: 4, y: 23}
-  isSingleCell: 0
-  occupiedGrids: []
-  isInterable: 1
-  isBattleInterable: 0
-  sr: {fileID: 0}
-  transparentAlpha: 0.75
-  blockingLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  dialogueFile: {fileID: 0}
-  triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
 --- !u!114 &189045965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,9 +431,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be502eab663da0b4588b2af74d007dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameGridsPos: []
+  gameGridsPos:
+  - {x: 3, y: 23}
+  - {x: 4, y: 23}
   choosePanel: {fileID: 8066115391996660268, guid: 7f7f345641289674ba53f8f7a59692d8, type: 3}
-  canvas: {fileID: 820780316}
+  canvas: {fileID: 944365435}
 --- !u!1 &237320102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,11 +1859,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
---- !u!223 &820780316 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 2748405385705231468, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-  m_PrefabInstance: {fileID: 820780315}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &849427795
 GameObject:
   m_ObjectHideFlags: 0
@@ -2178,6 +2164,11 @@ MonoBehaviour:
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
   customFont: {fileID: 0}
+--- !u!223 &944365435 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 553598767350503920, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 820780315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1020461767
 PrefabInstance:
   m_ObjectHideFlags: 0
