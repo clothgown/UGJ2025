@@ -417,7 +417,7 @@ public class GameGrid : MonoBehaviour
                 ClearStateAfterVFX();
                 break;
             default:
-                vfxPrefab = Resources.Load<GameObject>("fireVFX");
+                vfxPrefab = Resources.Load<GameObject>("VFX/fireVFX");
                 StartCoroutine(ClearStateAfterVFX());
                 break;
         }
@@ -426,15 +426,22 @@ public class GameGrid : MonoBehaviour
             GameObject vfx = Instantiate(vfxPrefab, transform.position, Quaternion.identity);
             vfx.transform.SetParent(transform);
 
+            // 设置 VFX 的排序层级
             Renderer vfxRenderer = vfx.GetComponent<Renderer>();
             if (vfxRenderer != null)
             {
-                vfxRenderer.sortingOrder = -sortingOrder + 10;
+                vfxRenderer.sortingOrder = -sortingOrder + 1000;
             }
 
+            // 自动销毁 VFX
             Destroy(vfx, destroyTime);
         }
+        else
+        {
+            Debug.LogWarning($"VFX 预制体加载失败，请检查 Resources路径下的文件");
+        }
     }
+
         public void OnIceAttackHit()
     {
         GameObject vfxPrefab = null;
@@ -446,22 +453,35 @@ public class GameGrid : MonoBehaviour
                 ClearStateAfterVFX();
                 break;
             default:
-                vfxPrefab = Resources.Load<GameObject>("iceVFX");
+                vfxPrefab = Resources.Load<GameObject>("VFX/iceVFX");
                 StartCoroutine(ClearStateAfterVFX());
                 break;
         }
         if (vfxPrefab != null)
         {
-            GameObject vfx = Instantiate(vfxPrefab, transform.position, Quaternion.identity);
+            Vector3 vfxPosition = transform.position + new Vector3(0, 0.3f, 0);
+
+            GameObject vfx = Instantiate(vfxPrefab, vfxPosition, Quaternion.identity);
+            
+
+            // 🎯 设置统一缩放为 0.5
+            vfx.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
             vfx.transform.SetParent(transform);
 
+            // 设置 VFX 的排序层级
             Renderer vfxRenderer = vfx.GetComponent<Renderer>();
             if (vfxRenderer != null)
             {
-                vfxRenderer.sortingOrder = -sortingOrder + 10;
+                vfxRenderer.sortingOrder = -sortingOrder + 1000;
             }
 
+            // 自动销毁 VFX
             Destroy(vfx, destroyTime);
+        }
+        else
+        {
+            Debug.LogWarning($"VFX 预制体加载失败，请检查 Resources路径下的文件");
         }
     }
 
