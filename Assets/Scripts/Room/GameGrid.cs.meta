@@ -3,7 +3,17 @@ guid: XSsf5y7/An0k43SkE+duDCrmVa8skh1F+ee4hu+YrCjtHLCmSHPn8ts=
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - rend: {instanceID: 0}
+  - selectGrid: {instanceID: 0}
+  - occupiedPlayer: {instanceID: 0}
+  - ocuupiedItem: {instanceID: 0}
+  - currentEnemy: {instanceID: 0}
+  - stateGrid: {instanceID: 0}
+  - fireAttackVFXPrefab: {fileID: 8139377124999125285, guid: 2e8affd681e81564bb4b33674968afa4, type: 3}
+  - oilIgniteVFXPrefab: {instanceID: 0}
+  - iceAttackVFXPrefab: {fileID: 1607246151479710364, guid: 0e22eae9bfd86f84182f7b392e545ffc, type: 3}
+  - waterIceVFXPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -43,7 +43,13 @@ public class GameGrid : MonoBehaviour
 
     public bool isLeaveGrid = false;
     public Color LeaveColor = new Color(00f, 0.5f, 0f, 0.8f);
-    
+
+    [Header("VFX Settings")]
+    public GameObject fireAttackVFXPrefab; // 火焰攻击VFX预制体
+    public GameObject oilIgniteVFXPrefab;  // 油格点燃VFX预制体
+    public GameObject iceAttackVFXPrefab;
+    public GameObject waterIceVFXPrefab;
+
     private void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
@@ -313,6 +319,7 @@ public class GameGrid : MonoBehaviour
                     playerController.attackDamage *= 2;
                     playerController.RecoverState();
                 }
+                OnFireAttackHit();
                 playerController.Attack(this);
 
                 FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
@@ -392,13 +399,146 @@ public class GameGrid : MonoBehaviour
             case GridState.Water:
                 stateGrid.enabled = true;
                 stateGrid.color = waterColor;
+                AudioManager.Instance.PlaySFX("water");
                 break;
             case GridState.Oil:
                 stateGrid.enabled = true;
                 stateGrid.color = oilColor;
+                AudioManager.Instance.PlaySFX("oil");
+
                 break;
         }
     }
 
+    public void OnFireAttackHit()
+    {
+        // 根据格子状态播放不同的VFX
+        switch (currentState)
+        {
+            case GridState.Oil:
+                PlayOilIgniteVFX();
+                break;
+            case GridState.Water:
+                ClearStateAfterVFX();
+                break;
+            default:
+                PlayFireAttackVFX();
+                break;
+        }
+    }
+        public void OnIceAttackHit()
+    {
+        // 根据格子状态播放不同的VFX
+        switch (currentState)
+        {
+            case GridState.Water:
+                PlayWaterIceVFX();
+                break;
+            case GridState.Oil:
+                ClearStateAfterVFX();
+                break;
+            default:
+                PlayFireAttackVFX();
+                break;
+        }
 
+
+        // 如果格子是油状态，播放完VFX后清除油状态
+        if (currentState == GridState.Oil)
+        {
+            // 延迟清除油状态，让VFX播放完成
+            StartCoroutine(ClearStateAfterVFX());
+        }
+    }
+
+    private void PlayFireAttackVFX()
+    {
+        if (fireAttackVFXPrefab != null)
+        {
+            GameObject vfx = Instantiate(fireAttackVFXPrefab, transform.position, Quaternion.identity);
+            vfx.transform.SetParent(transform);
+
+            // 设置VFX的排序层级，确保显示在正确的位置
+            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
+            if (vfxRenderer != null)
+            {
+                vfxRenderer.sortingOrder = -sortingOrder + 10; // 比格子高一些
+            }
+
+            // 自动销毁VFX
+            Destroy(vfx, 3f); // 3秒后销毁，根据你的VFX时长调整
+        }
+    }
+
+    private void PlayOilIgniteVFX()
+    {
+        if (oilIgniteVFXPrefab != null)
+        {
+            GameObject vfx = Instantiate(oilIgniteVFXPrefab, transform.position, Quaternion.identity);
+            vfx.transform.SetParent(transform);
+
+            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
+            if (vfxRenderer != null)
+            {
+                vfxRenderer.sortingOrder = -sortingOrder + 10;
+            }
+
+            // 油格点燃可能有更大的爆炸效果
+            Debug.Log("🔥 油格被点燃！造成爆炸效果！");
+            Destroy(vfx, 4f); // 油格爆炸可能持续时间更长
+        }
+    }
+    private void PlayIceAttackVFX()
+    {
+        // 如果水格被火焰攻击，可以播放蒸汽效果
+        // 这里可以添加蒸汽VFX的逻辑
+        Debug.Log("💨 水格产生蒸汽！");
+        if (iceAttackVFXPrefab != null)
+        {
+            GameObject vfx = Instantiate(iceAttackVFXPrefab, transform.position, Quaternion.identity);
+            vfx.transform.SetParent(transform);
+
+            // 设置VFX的排序层级，确保显示在正确的位置
+            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
+            if (vfxRenderer != null)
+            {
+                vfxRenderer.sortingOrder = -sortingOrder + 10; // 比格子高一些
+            }
+
+            // 自动销毁VFX
+            Destroy(vfx, 4f); // 3秒后销毁，根据你的VFX时长调整
+        }
+    }
+    private void PlayWaterIceVFX()
+    {
+        // 如果水格被火焰攻击，可以播放蒸汽效果
+        // 这里可以添加蒸汽VFX的逻辑
+        Debug.Log("💨 水格产生蒸汽！");
+        if (iceAttackVFXPrefab != null)
+        {
+            GameObject vfx = Instantiate(waterIceVFXPrefab, transform.position, Quaternion.identity);
+            vfx.transform.SetParent(transform);
+
+            // 设置VFX的排序层级，确保显示在正确的位置
+            Renderer vfxRenderer = vfx.GetComponent<Renderer>();
+            if (vfxRenderer != null)
+            {
+                vfxRenderer.sortingOrder = -sortingOrder + 10; // 比格子高一些
+            }
+
+            // 自动销毁VFX
+            Destroy(vfx, 4f); // 3秒后销毁，根据你的VFX时长调整
+        }
+    }
+
+    private IEnumerator ClearStateAfterVFX()
+    {
+        // 等待VFX播放一段时间后再清除油状态
+        yield return new WaitForSeconds(1.5f);
+
+        // 清除油状态
+        SetState(GridState.None);
+        Debug.Log("油格状态已清除");
+    }
 }
+

@@ -345,7 +345,15 @@ MonoBehaviour:
   attackway: 0
   Attack1: {fileID: 3156193613806086890}
   Cure: {fileID: 0}
+  deadColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   attackType: -1
+  attackAttribute: 0
+  isCriticalCharacter: 0
+  characterName: 
+  currentGrid: {fileID: 0}
+  isNextAttackChange: 0
+  changeTarget: {fileID: 0}
+  who: 1
   vectorPropertyName: "\u54EA\u4E2A\u653B\u51FB"
 --- !u!114 &3546787565854375578
 MonoBehaviour:
