@@ -120,7 +120,7 @@ public class TurnManager : MonoBehaviour
 
         // 条件2：如果允许直接进入探索模式，可以通过其他方式触发
         // 这个条件可以由对话系统或其他触发器设置
-        if (allowDirectExploration)
+        if (allowDirectExploration && ShouldForceExploration())
         {
             return true;
         }
