@@ -4033,6 +4033,14 @@ PrefabInstance:
       propertyPath: sfxSounds.Array.data[27].name
       value: shield
       objectReference: {fileID: 0}
+    - target: {fileID: 6091475132431429933, guid: 79e8c117b52f41f44902aca7b6119096, type: 3}
+      propertyPath: ambientSounds.Array.data[0].pitch
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6091475132431429933, guid: 79e8c117b52f41f44902aca7b6119096, type: 3}
+      propertyPath: ambientSounds.Array.data[1].volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7388709353937830852, guid: 79e8c117b52f41f44902aca7b6119096, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -4628,6 +4636,26 @@ PrefabInstance:
       propertyPath: loadingPanel
       value: 
       objectReference: {fileID: 1367734896}
+    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: sceneAmbientConfigs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: sceneAmbientConfigs.Array.data[0].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: sceneAmbientConfigs.Array.data[0].sceneName
+      value: 1-0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: sceneAmbientConfigs.Array.data[0].stopOnExit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813976757971348482, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: sceneAmbientConfigs.Array.data[0].ambientName
+      value: Ambient2
+      objectReference: {fileID: 0}
     - target: {fileID: 7902329851521180329, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
