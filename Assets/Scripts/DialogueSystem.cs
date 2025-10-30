@@ -731,6 +731,7 @@ public class DialogueSystem : MonoBehaviour
                 Debug.Log("找不到NextID对应的对话，结束对话。");
                 FadeOutUI();
                 isDialoguing = false;
+
             }
         }
     }
@@ -750,6 +751,34 @@ public class DialogueSystem : MonoBehaviour
                 if (sceneName == "1-0" && battleDialogDataFile.name == "1-0-talk2")
                 {
                     FindAnyObjectByType<NextSceneManager>().EnemySpawn();
+                }
+                if (sceneName == "1-5 1 laukinwang")
+                {
+                    if(DialogueSystem.Instance.currentIndex == 41)
+                    {
+                        TurnManager.instance.is15Battle = false;
+                        FindAnyObjectByType<DiamondChange>().ChangeDiamond();
+                        Debug.Log("Can");
+                    }
+                    else
+                    {
+                        TurnManager.instance.is15Battle = true;
+                    }
+
+                }
+                if (sceneName == "1-6")
+                {
+                    if (DialogueSystem.Instance.currentIndex == 83)
+                    {
+                        TurnManager.instance.is16Battle = false;
+                        FindAnyObjectByType<ClubChange>().ChangeClub();
+                        Debug.Log("Can");
+                    }
+                    else
+                    {
+                        TurnManager.instance.is16Battle = true;
+                    }
+
                 }
                 CheckDialogQueue();
             });

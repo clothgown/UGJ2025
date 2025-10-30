@@ -16,6 +16,8 @@ public class Door : MonoBehaviour
     private Vector2Int? lastTriggeredGrid = null; // 上一次触发的格子
     private UnitController lastTriggerUnit = null; // 哪个单位触发的
 
+    public GameObject EndPanel;
+    public bool isEndScene = false;
     private void Start()
     {
         StartCoroutine(InitAfterDelay());

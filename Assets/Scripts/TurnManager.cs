@@ -52,6 +52,8 @@ public class TurnManager : MonoBehaviour
     public bool allowDirectExploration = true; // 是否允许直接进入探索模式
     private bool explorationTriggered = false; // 防止重复触发
 
+    public bool is15Battle = false;
+    public bool is16Battle = false;
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -120,6 +122,30 @@ public class TurnManager : MonoBehaviour
             {
                 return true;
             }
+        }
+        else if(SceneManager.GetActiveScene().name == "1-5 1 laukinwang")
+        {
+            if(is15Battle)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        else if (SceneManager.GetActiveScene().name == "1-6")
+        {
+            if (is16Battle)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
         else
         {

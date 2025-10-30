@@ -732,6 +732,16 @@ public class EnemyUnit : MonoBehaviour
         {
             TurnManager.instance.isMaidDead = true;
         }
+
+        if(FindAnyObjectByType<ClubChange>() != null)
+        {
+            TurnManager.instance.is16Battle = true;
+        }
+
+        if (FindAnyObjectByType<DiamondChange>() != null)
+        {
+            TurnManager.instance.is15Battle = true;
+        }
         CollectionManager.instance.AddCoin(coin);
         Destroy(gameObject);
     }
