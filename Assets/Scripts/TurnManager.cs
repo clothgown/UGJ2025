@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum TurnPhase { PlayerTurn, EnemyTurn, Exploration }
 
@@ -112,11 +113,22 @@ public class TurnManager : MonoBehaviour
     // ✅ 新增：检查探索模式条件
     private bool CheckExplorationConditions()
     {
-        // 条件1：所有敌人被消灭 + 女仆死亡
-        if (enemies.Length == 0 && !isCheckingForWin)
+        if(SceneManager.GetActiveScene().name == "1-0")
         {
-            return true;
+            // 条件1：所有敌人被消灭 + 女仆死亡
+            if (enemies.Length == 0 && isMaidDead && !isCheckingForWin)
+            {
+                return true;
+            }
         }
+        else
+        {
+            if (enemies.Length == 0 && !isCheckingForWin)
+            {
+                return true;
+            }
+        }
+
 
         // 条件2：如果允许直接进入探索模式，可以通过其他方式触发
         // 这个条件可以由对话系统或其他触发器设置
