@@ -169,7 +169,7 @@ MonoBehaviour:
   cornerB: {x: 12, y: 12}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -627,7 +627,7 @@ MonoBehaviour:
   cornerB: {x: 6, y: 12}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -1304,7 +1304,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -1416,11 +1416,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerA: {x: 3, y: 12}
+  cornerA: {x: 0, y: 12}
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -1474,7 +1474,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 06a8ae4a0ee5a5d489bc83f7079f9e4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1495,7 +1495,7 @@ Transform:
   m_GameObject: {fileID: 475451078}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.535248, y: 1.6186047, z: 0}
+  m_LocalPosition: {x: -9.06, y: 0.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2171,7 +2171,7 @@ MonoBehaviour:
   cornerB: {x: 2, y: 12}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -2725,7 +2725,7 @@ MonoBehaviour:
   cornerB: {x: 13, y: 1}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -3112,7 +3112,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -3362,7 +3362,7 @@ MonoBehaviour:
   cornerB: {x: 13, y: 8}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -3915,7 +3915,7 @@ MonoBehaviour:
   cornerB: {x: 3, y: 4}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -4781,7 +4781,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -5166,7 +5166,7 @@ MonoBehaviour:
   cornerB: {x: 8, y: 12}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -6225,7 +6225,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 1
   sr: {fileID: 0}
   transparentAlpha: 0.75
