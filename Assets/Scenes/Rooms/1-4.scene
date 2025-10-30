@@ -3829,7 +3829,7 @@ PrefabInstance:
       objectReference: {fileID: 1258956710}
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: isExplorationMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: stelse.Array.size
@@ -3924,22 +3924,22 @@ MonoBehaviour:
   playerCardHolder: {fileID: 1258956710}
   actionPointText: {fileID: 378661447}
   unitControllers:
-  - {fileID: 1304696795}
   - {fileID: 1274864650}
+  - {fileID: 1304696795}
   playerCards:
-  - {fileID: 1258956706}
   - {fileID: 913410618}
+  - {fileID: 1258956706}
   deadCardColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.7}
   aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
   enemies:
   - {fileID: 0}
   isWin: 0
-  Gameover: {fileID: 0}
+  Gameover: {fileID: 1448247073}
   criticalCharacters:
   - {fileID: 1274864650}
   gameOverOnCriticalDeath: 1
   explorationManager: {fileID: 1714261624}
-  isMaidDead: 1
+  isMaidDead: 0
   allowDirectExploration: 1
 --- !u!4 &1188374972
 Transform:
@@ -5119,6 +5119,11 @@ MonoBehaviour:
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
   customFont: {fileID: 0}
+--- !u!1 &1448247073 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8826646181911111505, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1258956705}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1489439228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4136337234632276787, guid: ea583722bae42b94bbe1b528d986ff3e, type: 3}
