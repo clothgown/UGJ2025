@@ -100,7 +100,6 @@ public class TurnManager : MonoBehaviour
         // 检查是否满足进入探索模式的条件
         if (phase != TurnPhase.Exploration && !explorationTriggered && !isWin)
         {
-            Debug.Log(1234);
             if (CheckExplorationConditions())
             {
                 explorationTriggered = true;

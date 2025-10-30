@@ -24,7 +24,12 @@ public class Store : MonoBehaviour
     public void BackToMap()
     {
         SceneManager.LoadScene("Map");
-        FindAnyObjectByType<LevelSelectRoot>().SetGridManagerTrue();
+        if (MapGridManager.instance != null)
+        {
+            MapGridManager.instance.gameObject.SetActive(true);
+            MapGridManager.instance.HighlightNearbyGrids();
+
+        }
     }
 
     public void ShowDeck()
