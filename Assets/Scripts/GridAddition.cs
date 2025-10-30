@@ -24,7 +24,7 @@ public class GridAddition : MonoBehaviour
 
     private void Awake()
     {
-        gridSystem = IsoGrid2D.instance;
+        
         if (gridSystem == null)
         {
             Debug.LogError("未找到 IsoGrid2D 实例，请确保场景中存在 IsoGrid2D。");
@@ -38,6 +38,7 @@ public class GridAddition : MonoBehaviour
     }
     void Start()
     {
+        gridSystem = IsoGrid2D.instance;
         if (generateOnStart)
             GenerateExtraArea();
     }
