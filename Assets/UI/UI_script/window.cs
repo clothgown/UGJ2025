@@ -58,6 +58,7 @@ public class Window : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         if (isInstore)
         {
             Store store = FindAnyObjectByType<Store>();
+            store.currentWindow = this;
             if (store != null && store.detailPanel != null)
             {
                 store.ShowDetailPanel();
