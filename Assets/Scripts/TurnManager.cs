@@ -217,18 +217,18 @@ public class TurnManager : MonoBehaviour
         CameraMove.instance.ChangeFollow(player.gameObject);
         Debug.Log(123);
         player.Move();
-        PlayerSwitchManager.instance.currentUnitController = player;
+        //PlayerSwitchManager.instance.currentUnitController = player;
 
-        var psm = PlayerSwitchManager.instance;
-        if (psm != null)
-        {
-            psm.currentUnitController = player;
-            int slotIndex = psm.allSlots.FindIndex(s => s.unit == player);
-            if (slotIndex >= 0)
-                psm.currentIndex = slotIndex;
-            else
-                Debug.LogWarning("玩家未在 PlayerSwitchManager 的 slots 中找到！");
-        }
+        //var psm = PlayerSwitchManager.instance;
+        //if (psm != null)
+        //{
+        //    psm.currentUnitController = player;
+        //    int slotIndex = psm.allSlots.FindIndex(s => s.unit == player);
+        //    if (slotIndex >= 0)
+        //        psm.currentIndex = slotIndex;
+        //    else
+        //        Debug.LogWarning("玩家未在 PlayerSwitchManager 的 slots 中找到！");
+        //}
 
         // 更新卡片 UI 状态
         UpdateCardSelectionUI(player);

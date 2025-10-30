@@ -221,7 +221,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public bool ExecuteEffect()
     {
         if (data == null) return false;
-        if(PlayerSwitchManager.instance.isChoosing == true) return false;
+        //if(PlayerSwitchManager.instance.isChoosing == true) return false;
 
         bool effectExecuted = false;
         UnitController playerUnit = IsoGrid2D.instance.controller.GetComponent<UnitController>();
@@ -370,7 +370,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                 Debug.Log($"获得 {data.amount} 点护盾！");
                 break;
             case CardData.CardEffectType.Switch:
-                PlayerSwitchManager.instance.StartChooseSwitch();
+                //PlayerSwitchManager.instance.StartChooseSwitch();
                 FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
                 effectExecuted = true;
                 Debug.Log($"切换");
