@@ -122,7 +122,7 @@ public class TeamManager : MonoBehaviour
     /// <summary>
     /// 按角色表排序 + 根据是否解锁更新显示状态
     /// </summary>
-    private void SortAndUpdateStatus()
+    public void SortAndUpdateStatus()
     {
         // 按 ID 排序
         characterInfos.Sort((a, b) => a.id.CompareTo(b.id));
@@ -155,7 +155,7 @@ public class TeamManager : MonoBehaviour
                 // ✅ 同步角色的血量信息
                 if (matchedUnit.healthSystem != null)
                 {
-                    info.currentHealth = matchedUnit.healPoint;
+                    info.currentHealth = matchedUnit.currentHealth;
                     info.maxHealth = matchedUnit.maxHealth;
                     Debug.Log($"🩸 记录角色 {info.characterName} 血量：{info.currentHealth}/{info.maxHealth}");
                 }
@@ -241,5 +241,25 @@ public class TeamManager : MonoBehaviour
             return (-1f, -1f);
         }
     }
-
+    /// <summary>
+    /// 从当前场景的 UnitController 同步血量到 CharacterInfos
+    /// （每次回合开始调用）
+    /// </summary>
+    public void RefreshCharacterHealthFromScene()
+    {
+        foreach (var info in characterInfos)
+        {
+            var unit = unitControllers.Find(u => u.name == info.characterName);
+            if (unit != null && unit.healthSystem != null)
+            {
+                info.currentHealth = unit.currentHealth;
+                info.maxHealth = unit.maxHealth;
+                Debug.Log($"🔁 刷新角色血量：{info.characterName}  {info.currentHealth}/{info.maxHealth}");
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ 未找到 {info.characterName} 或其 HealthSystem，无法同步血量。");
+            }
+        }
+    }
 }

@@ -93,8 +93,22 @@ public class UnitController : MonoBehaviour
         Insert,
         Male,
     }
-    public Who who; 
+    public Who who;
 
+    private void Awake()
+    {
+        healthSystem = GetComponent<HealthSystem>();
+        if (healthSystem != null)
+        {
+            // 订阅死亡事件
+
+            currentHealth = maxHealth;
+            healthSystem.SetMaxHealth(maxHealth);
+            healthSystem.SetMaxShield(10f);
+            healthSystem.SetShield(shield);
+            //PlayerSwitchManager.instance.currentUnitController = this;
+        }
+    }
     private void Start()
     {
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -122,17 +136,7 @@ public class UnitController : MonoBehaviour
             }
             IsoGrid2D.instance.currentPlayerGrid = gridComp;
         }
-        healthSystem = GetComponent<HealthSystem>();
-        if (healthSystem != null)
-        {
-            // 订阅死亡事件
-            
-            currentHealth = maxHealth;
-            healthSystem.SetMaxHealth(maxHealth);
-            healthSystem.SetMaxShield(10f);
-            healthSystem.SetShield(shield);
-            //PlayerSwitchManager.instance.currentUnitController = this;
-        }
+        
         // ✅ 从 AllPlayerState 恢复血量
         AllPlayerState aps = FindAnyObjectByType<AllPlayerState>();
         if (aps != null)
