@@ -530,7 +530,7 @@ public class UnitController : MonoBehaviour
 
             Debug.Log($"{enemy.name} 受到 {finalDamage} 点伤害");
             enemy.TakeDamage(finalDamage, this.attackAttribute);
-
+            enemy.TakeDamage(finalDamage);
 
         }
         

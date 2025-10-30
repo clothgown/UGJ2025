@@ -569,6 +569,7 @@ public class IsoGrid2D : MonoBehaviour
 
     public void DealMassAttackDamage(float damage)
     {
+        Debug.Log(123);
         foreach (var tileObj in grid)
         {
             if (tileObj == null) continue;
