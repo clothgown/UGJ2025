@@ -159,12 +159,12 @@ public class DialogueSystem : MonoBehaviour
         // 左右立绘初始化
         if (leftImage != null)
         {
-            leftImage.gameObject.SetActive(true);
+            leftImage.gameObject.SetActive(false);
             leftImage.color = new Color(1, 1, 1, 0);
         }
         if (rightImage != null)
         {
-            rightImage.gameObject.SetActive(true);
+            rightImage.gameObject.SetActive(false);
             rightImage.color = new Color(1, 1, 1, 0);
         }
 
@@ -306,26 +306,34 @@ public class DialogueSystem : MonoBehaviour
         }
 
         Dialogue d = dialogues[index];
-        nameTMP.text = d.Speaker;
-        dialogTMP.text = "";
-
-        // 检查条件
         if (!string.IsNullOrEmpty(d.Condition) && !CheckCondition(d.Condition))
         {
-            Debug.Log($"条件不满足，跳过对话: {d.Condition}");
-            int nextIndex = dialogues.FindIndex(dial => dial.ID == d.NextID);
-            if (nextIndex == -1)
+            Debug.Log($"对话条件不满足: {d.Condition}，跳转到NextID: {d.NextID}");
+
+            // 安全地跳转到NextID，避免递归
+            if (d.NextID != -1)
             {
-                FadeOutUI();
-                isDialoguing = false;
+                int nextIndex = dialogues.FindIndex(dial => dial.ID == d.NextID);
+                if (nextIndex >= 0)
+                {
+                    currentIndex = nextIndex;
+                    ShowDialogue(nextIndex);
+                }
+                else
+                {
+                    FadeOutUI();
+                }
             }
             else
             {
-                ShowDialogue(nextIndex);
-                currentIndex = nextIndex;
+                FadeOutUI();
             }
             return;
         }
+
+        // 正常的对话显示逻辑...
+        nameTMP.text = d.Speaker;
+        dialogTMP.text = "";
         if (d.Type == "Exploration" || d.Text.Contains("[探索模式]"))
         {
             TriggerExplorationFromDialogue();
@@ -347,8 +355,7 @@ public class DialogueSystem : MonoBehaviour
 
         // 立绘
         Sprite s = characterManager.GetPortrait(d.Speaker, d.IMG);
-        if (leftImage != null) leftImage.gameObject.SetActive(false);
-        if (rightImage != null) rightImage.gameObject.SetActive(false);
+        
         if (s != null)
         {
             if (d.Position == "左" && leftImage != null)
@@ -502,6 +509,7 @@ public class DialogueSystem : MonoBehaviour
 
     void ShowOptions(int startIndex)
     {
+        
         HideOptions(); // 先隐藏所有按钮
         int count = 0;
         isChoosing = true; // 进入选项状态
@@ -632,45 +640,18 @@ public class DialogueSystem : MonoBehaviour
             }
         }
 
-        // 如果找不到无条件选项，寻找父对话的NextID
-        Dialogue parentDialogue = dialogues[startIndex - 1]; // 假设选项前是父对话
-        if (parentDialogue != null && parentDialogue.NextID != -1)
+        // 如果找不到无条件选项，使用父对话的NextID
+        if (startIndex > 0)
         {
-            Debug.Log($"使用父对话的NextID作为默认跳转: {parentDialogue.NextID}");
-            int nextIndex = dialogues.FindIndex(dial => dial.ID == parentDialogue.NextID);
-            if (nextIndex >= 0)
+            Dialogue parentDialogue = dialogues[startIndex - 1];
+            if (parentDialogue != null && parentDialogue.NextID != -1)
             {
-                currentIndex = nextIndex;
-                ShowDialogue(nextIndex);
-            }
-            else
-            {
-                FadeOutUI();
-            }
-        }
-        else
-        {
-            // 最后保底：结束对话
-            Debug.LogWarning("没有找到有效的选项或默认跳转，结束对话");
-            FadeOutUI();
-        }
-    }
-
-    void JumpToDialogueByID(int id)
-    {
-        int idx = dialogues.FindIndex(d => d.ID == id);
-        if (idx >= 0)
-        {
-            // 检查目标对话的条件
-            Dialogue targetDialogue = dialogues[idx];
-            if (!string.IsNullOrEmpty(targetDialogue.Condition) && !CheckCondition(targetDialogue.Condition))
-            {
-                Debug.Log($"跳转目标对话条件不满足: {targetDialogue.Condition}");
-                // 如果条件不满足，寻找下一个有效的对话
-                int nextIndex = dialogues.FindIndex(dial => dial.ID == targetDialogue.NextID);
+                Debug.Log($"使用父对话的NextID作为默认跳转: {parentDialogue.NextID}");
+                int nextIndex = dialogues.FindIndex(dial => dial.ID == parentDialogue.NextID);
                 if (nextIndex >= 0)
                 {
-                    JumpToDialogueByID(dialogues[nextIndex].ID);
+                    currentIndex = nextIndex;
+                    ShowDialogue(nextIndex);
                 }
                 else
                 {
@@ -678,7 +659,21 @@ public class DialogueSystem : MonoBehaviour
                 }
                 return;
             }
+        }
 
+
+    // 最后保底：结束对话
+    Debug.LogWarning("没有找到有效的选项或默认跳转，结束对话");
+        FadeOutUI();
+    }
+
+
+    void JumpToDialogueByID(int id)
+    {
+        int idx = dialogues.FindIndex(d => d.ID == id);
+        if (idx >= 0)
+        {
+            // 不再在这里检查条件，让ShowDialogue统一处理
             currentIndex = idx;
             ShowDialogue(idx);
         }
@@ -688,6 +683,7 @@ public class DialogueSystem : MonoBehaviour
             FadeOutUI();
         }
     }
+
 
     void HideOptions()
     {
@@ -706,6 +702,7 @@ public class DialogueSystem : MonoBehaviour
             Debug.Log("正在显示书本对话，请先关闭书本");
             return;
         }
+
         // 如果当前打字还没结束，直接跳完本句
         if (typingTween != null && typingTween.IsActive() && typingTween.IsPlaying())
         {
@@ -714,26 +711,29 @@ public class DialogueSystem : MonoBehaviour
         }
 
         // 否则跳到下一句
-        int nextIndex = dialogues[currentIndex].NextID;
-        if (nextIndex == -1)
+        int nextID = dialogues[currentIndex].NextID;
+        if (nextID == -1)
         {
             Debug.Log("对话结束。");
             FadeOutUI();
             isDialoguing = false;
-        }
-        else if (nextIndex < dialogues.Count)
-        {
-            ShowDialogue(nextIndex);
-            currentIndex = nextIndex;
         }
         else
         {
-            Debug.Log("对话结束。");
-            FadeOutUI();
-            isDialoguing = false;
+            int nextIndex = dialogues.FindIndex(d => d.ID == nextID);
+            if (nextIndex >= 0)
+            {
+                ShowDialogue(nextIndex);
+                currentIndex = nextIndex;
+            }
+            else
+            {
+                Debug.Log("找不到NextID对应的对话，结束对话。");
+                FadeOutUI();
+                isDialoguing = false;
+            }
         }
     }
-
     void FadeOutUI()
     {
         
