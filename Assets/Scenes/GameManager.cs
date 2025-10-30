@@ -453,16 +453,12 @@ public class GameManager : MonoBehaviour
 
         while (!operation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-
-            // 更新进度条
-            if (loadingProgressBar != null)
-                loadingProgressBar.value = progress;
+            
 
             if (operation.progress >= 0.9f)
             {
                 // 等待0.5秒显示100%
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(2.6f);
                 operation.allowSceneActivation = true;
             }
 

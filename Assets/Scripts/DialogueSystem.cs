@@ -304,16 +304,11 @@ public class DialogueSystem : MonoBehaviour
         Dialogue d = dialogues[index];
         nameTMP.text = d.Speaker;
         dialogTMP.text = "";
-        if (d.Type == "Exploration" || d.Text.Contains("[探索模式]"))
-        {
-            TriggerExplorationFromDialogue();
-            return;
-        }
 
-        
+        // 检查条件
         if (!string.IsNullOrEmpty(d.Condition) && !CheckCondition(d.Condition))
         {
-            // 条件不满足，跳过这句对话
+            Debug.Log($"条件不满足，跳过对话: {d.Condition}");
             int nextIndex = dialogues.FindIndex(dial => dial.ID == d.NextID);
             if (nextIndex == -1)
             {
@@ -327,9 +322,15 @@ public class DialogueSystem : MonoBehaviour
             }
             return;
         }
+        if (d.Type == "Exploration" || d.Text.Contains("[探索模式]"))
+        {
+            TriggerExplorationFromDialogue();
+            return;
+        }
+        // 处理随机分支
         if (d.Type == "R" && enableRandomBranches)
         {
-            Debug.Log("检测到随机分支对话类型");
+            Debug.Log($"处理随机分支对话 ID={d.ID}, 分支数={d.randomBranches.Count}");
             HandleRandomBranch(d);
             return;
         }
@@ -366,8 +367,8 @@ public class DialogueSystem : MonoBehaviour
         else
         {
             // 如果没有立绘，淡出所有立绘
-            if (leftImage != null) leftImage.DOFade(0f, fadeDuration);
-            if (rightImage != null) rightImage.DOFade(0f, fadeDuration);
+            if (leftImage != null) leftImage.gameObject.SetActive(false);
+            if (rightImage != null) rightImage.gameObject.SetActive(false);
         }
 
 
@@ -398,15 +399,21 @@ public class DialogueSystem : MonoBehaviour
 
         if (d.Type == "Select" || d.Type == "@")
         {
-            // 停止输入事件
+            // 停止打字机效果
             typingTween?.Kill();
+            dialogTMP.text = d.Text;
 
-            // 假设当前选项在 CSV 中是连续的三行
+            // 显示选项（包含条件检查）
             ShowOptions(index);
         }
         else
         {
             HideOptions();
+        }
+        if (!string.IsNullOrEmpty(d.Effects))
+        {
+            Debug.Log($"执行效果: {d.Effects}");
+            ExecuteEffects(d.Effects);
         }
         if (d.Type == "&")
         {
@@ -489,79 +496,157 @@ public class DialogueSystem : MonoBehaviour
 
     void ShowOptions(int startIndex)
     {
-
         HideOptions(); // 先隐藏所有按钮
         int count = 0;
         isChoosing = true; // 进入选项状态
-        int optionIndex = count; // 捕获当前按钮编号
-        // 遍历接下来的几行，把 Type 仍是 @ 的当成选项
+
+        // 收集所有满足条件的选项
+        List<Dialogue> validOptions = new List<Dialogue>();
+        List<int> optionIndices = new List<int>();
+
+        // 遍历接下来的几行，把 Type 仍是 @ 或 Select 的当成选项
         for (int i = startIndex; i < dialogues.Count && count < 3; i++)
         {
             Dialogue d = dialogues[i];
             if (d.Type == "@" || d.Type == "Select")
             {
-                optionButtons[count].gameObject.SetActive(true);
-                optionTexts[count].text = d.Text;
-
-                int next = d.NextID; // 捕获正确的 NextID
-                Debug.Log(next);
-                int idx = i;         // 捕获当前索引
-                optionButtons[count].onClick.RemoveAllListeners();
-                optionButtons[count].onClick.AddListener(() =>
+                // 检查选项条件
+                if (string.IsNullOrEmpty(d.Condition) || CheckCondition(d.Condition))
                 {
+                    validOptions.Add(d);
+                    optionIndices.Add(i);
+                    count++;
+                }
+                else
+                {
+                    Debug.Log($"选项条件不满足，跳过选项: {d.Text}, 条件: {d.Condition}");
+                }
+            }
+            else
+            {
+                break; // 遇到非选项对话，停止收集
+            }
+        }
 
-                    HideOptions();
-                    isChoosing = false; // 选完恢复正常点击
+        // 如果没有有效的选项，处理默认行为
+        if (validOptions.Count == 0)
+        {
+            Debug.LogWarning("没有满足条件的选项，寻找默认跳转");
+            HandleNoValidOptions(startIndex);
+            return;
+        }
 
-                    JumpToDialogueByID(next);
+        // 显示有效的选项
+        for (int i = 0; i < validOptions.Count && i < 3; i++)
+        {
+            Dialogue d = validOptions[i];
+            int optionIndex = optionIndices[i]; // 捕获当前选项索引
 
-                    Scene currentScene = SceneManager.GetActiveScene();
-                    string sceneName = currentScene.name;
-                    // 如果当前场景是 "1-0" 且当前对话文件名是 "1-0-talk3"
-                    if (sceneName == "1-0" && battleDialogDataFile != null && battleDialogDataFile.name == "1-0-talk3")
+            optionButtons[i].gameObject.SetActive(true);
+            optionTexts[i].text = d.Text;
+
+            int next = d.NextID; // 捕获正确的 NextID
+            optionButtons[i].onClick.RemoveAllListeners();
+            optionButtons[i].onClick.AddListener(() =>
+            {
+                HideOptions();
+                isChoosing = false; // 选完恢复正常点击
+
+                JumpToDialogueByID(next);
+
+                // 原有的场景特殊处理代码...
+                Scene currentScene = SceneManager.GetActiveScene();
+                string sceneName = currentScene.name;
+                if (sceneName == "1-0" && battleDialogDataFile != null && battleDialogDataFile.name == "1-0-talk3")
+                {
+                    // 使用闭包捕获的 optionIndex
+                    if (optionIndex == startIndex + 2) // 第三个选项（索引从0开始）
                     {
-                        optionIndex = count;
-                        Debug.Log(45);
-                        Debug.Log(optionIndex);
-                        if (optionIndex == 2) // 第二个按钮
+                        TeamManager teamManager = FindAnyObjectByType<TeamManager>();
+                        if (teamManager != null)
                         {
-                            TeamManager teamManager = FindAnyObjectByType<TeamManager>();
-                            if (teamManager != null)
+                            CharacterInfo targetInfo = teamManager.characterInfos.Find(c => c.id == 1);
+                            if (targetInfo != null)
                             {
-                                // 找到 id=1 的角色
-                                CharacterInfo targetInfo = teamManager.characterInfos.Find(c => c.id == 1);
-                                if (targetInfo != null)
-                                {
-                                    targetInfo.isUnlocked = true;
-                                    Debug.Log("✅ 已解锁角色 ID=1！");
+                                targetInfo.isUnlocked = true;
+                                Debug.Log("✅ 已解锁角色 ID=1！");
 
-                                    // 同步按钮和角色显示
-                                    // 找到对应按钮
-                                    Button matchedButton = teamManager.headUIButtons.Find(b => b.name == targetInfo.buttonName);
-                                    if (matchedButton != null)
-                                        matchedButton.gameObject.SetActive(true);
+                                Button matchedButton = teamManager.headUIButtons.Find(b => b.name == targetInfo.buttonName);
+                                if (matchedButton != null)
+                                    matchedButton.gameObject.SetActive(true);
 
-                                    // 找到对应角色
-                                    UnitController matchedUnit = teamManager.unitControllers.Find(u => u.name == targetInfo.characterName);
-                                    if (matchedUnit != null)
-                                        matchedUnit.gameObject.SetActive(true);
-                                }
-                                else
-                                {
-                                    Debug.LogWarning("⚠️ 未找到 ID=1 的角色信息。");
-                                }
+                                UnitController matchedUnit = teamManager.unitControllers.Find(u => u.name == targetInfo.characterName);
+                                if (matchedUnit != null)
+                                    matchedUnit.gameObject.SetActive(true);
                             }
                             else
                             {
-                                Debug.LogWarning("⚠️ 未找到 TeamManager 实例。");
+                                Debug.LogWarning("⚠️ 未找到 ID=1 的角色信息。");
                             }
                         }
+                        else
+                        {
+                            Debug.LogWarning("⚠️ 未找到 TeamManager 实例。");
+                        }
                     }
-                });
+                }
+            });
+        }
+    }
 
-                count++;
+    // 新增：处理没有有效选项的情况
+    private void HandleNoValidOptions(int startIndex)
+    {
+        // 寻找第一个无条件选项作为默认选项
+        for (int i = startIndex; i < dialogues.Count; i++)
+        {
+            Dialogue d = dialogues[i];
+            if (d.Type == "@" || d.Type == "Select")
+            {
+                if (string.IsNullOrEmpty(d.Condition))
+                {
+                    Debug.Log($"使用无条件选项作为默认: {d.Text}");
+                    // 自动选择这个选项
+                    int nextIndex = dialogues.FindIndex(dial => dial.ID == d.NextID);
+                    if (nextIndex >= 0)
+                    {
+                        currentIndex = nextIndex;
+                        ShowDialogue(nextIndex);
+                    }
+                    else
+                    {
+                        FadeOutUI();
+                    }
+                    return;
+                }
             }
-            else break;
+            else
+            {
+                break; // 遇到非选项对话，停止搜索
+            }
+        }
+
+        // 如果找不到无条件选项，寻找父对话的NextID
+        Dialogue parentDialogue = dialogues[startIndex - 1]; // 假设选项前是父对话
+        if (parentDialogue != null && parentDialogue.NextID != -1)
+        {
+            Debug.Log($"使用父对话的NextID作为默认跳转: {parentDialogue.NextID}");
+            int nextIndex = dialogues.FindIndex(dial => dial.ID == parentDialogue.NextID);
+            if (nextIndex >= 0)
+            {
+                currentIndex = nextIndex;
+                ShowDialogue(nextIndex);
+            }
+            else
+            {
+                FadeOutUI();
+            }
+        }
+        else
+        {
+            // 最后保底：结束对话
+            Debug.LogWarning("没有找到有效的选项或默认跳转，结束对话");
+            FadeOutUI();
         }
     }
 
@@ -570,6 +655,24 @@ public class DialogueSystem : MonoBehaviour
         int idx = dialogues.FindIndex(d => d.ID == id);
         if (idx >= 0)
         {
+            // 检查目标对话的条件
+            Dialogue targetDialogue = dialogues[idx];
+            if (!string.IsNullOrEmpty(targetDialogue.Condition) && !CheckCondition(targetDialogue.Condition))
+            {
+                Debug.Log($"跳转目标对话条件不满足: {targetDialogue.Condition}");
+                // 如果条件不满足，寻找下一个有效的对话
+                int nextIndex = dialogues.FindIndex(dial => dial.ID == targetDialogue.NextID);
+                if (nextIndex >= 0)
+                {
+                    JumpToDialogueByID(dialogues[nextIndex].ID);
+                }
+                else
+                {
+                    FadeOutUI();
+                }
+                return;
+            }
+
             currentIndex = idx;
             ShowDialogue(idx);
         }
@@ -759,9 +862,148 @@ public class DialogueSystem : MonoBehaviour
 
     // 跳过所有对话
     // 跳过所有对话
+    // 新增：跳到下一个决策点（选项、随机分支、探索模式等）
+    // 新的跳过逻辑：跳到决策前一句话
+    public void SkipToNextDecisionPoint()
+    {
+        // 如果正在显示书本对话，先关闭它
+        if (isBookDialogActive)
+        {
+            HideBookDialog();
+        }
+
+        // 终止当前打字机效果，立即显示完整文本
+        if (typingTween != null && typingTween.IsActive())
+        {
+            typingTween.Kill();
+            if (currentIndex >= 0 && currentIndex < dialogues.Count)
+            {
+                Dialogue currentDialogue = dialogues[currentIndex];
+                dialogTMP.text = currentDialogue.Text;
+            }
+            return; // 第一次点击跳过，只完成当前打字效果
+        }
+
+        // 清除所有选项按钮（如果有）
+        HideOptions();
+
+        // 从当前对话的下一个开始，寻找决策点
+        int searchIndex = currentIndex + 1;
+        int lastNormalDialogue = -1; // 记录最后一个普通对话
+
+        while (searchIndex < dialogues.Count)
+        {
+            Dialogue candidate = dialogues[searchIndex];
+
+            // 检查是否是决策点
+            if (IsDecisionPoint(candidate))
+            {
+                Debug.Log($"找到决策点 at index {searchIndex}, ID={candidate.ID}, Type={candidate.Type}");
+
+                // 如果找到了决策点，但我们之前记录过普通对话，就停在最后一个普通对话
+                if (lastNormalDialogue != -1)
+                {
+                    Debug.Log($"停在决策点前一句话: index {lastNormalDialogue}");
+                    currentIndex = lastNormalDialogue;
+                    ShowDialogue(currentIndex);
+                    return;
+                }
+                else
+                {
+                    // 如果没有普通对话，直接停在决策点
+                    Debug.Log($"直接停在决策点: index {searchIndex}");
+                    currentIndex = searchIndex;
+                    ShowDialogue(currentIndex);
+                    return;
+                }
+            }
+
+            // 检查是否是普通对话（非决策点）
+            if (IsNormalDialogue(candidate))
+            {
+                lastNormalDialogue = searchIndex;
+                // 标记为已观看
+                candidate.IsWatched = true;
+            }
+
+            // 如果遇到结束点，也停下来
+            if (candidate.NextID == -1 || candidate.Type == "E")
+            {
+                Debug.Log($"遇到对话结束点 at index {searchIndex}, 停止跳过");
+                if (lastNormalDialogue != -1)
+                {
+                    currentIndex = lastNormalDialogue;
+                    ShowDialogue(currentIndex);
+                }
+                else
+                {
+                    // 直接结束对话
+                    FadeOutUI();
+                }
+                return;
+            }
+
+            searchIndex++;
+        }
+
+        // 如果没找到决策点，且已到末尾，则正常结束对话
+        Debug.Log("未找到后续决策点，结束对话");
+        FadeOutUI();
+    }
+
+    // 判断是否是普通对话（可以安全跳过的对话）
+    private bool IsNormalDialogue(Dialogue dialogue)
+    {
+        // 普通对话类型：Start, #, 以及其他没有特殊功能的类型
+        string[] normalTypes = { "Start", "#" };
+
+        // 没有特殊条件、效果、分支的对话
+        return Array.Exists(normalTypes, type => type == dialogue.Type) &&
+               string.IsNullOrEmpty(dialogue.Condition) &&
+               string.IsNullOrEmpty(dialogue.Effects) &&
+               string.IsNullOrEmpty(dialogue.RandomBranchesData);
+    }
+
+    // 判断是否是决策点（需要玩家参与的对话）
+    private bool IsDecisionPoint(Dialogue dialogue)
+    {
+        // 包含选项的对话
+        if (dialogue.Type == "Select" || dialogue.Type == "@")
+        {
+            return true;
+        }
+
+        // 随机分支对话
+        if (dialogue.Type == "R" && enableRandomBranches)
+        {
+            return true;
+        }
+
+        // 书本对话
+        if (dialogue.Type == "&")
+        {
+            return true;
+        }
+
+        // 有条件的对话（可能影响分支）
+        if (!string.IsNullOrEmpty(dialogue.Condition))
+        {
+            return true;
+        }
+
+        // 有效果的对话（可能影响游戏状态）
+        if (!string.IsNullOrEmpty(dialogue.Effects))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    // 修改原来的 SkipAllDialogues 方法，或者用上面的新方法替代
     public void SkipAllDialogues()
     {
-        // 检查对话系统是否正在运行，而不是只检查isDialoguing标志
+        // 检查是否正在运行
         bool hasActiveDialogues = (dialogues != null && dialogues.Count > 0) ||
                                  isDialoguing ||
                                  (UIGroup != null && UIGroup.gameObject.activeInHierarchy);
@@ -772,59 +1014,45 @@ public class DialogueSystem : MonoBehaviour
             return;
         }
 
-        // 终止当前打字机效果
-        if (typingTween != null && typingTween.IsActive())
-        {
-            typingTween.Kill();
-        }
-
-        // 清除所有选项按钮
-        HideOptions();
-
+        // 如果有探索模式触发，特殊处理
         bool hasExplorationTrigger = dialogues.Any(d => d.Type == "Exploration" || d.Text.Contains("[探索模式]"));
         if (hasExplorationTrigger && canTriggerExploration)
         {
             Debug.Log("跳过对话时检测到探索模式触发");
             TriggerExplorationFromDialogue();
             return;
-        }   // 标记所有对话为已观看（如果对话列表存在）
-            if (dialogues != null)
-            {
-                foreach (var d in dialogues)
-                {
-                    d.IsWatched = true;
-                }
-            }
-
-            Debug.Log("已跳过所有对话。");
-
-            // 直接淡出UI并结束当前对话
-            FadeOutUI();
-
-            // 清除对话状态
-            isDialoguing = false;
-            isLoaded = false;
-            currentIndex = 0;
-
-            // 清空对话队列
-            ClearDialogQueue();
         }
-    
+
+        // 使用新的跳到决策点功能
+        SkipToNextDecisionPoint();
+    }
+
     private bool CheckCondition(string condition)
     {
-        if (string.IsNullOrEmpty(condition)) return true;
+        if (string.IsNullOrEmpty(condition))
+        {
+            Debug.Log("条件为空，默认通过");
+            return true;
+        }
+
+        Debug.Log($"检查条件: {condition}");
 
         // 支持多个条件用逗号分隔
         string[] conditions = condition.Split(',');
 
         foreach (string cond in conditions)
         {
-            if (!EvaluateSingleCondition(cond.Trim()))
+            bool result = EvaluateSingleCondition(cond.Trim());
+            Debug.Log($"条件 '{cond.Trim()}' 结果: {result}");
+
+            if (!result)
             {
+                Debug.Log($"条件不满足: {cond.Trim()}");
                 return false;
             }
         }
 
+        Debug.Log("所有条件都满足");
         return true;
     }
 
@@ -840,11 +1068,17 @@ public class DialogueSystem : MonoBehaviour
         // "ally1_dead"           - 特定友方死亡
         // "enemy_all_dead"       - 所有敌人都死亡
 
+        if (condition.StartsWith("coin"))
+        {
+            return CheckCoinCondition(condition);
+        }
+
         string[] parts = condition.Split('_');
         if (parts.Length < 2) return true; // 条件格式错误，默认通过
 
         string target = parts[0];  // enemy 或 ally
         string conditionType = parts[1]; // health 或 dead
+
 
         // 处理死亡条件
         if (conditionType == "dead")
@@ -866,7 +1100,93 @@ public class DialogueSystem : MonoBehaviour
 
         return true; // 未知条件类型，默认通过
     }
+    private bool CheckCoinCondition(string condition)
+    {
+        try
+        {
+            // 格式: coin>=10, coin<50, coin==100
+            string operatorStr = "";
+            string valueStr = "";
 
+            // 提取运算符和数值
+            if (condition.Contains(">="))
+            {
+                operatorStr = ">=";
+                valueStr = condition.Substring(condition.IndexOf(">=") + 2);
+            }
+            else if (condition.Contains("<="))
+            {
+                operatorStr = "<=";
+                valueStr = condition.Substring(condition.IndexOf("<=") + 2);
+            }
+            else if (condition.Contains(">"))
+            {
+                operatorStr = ">";
+                valueStr = condition.Substring(condition.IndexOf(">") + 1);
+            }
+            else if (condition.Contains("<"))
+            {
+                operatorStr = "<";
+                valueStr = condition.Substring(condition.IndexOf("<") + 1);
+            }
+            else if (condition.Contains("=="))
+            {
+                operatorStr = "==";
+                valueStr = condition.Substring(condition.IndexOf("==") + 2);
+            }
+            else if (condition.Contains("!="))
+            {
+                operatorStr = "!=";
+                valueStr = condition.Substring(condition.IndexOf("!=") + 2);
+            }
+            else
+            {
+                Debug.LogWarning($"未知的金币条件运算符: {condition}");
+                return true;
+            }
+
+            // 解析数值
+            if (int.TryParse(valueStr.Trim(), out int requiredCoins))
+            {
+                // 获取当前金币数量
+                int currentCoins = 0;
+                if (CollectionManager.instance != null)
+                {
+                    currentCoins = CollectionManager.instance.GetCoinCount();
+                }
+                else
+                {
+                    Debug.LogWarning("CollectionManager 实例未找到，无法检查金币条件");
+                    return true; // 如果找不到管理器，默认通过条件
+                }
+
+                // 根据运算符进行比较
+                bool result = false;
+                switch (operatorStr)
+                {
+                    case ">=": result = currentCoins >= requiredCoins; break;
+                    case "<=": result = currentCoins <= requiredCoins; break;
+                    case ">": result = currentCoins > requiredCoins; break;
+                    case "<": result = currentCoins < requiredCoins; break;
+                    case "==": result = currentCoins == requiredCoins; break;
+                    case "!=": result = currentCoins != requiredCoins; break;
+                }
+
+                Debug.Log($"金币条件检查: {currentCoins} {operatorStr} {requiredCoins} = {result}");
+                return result;
+            }
+            else
+            {
+                Debug.LogWarning($"无法解析金币条件数值: {condition}");
+                return true;
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"检查金币条件时出错: {condition}, 错误: {e.Message}");
+            return true;
+        }
+    }
     // ✅ 新增：检查死亡条件
     private bool CheckDeathCondition(string target)
     {
@@ -1135,7 +1455,7 @@ public class DialogueSystem : MonoBehaviour
     // 执行单个效果
     private void ExecuteSingleEffect(string effectType, string parameters)
     {
-        string[] paramArray = parameters.Split(',');
+        string[] paramArray = parameters.Split('|');
 
         switch (effectType)
         {
@@ -1154,12 +1474,121 @@ public class DialogueSystem : MonoBehaviour
             case "sethealth":
                 HandleSetHealthEffect(paramArray);
                 break;
+            case "event": // 新增：事件触发
+                Debug.Log("检测到 event 效果类型");
+                HandleEventEffect(paramArray);
+                break;
             default:
                 Debug.LogWarning($"未知的效果类型: {effectType}");
                 break;
         }
     }
+    private void HandleEventEffect(string[] parameters)
+    {
+        if (parameters.Length == 0) return;
 
+        string eventName = parameters[0].Trim();
+
+        switch (eventName)
+        {
+            case "endDialogue":
+                OnDialogueEnd();
+                break;
+            case "startBattle":
+                StartBattle();
+                break;
+            case "openShop":
+                OpenShop();
+                break;
+            case "changeScene":
+                if (parameters.Length > 1)
+                    ChangeScene(parameters[1]);
+                break;
+            case "activate": // 新增加：激活GameObject
+                if (parameters.Length > 1)
+                {
+                    string objectName = parameters[1];
+                    GameObject obj = GameObject.Find(objectName);
+                    if (obj != null)
+                    {
+                        obj.SetActive(true);
+                        Debug.Log("找到名为 {objectName} 的GameObject");
+                        obj.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"未找到名为 {objectName} 的GameObject");
+                    }
+                }
+                break;
+            case "deactivate": // 新增加：禁用GameObject
+                if (parameters.Length > 1)
+                {
+                    string objectName = parameters[1];
+                    GameObject obj = GameObject.Find(objectName);
+                    if (obj != null)
+                    {
+                        obj.SetActive(false);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"未找到名为 {objectName} 的GameObject");
+                    }
+                }
+                break;
+            default:
+                Debug.LogWarning($"未知的事件: {eventName}");
+                break;
+        }
+
+        Debug.Log($"触发事件: {eventName}");
+    }
+    private void OnDialogueEnd()
+    {
+        Debug.Log("对话结束事件被触发");
+
+        // 这里可以添加你需要的逻辑，例如：
+        // - 激活游戏对象
+        // - 开始新任务
+        // - 播放音效
+        // - 等等
+
+        // 示例：激活一个游戏对象
+        GameObject endTrigger = GameObject.Find("DialogueEndTrigger");
+        if (endTrigger != null)
+        {
+            endTrigger.SetActive(true);
+        }
+
+        // 示例：发送消息给其他对象
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("DialogueTarget");
+        foreach (GameObject target in targets)
+        {
+            target.SendMessage("OnDialogueEnd", SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+    // 开始战斗事件
+    private void StartBattle()
+    {
+        Debug.Log("开始战斗事件");
+        // 调用你的战斗系统
+    }
+
+    // 打开商店事件
+    private void OpenShop()
+    {
+        Debug.Log("打开商店事件");
+        // 调用你的商店系统
+    }
+
+    // 切换场景事件
+    private void ChangeScene(string sceneName)
+    {
+        Debug.Log($"切换场景到: {sceneName}");
+        // 调用场景切换
+        // SceneManager.LoadScene(sceneName);
+    }
     // 治疗效果
     private void HandleHealEffect(string[] parameters)
     {
@@ -1370,16 +1799,14 @@ public class DialogueSystem : MonoBehaviour
             return;
         }
 
-        // 规范换行（统一为 \n）
+        // 规范换行
         text = text.Replace("\r\n", "\n").Replace("\r", "\n");
 
-        // 先拿第一行（表头）判断分隔符（逗号或制表符）
+        // 检测分隔符
         int firstNewline = text.IndexOf('\n');
         string headerLine = firstNewline >= 0 ? text.Substring(0, firstNewline) : text;
-        char delimiter = headerLine.Contains("\t") ? '\t' : ','; // 简单检测：优先制表符
+        char delimiter = headerLine.Contains("\t") ? '\t' : ',';
 
-        // 我们需要按行遍历，但要注意可能有字段内的换行（被引号包裹）。
-        // 所以不能简单 Split('\n') —— 改为手动逐字符解析，按 CSV 引号规则切行。
         List<string> rows = SplitCsvRows(text);
 
         if (rows == null || rows.Count == 0)
@@ -1388,14 +1815,13 @@ public class DialogueSystem : MonoBehaviour
             return;
         }
 
-        // 跳过表头（假设第一行是 header）
+        // 跳过表头
         for (int i = 1; i < rows.Count; i++)
         {
             string row = rows[i].Trim();
             if (string.IsNullOrEmpty(row)) continue;
 
             List<string> cells = ParseCsvLine(row);
-            // 我们期望至少 6 列（Type, ID, Speaker, Position, NextID, Text），第7列CG可选
             if (cells.Count < 6)
             {
                 Debug.LogWarning($"第 {i + 1} 行列数不足：{cells.Count} -> \"{row}\"");
@@ -1404,30 +1830,51 @@ public class DialogueSystem : MonoBehaviour
 
             Dialogue d = new Dialogue();
             d.Type = cells[0].Trim();
+
+            // 解析基础字段
             int id; if (!int.TryParse(cells[1].Trim(), out id)) id = -1;
             d.ID = id;
             d.Speaker = cells[2].Trim();
             d.IMG = cells[3].Trim();
             d.Position = cells[4].Trim();
+
             int nextid; if (!int.TryParse(cells[5].Trim(), out nextid)) nextid = -1;
             d.NextID = nextid;
-            d.Text = cells[6].Replace("\\n", "\n"); // 如果CSV里用 \n 表示换行
+
+            d.Text = cells[6].Replace("\\n", "\n");
             d.CG = cells.Count > 7 ? cells[7].Trim() : "";
-            d.Condition = cells.Count > 8 ? cells[8].Trim() : "";
-            d.IsWatched = false;
+
+            // 解析 IsWatched
+            bool isWatched;
+            if (cells.Count > 8 && bool.TryParse(cells[8].Trim(), out isWatched))
+                d.IsWatched = isWatched;
+            else
+                d.IsWatched = false;
+
+            d.Condition = cells.Count > 9 ? cells[9].Trim() : "";
+
+            // 关键修改：解析 RandomBranches
+            d.RandomBranchesData = cells.Count > 10 ? cells[10].Trim() : "";
+
+            // 解析 Effects
+            d.Effects = cells.Count > 11 ? cells[11].Trim() : "";
 
             dialogues.Add(d);
-
         }
+
+        // 解析随机分支数据
         ProcessRandomBranches();
 
-        Debug.Log($"对话加载完成，总计 {dialogues.Count} 条对话，包含随机分支和效果");
+        Debug.Log($"对话加载完成，总计 {dialogues.Count} 条对话");
     }
     private void ProcessRandomBranches()
     {
         foreach (var dialogue in dialogues)
         {
-            // 解析随机分支数据（如果存在）
+            // 清空现有分支
+            dialogue.randomBranches.Clear();
+
+            // 解析随机分支数据
             if (!string.IsNullOrEmpty(dialogue.RandomBranchesData))
             {
                 ParseRandomBranches(dialogue);
@@ -1435,10 +1882,9 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    // 解析随机分支
     private void ParseRandomBranches(Dialogue dialogue)
     {
-        // 格式: nextID1:probability1:condition1;nextID2:probability2:condition2
+        // 格式: nextID1:probability1;nextID2:probability2;...
         string[] branchStrings = dialogue.RandomBranchesData.Split(';');
 
         foreach (string branchString in branchStrings)
@@ -1452,6 +1898,11 @@ public class DialogueSystem : MonoBehaviour
                 {
                     string condition = parts.Length > 2 ? parts[2] : "";
                     dialogue.randomBranches.Add(new RandomBranch(nextID, probability, condition));
+                    Debug.Log($"添加随机分支: ID={nextID}, 概率={probability}%, 条件={condition}");
+                }
+                else
+                {
+                    Debug.LogWarning($"无法解析随机分支: {branchString}");
                 }
             }
         }

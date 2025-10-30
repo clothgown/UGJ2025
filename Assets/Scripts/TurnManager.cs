@@ -113,7 +113,7 @@ public class TurnManager : MonoBehaviour
     private bool CheckExplorationConditions()
     {
         // 条件1：所有敌人被消灭 + 女仆死亡
-        if (enemies.Length == 0 && isMaidDead && !isCheckingForWin)
+        if (enemies.Length == 0 && !isCheckingForWin)
         {
             return true;
         }

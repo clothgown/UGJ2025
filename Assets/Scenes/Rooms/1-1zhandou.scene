@@ -1854,11 +1854,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3293656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &431811704 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 167667676212174311, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-  m_PrefabInstance: {fileID: 452337380}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &432173495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2224,6 +2219,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+--- !u!1 &452337381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7074371361413133234, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 452337380}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &452935999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2561,7 +2561,8 @@ MonoBehaviour:
   - {fileID: 1203261029}
   isWin: 0
   Gameover: {fileID: 0}
-  criticalCharacters: []
+  criticalCharacters:
+  - {fileID: 1876232432}
   gameOverOnCriticalDeath: 1
   explorationManager: {fileID: 538331932}
   isMaidDead: 0
@@ -8513,7 +8514,7 @@ PrefabInstance:
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: stelse.Array.data[0]
       value: 
-      objectReference: {fileID: 431811704}
+      objectReference: {fileID: 452337381}
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: stelse.Array.data[1]
       value: 

@@ -29,6 +29,12 @@ public class CollectionManager : MonoBehaviour
     {
         
     }
+    public int GetCoinCount()
+    {
+        return coins; // 假设 coinCount 是你的金币变量
+    }
+
+    
     public void AddCoin(int coin)
     {
         coins += coin;
