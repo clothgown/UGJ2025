@@ -363,7 +363,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!225 &8558834297146771870
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1113,6 +1113,7 @@ MonoBehaviour:
   cardToSell: {fileID: 0}
   cardImage: {fileID: 0}
   canInteract: 1
+  isInstore: 0
 --- !u!114 &3379682658189070466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1822,6 +1823,7 @@ MonoBehaviour:
   cardToSell: {fileID: 0}
   cardImage: {fileID: 0}
   canInteract: 1
+  isInstore: 0
 --- !u!114 &3175269779132020998
 MonoBehaviour:
   m_ObjectHideFlags: 0

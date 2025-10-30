@@ -1882,11 +1882,11 @@ MonoBehaviour:
   playerCardHolder: {fileID: 820453801}
   actionPointText: {fileID: 905765333}
   unitControllers:
-  - {fileID: 1559083429}
   - {fileID: 696274962}
+  - {fileID: 1559083429}
   playerCards:
-  - {fileID: 2103927070}
   - {fileID: 904111692}
+  - {fileID: 2103927070}
   deadCardColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.7}
   aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
   enemies:
@@ -1895,7 +1895,7 @@ MonoBehaviour:
   - {fileID: 1413492292}
   - {fileID: 1688835418}
   isWin: 0
-  Gameover: {fileID: 0}
+  Gameover: {fileID: 1776365397}
   criticalCharacters:
   - {fileID: 696274962}
   gameOverOnCriticalDeath: 1
@@ -2581,10 +2581,10 @@ MonoBehaviour:
     button: {fileID: 2103927074}
     isActive: 0
   - unit: {fileID: 557340527}
-    button: {fileID: 1427238228}
+    button: {fileID: 0}
     isActive: 0
   - unit: {fileID: 545796604}
-    button: {fileID: 874638668}
+    button: {fileID: 0}
     isActive: 0
   currentUnitController: {fileID: 0}
   currentIndex: 0
@@ -2742,17 +2742,6 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 170426399}
   m_ConfineScreenEdges: 1
   m_Damping: 0.1
---- !u!114 &874638668 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3539640267439134990, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-  m_PrefabInstance: {fileID: 1776365392}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &880004525
 GameObject:
   m_ObjectHideFlags: 0
@@ -4133,17 +4122,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3305443969280299731, guid: dd86e64a46bfa5c46922a0a4a0547e16, type: 3}
   m_PrefabInstance: {fileID: 1415041629}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1427238228 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6278401142097771872, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-  m_PrefabInstance: {fileID: 1776365392}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1477021473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4865,6 +4843,11 @@ GameObject:
 --- !u!1 &1776365396 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1840179236572513878, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1776365392}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1776365397 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8826646181911111505, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
   m_PrefabInstance: {fileID: 1776365392}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1790558681

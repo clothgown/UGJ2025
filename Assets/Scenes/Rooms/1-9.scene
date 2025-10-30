@@ -1233,21 +1233,21 @@ MonoBehaviour:
   playerCardHolder: {fileID: 1695283176}
   actionPointText: {fileID: 1514479600}
   unitControllers:
-  - {fileID: 1151071046}
   - {fileID: 67349446}
+  - {fileID: 1151071046}
   - {fileID: 879371049}
   - {fileID: 2003136359}
   playerCards:
-  - {fileID: 1695283172}
   - {fileID: 414642371}
-  - {fileID: 1462732739}
+  - {fileID: 1695283172}
+  - {fileID: 1756661062}
   - {fileID: 1890198923}
   deadCardColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.7}
   aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
   enemies:
   - {fileID: 0}
   isWin: 0
-  Gameover: {fileID: 0}
+  Gameover: {fileID: 1756661061}
   criticalCharacters:
   - {fileID: 67349446}
   gameOverOnCriticalDeath: 1
@@ -6108,11 +6108,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1462732739 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1160174143663818729, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
-  m_PrefabInstance: {fileID: 1695283171}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1487253367
 GameObject:
   m_ObjectHideFlags: 0
@@ -6896,6 +6891,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8826646181911111505, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7063,6 +7062,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 186259452f567324294df1499eee0aad, type: 3}
+--- !u!1 &1756661061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8826646181911111505, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1756661062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6847007565326532065, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1761595629
 GameObject:
   m_ObjectHideFlags: 0

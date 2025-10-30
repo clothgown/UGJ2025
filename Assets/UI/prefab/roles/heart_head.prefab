@@ -508,6 +508,7 @@ GameObject:
   - component: {fileID: 4246153434641300285}
   - component: {fileID: 7135371970973953328}
   - component: {fileID: 7413858259696979900}
+  - component: {fileID: 6886588991693982541}
   m_Layer: 5
   m_HasEditorInfo: 1
   m_Name: heart_head
@@ -890,6 +891,22 @@ MonoBehaviour:
   optionalScrambleMode: 0
   optionalShakeRandomnessMode: 0
   optionalString: 
+--- !u!114 &6886588991693982541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4238420088579884289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b088ba310a922444a2c1a41e767d482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPanel: {fileID: 0}
+  togglePanel: 1
+  closeOnClickOutside: 1
+  rightClickSound: {fileID: 8300000, guid: 175604ac4ee8ad14db6f94176a3f7b68, type: 3}
 --- !u!1 &4912787249808819172
 GameObject:
   m_ObjectHideFlags: 0

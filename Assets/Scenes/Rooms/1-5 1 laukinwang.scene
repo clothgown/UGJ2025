@@ -450,6 +450,11 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 2748405385705231468, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
   m_PrefabInstance: {fileID: 1801306227}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &86735536 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8826646181911111505, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1801306227}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &110835872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -539,6 +544,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+--- !u!114 &110835873 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
+  m_PrefabInstance: {fileID: 110835872}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15149c981adc3254d9a2537b72ea7559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &119299818
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,8 +588,8 @@ MonoBehaviour:
   currentController: {fileID: 2133320821}
   phase: 0
   turnIndex: 1
-  playerCardHolder: {fileID: 0}
-  actionPointText: {fileID: 0}
+  playerCardHolder: {fileID: 1801306233}
+  actionPointText: {fileID: 1878646910}
   unitControllers:
   - {fileID: 2133320821}
   - {fileID: 1235088818}
@@ -584,10 +600,11 @@ MonoBehaviour:
   aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
   enemies: []
   isWin: 0
-  Gameover: {fileID: 0}
-  criticalCharacters: []
+  Gameover: {fileID: 86735536}
+  criticalCharacters:
+  - {fileID: 2133320821}
   gameOverOnCriticalDeath: 1
-  explorationManager: {fileID: 0}
+  explorationManager: {fileID: 110835873}
   isMaidDead: 0
   allowDirectExploration: 1
 --- !u!4 &119299820
@@ -4524,6 +4541,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9a8467b6193a1a49b70c85fa3d9d7a8, type: 3}
+--- !u!114 &1878646910 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9072935683767121981, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1801306227}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1913533766
 GameObject:
   m_ObjectHideFlags: 0
