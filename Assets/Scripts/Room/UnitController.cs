@@ -458,6 +458,7 @@ public class UnitController : MonoBehaviour
     
     public void Heal(float health)
     {
+        Debug.Log(123);
         currentHealth += health;
         if (health > 5)
         {
@@ -530,7 +531,7 @@ public class UnitController : MonoBehaviour
 
             Debug.Log($"{enemy.name} 受到 {finalDamage} 点伤害");
             enemy.TakeDamage(finalDamage, this.attackAttribute);
-
+            enemy.TakeDamage(finalDamage);
 
         }
         
