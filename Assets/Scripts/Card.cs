@@ -344,7 +344,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                 break;
 
 
-                break;
+                
             case CardData.CardEffectType.Bloodsucking:
                 playerUnit.SetNextAttackBloodSuck();
                 FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();

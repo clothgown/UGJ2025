@@ -1,7 +1,7 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -562,7 +562,7 @@ public class UnitController : MonoBehaviour
         transform.localPosition = Vector3.zero;
     }
 
-    private bool hasPlayedRunOutVFX = false;
+    private bool hasPlayedRunOutVFX;
     public void UseActionPoint(int usePoint)
     {
         if (TurnManager.instance.currentController == this)
