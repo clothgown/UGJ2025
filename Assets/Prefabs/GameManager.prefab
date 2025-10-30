@@ -165,22 +165,72 @@ MonoBehaviour:
     bgmName: ForcedMarch
     stopOnExit: 1
     fadeOutTime: 2
+  - sceneName: Store
+    bgmName: Allegory
+    stopOnExit: 1
+    fadeOutTime: 2
+  - sceneName: Map
+    bgmName: CanononAcrostic
+    stopOnExit: 1
+    fadeOutTime: 2
   sceneAmbientConfigs:
   - sceneName: 1-0
     ambientName: Ambient2
-    stopOnExit: 0
+    stopOnExit: 1
     loop: 1
     fadeInTime: 0
     fadeOutTime: 0
   - sceneName: 1-1zhandou
     ambientName: Ambient2
-    stopOnExit: 0
+    stopOnExit: 1
     loop: 1
     fadeInTime: 0
     fadeOutTime: 0
   - sceneName: 1-1zhandou-2
     ambientName: Ambient2
-    stopOnExit: 0
+    stopOnExit: 1
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
+  - sceneName: 1-2zhandou-2
+    ambientName: Ambient2
+    stopOnExit: 1
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
+  - sceneName: 1-3 tansuo
+    ambientName: Ambient
+    stopOnExit: 1
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
+  - sceneName: 1-2zhandou
+    ambientName: Ambient2
+    stopOnExit: 1
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
+  - sceneName: 1-4
+    ambientName: Ambient2
+    stopOnExit: 1
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
+  - sceneName: 1-5 1 laukinwang
+    ambientName: Ambient2
+    stopOnExit: 1
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
+  - sceneName: 1-6
+    ambientName: Ambient2
+    stopOnExit: 1
+    loop: 1
+    fadeInTime: 0
+    fadeOutTime: 0
+  - sceneName: 1-9
+    ambientName: Ambient
+    stopOnExit: 1
     loop: 1
     fadeInTime: 0
     fadeOutTime: 0
