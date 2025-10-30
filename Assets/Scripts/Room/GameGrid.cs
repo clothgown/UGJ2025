@@ -197,9 +197,10 @@ public class GameGrid : MonoBehaviour
                 if (playerController.isNextAttackMass)
                 {
                     playerController.RecoverState();
-                    FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+                    
 
                     IsoGrid2D.instance.DealMassHeal(playerController.healPoint);
+                    FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
                     FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
                     IsoGrid2D.instance.ResetWaiting();
                     return;

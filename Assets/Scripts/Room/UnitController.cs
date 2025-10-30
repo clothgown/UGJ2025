@@ -458,6 +458,7 @@ public class UnitController : MonoBehaviour
     
     public void Heal(float health)
     {
+        Debug.Log(123);
         currentHealth += health;
         if (health > 5)
         {

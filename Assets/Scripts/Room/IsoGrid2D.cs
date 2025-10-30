@@ -141,7 +141,6 @@ public class IsoGrid2D : MonoBehaviour
     public void HighlightMoveRange(Vector2Int playerPos, int moveRange)
     {
 
-        Debug.Log(playerPos);
         ClearHighlight();
 
         // 检查当前模式
@@ -645,7 +644,7 @@ public class IsoGrid2D : MonoBehaviour
             if (tileObj == null) continue;
 
             GameGrid gridComp = tileObj.GetComponent<GameGrid>();
-            if (gridComp == null || !gridComp.isAttackTarget) continue;
+            if (gridComp == null || !gridComp.canHeal) continue;
 
             // 检查格子上是否有可治疗的玩家单位
             if (gridComp.occupiedPlayer != null)
