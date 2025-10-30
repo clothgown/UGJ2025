@@ -1,16 +1,16 @@
-using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DeckManager : MonoBehaviour
 {
     public static DeckManager instance;
 
-    [Header("³õÊ¼ÅÆ×é (ÔÚ Inspector ÅäÖÃ)")]
-    public List<CardData> initialDeck; // ³õÊ¼¿¨×é
+    [Header("åˆå§‹ç‰Œç»„ (åœ¨ Inspector é…ç½®)")]
+    public List<CardData> initialDeck; // åˆå§‹å¡ç»„
 
-    public List<CardData> deck;       // µ±Ç°¿¨×é
-    private List<CardData> discardPile; // ÆúÅÆ¶Ñ
+    public List<CardData> deck;         // å½“å‰å¡ç»„
+    private List<CardData> discardPile; // å¼ƒç‰Œå †
 
     private void Awake()
     {
@@ -18,49 +18,64 @@ public class DeckManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded; // âœ… æ¯æ¬¡åŠ è½½åœºæ™¯æ—¶é‡ç½®å¡ç»„
         }
         else
         {
             Destroy(gameObject);
+            return;
         }
 
-        // ³õÊ¼»¯ÅÆ×éºÍÆúÅÆ¶Ñ
-        deck = new List<CardData>(initialDeck);
-        discardPile = new List<CardData>();
+        // åˆå§‹åŒ–ç‰Œç»„å’Œå¼ƒç‰Œå †
+        ResetDeckToInitial(); // âœ… åˆå§‹åŒ–æ—¶åŒæ­¥åˆå§‹ç‰Œç»„
     }
 
     /// <summary>
-    /// ³éÒ»ÕÅÅÆ£¬Èç¹û¿¨×é¿ÕÁË¿ÉÒÔÏ´ÅÆ
+    /// âœ… æ¯æ¬¡åŠ è½½åœºæ™¯æ—¶ï¼Œå°†å¡ç»„é‡ç½®ä¸ºåˆå§‹ç‰Œç»„
+    /// </summary>
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ResetDeckToInitial();
+    }
+
+    /// <summary>
+    /// âœ… é‡ç½®å¡ç»„ä¸ºåˆå§‹ç‰Œç»„å¹¶æ´—ç‰Œ
+    /// </summary>
+    private void ResetDeckToInitial()
+    {
+        deck = new List<CardData>(initialDeck);
+        discardPile = new List<CardData>();
+        Shuffle(deck);
+    }
+
+    /// <summary>
+    /// æŠ½ä¸€å¼ ç‰Œï¼Œå¦‚æœå¡ç»„ç©ºäº†åˆ™ä»åˆå§‹ç‰Œç»„å¤åˆ¶å¹¶æ´—ç‰Œ
     /// </summary>
     public CardData DrawCard()
     {
         if (deck.Count == 0)
         {
-            if (discardPile.Count > 0)
+            // âœ… å½“å¡ç»„ç©ºæ—¶ï¼Œç”¨åˆå§‹ç‰Œç»„é‡æ–°å¤åˆ¶å¹¶æ´—ç‰Œ
+            if (initialDeck.Count > 0)
             {
-                // °ÑÆúÅÆ¶ÑÏ´»ØÈ¥
-                deck.AddRange(discardPile);
-                discardPile.Clear();
+                deck = new List<CardData>(initialDeck);
                 Shuffle(deck);
+                Debug.Log("å¡ç»„ä¸ºç©ºï¼Œä»åˆå§‹ç‰Œç»„é‡æ–°å¤åˆ¶å¹¶æ´—ç‰Œã€‚");
             }
             else
             {
-                Debug.Log("¿¨×éºÍÆúÅÆ¶Ñ¶¼¿ÕÁË£¬²»ÄÜ³éÅÆ");
+                Debug.Log("åˆå§‹ç‰Œç»„ä¸ºç©ºï¼Œæ— æ³•é‡ç½®ã€‚");
                 return null;
             }
         }
 
-
-
         CardData drawnCard = deck[0];
         deck.RemoveAt(0);
-        
         return drawnCard;
-
     }
 
     /// <summary>
-    /// ½«ÅÆ¼ÓÈëÆúÅÆ¶Ñ
+    /// å°†ç‰ŒåŠ å…¥å¼ƒç‰Œå †
     /// </summary>
     public void Discard(CardData card)
     {
@@ -68,15 +83,15 @@ public class DeckManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Ìí¼ÓĞÂ¿¨µ½¿¨×é
+    /// æ·»åŠ æ–°å¡åˆ°åˆå§‹ç‰Œç»„
     /// </summary>
     public void AddCard(CardData card)
     {
-        deck.Add(card);
+        initialDeck.Add(card);
     }
 
     /// <summary>
-    /// ´Ó¿¨×éÒÆ³ı¿¨
+    /// ä»å¡ç»„ç§»é™¤å¡
     /// </summary>
     public void RemoveCard(CardData card)
     {
@@ -85,7 +100,7 @@ public class DeckManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Ï´ÅÆ
+    /// æ´—ç‰Œ
     /// </summary>
     public void Shuffle(List<CardData> list)
     {

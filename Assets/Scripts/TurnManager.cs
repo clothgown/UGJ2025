@@ -389,7 +389,7 @@ public class TurnManager : MonoBehaviour
                 player.healthSystem.SetShield(0);
             }
         }
-
+        TeamManager.instance?.RefreshCharacterHealthFromScene();
         Debug.Log("Player Turn Started!");
     }
 
