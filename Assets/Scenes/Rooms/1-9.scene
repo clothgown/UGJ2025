@@ -352,7 +352,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: -926
   m_Sprite: {fileID: 21300000, guid: faf29392e87589445a0321ebfb9809ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2870,7 +2870,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -3229,7 +3229,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -3249,7 +3249,6 @@ GameObject:
   m_Component:
   - component: {fileID: 814867888}
   - component: {fileID: 814867887}
-  - component: {fileID: 814867886}
   - component: {fileID: 814867889}
   m_Layer: 0
   m_HasEditorInfo: 1
@@ -3259,32 +3258,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &814867886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 814867885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerA: {x: 38, y: 11}
-  cornerB: {x: 38, y: 12}
-  isSingleCell: 0
-  occupiedGrids: []
-  isInterable: 1
-  isBattleInterable: 1
-  sr: {fileID: 0}
-  transparentAlpha: 0.75
-  blockingLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  dialogueFile: {fileID: 0}
-  triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
 --- !u!212 &814867887
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3945,7 +3918,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -4407,7 +4380,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -5403,7 +5376,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -6493,7 +6466,7 @@ MonoBehaviour:
   cornerB: {x: 0, y: 0}
   isSingleCell: 1
   occupiedGrids: []
-  isInterable: 1
+  isInterable: 0
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
@@ -7649,6 +7622,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2009778794}
   - component: {fileID: 2009778793}
+  - component: {fileID: 2009778795}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: "poker-house_0000s_0002_\u697C\u68AF"
@@ -7728,6 +7702,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1919962764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2009778795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009778792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa6eae310202bce4398ba9d47cbf3629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cornerA: {x: 35, y: 1}
+  cornerB: {x: 38, y: 1}
+  isSingleCell: 0
+  occupiedGrids: []
+  isInterable: 1
+  isBattleInterable: 0
+  sr: {fileID: 0}
+  transparentAlpha: 0.75
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  dialogueFile: {fileID: 0}
+  triggerDialogueOnInteract: 1
+  customFont: {fileID: 0}
 --- !u!4 &2010568928 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4136337234632276787, guid: ea583722bae42b94bbe1b528d986ff3e, type: 3}
