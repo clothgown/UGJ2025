@@ -360,8 +360,9 @@ public class UnitController : MonoBehaviour
     {
         if (Random.value < dodgeChance)
         {
+            
             Debug.Log($"{name} 闪避了这次攻击！");
-            AudioManager.Instance.PlaySFX("change");
+            AudioManager.Instance.PlaySFX("dodge");
             return;
         }
         DOTweenAnimation attackedTween = GetComponent<DOTweenAnimation>();

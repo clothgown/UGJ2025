@@ -58,7 +58,7 @@ MonoBehaviour:
   - name: Alchemy
     clip: {fileID: 8300000, guid: 2f0b38d48e7f1b84b9d52025c9abf7b3, type: 3}
     volume: 1
-    pitch: 0
+    pitch: 0.1
     loop: 1
   - name: Allegory
     clip: {fileID: 8300000, guid: 915f851459936b342ae105cac74451a6, type: 3}
@@ -100,6 +100,16 @@ MonoBehaviour:
     volume: 1
     pitch: 0.1
     loop: 1
+  - name: failure
+    clip: {fileID: 8300000, guid: 3b750c5556135d545b142eebd37379c2, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: victory
+    clip: {fileID: 8300000, guid: addd31b582428534798aebb53abd36af, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
   bgmCrossfadeTime: 5
   sfxSounds:
   - name: soldierdie
@@ -108,7 +118,7 @@ MonoBehaviour:
     pitch: 0
     loop: 0
   - name: drag
-    clip: {fileID: 8300000, guid: 0dc24bc03aea56342a6a843e29c3825c, type: 3}
+    clip: {fileID: 8300000, guid: 2f75239b60c853a4e9deb852049bd15f, type: 3}
     volume: 1
     pitch: 0.1
     loop: 0
@@ -118,7 +128,7 @@ MonoBehaviour:
     pitch: 0.1
     loop: 0
   - name: enddrag
-    clip: {fileID: 8300000, guid: cac2685b886423a408765ccaec58e85e, type: 3}
+    clip: {fileID: 8300000, guid: eea0e569202d911498fe70318b3bb15a, type: 3}
     volume: 1
     pitch: 0
     loop: 0
@@ -259,7 +269,7 @@ MonoBehaviour:
     loop: 0
   - name: water
     clip: {fileID: 8300000, guid: b01180bfaad154946aa2954e907aafcd, type: 3}
-    volume: 0.98
+    volume: 1
     pitch: 0.1
     loop: 0
   - name: dodge
@@ -267,14 +277,9 @@ MonoBehaviour:
     volume: 0.98
     pitch: 0.1
     loop: 0
-  - name: Playthecard
-    clip: {fileID: 8300000, guid: eea0e569202d911498fe70318b3bb15a, type: 3}
-    volume: 0.98
-    pitch: 0.1
-    loop: 0
-  - name: chosethecard
-    clip: {fileID: 8300000, guid: 2f75239b60c853a4e9deb852049bd15f, type: 3}
-    volume: 0.98
+  - name: double
+    clip: {fileID: 8300000, guid: 013854b91bb96a24dbaaba4f4ca96e01, type: 3}
+    volume: 1
     pitch: 0.1
     loop: 0
   ambientSounds:
