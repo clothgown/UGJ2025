@@ -347,6 +347,8 @@ public class DialogueSystem : MonoBehaviour
 
         // 立绘
         Sprite s = characterManager.GetPortrait(d.Speaker, d.IMG);
+        if (leftImage != null) leftImage.gameObject.SetActive(false);
+        if (rightImage != null) rightImage.gameObject.SetActive(false);
         if (s != null)
         {
             if (d.Position == "左" && leftImage != null)
