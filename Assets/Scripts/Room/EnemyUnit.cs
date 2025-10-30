@@ -190,7 +190,7 @@ public class EnemyUnit : MonoBehaviour
     // 🎯 修改 TakeDamage 方法，添加攻击属性检测
     public void TakeDamage(float amount, CardData.AttackAttribute attackAttribute = CardData.AttackAttribute.None)
     {
-        currentHealth -= amount;
+        
 
         // 🎯 播放属性攻击VFX
         if (attackAttribute != CardData.AttackAttribute.None)

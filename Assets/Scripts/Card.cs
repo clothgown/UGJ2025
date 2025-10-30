@@ -255,7 +255,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
                         // 我写代码真的假的？
                         
-
                         effectExecuted = true;
                         Debug.Log($"近战攻击，造成 {playerUnit.attackDamage} 点伤害！");
                     }

@@ -197,9 +197,10 @@ public class GameGrid : MonoBehaviour
                 if (playerController.isNextAttackMass)
                 {
                     playerController.RecoverState();
-                    FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+                    
 
                     IsoGrid2D.instance.DealMassHeal(playerController.healPoint);
+                    FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
                     FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
                     IsoGrid2D.instance.ResetWaiting();
                     return;
@@ -252,31 +253,15 @@ public class GameGrid : MonoBehaviour
         }
         if (isAttackTarget)
         {
-            if (playerController.isNextAttackDouble)
+            if (playerController.isNextAttackChange)
             {
-                playerController.attackDamage *= 2;
-                playerController.RecoverState();
-                FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
-            }
-
-            if(playerController.isNextAttackMass)
-            {
-                playerController.RecoverState();
-                FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
-                IsoGrid2D.instance.DealMassAttackDamage(playerController.attackDamage);
-                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
-                IsoGrid2D.instance.ResetWaiting();
-                return;
-            }
-            if(playerController.isNextAttackChange)
-            {
-                if(occupiedPlayer != null || currentEnemy!=null)
+                if (occupiedPlayer != null || currentEnemy != null)
                 {
-                    if(occupiedPlayer != null)
+                    if (occupiedPlayer != null)
                     {
                         IsoGrid2D.instance.SwapUnitPositions(playerController, occupiedPlayer);
                     }
-                    else if(currentEnemy != null)
+                    else if (currentEnemy != null)
                     {
                         IsoGrid2D.instance.SwapUnitPositions(playerController, currentEnemy);
                     }
@@ -286,12 +271,29 @@ public class GameGrid : MonoBehaviour
                     IsoGrid2D.instance.ResetWaiting();
                 }
             }
-
-            if (playerController.isNextAttackDizziness)
+            else if (playerController.isNextAttackDizziness)
             {
                 currentEnemy.Dizziness();
+                playerController.attackDamage = 0;
                 playerController.Attack(this);
                 playerController.isNextAttackDizziness = false;
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                IsoGrid2D.instance.ResetWaiting();
+            }
+            else if (playerController.isNextAttackDouble)
+            {
+                playerController.attackDamage *= 2;
+                playerController.RecoverState();
+                FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+            }
+            else if(playerController.isNextAttackMass)
+            {
+                playerController.RecoverState();
+                FindAnyObjectByType<HorizontalCardHolder>().ChangeAllCardToNormal();
+                IsoGrid2D.instance.DealMassAttackDamage(playerController.attackDamage);
+                FindAnyObjectByType<HorizontalCardHolder>().DrawCardAndUpdate();
+                IsoGrid2D.instance.ResetWaiting();
+                
             }
             else if (playerController.isNextAttackMultiple)
             {
