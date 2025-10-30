@@ -12,12 +12,18 @@ public class CharacterInfo
     public string buttonName;       // UI 按钮名（HeadUI 下的按钮）
     public bool isUnlocked;         // 是否已解锁
 
-    public CharacterInfo(int id, string characterName, string buttonName, bool isUnlocked)
+    // ✅ 新增字段
+    public float currentHealth;     // 当前血量
+    public float maxHealth;         // 最大血量
+
+    public CharacterInfo(int id, string characterName, string buttonName, bool isUnlocked, float maxHealth = 100f)
     {
         this.id = id;
         this.characterName = characterName;
         this.buttonName = buttonName;
         this.isUnlocked = isUnlocked;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth; // 默认满血
     }
 }
 
@@ -132,11 +138,11 @@ public class TeamManager : MonoBehaviour
             {
                 sortedButtons.Add(matchedButton);
                 matchedButton.gameObject.SetActive(info.isUnlocked);
-                Debug.Log(matchedButton);
+                Debug.Log($"✅ 找到按钮：{matchedButton.name}");
             }
             else
             {
-                Debug.LogWarning($"未找到按钮：{info.buttonName}");
+                Debug.LogWarning($"⚠️ 未找到按钮：{info.buttonName}");
             }
 
             // 匹配角色
@@ -145,17 +151,32 @@ public class TeamManager : MonoBehaviour
             {
                 sortedUnits.Add(matchedUnit);
                 matchedUnit.gameObject.SetActive(info.isUnlocked);
+
+                // ✅ 同步角色的血量信息
+                if (matchedUnit.healthSystem != null)
+                {
+                    info.currentHealth = matchedUnit.healPoint;
+                    info.maxHealth = matchedUnit.maxHealth;
+                    Debug.Log($"🩸 记录角色 {info.characterName} 血量：{info.currentHealth}/{info.maxHealth}");
+                }
+                else if (matchedUnit.healthSystem == null)
+                {
+                    // 如果角色还没初始化血量系统，尝试用 UnitController 自身的 currentHealth
+                    info.currentHealth = matchedUnit.currentHealth;
+                    info.maxHealth = matchedUnit.maxHealth;
+                    Debug.Log($"🩸（备用）记录角色 {info.characterName} 血量：{info.currentHealth}/{info.maxHealth}");
+                }
             }
             else
             {
-                Debug.LogWarning($"未找到角色：{info.characterName}");
+                Debug.LogWarning($"⚠️ 未找到角色：{info.characterName}");
             }
         }
 
         headUIButtons = sortedButtons;
         unitControllers = sortedUnits;
-
     }
+
 
     /// <summary>
     /// 动态解锁角色
@@ -180,4 +201,45 @@ public class TeamManager : MonoBehaviour
         Match match = Regex.Match(name, @"\\d+");
         return match.Success ? int.Parse(match.Value) : -1;
     }
+
+    /// <summary>
+    /// 获取指定角色当前血量
+    /// </summary>
+    /// <param name="characterName">角色在场景中的名称（UnitController 名）</param>
+    /// <returns>当前血量，如果未找到则返回 -1</returns>
+    public float GetCharacterHealth(string characterName)
+    {
+        CharacterInfo info = characterInfos.Find(c => c.characterName == characterName);
+        if (info != null)
+        {
+            Debug.Log($"🔍 获取 {characterName} 当前血量：{info.currentHealth}");
+            return info.currentHealth;
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ 未找到角色：{characterName}");
+            return -1f;
+        }
+    }
+
+    /// <summary>
+    /// 获取指定角色的当前血量与最大血量
+    /// </summary>
+    /// <param name="characterName">角色名</param>
+    /// <returns>(current, max)，未找到返回(-1, -1)</returns>
+    public (float current, float max) GetCharacterHealthInfo(string characterName)
+    {
+        CharacterInfo info = characterInfos.Find(c => c.characterName == characterName);
+        if (info != null)
+        {
+            Debug.Log($"🔍 获取 {characterName} 血量信息：{info.currentHealth}/{info.maxHealth}");
+            return (info.currentHealth, info.maxHealth);
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ 未找到角色：{characterName}");
+            return (-1f, -1f);
+        }
+    }
+
 }
