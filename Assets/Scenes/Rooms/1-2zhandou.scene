@@ -3339,9 +3339,9 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 9d2f4de2c19bed74f8cadb13b99dcab9, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!212 &1230688374
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5604,15 +5604,15 @@ MonoBehaviour:
   isSingleCell: 1
   occupiedGrids: []
   isInterable: 1
-  isBattleInterable: 1
+  isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 9d2f4de2c19bed74f8cadb13b99dcab9, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!212 &2010022445
 SpriteRenderer:
   m_ObjectHideFlags: 0

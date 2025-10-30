@@ -522,16 +522,16 @@ MonoBehaviour:
   cornerB: {x: 16, y: 10}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 0
+  isInterable: 1
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!212 &89904065
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -820,16 +820,16 @@ MonoBehaviour:
   cornerB: {x: 16, y: 13}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 0
+  isInterable: 1
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!212 &255294793
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1071,16 +1071,16 @@ MonoBehaviour:
   cornerB: {x: 16, y: 7}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 0
+  isInterable: 1
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1 &283001906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,9 +1194,9 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1 &284781027
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,16 +1303,16 @@ MonoBehaviour:
   cornerB: {x: 14, y: 7}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 0
+  isInterable: 1
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1001 &303236461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1607,9 +1607,9 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1 &434870760
 GameObject:
   m_ObjectHideFlags: 0
@@ -2570,9 +2570,9 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!114 &756320107 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4833354151820101678, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}
@@ -2695,16 +2695,16 @@ MonoBehaviour:
   cornerB: {x: 6, y: 18}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 0
+  isInterable: 1
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1 &831503854
 GameObject:
   m_ObjectHideFlags: 0
@@ -3580,16 +3580,16 @@ MonoBehaviour:
   cornerB: {x: 0, y: 18}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 0
+  isInterable: 1
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1 &1061119357
 GameObject:
   m_ObjectHideFlags: 0
@@ -4151,16 +4151,16 @@ MonoBehaviour:
   cornerB: {x: 16, y: 4}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 0
+  isInterable: 1
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1001 &1258956705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5387,9 +5387,9 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1 &1813551869
 GameObject:
   m_ObjectHideFlags: 0
@@ -5503,9 +5503,9 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1 &1863966296
 GameObject:
   m_ObjectHideFlags: 0
@@ -6231,9 +6231,9 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1 &2089702588
 GameObject:
   m_ObjectHideFlags: 0
@@ -6385,16 +6385,16 @@ MonoBehaviour:
   cornerB: {x: 8, y: 18}
   isSingleCell: 0
   occupiedGrids: []
-  isInterable: 0
+  isInterable: 1
   isBattleInterable: 0
   sr: {fileID: 0}
   transparentAlpha: 0.75
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1001 &2096257828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6581,9 +6581,9 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: 900142632d6e487479b739bcc450c8fa, type: 3}
   triggerDialogueOnInteract: 1
-  customFont: {fileID: 0}
+  customFont: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
 --- !u!1 &2142198912
 GameObject:
   m_ObjectHideFlags: 0
