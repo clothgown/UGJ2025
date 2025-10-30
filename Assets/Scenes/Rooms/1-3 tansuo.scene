@@ -840,7 +840,7 @@ MonoBehaviour:
   - {fileID: 1246808969}
   gameOverOnCriticalDeath: 1
   explorationManager: {fileID: 916827509}
-  isMaidDead: 0
+  isMaidDead: 1
   allowDirectExploration: 1
 --- !u!4 &457445282
 Transform:
@@ -3473,6 +3473,14 @@ PrefabInstance:
     - target: {fileID: 3417301197879151901, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 1.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: moveRange
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: startPoint.x

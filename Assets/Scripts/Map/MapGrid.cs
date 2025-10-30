@@ -87,7 +87,7 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                     SceneManager.sceneLoaded += OnSceneLoaded;
                     SceneManager.LoadScene(sceneToLoad);
                 }
-                if (normalType == 0 && gridType == MapGridType.Normal)
+                else if (normalType == 0 && gridType == MapGridType.Normal)
                 {
                     // 从 sceneNames 列表中随机选择一个场景
                     if (MapGridManager.instance.battleSceneNames != null && MapGridManager.instance.battleSceneNames.Count > 0)
