@@ -845,7 +845,7 @@ MonoBehaviour:
   - {fileID: 1246808969}
   gameOverOnCriticalDeath: 1
   explorationManager: {fileID: 916827509}
-  isMaidDead: 0
+  isMaidDead: 1
   allowDirectExploration: 1
 --- !u!4 &457445282
 Transform:
@@ -4342,6 +4342,8 @@ MonoBehaviour:
   - {x: 22, y: 16}
   choosePanel: {fileID: 8066115391996660268, guid: 7f7f345641289674ba53f8f7a59692d8, type: 3}
   canvas: {fileID: 1750579474}
+  EndPanel: {fileID: 0}
+  isEndScene: 0
 --- !u!4 &1637418730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5822160426406325450, guid: 0d632ccfda817b44facad0ff0054a2f5, type: 3}

@@ -3145,6 +3145,8 @@ MonoBehaviour:
   - {x: 16, y: 19}
   choosePanel: {fileID: 8066115391996660268, guid: 7f7f345641289674ba53f8f7a59692d8, type: 3}
   canvas: {fileID: 115787144}
+  EndPanel: {fileID: 0}
+  isEndScene: 0
 --- !u!1 &894779052
 GameObject:
   m_ObjectHideFlags: 3
@@ -3939,7 +3941,7 @@ MonoBehaviour:
   - {fileID: 1274864650}
   gameOverOnCriticalDeath: 1
   explorationManager: {fileID: 1714261624}
-  isMaidDead: 0
+  isMaidDead: 1
   allowDirectExploration: 1
 --- !u!4 &1188374972
 Transform:

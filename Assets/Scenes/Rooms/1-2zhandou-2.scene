@@ -1900,7 +1900,7 @@ MonoBehaviour:
   - {fileID: 696274962}
   gameOverOnCriticalDeath: 1
   explorationManager: {fileID: 1164047552}
-  isMaidDead: 0
+  isMaidDead: 1
   allowDirectExploration: 1
 --- !u!4 &598813609
 Transform:
@@ -3413,6 +3413,8 @@ MonoBehaviour:
   - {x: 13, y: 4}
   choosePanel: {fileID: 8066115391996660268, guid: 7f7f345641289674ba53f8f7a59692d8, type: 3}
   canvas: {fileID: 300579722}
+  EndPanel: {fileID: 0}
+  isEndScene: 0
 --- !u!1 &1191703872
 GameObject:
   m_ObjectHideFlags: 0
@@ -4624,6 +4626,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 512515737529113491, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: m_text
+      value: "\u968F\u7740Heart\u7684\u5012\u4E0B\uFF0C\u4EC6\u4EBA\u4EEC\u60CA\u53EB\u7740\u56DB\u6563\u5F00\u6765\uFF0C\u800C\u4E3A\u9996\u4E4B\u4EBA\u63E1\u7740\u5200\u67C4\uFF0C\u6D51\u8EAB\u6B62\u4E0D\u4F4F\u98A4\u6296\uFF1A\u5979\u7684\u7ED3\u5C40\u4E5F\u540C\u6837\u662F\u53D8\u6210\u4E00\u5177\u51B0\u51C9\u7684\u5C38\u4F53\uFF0C\u8EBA\u5728\u8FD9\u4F4D\u8FF7\u832B\u7684\u7687\u5B50\u8EAB\u8FB9\u3002\r\n\u968F\u540E\uFF0CMaid\u64E6\u6389\u4E86\u5200\u4E0A\u7684\u8840\u8FF9\uFF0C\u53C8\u5C06\u5200\u5BF9\u51C6\u4E86\u81EA\u5DF1\u7684\u80F8\u819B\u3002\u4E09\u5177\u5C38\u4F53\u7684\u5B58\u5728\u9707\u60CA\u4E86\u57CE\u5821\u7684\u91CC\u91CC\u5916\u5916\u2014\u2014\u56DB\u7687\u5B50\u3001Spade\u4FE1\u4EFB\u7684\u5973\u4EC6\u4EE5\u53CA\u53D7\u8FC7Spade\u6069\u60E0\u800C\u613F\u610F\u4E3A\u5979\u5949\u732E\u751F\u547D\u7684\u4EC6\u4EBA\uFF0C\u8FD9\u6869\u60E8\u6848\u4E0ESpade\u6BBF\u4E0B\u9047\u5BB3\u4E4B\u4E8B\u4E00\u5B9A\u4E43\u540C\u4E00\u4EBA\u6240\u4E3A\u3002\r\n\u5306\u5306\u56DE\u5BAB\u6B63\u4E3A\u5BFB\u627E\u771F\u51F6\u800C\u5934\u75BCClub\uFF0C\u5728\u542C\u95FB\u6B64\u4E8B\u540E\u706B\u5192\u4E09\u4E08\uFF0C\u4E0D\u7531\u5206\u8BF4\u5F00\u59CB\u76D8\u67E5\u548C\u62F7\u95EE\u6240\u6709\u7684\u53EF\u7591\u4EBA\u5458\u3002\u5728\u6240\u6709\u7684\u7EBF\u7D22\u90FD\u6307\u5411\u4E86\u90A3\u4F4D\u75AF\u6389\u7684\u5927\u7687\u5B50Diamond\u540E\uFF0CClub\u4EE5\u6740\u4EBA\u7F6A\u5904\u6B7B\u4E86\u81EA\u5DF1\u7684\u5927\u54E5\uFF0C\u81F3\u6B64\u4F5C\u4E3A\u552F\u4E00\u7684\u7EE7\u627F\u4EBA\u540D\u6B63\u8A00\u987A\u5F53\u4E0A\u4E86\u65B0\u4E00\u4EFB\u56FD\u738B\u3002\r\nSpade\u7684\u65E0\u5934\u5C38\u4F53\u88AB\u653E\u8FDB\u73BB\u7483\u68FA\u91CC\u4FDD\u5B58\uFF0C\u5C31\u7B97\u4E0B\u4E00\u4EFB\u738B\u7684\u5B50\u55E3\u4E0D\u5728\u610F\u7236\u8F88\u7684\u5149\u8363\u5386\u53F2\uFF0C\u5979\u7684\u8EAF\u4F53\u4E5F\u4F1A\u4E0D\u673D\uFF1B\u800C\u53E6\u5916\u4E24\u4F4D\u7687\u5B50\u548C\u4EC6\u4EBA\u4EEC\u7684\u5C38\u4F53\u5219\u6309\u7167\u5E94\u6709\u7684\u7B49\u7EA7\u89C4\u5219\u4E0B\u846C\uFF0C\u4ED6\u4EEC\u518D\u4E5F\u65E0\u6CD5\u5411\u5916\u8BC9\u8BF4\u81EA\u5DF1\u7684\u56F0\u60D1\uFF0C\u66F4\u65E0\u6CD5\u7EE7\u7EED\u627E\u5BFB\u57CE\u5821\u4E2D\u7684\u79D8\u5BC6\u2014\u2014\u4E00\u5207\u8D23\u4EFB\u90FD\u843D\u5230\u4E86Club\u4E00\u4EBA\u7684\u80A9\u4E0A\u3002\r\n\u5982\u4F17\u4EBA\u6240\u6599\uFF0C\u6CA1\u6709\u4EFB\u4F55\u7EBF\u7D22\u548C\u5E2E\u624B\u7684Club\u5982\u540C\u65E0\u5934\u82CD\u8747\uFF0C\u96BE\u4EE5\u89E3\u5F00\u4E00\u4E2A\u53C8\u4E00\u4E2A\u590D\u6742\u7684\u8C1C\u56E2\u3002\u5728\u8FB9\u5883\u866B\u65CF\u518D\u6B21\u6765\u72AF\u65F6\uFF0C\u5979\u9009\u62E9\u653E\u4E0B\u624B\u4E2D\u7684\u4E00\u5207\uFF0C\u4ECD\u7136\u4EB2\u81EA\u62FF\u8D77\u5175\u68B0\uFF0C\u5954\u8D74\u6218\u573A\u3002\r\nPOKER\u56FD\u8FCE\u6765\u6218\u4E89\u9891\u7E41\u7684\u5E74\u4EE3\uFF0C\u4E00\u76F4\u6301\u7EED\u5230Club\u6B7B\u4E8E\u884C\u519B\u7684\u8DEF\u4E0A\u3002\u5979\u7684\u5C38\u4F53\u88AB\u5C18\u571F\u63A9\u57CB\uFF0C\u5982\u540C\u5979\u672A\u80FD\u63A2\u67E5\u51FA\u7684\u771F\u76F8\u548C\u79D8\u5BC6\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 512515737529113491, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: m_fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 512515737529113491, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 553598767350503920, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_Camera
       value: 
@@ -4768,6 +4782,10 @@ PrefabInstance:
       propertyPath: dialogDataFile
       value: 
       objectReference: {fileID: 4900000, guid: 6855ba094d07c0d48a25c4c4f860cd8f, type: 3}
+    - target: {fileID: 6726084647012033154, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+      propertyPath: m_text
+      value: "\u4EC6\u4EBA\u623F\u95F4\u91CC"
+      objectReference: {fileID: 0}
     - target: {fileID: 7461219631627072144, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -4821,7 +4839,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6814894902420845032, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
