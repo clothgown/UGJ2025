@@ -90,6 +90,16 @@ MonoBehaviour:
     volume: 1
     pitch: 0.1
     loop: 0
+  - name: CanononAcrostic
+    clip: {fileID: 8300000, guid: d6875130f76de6b4e9628e05f791b6f9, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
+  - name: WelcomeToTheKingdomNOV
+    clip: {fileID: 8300000, guid: bcf69798dce01a145b9b970e0a20358b, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 0
   bgmCrossfadeTime: 5
   sfxSounds:
   - name: soldierdie
@@ -259,7 +269,7 @@ MonoBehaviour:
     pitch: 0.1
     loop: 1
   - name: Ambient2
-    clip: {fileID: 8300000, guid: 34a01639d75ea2343ab253cc083c0b79, type: 3}
+    clip: {fileID: 8300000, guid: 81d38b77656cc1d43b39909f2df5b663, type: 3}
     volume: 1
     pitch: 0
     loop: 1
