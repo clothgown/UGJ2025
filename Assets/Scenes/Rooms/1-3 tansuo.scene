@@ -411,6 +411,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f646e95bb4270f94886fe202beddac37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &180540923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8826646181911111505, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1319980381}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &187689591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -835,12 +840,12 @@ MonoBehaviour:
   aliveCardColor: {r: 1, g: 1, b: 1, a: 1}
   enemies: []
   isWin: 0
-  Gameover: {fileID: 0}
+  Gameover: {fileID: 180540923}
   criticalCharacters:
   - {fileID: 1246808969}
   gameOverOnCriticalDeath: 1
   explorationManager: {fileID: 916827509}
-  isMaidDead: 1
+  isMaidDead: 0
   allowDirectExploration: 1
 --- !u!4 &457445282
 Transform:
@@ -4468,7 +4473,7 @@ PrefabInstance:
       objectReference: {fileID: 1319980385}
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: isExplorationMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6014851078916971399, guid: 9b95abf912e89d84989dd5572b41c506, type: 3}
       propertyPath: stelse.Array.size

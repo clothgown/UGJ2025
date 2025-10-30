@@ -93,8 +93,22 @@ public class UnitController : MonoBehaviour
         Insert,
         Male,
     }
-    public Who who; 
+    public Who who;
 
+    private void Awake()
+    {
+        healthSystem = GetComponent<HealthSystem>();
+        if (healthSystem != null)
+        {
+            // 订阅死亡事件
+
+            currentHealth = maxHealth;
+            healthSystem.SetMaxHealth(maxHealth);
+            healthSystem.SetMaxShield(10f);
+            healthSystem.SetShield(shield);
+            //PlayerSwitchManager.instance.currentUnitController = this;
+        }
+    }
     private void Start()
     {
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -122,17 +136,7 @@ public class UnitController : MonoBehaviour
             }
             IsoGrid2D.instance.currentPlayerGrid = gridComp;
         }
-        healthSystem = GetComponent<HealthSystem>();
-        if (healthSystem != null)
-        {
-            // 订阅死亡事件
-            
-            currentHealth = maxHealth;
-            healthSystem.SetMaxHealth(maxHealth);
-            healthSystem.SetMaxShield(10f);
-            healthSystem.SetShield(shield);
-            //PlayerSwitchManager.instance.currentUnitController = this;
-        }
+        
         // ✅ 从 AllPlayerState 恢复血量
         AllPlayerState aps = FindAnyObjectByType<AllPlayerState>();
         if (aps != null)
@@ -147,6 +151,30 @@ public class UnitController : MonoBehaviour
                 }
                 
             }
+        }
+
+        if (TeamManager.instance != null)
+        {
+            CharacterInfo info = TeamManager.instance.characterInfos.Find(c => c.characterName == this.name);
+            if (info != null && info.currentHealth > 0)
+            {
+                currentHealth = info.currentHealth;
+                maxHealth = info.maxHealth;
+                if (healthSystem != null)
+                {
+                    healthSystem.SetMaxHealth(maxHealth);
+                    healthSystem.SetHealth(currentHealth);
+                }
+                Debug.Log($"✅ 已从 TeamManager 恢复 {name} 的血量：{currentHealth}/{maxHealth}");
+            }
+            else
+            {
+                Debug.Log(2);
+            }
+        }
+        else
+        {
+            Debug.Log(1);
         }
     }
 
@@ -444,6 +472,22 @@ public class UnitController : MonoBehaviour
                 trigger.TriggerManually();
             }
         }
+        UpdateCharacterHealthRecord();
+    }
+
+    // ⚡ 在 TakeDamage() 函数末尾添加：
+    private void UpdateCharacterHealthRecord()
+    {
+        if (TeamManager.instance == null) return;
+
+        // 找到对应角色信息
+        CharacterInfo info = TeamManager.instance.characterInfos.Find(c => c.characterName == this.name);
+        if (info != null)
+        {
+            info.currentHealth = currentHealth;
+            info.maxHealth = maxHealth;
+            Debug.Log($"🩸 已同步 {name} 的血量：{currentHealth}/{maxHealth}");
+        }
     }
 
     public void AddShield(float amount)
@@ -475,6 +519,7 @@ public class UnitController : MonoBehaviour
             currentHealth=maxHealth;
         }
         healthSystem.SetHealth(currentHealth);
+        UpdateCharacterHealthRecord();
     }
     public void Attack(GameGrid targetGrid)
     {
