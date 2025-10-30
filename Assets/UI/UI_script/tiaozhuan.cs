@@ -38,6 +38,17 @@ public class BagSwitch : MonoBehaviour
             return;
         }
 
+        // 确保我们有可用的 Canvas
+        if (rootCanvas == null)
+        {
+            rootCanvas = FindCanvas();
+            if (rootCanvas == null)
+            {
+                Debug.LogError("BagSwitch: 无法找到可用的 Canvas！");
+                return;
+            }
+        }
+
         // 创建临时黑幕
         GameObject fadeObj = new GameObject("FadeScreen");
         Image fadeImg = fadeObj.AddComponent<Image>();
@@ -52,13 +63,13 @@ public class BagSwitch : MonoBehaviour
         fadeImg.DOFade(1f, fadeDuration)
             .OnComplete(() =>
             {
-                //  销毁旧背包
+                // 销毁旧背包
                 if (currentBag != null)
                 {
                     Destroy(currentBag);
                 }
 
-                //  实例化新背包
+                // 实例化新背包
                 GameObject nextBag = Instantiate(nextBagPrefab, rootCanvas.transform);
                 nextBag.transform.SetAsLastSibling();
 
@@ -72,14 +83,37 @@ public class BagSwitch : MonoBehaviour
 
     private Canvas FindCanvas()
     {
+        // 优先查找当前背包所在的 Canvas
+        if (currentBag != null)
+        {
+            Canvas bagCanvas = currentBag.GetComponentInParent<Canvas>();
+            if (bagCanvas != null)
+            {
+                return bagCanvas;
+            }
+        }
+
+        // 其次查找当前按钮所在的 Canvas
+        if (switchBtn != null)
+        {
+            Canvas buttonCanvas = switchBtn.GetComponentInParent<Canvas>();
+            if (buttonCanvas != null)
+            {
+                return buttonCanvas;
+            }
+        }
+
+        // 最后查找场景中的任何 Canvas
         Canvas canvas = FindObjectOfType<Canvas>();
         if (canvas != null)
-            return canvas;
-        else
         {
-            GameObject go = new GameObject("Canvas", typeof(Canvas));
-            go.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-            return go.GetComponent<Canvas>();
+            return canvas;
         }
+
+        // 如果确实没有找到任何 Canvas，才创建新的（作为备用方案）
+        Debug.LogWarning("BagSwitch: 场景中未找到 Canvas，将创建新的 Canvas");
+        GameObject go = new GameObject("Canvas", typeof(Canvas));
+        go.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+        return go.GetComponent<Canvas>();
     }
 }

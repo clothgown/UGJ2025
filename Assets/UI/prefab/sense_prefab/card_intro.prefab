@@ -102,6 +102,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3291101342571670545}
     m_Modifications:
+    - target: {fileID: 2298740039554652550, guid: e0b00df2f4d939649a29e0a15eeca90b, type: 3}
+      propertyPath: m_fontSize
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2298740039554652550, guid: e0b00df2f4d939649a29e0a15eeca90b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 3917318832011916759, guid: e0b00df2f4d939649a29e0a15eeca90b, type: 3}
       propertyPath: m_Name
       value: card_preview

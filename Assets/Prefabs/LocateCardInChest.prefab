@@ -115,7 +115,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4044095046035803382, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 226.0001
+      value: 263
       objectReference: {fileID: 0}
     - target: {fileID: 4500747798762140553, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
       propertyPath: m_Pivot.x
@@ -209,6 +209,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5523290105628006934, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
+      propertyPath: m_text
+      value: "\u7F6E\u58C1\r\n\u5EFA\u7ACB\u4E00\u6839\u9AD8\u67F1\uFF0C\u6301\u7EED\u6574\u573A\u6218\u6597\r\n\u8DDD\u79BB\u4F7F\u7528\u80056\u683C\u53CA\u4EE5\u5185"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523290105628006934, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
+      propertyPath: m_fontSize
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523290105628006934, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 6093201685301322953, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -219,7 +231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8020323331192739670, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 213
+      value: 249.99992
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
