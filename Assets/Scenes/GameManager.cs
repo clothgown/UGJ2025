@@ -93,11 +93,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // ESC键打开/关闭设置界面
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ToggleSettings();
-        }
+        
     }
 
     #region BGM管理 - 修复平滑过渡
@@ -471,61 +467,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region 设置界面管理
-    public void ToggleSettings()
-    {
-        if (settingsPanel != null)
-        {
-            bool newState = !settingsPanel.activeSelf;
-            settingsPanel.SetActive(newState);
-
-            // 暂停/恢复游戏
-            if (newState)
-            {
-                PauseGame();
-                PauseBGM(); // 暂停BGM
-            }
-            else
-            {
-                ResumeGame();
-                ResumeBGM(); // 恢复BGM
-            }
-        }
-    }
-
-    public void OpenSettings()
-    {
-        if (settingsPanel != null)
-        {
-            settingsPanel.SetActive(true);
-            PauseGame();
-            PauseBGM();
-        }
-    }
-
-    public void CloseSettings()
-    {
-        if (settingsPanel != null)
-        {
-            settingsPanel.SetActive(false);
-            ResumeGame();
-            ResumeBGM();
-            SaveSettings();
-        }
-    }
-
-    private void PauseGame()
-    {
-        Time.timeScale = 0f;
-        isGamePaused = true;
-    }
-
-    private void ResumeGame()
-    {
-        Time.timeScale = 1f;
-        isGamePaused = false;
-    }
-    #endregion
+    
 
     #region 设置管理
     private void InitializeSettings()

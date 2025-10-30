@@ -104,6 +104,8 @@ public class DialogueSystem : MonoBehaviour
     public Vector2 maxPortraitSize = new Vector2(400, 400); // 最大立绘尺寸限制
     public bool maintainAspectRatio = true; // 保持宽高比
 
+    
+
     // 添加一个静态实例以便全局访问
     public static DialogueSystem Instance { get; private set; }
 
@@ -122,6 +124,8 @@ public class DialogueSystem : MonoBehaviour
         }
         // 初始化书本对话系统
         InitializeBookDialog();
+
+        
 
         // 初始化按钮事件
         if (nextDialogueButton != null)
@@ -1507,33 +1511,53 @@ public class DialogueSystem : MonoBehaviour
             case "activate": // 新增加：激活GameObject
                 if (parameters.Length > 1)
                 {
-                    string objectName = parameters[1];
-                    GameObject obj = GameObject.Find(objectName);
+                    string objectName = parameters[1].Trim();
+                    Debug.Log($"尝试激活子级对象: '{objectName}'");
+
+                    // 在当前脚本所在GameObject的子级中查找
+                    GameObject obj = FindChildObject(objectName);
+
                     if (obj != null)
                     {
+                        Debug.Log($"找到子级对象: {obj.name}, 激活前状态: {obj.activeSelf}");
                         obj.SetActive(true);
-                        Debug.Log("找到名为 {objectName} 的GameObject");
-                        obj.SetActive(true);
+                        Debug.Log($"已激活 {obj.name}, 激活后状态: {obj.activeSelf}");
                     }
                     else
                     {
-                        Debug.LogWarning($"未找到名为 {objectName} 的GameObject");
+                        Debug.LogWarning($"未找到名为 '{objectName}' 的子级对象");
+                        ListAllChildren(); // 列出所有子对象帮助调试
                     }
+                }
+                else
+                {
+                    Debug.LogError("activate 事件缺少对象名称参数");
                 }
                 break;
             case "deactivate": // 新增加：禁用GameObject
                 if (parameters.Length > 1)
                 {
-                    string objectName = parameters[1];
-                    GameObject obj = GameObject.Find(objectName);
+                    string objectName = parameters[1].Trim();
+                    Debug.Log($"尝试激活子级对象: '{objectName}'");
+
+                    // 在当前脚本所在GameObject的子级中查找
+                    GameObject obj = FindChildObject(objectName);
+
                     if (obj != null)
                     {
-                        obj.SetActive(false);
+                        Debug.Log($"找到子级对象: {obj.name}, 激活前状态: {obj.activeSelf}");
+                        obj.SetActive(true);
+                        Debug.Log($"已激活 {obj.name}, 激活后状态: {obj.activeSelf}");
                     }
                     else
                     {
-                        Debug.LogWarning($"未找到名为 {objectName} 的GameObject");
+                        Debug.LogWarning($"未找到名为 '{objectName}' 的子级对象");
+                        ListAllChildren(); // 列出所有子对象帮助调试
                     }
+                }
+                else
+                {
+                    Debug.LogError("activate 事件缺少对象名称参数");
                 }
                 break;
             default:
@@ -1542,6 +1566,74 @@ public class DialogueSystem : MonoBehaviour
         }
 
         Debug.Log($"触发事件: {eventName}");
+    }
+    private GameObject FindChildObject(string childName)
+    {
+        // 方法1: 使用 Transform.Find (支持简单路径)
+        Transform child = transform.Find(childName);
+        if (child != null)
+        {
+            Debug.Log($"方法1 - Transform.Find 找到: {child.name}");
+            return child.gameObject;
+        }
+
+        // 方法2: 递归查找所有子对象
+        GameObject found = FindInChildren(transform, childName);
+        if (found != null)
+        {
+            Debug.Log($"方法2 - 递归查找找到: {found.name}");
+            return found;
+        }
+
+        // 方法3: 使用 GetComponentsInChildren (包括非激活对象)
+        Transform[] allChildren = GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in allChildren)
+        {
+            if (t.name == childName && t != transform) // 排除自己
+            {
+                Debug.Log($"方法3 - GetComponentsInChildren 找到: {t.name}");
+                return t.gameObject;
+            }
+        }
+
+        return null;
+    }
+
+    // 递归在子对象中查找
+    private GameObject FindInChildren(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+                return child.gameObject;
+
+            GameObject found = FindInChildren(child, name);
+            if (found != null)
+                return found;
+        }
+        return null;
+    }
+
+    // 列出所有子对象
+    private void ListAllChildren()
+    {
+        Debug.Log($"=== {gameObject.name} 的所有子对象 ===");
+        ListChildren(transform, 0);
+    }
+
+    // 递归列出所有子对象
+    private void ListChildren(Transform parent, int depth)
+    {
+        string indent = new string(' ', depth * 2);
+        foreach (Transform child in parent)
+        {
+            if (child != transform) // 不显示自己
+            {
+                string activeStatus = child.gameObject.activeSelf ? "激活" : "非激活";
+                Debug.Log($"{indent}- {child.name} ({activeStatus})");
+                ListChildren(child, depth + 1);
+            }
+        }
     }
     private void OnDialogueEnd()
     {

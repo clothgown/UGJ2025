@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-using static UnityEditor.PlayerSettings;
+
 
 public class IsoGrid2D : MonoBehaviour
 {

@@ -14,7 +14,7 @@ public class CradInStore : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private Vector3 originalScale;        // 原始缩放
     private Tween currentTween;           // 当前动画
     private GameObject cardAssetsPreview; // 预览图对象
-    public string name;
+    public string nname;
     public string descript;
     public CardData cardData;
 
