@@ -36,7 +36,7 @@ public class Door : MonoBehaviour
             {
                 if (grid.gridPos == pos)
                 {
-                    Debug.Log(123456);
+                    
                     grid.isLeaveGrid = true;
                     grid.normalColor = grid.LeaveColor;
                     grid.UpdateGridAppearance();

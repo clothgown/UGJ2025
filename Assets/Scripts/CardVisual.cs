@@ -313,7 +313,6 @@ public class CardVisual : MonoBehaviour
         if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         if (horizontalCardHolder.isDraging) return;
         if (TurnManager.instance.currentController.isMoving == true) return;
-        Debug.Log(1);
         if (!parentCard.wasDragged)
         {
             transform.DOScale(1, scaleTransition).SetEase(scaleEase);
