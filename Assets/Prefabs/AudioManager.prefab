@@ -52,44 +52,54 @@ MonoBehaviour:
   bgmSounds:
   - name: Acrostic
     clip: {fileID: 8300000, guid: 0922fce827939164992f2061d56e7cd0, type: 3}
-    volume: 0
+    volume: 1
     pitch: 0
-    loop: 0
+    loop: 1
   - name: Alchemy
     clip: {fileID: 8300000, guid: 2f0b38d48e7f1b84b9d52025c9abf7b3, type: 3}
     volume: 1
     pitch: 0
-    loop: 0
+    loop: 1
   - name: Allegory
     clip: {fileID: 8300000, guid: 915f851459936b342ae105cac74451a6, type: 3}
     volume: 1
     pitch: 0
-    loop: 0
+    loop: 1
   - name: Archaeology
     clip: {fileID: 8300000, guid: 3574e506b81e2744fba91dea34c29686, type: 3}
     volume: 1
     pitch: 0
-    loop: 0
+    loop: 1
   - name: Ares
     clip: {fileID: 8300000, guid: 9668a8d175683f246bc8bb10c418fa7a, type: 3}
     volume: 1
     pitch: 0
-    loop: 0
+    loop: 1
   - name: Astrology
     clip: {fileID: 8300000, guid: 6212463dd143ebe4084312ad7da0cd1c, type: 3}
     volume: 1
     pitch: 0
-    loop: 0
+    loop: 1
   - name: ForcedMarch
     clip: {fileID: 8300000, guid: acef7399d94719c429c38f8c64ff1422, type: 3}
     volume: 1
     pitch: 0
-    loop: 0
+    loop: 1
   - name: WelcomeToTheKingdom
     clip: {fileID: 8300000, guid: 22a660e9af49cc4469f46a8f55c3ba88, type: 3}
     volume: 1
     pitch: 0.1
-    loop: 0
+    loop: 1
+  - name: CanononAcrostic
+    clip: {fileID: 8300000, guid: d6875130f76de6b4e9628e05f791b6f9, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 1
+  - name: WelcomeToTheKingdomNOV
+    clip: {fileID: 8300000, guid: bcf69798dce01a145b9b970e0a20358b, type: 3}
+    volume: 1
+    pitch: 0.1
+    loop: 1
   bgmCrossfadeTime: 5
   sfxSounds:
   - name: soldierdie
@@ -252,6 +262,21 @@ MonoBehaviour:
     volume: 0.98
     pitch: 0.1
     loop: 0
+  - name: dodge
+    clip: {fileID: 8300000, guid: 7c68c2dce4b6bfb45b5669ad45e44994, type: 3}
+    volume: 0.98
+    pitch: 0.1
+    loop: 0
+  - name: Playthecard
+    clip: {fileID: 8300000, guid: eea0e569202d911498fe70318b3bb15a, type: 3}
+    volume: 0.98
+    pitch: 0.1
+    loop: 0
+  - name: chosethecard
+    clip: {fileID: 8300000, guid: 2f75239b60c853a4e9deb852049bd15f, type: 3}
+    volume: 0.98
+    pitch: 0.1
+    loop: 0
   ambientSounds:
   - name: Ambient
     clip: {fileID: 8300000, guid: 3d8b7df356fe80649ad388bf14db1a12, type: 3}
@@ -259,7 +284,7 @@ MonoBehaviour:
     pitch: 0.1
     loop: 1
   - name: Ambient2
-    clip: {fileID: 8300000, guid: 34a01639d75ea2343ab253cc083c0b79, type: 3}
+    clip: {fileID: 8300000, guid: 81d38b77656cc1d43b39909f2df5b663, type: 3}
     volume: 1
     pitch: 0
     loop: 1
