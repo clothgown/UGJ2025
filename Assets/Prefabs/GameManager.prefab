@@ -259,6 +259,17 @@ MonoBehaviour:
   ambientVolumeSlider: {fileID: 0}
   qualityDropdown: {fileID: 0}
   resolutionDropdown: {fileID: 0}
+  specialPanelBGMConfigs:
+  - panelName: Win
+    bgmName: victory
+    pauseCurrentBGM: 1
+    fadeInTime: 1
+    fadeOutTime: 0
+  - panelName: dead
+    bgmName: failure
+    pauseCurrentBGM: 1
+    fadeInTime: 1
+    fadeOutTime: 0
 --- !u!1001 &1236482379589994207
 PrefabInstance:
   m_ObjectHideFlags: 0

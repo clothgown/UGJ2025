@@ -59,7 +59,31 @@ public class GameManager : MonoBehaviour
     private string previousSceneName = "";
     private Coroutine currentBGMTransitionCoroutine;
     private Coroutine currentAmbientTransitionCoroutine;
+    [Header("特殊面板BGM配置")]
+    [SerializeField] private SpecialPanelBGMConfig[] specialPanelBGMConfigs;
+    private Dictionary<string, SpecialPanelBGMConfig> specialPanelBGMDictionary = new Dictionary<string, SpecialPanelBGMConfig>();
+    private string prePanelBGM; // 记录面板弹出前的BGM
 
+    [System.Serializable]
+    public class SpecialPanelBGMConfig
+    {
+        public string panelName; // 面板名称，如"Victory", "GameOver", "Pause"
+        public string bgmName;   // 要播放的BGM名称
+        public bool pauseCurrentBGM = true; // 是否暂停当前BGM
+        public float fadeInTime = 1f;       // 淡入时间
+        public float fadeOutTime = 1f;      // 淡出时间
+    }
+
+    private void InitializeSpecialPanelBGMConfig()
+    {
+        foreach (SpecialPanelBGMConfig config in specialPanelBGMConfigs)
+        {
+            if (!string.IsNullOrEmpty(config.panelName) && !specialPanelBGMDictionary.ContainsKey(config.panelName))
+            {
+                specialPanelBGMDictionary.Add(config.panelName, config);
+            }
+        }
+    }
     void Awake()
     {
         // 单例模式
@@ -80,7 +104,7 @@ public class GameManager : MonoBehaviour
 
         // 初始化设置
         InitializeSettings();
-
+        InitializeSpecialPanelBGMConfig();
         // 监听场景加载事件
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -467,7 +491,129 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    
+    #region 特殊面板BGM管理
+    // 打开特殊面板时调用
+    public void OnSpecialPanelOpened(string panelName)
+    {
+        if (specialPanelBGMDictionary.ContainsKey(panelName))
+        {
+            SpecialPanelBGMConfig config = specialPanelBGMDictionary[panelName];
+
+            // 记录当前的BGM
+            prePanelBGM = AudioManager.Instance.GetCurrentBGMName();
+
+            if (config.pauseCurrentBGM)
+            {
+                AudioManager.Instance.PauseBGM();
+            }
+
+            // 播放面板BGM
+            if (!string.IsNullOrEmpty(config.bgmName))
+            {
+                StartCoroutine(PlayPanelBGMWithFade(config.bgmName, config.fadeInTime));
+            }
+
+            Debug.Log($"打开面板 {panelName}，播放BGM: {config.bgmName}");
+        }
+        else
+        {
+            Debug.LogWarning($"未找到面板 {panelName} 的BGM配置");
+        }
+    }
+
+    // 关闭特殊面板时调用
+    public void OnSpecialPanelClosed(string panelName)
+    {
+        if (specialPanelBGMDictionary.ContainsKey(panelName))
+        {
+            SpecialPanelBGMConfig config = specialPanelBGMDictionary[panelName];
+
+            // 停止面板BGM
+            if (!string.IsNullOrEmpty(config.bgmName))
+            {
+                StartCoroutine(StopPanelBGMWithFade(config.fadeOutTime));
+            }
+
+            // 恢复之前的BGM
+            if (config.pauseCurrentBGM && !string.IsNullOrEmpty(prePanelBGM))
+            {
+                AudioManager.Instance.ResumeBGM();
+            }
+            else if (!string.IsNullOrEmpty(prePanelBGM))
+            {
+                // 如果之前没有暂停，而是直接切换，则重新播放之前的BGM
+                AudioManager.Instance.PlayBGM(prePanelBGM);
+            }
+
+            Debug.Log($"关闭面板 {panelName}，恢复BGM: {prePanelBGM}");
+        }
+    }
+
+    // 带淡入效果播放面板BGM
+    private IEnumerator PlayPanelBGMWithFade(string bgmName, float fadeTime)
+    {
+        AudioManager.Instance.PlayBGM(bgmName);
+
+        // 获取当前BGM音量
+        float targetVolume = AudioManager.Instance.GetBGMVolume();
+        float timer = 0f;
+
+        // 淡入效果
+        while (timer < fadeTime)
+        {
+            timer += Time.deltaTime;
+            float volume = Mathf.Lerp(0f, targetVolume, timer / fadeTime);
+            AudioManager.Instance.SetBGMVolume(volume);
+            yield return null;
+        }
+
+        AudioManager.Instance.SetBGMVolume(targetVolume);
+    }
+
+    // 带淡出效果停止面板BGM
+    private IEnumerator StopPanelBGMWithFade(float fadeTime)
+    {
+        float startVolume = AudioManager.Instance.GetBGMVolume();
+        float timer = 0f;
+
+        // 淡出效果
+        while (timer < fadeTime)
+        {
+            timer += Time.deltaTime;
+            float volume = Mathf.Lerp(startVolume, 0f, timer / fadeTime);
+            AudioManager.Instance.SetBGMVolume(volume);
+            yield return null;
+        }
+
+        AudioManager.Instance.StopBGM();
+        // 恢复BGM音量设置
+        AudioManager.Instance.SetBGMVolume(musicVolumeSlider != null ? musicVolumeSlider.value : 1f);
+    }
+
+    // 强制切换BGM（不记录之前的BGM）
+    public void ForceSwitchBGM(string bgmName, float fadeOutTime = 1f)
+    {
+        if (AudioManager.Instance != null)
+        {
+            if (currentBGMTransitionCoroutine != null)
+            {
+                StopCoroutine(currentBGMTransitionCoroutine);
+            }
+
+            currentBGMTransitionCoroutine = StartCoroutine(SmoothBGMTransition(bgmName, fadeOutTime));
+        }
+    }
+
+    // 获取当前特殊面板BGM配置
+    public SpecialPanelBGMConfig GetPanelBGMConfig(string panelName)
+    {
+        if (specialPanelBGMDictionary.ContainsKey(panelName))
+        {
+            return specialPanelBGMDictionary[panelName];
+        }
+        return null;
+    }
+    #endregion
 
     #region 设置管理
     private void InitializeSettings()

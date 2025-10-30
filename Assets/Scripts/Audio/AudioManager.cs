@@ -309,7 +309,7 @@ public class AudioManager : MonoBehaviour
             ambientSource.clip = sound.clip;
             ambientSource.volume = sound.volume * ambientVolume * masterVolume;
             ambientSource.pitch = sound.pitch;
-            ambientSource.loop = true; // 确保环境音循环
+            ambientSource.loop = sound.loop; // 确保环境音循环
             ambientSource.Play();
 
             Debug.Log($"播放环境音: {ambientName}, 音量: {ambientSource.volume}, 循环: {ambientSource.loop}, 时长: {sound.clip.length}秒");
