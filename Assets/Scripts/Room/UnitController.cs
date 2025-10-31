@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 
 using UnityEngine;
@@ -447,6 +448,11 @@ public class UnitController : MonoBehaviour
         if (amount > 0)
         {
             currentHealth -= amount;
+
+            GameObject effect = Instantiate(hitEffect, transform.Find("Canvas")); 
+            effect.GetComponent<TextMeshProUGUI>().text = amount.ToString(); 
+            Destroy(effect,1f);//1秒后自动销毁
+
             healthSystem.SetHealth(currentHealth);
 
             if (currentHealth <= 0)
