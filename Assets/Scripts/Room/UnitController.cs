@@ -69,6 +69,7 @@ public class UnitController : MonoBehaviour
     public VisualEffect Attack1;
     public VisualEffect Cure;
     public VisualEffect sheild;
+    public VisualEffect Dodge;
 
 
     public GameObject hitEffect;
@@ -392,6 +393,8 @@ public class UnitController : MonoBehaviour
         {
             
             Debug.Log($"{name} 闪避了这次攻击！");
+            Dodge.gameObject.SetActive(true);
+            Dodge.Play();
             AudioManager.Instance.PlaySFX("dodge");
             return;
         }

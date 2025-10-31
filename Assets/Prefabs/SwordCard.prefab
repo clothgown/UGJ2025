@@ -444,7 +444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1897400088502344285
 RectTransform:
   m_ObjectHideFlags: 0
@@ -701,6 +701,9 @@ MonoBehaviour:
   normalSprite: {fileID: 7697484841366769644}
   doubleSprite: {fileID: 3978028144586405858}
   massSprite: {fileID: 4156990890260680623}
+  normalt: {fileID: 2506814464097125254}
+  doublet: {fileID: 3963996654175403356}
+  masst: {fileID: 9140600826825428378}
 --- !u!223 &4132845374223140069
 Canvas:
   m_ObjectHideFlags: 0
@@ -754,7 +757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3275543348096791679
 RectTransform:
   m_ObjectHideFlags: 0
@@ -994,6 +997,11 @@ PrefabInstance:
       addedObject: {fileID: 3275543348096791679}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
+--- !u!1 &2506814464097125254 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6761600360585508990, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
+  m_PrefabInstance: {fileID: 9160314826621729784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4713623441429661809 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4500747798762140553, guid: 28c5f932958786f4aaa16097a421059b, type: 3}

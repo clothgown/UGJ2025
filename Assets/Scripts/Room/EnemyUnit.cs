@@ -752,16 +752,20 @@ public class EnemyUnit : MonoBehaviour
         isDizziness = true;
         if(Dizzy!=null)
         {
+            Dizzy.gameObject.SetActive(true);
             Dizzy.Play();
         }
         
-        Color c = Color.blue;
-        sr.color = c;
     }
 
     public void Recover()
     {
         isDizziness = false;
+        if (Dizzy != null)
+        {
+            Dizzy.gameObject.SetActive(false);
+            Dizzy.Stop();
+        }
         Color c = Color.white;
         sr.color = c;
     }
