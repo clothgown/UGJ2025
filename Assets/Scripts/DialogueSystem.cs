@@ -101,7 +101,7 @@ public class DialogueSystem : MonoBehaviour
 
     [Header("立绘设置")]
     public bool autoSetNativeSize = true; // 自动设置为图片原生大小
-    public Vector2 maxPortraitSize = new Vector2(400, 400); // 最大立绘尺寸限制
+    public Vector2 maxPortraitSize = new Vector2(500, 500); // 最大立绘尺寸限制
     public bool maintainAspectRatio = true; // 保持宽高比
 
     
@@ -769,8 +769,36 @@ public class DialogueSystem : MonoBehaviour
             int nextIndex = dialogues.FindIndex(d => d.ID == nextID);
             if (nextIndex >= 0)
             {
-                ShowDialogue(nextIndex);
-                currentIndex = nextIndex;
+                if(SceneManager.GetActiveScene().name == "1-6")
+                {
+                    if(currentIndex == 43 )
+                    {
+                        if(CollectionManager.instance.isEntered1_5)
+                        {
+                            nextIndex = 61;
+                            ShowDialogue(nextIndex);
+                            currentIndex = nextIndex;
+                        }
+                        else
+                        {
+                            nextIndex = 44;
+                            ShowDialogue(nextIndex);
+                            currentIndex = nextIndex;
+                        }
+                    }
+                    else
+                    {
+                        ShowDialogue(nextIndex);
+                        currentIndex = nextIndex;
+                    }
+                }else
+                {
+                    ShowDialogue(nextIndex);
+                    currentIndex = nextIndex;
+                }
+
+
+
             }
             else
             {
