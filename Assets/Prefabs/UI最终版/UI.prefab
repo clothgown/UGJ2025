@@ -1002,7 +1002,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 101
@@ -2732,10 +2732,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: maid_info
       objectReference: {fileID: 0}
-    - target: {fileID: 2049690414974963092, guid: f3c1ef1f070af7941bb647ac700f5f5b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4960741842894478994, guid: f3c1ef1f070af7941bb647ac700f5f5b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2818,7 +2814,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
-    - {fileID: 8233482598080665696, guid: f3c1ef1f070af7941bb647ac700f5f5b, type: 3}
+    - {fileID: 302364576606472952, guid: f3c1ef1f070af7941bb647ac700f5f5b, type: 3}
+    - {fileID: 929733246926504389, guid: f3c1ef1f070af7941bb647ac700f5f5b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3c1ef1f070af7941bb647ac700f5f5b, type: 3}
@@ -2924,13 +2921,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: heart_info
       objectReference: {fileID: 0}
-    - target: {fileID: 4678461003761273593, guid: 52f029a0198452a479a57e3ed879af23, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
-    - {fileID: 7784456887409999446, guid: 52f029a0198452a479a57e3ed879af23, type: 3}
+    - {fileID: 416918605463439048, guid: 52f029a0198452a479a57e3ed879af23, type: 3}
+    - {fileID: 7718691388802646856, guid: 52f029a0198452a479a57e3ed879af23, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52f029a0198452a479a57e3ed879af23, type: 3}
@@ -3547,10 +3541,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: club_info
       objectReference: {fileID: 0}
-    - target: {fileID: 845934361373900355, guid: 920762a84d7120143af80ebe54fa36c1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3392033646163564842, guid: 920762a84d7120143af80ebe54fa36c1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3633,7 +3623,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
-    - {fileID: 7045090401013918380, guid: 920762a84d7120143af80ebe54fa36c1, type: 3}
+    - {fileID: 4335843166929235512, guid: 920762a84d7120143af80ebe54fa36c1, type: 3}
+    - {fileID: 3820760247610431601, guid: 920762a84d7120143af80ebe54fa36c1, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 920762a84d7120143af80ebe54fa36c1, type: 3}
@@ -3739,13 +3730,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: diamond_info
       objectReference: {fileID: 0}
-    - target: {fileID: 7535629611475780079, guid: f50589bcee5dcd24f85cd735cb40350e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
-    - {fileID: 7278663343516246839, guid: f50589bcee5dcd24f85cd735cb40350e, type: 3}
+    - {fileID: 1528159767559253888, guid: f50589bcee5dcd24f85cd735cb40350e, type: 3}
+    - {fileID: 8199485094431630977, guid: f50589bcee5dcd24f85cd735cb40350e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f50589bcee5dcd24f85cd735cb40350e, type: 3}
