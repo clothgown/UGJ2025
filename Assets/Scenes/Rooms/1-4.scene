@@ -785,6 +785,28 @@ MonoBehaviour:
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
   customFont: {fileID: 0}
+--- !u!114 &218354876 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1082004975823524027, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1258956705}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &218354877 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4176943777935825849, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1258956705}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &255294791
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,7 +2453,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -900
-  m_Sprite: {fileID: 21300000, guid: 789eee63f48502f42ba76b05edb7f1a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 26eeacde77af416449726b58dbc520c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2451,7 +2473,7 @@ Transform:
   m_GameObject: {fileID: 661414550}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.238516, y: 2.358368, z: 0}
+  m_LocalPosition: {x: -6.1, y: 3.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2950,6 +2972,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 1.14
       objectReference: {fileID: 0}
+    - target: {fileID: 3546787565854375578, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 218354877}
+    - target: {fileID: 3546787565854375578, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: healthBarinUI
+      value: 
+      objectReference: {fileID: 218354876}
     - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: isActive
       value: 1
@@ -3943,6 +3973,8 @@ MonoBehaviour:
   explorationManager: {fileID: 1714261624}
   isMaidDead: 1
   allowDirectExploration: 1
+  is15Battle: 0
+  is16Battle: 0
 --- !u!4 &1188374972
 Transform:
   m_ObjectHideFlags: 0

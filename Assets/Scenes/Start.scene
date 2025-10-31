@@ -276,7 +276,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: click
+          m_StringArgument: nextturn
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1333005610}
@@ -2723,9 +2723,11 @@ MonoBehaviour:
     UI
     BlackBadOne
 
-    Music Hale'
-  typingSpeed: 0.05
-  startTypingDelay: 0.5
+    Music Hale
+
+    Story WELLA & Eugene'
+  typingSpeed: 0.01
+  startTypingDelay: 0.1
   moveDuration: 0.8
   moveEase: 9
 --- !u!4 &1669086551
@@ -2810,7 +2812,9 @@ MonoBehaviour:
 
     UI
 
-    Music'
+    Music
+
+    Story'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}
   m_sharedMaterial: {fileID: 8253381855789811873, guid: 9f0418b9f764fe64197ab87e03f273c7, type: 2}

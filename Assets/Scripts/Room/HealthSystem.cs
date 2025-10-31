@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,9 +7,13 @@ public class HealthSystem : MonoBehaviour
 {
     [Header("UI Elements")]
     public Image healthBar;   // 血量条
+    public Image healthBarinUI;
+    public string healthper;
+    public TMP_Text healthText;   // 修改：使用 TextMeshPro 组件显示血量文本
     public Image shieldBar;   // 护盾条（可选）
 
     private float maxHealth;
+    private float currentHealth; // 记录当前血量
     private float maxShield;
     private bool isDead = false;
 
@@ -24,14 +29,19 @@ public class HealthSystem : MonoBehaviour
     public void SetMaxHealth(float health)
     {
         maxHealth = health;
+        currentHealth = health; // 初始化当前血量
         StartCoroutine(SmoothHealthChange(healthBar, health, maxHealth));
+        StartCoroutine(SmoothHealthChange(healthBarinUI, health, maxHealth));
+        UpdateHealthText(); // 更新血量文本
     }
 
     // 设置当前血量
     public void SetHealth(float health)
     {
+        currentHealth = health;
         StartCoroutine(SmoothHealthChange(healthBar, health, maxHealth));
-
+        StartCoroutine(SmoothHealthChange(healthBarinUI, health, maxHealth));
+        UpdateHealthText(); // 更新血量文本
         // 检查死亡
         if (health <= 0 && !isDead)
         {
@@ -52,6 +62,22 @@ public class HealthSystem : MonoBehaviour
         {
             StartCoroutine(SmoothHealthChange(shieldBar, shieldValue, maxShield));
         }
+    }
+    public string GetHealthString()
+    {
+        return $"{Mathf.RoundToInt(currentHealth)}/{Mathf.RoundToInt(maxHealth)}";
+    }
+
+    // 更新血量文本显示
+    private void UpdateHealthText()
+    {
+        if (healthText != null)
+        {
+            healthText.text = GetHealthString();
+        }
+
+        // 如果你还想在其他地方使用这个字符串，可以赋值给healthper
+        healthper = GetHealthString();
     }
 
     // 死亡方法
