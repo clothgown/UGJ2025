@@ -349,6 +349,7 @@ public class ExplorationManager : MonoBehaviour
         // ¸øÓèÕ½¶·½±Àø
         if (CollectionManager.instance != null)
             CollectionManager.instance.AddCoin(5);
+            Debug.Log("huode(5)");
         if (PanelManager.instance != null)
             PanelManager.instance.ShowEndPanel();
 

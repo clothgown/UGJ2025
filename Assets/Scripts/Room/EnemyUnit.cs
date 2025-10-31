@@ -743,6 +743,7 @@ public class EnemyUnit : MonoBehaviour
             TurnManager.instance.is15Battle = true;
         }
         CollectionManager.instance.AddCoin(coin);
+        Debug.Log($"huode{coin}");
         Destroy(gameObject);
     }
 

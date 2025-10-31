@@ -369,7 +369,7 @@ public class DialogueSystem : MonoBehaviour
             {
                 FadeOutUI();
             }
-            CleanupDialogue();
+            
             return;
         }
 
