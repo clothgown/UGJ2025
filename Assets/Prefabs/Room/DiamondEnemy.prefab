@@ -58,9 +58,9 @@ MonoBehaviour:
   moveSpeed: 2
   targetPlayer: {fileID: 0}
   healthSystem: {fileID: 5695332646528642167}
-  maxHealth: 15
+  maxHealth: 40
   currentHealth: 0
-  attackDamage: 5
+  attackDamage: 10
   isDizziness: 0
   hasBeenAttacked: 0
   sr: {fileID: 0}
@@ -72,7 +72,7 @@ MonoBehaviour:
   IceArrowHitVFX: {fileID: 7757260600431796719}
   isMaid: 0
   who: 3
-  coin: 20
+  coin: 50
 --- !u!114 &5695332646528642167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +86,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8292390721738227591}
+  healthBarinUI: {fileID: 0}
+  healthper: 
+  healthText: {fileID: 0}
   shieldBar: {fileID: 0}
   smoothTime: 0.2
 --- !u!1 &5976815327719714279

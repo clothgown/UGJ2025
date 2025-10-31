@@ -243,6 +243,17 @@ RectTransform:
   m_AnchoredPosition: {x: 959.99994, y: 539.99994}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &60697484 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4176943777935825849, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 3183350550714751998}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &70884204 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2310428479868365217, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
@@ -3426,6 +3437,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd86e64a46bfa5c46922a0a4a0547e16, type: 3}
+--- !u!114 &1795970475 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1082004975823524027, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 3183350550714751998}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1822604265 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3305443969280299731, guid: dd86e64a46bfa5c46922a0a4a0547e16, type: 3}
@@ -5181,6 +5203,14 @@ PrefabInstance:
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.m_NumColorKeys
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3546787565854375578, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 60697484}
+    - target: {fileID: 3546787565854375578, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: healthBarinUI
+      value: 
+      objectReference: {fileID: 1795970475}
     - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: XN
       value: 

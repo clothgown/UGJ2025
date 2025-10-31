@@ -3452,6 +3452,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3406468419049815727, guid: 1cdcf12eea4372b4d9176f1534910b58, type: 3}
+      propertyPath: who
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406468419049815727, guid: 1cdcf12eea4372b4d9176f1534910b58, type: 3}
+      propertyPath: coin
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406468419049815727, guid: 1cdcf12eea4372b4d9176f1534910b58, type: 3}
+      propertyPath: maxHealth
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406468419049815727, guid: 1cdcf12eea4372b4d9176f1534910b58, type: 3}
+      propertyPath: attackDamage
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406468419049815727, guid: 1cdcf12eea4372b4d9176f1534910b58, type: 3}
       propertyPath: startPoint.x
       value: 7
       objectReference: {fileID: 0}

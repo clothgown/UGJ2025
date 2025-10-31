@@ -238,6 +238,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3406468419049815727, guid: 3d94aff58b09126408f36c918d49cdec, type: 3}
+      propertyPath: isDizziness
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406468419049815727, guid: 3d94aff58b09126408f36c918d49cdec, type: 3}
       propertyPath: startPoint.y
       value: 5
       objectReference: {fileID: 0}
@@ -911,6 +915,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 1.14
       objectReference: {fileID: 0}
+    - target: {fileID: 3546787565854375578, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 1253776741}
+    - target: {fileID: 3546787565854375578, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
+      propertyPath: healthBarinUI
+      value: 
+      objectReference: {fileID: 1253776742}
     - target: {fileID: 4833354151820101678, guid: a5345cf0a3342ff42a45a3f9e0518267, type: 3}
       propertyPath: isActive
       value: 1
@@ -2150,6 +2162,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1373753361}
     m_Modifications:
+    - target: {fileID: 3546787565854375578, guid: 2fcb8a4a562077940bc8d3948199fee8, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1253776740}
+    - target: {fileID: 3546787565854375578, guid: 2fcb8a4a562077940bc8d3948199fee8, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 1253776739}
     - target: {fileID: 4833354151820101678, guid: 2fcb8a4a562077940bc8d3948199fee8, type: 3}
       propertyPath: dodgeChance
       value: 0
@@ -3870,6 +3890,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1373753361}
     m_Modifications:
+    - target: {fileID: 3546787565854375578, guid: 22128edabcebcf94da45a639ee582b87, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 1253776737}
+    - target: {fileID: 3546787565854375578, guid: 22128edabcebcf94da45a639ee582b87, type: 3}
+      propertyPath: healthBarinUI
+      value: 
+      objectReference: {fileID: 1253776738}
     - target: {fileID: 4833354151820101678, guid: 22128edabcebcf94da45a639ee582b87, type: 3}
       propertyPath: startPoint.x
       value: 10
@@ -5466,6 +5494,94 @@ MonoBehaviour:
   dialogueFile: {fileID: 0}
   triggerDialogueOnInteract: 1
   customFont: {fileID: 0}
+--- !u!114 &1253776737 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6556952834892456582, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1253776738 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2006637399471240717, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1253776739 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4267413242591792481, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1253776740 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2625197945620329863, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1253776741 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4176943777935825849, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1253776742 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1082004975823524027, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1253776743 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5228567001105842503, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1253776744 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4521738776799914388, guid: db5b2a6ade5c55a4e987af325ac592bf, type: 3}
+  m_PrefabInstance: {fileID: 1695283171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1265256810
 GameObject:
   m_ObjectHideFlags: 0
@@ -7875,6 +7991,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1373753361}
     m_Modifications:
+    - target: {fileID: 3546787565854375578, guid: c45c36c7d3753864dbdcd72446c97e97, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 1253776743}
+    - target: {fileID: 3546787565854375578, guid: c45c36c7d3753864dbdcd72446c97e97, type: 3}
+      propertyPath: healthBarinUI
+      value: 
+      objectReference: {fileID: 1253776744}
     - target: {fileID: 4833354151820101678, guid: c45c36c7d3753864dbdcd72446c97e97, type: 3}
       propertyPath: startPoint.x
       value: 10
