@@ -805,4 +805,123 @@ public class GameManager : MonoBehaviour
         QuitGame();
     }
     #endregion
+
+    #region 退出按钮功能
+    /// <summary>
+    /// 设置界面退出按钮点击事件
+    /// 根据当前场景决定是退出游戏还是返回主菜单
+    /// </summary>
+    public void OnExitButtonClicked()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        // 关闭设置面板
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
+
+        // 根据当前场景决定行为
+        if (currentScene == "Start")
+        {
+            // 在Start场景中，退出游戏
+            ShowExitConfirmationDialog();
+        }
+        else
+        {
+            // 在其他场景中，返回主菜单
+            ShowReturnToMainMenuConfirmationDialog();
+        }
+    }
+
+    /// <summary>
+    /// 显示退出游戏确认对话框
+    /// </summary>
+    private void ShowExitConfirmationDialog()
+    {
+        // 这里可以使用您项目中已有的对话框系统
+        // 或者使用Unity的简单实现
+#if UNITY_EDITOR
+        bool shouldQuit = UnityEditor.EditorUtility.DisplayDialog(
+            "退出游戏",
+            "您确定要退出游戏吗？",
+            "确定", "取消");
+#else
+    // 在运行时，您可以使用UI系统创建自定义对话框
+    // 这里简化处理，直接退出
+    bool shouldQuit = true;
+#endif
+
+        if (shouldQuit)
+        {
+            QuitGame();
+        }
+        else
+        {
+            // 用户取消退出，重新打开设置面板
+            if (settingsPanel != null)
+                settingsPanel.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// 显示返回主菜单确认对话框
+    /// </summary>
+    private void ShowReturnToMainMenuConfirmationDialog()
+    {
+#if UNITY_EDITOR
+        bool shouldReturn = UnityEditor.EditorUtility.DisplayDialog(
+            "返回主菜单",
+            "您确定要返回主菜单吗？当前进度可能会丢失。",
+            "确定", "取消");
+#else
+    // 在运行时，使用自定义UI对话框
+    bool shouldReturn = true;
+#endif
+
+        if (shouldReturn)
+        {
+            // 保存设置并返回主菜单
+            SaveSettings();
+            LoadMainMenu();
+
+            // 可选：播放返回主菜单的音效
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX("close");
+            }
+        }
+        else
+        {
+            // 用户取消，重新打开设置面板
+            if (settingsPanel != null)
+                settingsPanel.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// 获取退出按钮的显示文本
+    /// </summary>
+    public string GetExitButtonText()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        return currentScene == "Start" ? "退出游戏" : "返回主菜单";
+    }
+
+    /// <summary>
+    /// 快速退出（不显示确认对话框）
+    /// </summary>
+    public void QuickExit()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "Start")
+        {
+            QuitGame();
+        }
+        else
+        {
+            SaveSettings();
+            LoadMainMenu();
+        }
+    }
+    #endregion
 }

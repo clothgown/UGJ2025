@@ -24,6 +24,8 @@ public class TurnManager : MonoBehaviour
     public UnitController[] unitControllers; // 每个角色
     public List<GameObject> playerCards; // 每个角色对应的UI卡片（顺序一一对应）
 
+    
+
     [Header("卡片颜色设置")]
     public Color deadCardColor = new Color(0.3f, 0.3f, 0.3f, 0.7f); // 死亡卡片颜色
     public Color aliveCardColor = Color.white; // 存活卡片颜色
@@ -95,7 +97,7 @@ public class TurnManager : MonoBehaviour
         
 
     }
-
+   
     private void Update()
     {
         enemies = FindObjectsOfType<EnemyUnit>();
@@ -257,6 +259,8 @@ public class TurnManager : MonoBehaviour
         //}
 
         // 更新卡片 UI 状态
+        if (ExplorationManager.IsInExploration())
+            return;
         UpdateCardSelectionUI(player);
         AudioManager.Instance.PlaySFX("change");
     }
@@ -543,23 +547,7 @@ public class TurnManager : MonoBehaviour
         Debug.Log($"进入敌人回合，敌人数量: {enemies.Length}");
     }
 
-    private IEnumerator StartExplorationAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        Debug.Log($"开始探索模式，ExplorationManager: {explorationManager != null}");
-
-        // 进入探索模式
-        if (explorationManager != null)
-        {
-            explorationManager.StartExploration();
-            Debug.Log("探索模式已成功启动");
-        }
-        else
-        {
-            Debug.LogError("ExplorationManager 未设置！请检查场景中的ExplorationManager");
-        }
-    }
+    
 
     private IEnumerator EnemyTurn()
     {
@@ -600,6 +588,7 @@ public class TurnManager : MonoBehaviour
         }
 
         Debug.Log("敌人回合结束");
+        TeamManager.instance?.RefreshCharacterHealthFromScene();
     }
 
 
@@ -612,7 +601,8 @@ public class TurnManager : MonoBehaviour
             return;
         // 更新全局行动点显示
         UpdateActionPointUI(controller.actionPoints);
-
+        if (ExplorationManager.IsInExploration())
+            return;
         // 同时更新卡片上的行动点显示
         UpdateCardActionPointUI(controller);
     }
@@ -670,7 +660,7 @@ public class TurnManager : MonoBehaviour
     // ✅ 更新卡片上的行动点显示
     public void UpdateCardActionPointUI(UnitController controller)
     {
-        if (controller == null || playerCards == null || playerCards.Count == 0)
+        if (controller == null || playerCards == null || playerCards.Count == 0 || phase == TurnPhase.Exploration)
             return;
 
         int index = System.Array.IndexOf(unitControllers, controller);
@@ -760,7 +750,7 @@ public class TurnManager : MonoBehaviour
 
             // ✅ 控制UILogo的显示/隐藏
             Transform uiLogoTransform = card.transform.Find("UIlogo");
-            if (uiLogoTransform != null)
+            if (uiLogoTransform != null )
             {
                 uiLogoTransform.gameObject.SetActive(isSelected);
             }
@@ -796,6 +786,7 @@ public class TurnManager : MonoBehaviour
                 //}
             }
         }
+        Debug.Log("更新一下选中卡片");
     }
 
     private void OnDestroy()

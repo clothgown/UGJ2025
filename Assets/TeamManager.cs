@@ -68,7 +68,9 @@ public class TeamManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         RefreshSceneReferences();
-        RefreshSceneReferences();
+        
+        // 新增：场景加载后恢复血量
+        RestoreHealthFromAllPlayerState();
 
         // 判断场景里是否有 TurnManager
         if (FindAnyObjectByType<TurnManager>()==null)
@@ -259,6 +261,72 @@ public class TeamManager : MonoBehaviour
             else
             {
                 Debug.LogWarning($"⚠️ 未找到 {info.characterName} 或其 HealthSystem，无法同步血量。");
+            }
+        }
+    }
+    /// <summary>
+    /// 将角色血量信息同步到 AllPlayerState
+    /// </summary>
+    public void SyncHealthToAllPlayerState()
+    {
+        if (AllPlayerState.Instance == null)
+        {
+            Debug.LogWarning("AllPlayerState 实例未找到");
+            return;
+        }
+
+        AllPlayerState.Instance.unitNames.Clear();
+        AllPlayerState.Instance.unitHealths.Clear();
+
+        foreach (var info in characterInfos)
+        {
+            if (info.isUnlocked)
+            {
+                AllPlayerState.Instance.unitNames.Add(info.characterName);
+                AllPlayerState.Instance.unitHealths.Add(info.currentHealth);
+                Debug.Log($"🔄 同步血量到 AllPlayerState: {info.characterName} - {info.currentHealth}");
+            }
+        }
+    }
+
+    /// <summary>
+    /// 从 AllPlayerState 恢复血量信息
+    /// </summary>
+    public void RestoreHealthFromAllPlayerState()
+    {
+        if (AllPlayerState.Instance == null) return;
+
+        for (int i = 0; i < AllPlayerState.Instance.unitNames.Count; i++)
+        {
+            string unitName = AllPlayerState.Instance.unitNames[i];
+            float health = AllPlayerState.Instance.unitHealths[i];
+
+            CharacterInfo info = characterInfos.Find(c => c.characterName == unitName);
+            if (info != null)
+            {
+                info.currentHealth = health;
+                Debug.Log($"🔄 从 AllPlayerState 恢复血量: {unitName} - {health}");
+            }
+        }
+
+        // 应用到场景中的角色
+        ApplyHealthToSceneUnits();
+    }
+
+    /// <summary>
+    /// 将血量信息应用到场景中的 UnitController
+    /// </summary>
+    public void ApplyHealthToSceneUnits()
+    {
+        foreach (var unit in unitControllers)
+        {
+            CharacterInfo info = characterInfos.Find(c => c.characterName == unit.name);
+            if (info != null && unit.healthSystem != null)
+            {
+                unit.currentHealth = info.currentHealth;
+                unit.maxHealth = info.maxHealth;
+                unit.healthSystem.SetHealth(info.currentHealth);
+                Debug.Log($"💊 应用血量到场景角色: {unit.name} - {info.currentHealth}/{info.maxHealth}");
             }
         }
     }

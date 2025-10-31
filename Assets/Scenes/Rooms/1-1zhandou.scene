@@ -2560,6 +2560,8 @@ MonoBehaviour:
   explorationManager: {fileID: 538331932}
   isMaidDead: 1
   allowDirectExploration: 1
+  is15Battle: 0
+  is16Battle: 0
 --- !u!4 &497699329
 Transform:
   m_ObjectHideFlags: 0
@@ -3287,6 +3289,10 @@ PrefabInstance:
     - target: {fileID: 4833354151820101678, guid: 2fcb8a4a562077940bc8d3948199fee8, type: 3}
       propertyPath: startPoint.x
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4833354151820101678, guid: 2fcb8a4a562077940bc8d3948199fee8, type: 3}
+      propertyPath: currentHealth
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5084986422234508334, guid: 2fcb8a4a562077940bc8d3948199fee8, type: 3}
       propertyPath: m_Name

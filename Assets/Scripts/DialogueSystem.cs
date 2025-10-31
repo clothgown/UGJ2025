@@ -55,7 +55,7 @@ public class DialogueSystem : MonoBehaviour
     public TMP_Text dialogTMP;   // 显示对话内容
 
     private int currentID = 0;   // 当前对话ID（从0或Start开始）
-    private bool isLoaded = false;
+    public bool isLoaded = false;
 
     public int currentIndex = 0; // 当前对话索引
     private Tween typingTween;    // 保存打字机Tween
@@ -262,6 +262,7 @@ public class DialogueSystem : MonoBehaviour
     }
     public void StartNewDialogue(TextAsset dialogFile = null)
     {
+        
         // 如果指定了对话文件，使用它
         if (dialogFile != null)
         {
@@ -283,6 +284,10 @@ public class DialogueSystem : MonoBehaviour
         {
             LoadDialogues(battleDialogDataFile.text);
             isLoaded = true;
+
+            // 关键修改：找到第一个未阅读的对话，而不是总是从0开始
+            currentIndex = FindFirstUnwatchedDialogue();
+            Debug.Log($"对话开始 - 文件: {battleDialogDataFile.name}, 起始索引: {currentIndex}, 已阅读: {dialogues[currentIndex].IsWatched}");
         }
 
         if (UIGroup != null)
@@ -295,8 +300,43 @@ public class DialogueSystem : MonoBehaviour
         ShowDialogue(currentIndex);
         isDialoguing = true;
     }
+    private int FindFirstUnwatchedDialogue()
+    {
+        for (int i = 0; i < dialogues.Count; i++)
+        {
+            if (!dialogues[i].IsWatched)
+            {
+                return i;
+            }
+        }
+        // 如果所有对话都已阅读，从0开始
+        return 0;
+    }
+    public int FindStartDialogueIndex()
+    {
+        // 优先查找 Type 为 "Start" 的对话
+        int startIndex = dialogues.FindIndex(d => d.Type == "Start");
+        if (startIndex >= 0)
+        {
+            return startIndex;
+        }
 
-    void ShowDialogue(int index)
+        // 如果没有 "Start" 类型，查找最小的 ID
+        if (dialogues.Count > 0)
+        {
+            int minID = dialogues.Min(d => d.ID);
+            startIndex = dialogues.FindIndex(d => d.ID == minID);
+            if (startIndex >= 0)
+            {
+                return startIndex;
+            }
+        }
+
+        // 最后使用索引 0
+        return 0;
+    }
+
+    public void ShowDialogue(int index)
     {
         if (index < 0 || index >= dialogues.Count)
         {
@@ -322,12 +362,14 @@ public class DialogueSystem : MonoBehaviour
                 else
                 {
                     FadeOutUI();
+                    
                 }
             }
             else
             {
                 FadeOutUI();
             }
+            CleanupDialogue();
             return;
         }
 
@@ -574,7 +616,7 @@ public class DialogueSystem : MonoBehaviour
                 if (sceneName == "1-0" && battleDialogDataFile != null && battleDialogDataFile.name == "1-0-talk3")
                 {
                     // 使用闭包捕获的 optionIndex
-                    if (optionIndex == startIndex + 2) // 第三个选项（索引从0开始）
+                    if (optionIndex == startIndex + 1) // 第二个选项（索引从0开始）
                     {
                         TeamManager teamManager = FindAnyObjectByType<TeamManager>();
                         if (teamManager != null)
@@ -709,7 +751,10 @@ public class DialogueSystem : MonoBehaviour
             typingTween.Complete();
             return;
         }
-
+        if (currentIndex >= 0 && currentIndex < dialogues.Count)
+        {
+            dialogues[currentIndex].IsWatched = true;
+        }
         // 否则跳到下一句
         int nextID = dialogues[currentIndex].NextID;
         if (nextID == -1)
@@ -717,6 +762,7 @@ public class DialogueSystem : MonoBehaviour
             Debug.Log("对话结束。");
             FadeOutUI();
             isDialoguing = false;
+            CleanupDialogue();
         }
         else
         {
@@ -731,6 +777,7 @@ public class DialogueSystem : MonoBehaviour
                 Debug.Log("找不到NextID对应的对话，结束对话。");
                 FadeOutUI();
                 isDialoguing = false;
+                CleanupDialogue();
 
             }
         }
@@ -855,24 +902,6 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    private void EnableOverlay()
-    {
-        if (overlayBlock != null)
-        {
-            overlayBlock.raycastTarget = true;
-            overlayBlock.color = new Color(0, 0, 0, 0.01f);
-        }
-    }
-
-    // 禁用覆盖层
-    private void DisableOverlay()
-    {
-        if (overlayBlock != null)
-        {
-            overlayBlock.raycastTarget = false;
-            overlayBlock.color = new Color(0, 0, 0, 0f);
-        }
-    }
     // 清空对话队列
     public void ClearDialogQueue()
     {
@@ -901,11 +930,7 @@ public class DialogueSystem : MonoBehaviour
     // 新的跳过逻辑：跳到决策前一句话
     public void SkipToNextDecisionPoint()
     {
-        // 如果正在显示书本对话，先关闭它
-        if (isBookDialogActive)
-        {
-            HideBookDialog();
-        }
+        
 
         // 终止当前打字机效果，立即显示完整文本
         if (typingTween != null && typingTween.IsActive())
@@ -919,11 +944,10 @@ public class DialogueSystem : MonoBehaviour
             return; // 第一次点击跳过，只完成当前打字效果
         }
 
-        // 清除所有选项按钮（如果有）
-        HideOptions();
+        
 
-        // 从当前对话的下一个开始，寻找决策点
-        int searchIndex = currentIndex + 1;
+        // 从当前对话开始，寻找决策点
+        int searchIndex = currentIndex ;
         int lastNormalDialogue = -1; // 记录最后一个普通对话
 
         while (searchIndex < dialogues.Count)
@@ -1003,13 +1027,18 @@ public class DialogueSystem : MonoBehaviour
     private bool IsDecisionPoint(Dialogue dialogue)
     {
         // 包含选项的对话
-        if (dialogue.Type == "Select" || dialogue.Type == "@")
+        if (dialogue.Type == "@")
         {
             return true;
         }
 
         // 随机分支对话
         if (dialogue.Type == "R" && enableRandomBranches)
+        {
+            return true;
+        }
+
+        if (dialogue.Type == "Exploration" && enableRandomBranches)
         {
             return true;
         }
@@ -1049,15 +1078,7 @@ public class DialogueSystem : MonoBehaviour
             return;
         }
 
-        // 如果有探索模式触发，特殊处理
-        bool hasExplorationTrigger = dialogues.Any(d => d.Type == "Exploration" || d.Text.Contains("[探索模式]"));
-        if (hasExplorationTrigger && canTriggerExploration)
-        {
-            Debug.Log("跳过对话时检测到探索模式触发");
-            TriggerExplorationFromDialogue();
-            return;
-        }
-
+        
         // 使用新的跳到决策点功能
         SkipToNextDecisionPoint();
     }
@@ -2128,5 +2149,43 @@ public class DialogueSystem : MonoBehaviour
             cells[j] = cells[j].Trim();
         }
         return cells;
+    }
+    // 清理对话状态和UI
+    public void CleanupDialogue()
+    {
+        // 停止所有动画
+        typingTween?.Kill();
+
+        // 重置UI显示
+        if (nameTMP != null) nameTMP.text = "";
+        if (dialogTMP != null) dialogTMP.text = "";
+
+        // 隐藏立绘
+        if (leftImage != null)
+        {
+            leftImage.DOKill();
+            leftImage.gameObject.SetActive(false);
+        }
+        if (rightImage != null)
+        {
+            rightImage.DOKill();
+            rightImage.gameObject.SetActive(false);
+        }
+
+        // 隐藏CG
+        if (cgImage != null)
+        {
+            cgImage.DOKill();
+            cgImage.gameObject.SetActive(false);
+        }
+
+        // 隐藏选项
+        HideOptions();
+
+        // 重置状态
+        isChoosing = false;
+        isBookDialogActive = false;
+
+        Debug.Log("对话状态已清理");
     }
 }

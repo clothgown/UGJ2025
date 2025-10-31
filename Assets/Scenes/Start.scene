@@ -308,6 +308,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -8.550003
       objectReference: {fileID: 0}
+    - target: {fileID: 1265119375122810935, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1265119375122810935, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1265119375122810935, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 825834490}
+    - target: {fileID: 1265119375122810935, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 7388709353937830852, guid: 79e8c117b52f41f44902aca7b6119096, type: 3}
+    - target: {fileID: 1265119375122810935, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1265119375122810935, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayOff
+      objectReference: {fileID: 0}
+    - target: {fileID: 1265119375122810935, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1516267260360938817, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -371,6 +399,66 @@ PrefabInstance:
     - target: {fileID: 2034614272497238666, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
       propertyPath: m_SortingOrder
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 41944897}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 825834490}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1333005610}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayOff
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: OnExitButtonClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347434885053350628, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2857855045705142039, guid: c5e4f64487ddfaa49af366cf0f031c82, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2205,7 +2293,7 @@ GameObject:
   - component: {fileID: 1532045882}
   m_Layer: 5
   m_HasEditorInfo: 1
-  m_Name: Canvas
+  m_Name: "\u9ED1\u5C4F\u5F00\u573A"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

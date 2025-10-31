@@ -32,6 +32,12 @@ public class AllPlayerState : MonoBehaviour
         // 查找场景中的所有 UnitController
         allUnits.AddRange(FindObjectsOfType<UnitController>());
 
+        // 新增：从 TeamManager 恢复血量信息
+        if (TeamManager.instance != null)
+        {
+            TeamManager.instance.RestoreHealthFromAllPlayerState();
+        }
+
 
     }
 
@@ -42,6 +48,14 @@ public class AllPlayerState : MonoBehaviour
 
     public void UpdateUnitStates()
     {
+        // 优先使用 TeamManager 的数据
+        if (TeamManager.instance != null)
+        {
+            TeamManager.instance.SyncHealthToAllPlayerState();
+            return;
+        }
+
+        // 备用方案：直接扫描场景中的单位
         unitNames.Clear();
         unitHealths.Clear();
 
