@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections; // 添加这个命名空间
 
 public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -19,6 +20,10 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public bool isNextBoss;
     public MapGrid bossGrid;
+    
+    [Header("场景过渡设置")]
+    public GameObject transitionObject; // 在加载场景前要显示的对象
+    public float transitionDelay = 2f; // 等待时间（秒）
 
 
     private void Awake()
@@ -43,6 +48,12 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             {
                 HiddenPrefab.SetActive(false);
             }
+        }
+        
+        // 初始化过渡对象为隐藏状态
+        if (transitionObject != null)
+        {
+            transitionObject.SetActive(false);
         }
     }
 
@@ -74,81 +85,90 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             .SetEase(Ease.InOutSine)
             .OnComplete(() =>
             {
-                
-
                 player.transform.SetParent(transform);
                 player.transform.localPosition = Vector3.zero;
                 player.transform.localRotation = Quaternion.identity;
                 player.currentPos = gridPos;
                 MapGridManager.instance.currentGrid = this;
-                if(gridType==MapGridType.Store)
+                
+                string sceneToLoad = GetSceneToLoad();
+                if (!string.IsNullOrEmpty(sceneToLoad))
                 {
-                    string sceneToLoad = "Store";
-                    SceneManager.sceneLoaded += OnSceneLoaded;
-                    SceneManager.LoadScene(sceneToLoad);
-                }
-                else if (normalType == 0 && gridType == MapGridType.Normal)
-                {
-                    // 从 sceneNames 列表中随机选择一个场景
-                    if (MapGridManager.instance.battleSceneNames != null && MapGridManager.instance.battleSceneNames.Count > 0)
-                    {
-                        int randomIndex = Random.Range(0, MapGridManager.instance.battleSceneNames.Count);
-                        string sceneToLoad = MapGridManager.instance.battleSceneNames[randomIndex];
-                        // 监听加载完成事件
-                        SceneManager.sceneLoaded += OnSceneLoaded;
-                        SceneManager.LoadScene(sceneToLoad);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("sceneNames 列表为空，无法加载随机场景！");
-                    }
-                }
-                else if(normalType == 1 && gridType == MapGridType.Normal)
-                {
-                    // 从 sceneNames 列表中随机选择一个场景
-                    if (MapGridManager.instance.bigBattleSceneNames != null && MapGridManager.instance.bigBattleSceneNames.Count > 0)
-                    {
-                        int randomIndex = Random.Range(0, MapGridManager.instance.bigBattleSceneNames.Count);
-                        string sceneToLoad = MapGridManager.instance.bigBattleSceneNames[randomIndex];
-                        // 监听加载完成事件
-                        SceneManager.sceneLoaded += OnSceneLoaded;
-                        SceneManager.LoadScene(sceneToLoad);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("sceneNames 列表为空，无法加载随机场景！");
-                    }
-                }
-                else if (normalType == 2)
-                {
-                    string sceneToLoad = "choose_baoxiang";
-                    SceneManager.sceneLoaded += OnSceneLoaded;
-                    SceneManager.LoadScene(sceneToLoad);
-                }
-                else if(normalType == 3)
-                {
-                    // 从 sceneNames 列表中随机选择一个场景
-                    if (MapGridManager.instance.exploreSceneNames != null && MapGridManager.instance.exploreSceneNames.Count > 0)
-                    {
-                        int randomIndex = Random.Range(0, MapGridManager.instance.exploreSceneNames.Count);
-                        string sceneToLoad = MapGridManager.instance.exploreSceneNames[randomIndex];
-                        // 监听加载完成事件
-                        SceneManager.sceneLoaded += OnSceneLoaded;
-                        SceneManager.LoadScene(sceneToLoad);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("sceneNames 列表为空，无法加载随机场景！");
-                    }
+                    // 使用过渡效果加载场景
+                    StartCoroutine(LoadSceneWithTransition(sceneToLoad));
                 }
                 else
                 {
                     ShowNextGrids();
                 }
             });
-        
-
     }
+    
+    // 使用过渡效果加载场景
+    private IEnumerator LoadSceneWithTransition(string sceneName)
+    {
+        // 显示过渡对象
+        if (transitionObject != null)
+        {
+            transitionObject.SetActive(true);
+            
+            // 可选：添加淡入动画
+            CanvasGroup canvasGroup = transitionObject.GetComponent<CanvasGroup>();
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 0f;
+                canvasGroup.DOFade(1f, 0.5f).SetEase(Ease.OutQuad);
+            }
+            
+            Debug.Log($"显示过渡对象，等待 {transitionDelay} 秒");
+        }
+        
+        // 等待指定时间
+        yield return new WaitForSeconds(transitionDelay);
+        
+        // 加载场景
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private string GetSceneToLoad()
+    {
+        if (gridType == MapGridType.Store)
+        {
+            return "Store";
+        }
+        else if (normalType == 0 && gridType == MapGridType.Normal)
+        {
+            if (MapGridManager.instance.battleSceneNames != null && MapGridManager.instance.battleSceneNames.Count > 0)
+            {
+                int randomIndex = Random.Range(0, MapGridManager.instance.battleSceneNames.Count);
+                return MapGridManager.instance.battleSceneNames[randomIndex];
+            }
+        }
+        else if (normalType == 1 && gridType == MapGridType.Normal)
+        {
+            if (MapGridManager.instance.bigBattleSceneNames != null && MapGridManager.instance.bigBattleSceneNames.Count > 0)
+            {
+                int randomIndex = Random.Range(0, MapGridManager.instance.bigBattleSceneNames.Count);
+                return MapGridManager.instance.bigBattleSceneNames[randomIndex];
+            }
+        }
+        else if (normalType == 2)
+        {
+            return "choose_baoxiang";
+        }
+        else if (normalType == 3)
+        {
+            if (MapGridManager.instance.exploreSceneNames != null && MapGridManager.instance.exploreSceneNames.Count > 0)
+            {
+                int randomIndex = Random.Range(0, MapGridManager.instance.exploreSceneNames.Count);
+                return MapGridManager.instance.exploreSceneNames[randomIndex];
+            }
+        }
+        
+        return null;
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 加载完成后再关闭地图
@@ -160,6 +180,7 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         // 移除事件防止重复触发
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
     public void ShowNextGrids()
     {
         // 显示隐藏内容
@@ -210,7 +231,5 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             if (selfImage != null)
                 selfImage.DOFade(0f, duration).SetEase(Ease.OutQuad);
         }
-        
     }
-
 }
