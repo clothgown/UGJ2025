@@ -566,6 +566,9 @@ MonoBehaviour:
   normalSprite: {fileID: 7697484841366769644}
   doubleSprite: {fileID: 967265823693914082}
   massSprite: {fileID: 4649342930466768519}
+  normalt: {fileID: 7191882092060183984}
+  doublet: {fileID: 8468230438551505055}
+  masst: {fileID: 8418031885487398808}
 --- !u!223 &4132845374223140069
 Canvas:
   m_ObjectHideFlags: 0
@@ -619,7 +622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8564425968850302157
 RectTransform:
   m_ObjectHideFlags: 0
@@ -754,7 +757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &61406475991204528
 RectTransform:
   m_ObjectHideFlags: 0
@@ -997,5 +1000,10 @@ PrefabInstance:
 --- !u!224 &30798808609785415 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4500747798762140553, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
+  m_PrefabInstance: {fileID: 4474525363911243214}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7191882092060183984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6761600360585508990, guid: 28c5f932958786f4aaa16097a421059b, type: 3}
   m_PrefabInstance: {fileID: 4474525363911243214}
   m_PrefabAsset: {fileID: 0}

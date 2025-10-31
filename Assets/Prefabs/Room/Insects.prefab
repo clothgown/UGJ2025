@@ -38,6 +38,7 @@ Transform:
   - {fileID: 5295775237520920531}
   - {fileID: 8339589241945546447}
   - {fileID: 5122827426474771114}
+  - {fileID: 4619541856552337214}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3406468419049815727
@@ -64,11 +65,11 @@ MonoBehaviour:
   attackDamage: 5
   isDizziness: 0
   hasBeenAttacked: 0
-  sr: {fileID: 0}
+  sr: {fileID: 2582855317599814803}
   frontSprite: {fileID: 21300000, guid: 97e7b7c891f2ac647943282e766c4876, type: 3}
   backSprite: {fileID: 21300000, guid: b0792dbadcfc01041956950248a26154, type: 3}
   Attacked: {fileID: 3397712441109148472}
-  Dizzy: {fileID: 0}
+  Dizzy: {fileID: 7087917544480956059}
   FireArrowHitVFX: {fileID: 7114713562765891889}
   IceArrowHitVFX: {fileID: 6924111105375492818}
   isMaid: 0
@@ -87,6 +88,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8292390721738227591}
+  healthBarinUI: {fileID: 0}
+  healthper: 
+  healthText: {fileID: 0}
   shieldBar: {fileID: 0}
   smoothTime: 0.2
 --- !u!114 &2128612670416922039
@@ -397,6 +401,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 393213673740759355}
     m_Modifications:
+    - target: {fileID: 802436511506268540, guid: c9e9d3684448c1840a9a439f1db23fca, type: 3}
+      propertyPath: m_PropertySheet.m_NamedObject.m_Array.Array.data[0].m_Value
+      value: 
+      objectReference: {fileID: 2800000, guid: 3aa5619050946c240bcca6f627a1a068, type: 3}
     - target: {fileID: 5062424965284284725, guid: c9e9d3684448c1840a9a439f1db23fca, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -651,6 +659,73 @@ Transform:
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 6676239737805010577, guid: d370a0fca5a74124ea2d82a5fa17eed4, type: 3}
   m_PrefabInstance: {fileID: 4373460289485057091}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5658457209320817334
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 393213673740759355}
+    m_Modifications:
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.014
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1804221232022264996, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+      propertyPath: m_Name
+      value: dizziness
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+--- !u!4 &4619541856552337214 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1053006744005475720, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+  m_PrefabInstance: {fileID: 5658457209320817334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!2083052967 &7087917544480956059 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 3232379116298378285, guid: 5e173601d286a2742aaf3205c43a2ed7, type: 3}
+  m_PrefabInstance: {fileID: 5658457209320817334}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5679644333848529871
 PrefabInstance:

@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -73,6 +74,11 @@ public class CardVisual : MonoBehaviour
     public Image normalSprite;
     public Image doubleSprite;
     public Image massSprite;
+
+    public GameObject normalt;
+    public GameObject doublet;
+    public GameObject masst;
+
     private void Start()
     {
         horizontalCardHolder = FindFirstObjectByType<HorizontalCardHolder>();
@@ -93,6 +99,10 @@ public class CardVisual : MonoBehaviour
         {
             cardAssetsPreview = previewTransform.gameObject;
             cardAssetsPreview.SetActive(false); // Ä¬ÈÏÒþ²Ø
+            normalt.SetActive(false);
+            doublet.SetActive(false);
+            masst.SetActive(false);
+            
         }
     }
 
@@ -382,6 +392,9 @@ public class CardVisual : MonoBehaviour
             normalSprite.enabled = true;
             doubleSprite.enabled = false;
             massSprite.enabled = false;
+            normalt.SetActive(true);
+            doublet.SetActive(false);
+            masst.SetActive(false);
         }
 
     }
@@ -393,6 +406,9 @@ public class CardVisual : MonoBehaviour
             normalSprite.enabled = false;
             doubleSprite.enabled = true;
             massSprite.enabled = false;
+            normalt.SetActive(false);
+            doublet.SetActive(true);
+            masst.SetActive(false);
         }
     }
 
@@ -403,6 +419,9 @@ public class CardVisual : MonoBehaviour
             normalSprite.enabled = false;
             doubleSprite.enabled = false;
             massSprite.enabled = true;
+            normalt.SetActive(false);
+            doublet.SetActive(false);
+            masst.SetActive(true);
         }
     }
 }
