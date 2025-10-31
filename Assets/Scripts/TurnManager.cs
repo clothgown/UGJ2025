@@ -226,7 +226,7 @@ public class TurnManager : MonoBehaviour
 
     public void ChangePlayer(UnitController player)
     {
-        if (player == null || player.IsDead() || !player.isActive)
+        if (player == null || player.IsDead())
         {
             Debug.Log($"玩家 {player?.name} 已死亡或不可用，尝试切换下一个");
             FindNextAlivePlayer();
