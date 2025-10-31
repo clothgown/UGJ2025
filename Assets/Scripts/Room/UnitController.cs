@@ -544,23 +544,34 @@ public class UnitController : MonoBehaviour
         {
             UpdateDirectionSprite(currentGridPos, targetGrid.gridPos);
             Debug.Log($"��ҹ��� {enemy.name}����� {attackDamage} �˺���");
-            Attack1.gameObject.SetActive(true);
-            Attack1.Play();
+            
             if (attackType == 1)
             {
                 AudioManager.Instance.PlaySFX("sword");
+                Attack1.gameObject.SetActive(true);
+                Attack1.Play();
             }
             if (attackType == 2 && attackAttribute == CardData.AttackAttribute.None)
             {
                 AudioManager.Instance.PlaySFX("arrow");
+                Attack1.gameObject.SetActive(true);
+                Attack1.Play();
             }
             if (attackType == 2 && attackAttribute == CardData.AttackAttribute.Fire)
             {
                 AudioManager.Instance.PlaySFX("firearrow");
+                Attack1.gameObject.SetActive(true);
+                Attack1.Play();
             }
             if (attackType == 2 && attackAttribute == CardData.AttackAttribute.Ice)
             {
                 AudioManager.Instance.PlaySFX("icearrow");
+                Attack1.gameObject.SetActive(true);
+                Attack1.Play();
+            }
+            if (attackAttribute == CardData.AttackAttribute.Dizziness)
+            {
+                AudioManager.Instance.PlaySFX("arrow");
             }
 
             float finalDamage = attackDamage;
