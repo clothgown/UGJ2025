@@ -137,6 +137,10 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         {
             return "Store";
         }
+        else if(gridType == MapGridType.Boss)
+        {
+            return "1-9";
+        }
         else if (normalType == 0 && gridType == MapGridType.Normal)
         {
             if (MapGridManager.instance.battleSceneNames != null && MapGridManager.instance.battleSceneNames.Count > 0)
