@@ -22,6 +22,12 @@ public class CardHoverPreview : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private Tween scaleTween;
     private Tween fadeTween;
 
+    public CardData cardData;
+    public bool isItemCard = false;
+    public ItemType itemType;
+
+    public string cardName;
+    public string description;
     private void Start()
     {
         originalScale = transform.localScale;

@@ -1,8 +1,9 @@
+using DG.Tweening;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using DG.Tweening;
 using UnityEngine.UI;
-using TMPro;
 
 public class Window : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -51,7 +52,7 @@ public class Window : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
         // µã»÷¶¯»­
         if (currentTween != null) currentTween.Kill();
-        Sequence seq = DOTween.Sequence();
+        DG.Tweening.Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOScale(originalScale * clickScale, 0.1f).SetEase(Ease.OutQuad));
         seq.Append(transform.DOScale(originalScale * hoverScale, 0.2f).SetEase(Ease.OutBack));
 
@@ -97,6 +98,18 @@ public class Window : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
                         newGoods.transform.localPosition = Vector3.zero;
                         newGoods.transform.localScale = Vector3.one;
                     }
+                }
+
+                Transform cardName = store.detailPanel.transform.Find("name");
+                if (cardName != null)
+                {
+                    cardName.GetComponent<TextMeshProUGUI>().text = transform.Find("goods").GetChild(0).GetComponent<CardHoverPreview>().cardName;
+                }
+
+                Transform describe = store.detailPanel.transform.Find("name").Find("describe");
+                if (describe != null)
+                {
+                    describe.GetComponent<TextMeshProUGUI>().text = transform.Find("goods").GetChild(0).GetComponent<CardHoverPreview>().description;
                 }
             }
         }
