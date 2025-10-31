@@ -3754,7 +3754,7 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  dialogueFile: {fileID: 0}
+  dialogueFile: {fileID: 4900000, guid: e8d7fd9a7c3f8e44a9e43873ec7282a4, type: 3}
   triggerDialogueOnInteract: 1
   customFont: {fileID: 0}
 --- !u!1001 &1513345014
@@ -3999,6 +3999,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coins: 0
   thisLevelGetCoins: 0
+  isEntered1_5: 0
 --- !u!4 &1569579881
 Transform:
   m_ObjectHideFlags: 0
