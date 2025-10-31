@@ -2952,7 +2952,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5918146514391664257, guid: e3c4e5531d3d9824da01f0ffca872a31, type: 3}
       insertIndex: -1
       addedObject: {fileID: 232674106}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6338569722997824162, guid: e3c4e5531d3d9824da01f0ffca872a31, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1147125586}
   m_SourcePrefab: {fileID: 100100000, guid: e3c4e5531d3d9824da01f0ffca872a31, type: 3}
 --- !u!224 &1147125583 stripped
 RectTransform:
@@ -2964,12 +2967,39 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6040919238166993765, guid: e3c4e5531d3d9824da01f0ffca872a31, type: 3}
   m_PrefabInstance: {fileID: 1147125582}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1147125585}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1aaf7985e23ebe41bb051ce9181fefa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1147125585 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6338569722997824162, guid: e3c4e5531d3d9824da01f0ffca872a31, type: 3}
+  m_PrefabInstance: {fileID: 1147125582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1147125586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147125585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18589c4eb25fbc84e87729b7d8fe580c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogDataFile: {fileID: 4900000, guid: f89fb9093e871f744aa54a4f5d1e9f78, type: 3}
+  triggerType: 7
+  onlyTriggerOnce: 1
+  healthThreshold: 0
+  targetAlly: {fileID: 0}
+  targetEnemy: {fileID: 0}
+  turnNumber: 1
+  customEventName: 
+  waitForCurrentDialog: 1
+  retryDelay: 1
 --- !u!1 &1150306783 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2292481340924908294, guid: 1ed141c4796dfa843b5f93eb9fdde0c5, type: 3}
@@ -3004,6 +3034,8 @@ MonoBehaviour:
   bossGrid: {fileID: 0}
   transitionObject: {fileID: 1857385483}
   transitionDelay: 2.6
+  preBossDialogue: {fileID: 0}
+  waitForDialogueEnd: 1
 --- !u!1001 &1166593252
 PrefabInstance:
   m_ObjectHideFlags: 0

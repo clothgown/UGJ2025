@@ -1,9 +1,9 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections; // Ìí¼ÓÕâ¸öÃüÃû¿Õ¼ä
+using System.Collections; // æ·»åŠ è¿™ä¸ªå‘½åç©ºé—´
 
 public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -16,15 +16,18 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public GameObject HiddenPrefab;
     public MapGridType gridType;
     public int normalType;
-    private Image hiddenImage; // Èô HiddenPrefab ÊÇ UI ¶ÔÏó
+    private Image hiddenImage; // è‹¥ HiddenPrefab æ˜¯ UI å¯¹è±¡
 
     public bool isNextBoss;
     public MapGrid bossGrid;
     
-    [Header("³¡¾°¹ı¶ÉÉèÖÃ")]
-    public GameObject transitionObject; // ÔÚ¼ÓÔØ³¡¾°Ç°ÒªÏÔÊ¾µÄ¶ÔÏó
-    public float transitionDelay = 2f; // µÈ´ıÊ±¼ä£¨Ãë£©
+    [Header("åœºæ™¯è¿‡æ¸¡è®¾ç½®")]
+    public GameObject transitionObject; // åœ¨åŠ è½½åœºæ™¯å‰è¦æ˜¾ç¤ºçš„å¯¹è±¡
+    public float transitionDelay = 2f; // ç­‰å¾…æ—¶é—´ï¼ˆç§’ï¼‰
 
+    [Header("Boss æˆ˜å‰å¯¹è¯")]
+    public DialogueTrigger preBossDialogue; // ç»‘å®šä¸€ä¸ªå¯¹è¯è§¦å‘å™¨ï¼ˆCustomEventç±»å‹ï¼‰
+    public bool waitForDialogueEnd = true;   // æ˜¯å¦ç­‰å¾…å¯¹è¯ç»“æŸ
 
     private void Awake()
     {
@@ -50,37 +53,37 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             }
         }
         
-        // ³õÊ¼»¯¹ı¶É¶ÔÏóÎªÒş²Ø×´Ì¬
+        // åˆå§‹åŒ–è¿‡æ¸¡å¯¹è±¡ä¸ºéšè—çŠ¶æ€
         if (transitionObject != null)
         {
             transitionObject.SetActive(false);
         }
     }
 
-    // Êó±êĞüÍ£
+    // é¼ æ ‡æ‚¬åœ
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // ¿ÉÑ¡£ºĞüÍ£¶¯»­
+        // å¯é€‰ï¼šæ‚¬åœåŠ¨ç”»
         // transform.DOScale(originalScale * 1.1f, 0.2f).SetEase(Ease.OutBack);
     }
 
-    // Êó±êÀë¿ª
+    // é¼ æ ‡ç¦»å¼€
     public void OnPointerExit(PointerEventData eventData)
     {
         // transform.DOScale(originalScale, 0.2f).SetEase(Ease.OutBack);
     }
 
-    // µã»÷¸ñ×Ó
+    // ç‚¹å‡»æ ¼å­
     public void OnPointerClick(PointerEventData eventData)
     {
         if (isReached) return;
         PlayerInMap player = MapGridManager.instance.player;
         if (player == null || canSelect == false) return;
 
-        // ÏÈÍÑÀë¸¸Îï¼ş
+        // å…ˆè„±ç¦»çˆ¶ç‰©ä»¶
         player.transform.SetParent(player.transform.parent.parent);
 
-        // ÒÆ¶¯¶¯»­
+        // ç§»åŠ¨åŠ¨ç”»
         player.transform.DOMove(transform.position, 0.5f)
             .SetEase(Ease.InOutSine)
             .OnComplete(() =>
@@ -90,12 +93,19 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 player.transform.localRotation = Quaternion.identity;
                 player.currentPos = gridPos;
                 MapGridManager.instance.currentGrid = this;
-                
+
                 string sceneToLoad = GetSceneToLoad();
                 if (!string.IsNullOrEmpty(sceneToLoad))
                 {
-                    // Ê¹ÓÃ¹ı¶ÉĞ§¹û¼ÓÔØ³¡¾°
-                    StartCoroutine(LoadSceneWithTransition(sceneToLoad));
+                    if (gridType == MapGridType.Boss)
+                    {
+                        // ğŸ‘‡ ç”¨åç¨‹æ‰§è¡Œâ€œå¯¹è¯â†’åˆ‡æ¢åœºæ™¯â€
+                        StartCoroutine(HandleBossDialogueAndScene(sceneToLoad));
+                    }
+                    else
+                    {
+                        StartCoroutine(LoadSceneWithTransition(sceneToLoad));
+                    }
                 }
                 else
                 {
@@ -103,16 +113,46 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 }
             });
     }
-    
-    // Ê¹ÓÃ¹ı¶ÉĞ§¹û¼ÓÔØ³¡¾°
+    private IEnumerator HandleBossDialogueAndScene(string sceneName)
+    {
+        // å¦‚æœæœ‰è®¾ç½® Boss å‰å¯¹è¯
+        if (preBossDialogue != null)
+        {
+            Debug.Log("å‡†å¤‡è§¦å‘ Boss å‰å¯¹è¯...");
+            preBossDialogue.TriggerManually();
+
+            if (waitForDialogueEnd)
+            {
+                DialogueSystem dialogueSystem = FindObjectOfType<DialogueSystem>();
+                if (dialogueSystem != null)
+                {
+                    // ç­‰å¾…å¯¹è¯ç³»ç»Ÿå¼€å§‹
+                    yield return new WaitUntil(() => dialogueSystem.isDialoguing);
+                    Debug.Log("Boss å¯¹è¯å¼€å§‹æ’­æ”¾...");
+
+                    // ç­‰å¾…å¯¹è¯ç»“æŸ
+                    yield return new WaitUntil(() => !dialogueSystem.isDialoguing);
+                    Debug.Log("Boss å¯¹è¯ç»“æŸã€‚");
+                }
+                else
+                {
+                    Debug.LogWarning("æœªæ‰¾åˆ° DialogueSystemï¼Œç›´æ¥è¿›å…¥åœºæ™¯ã€‚");
+                }
+            }
+        }
+
+        // æ’­æ”¾è¿‡æ¸¡åŠ¨ç”»å¹¶åŠ è½½åœºæ™¯
+        yield return StartCoroutine(LoadSceneWithTransition(sceneName));
+    }
+    // ä½¿ç”¨è¿‡æ¸¡æ•ˆæœåŠ è½½åœºæ™¯
     private IEnumerator LoadSceneWithTransition(string sceneName)
     {
-        // ÏÔÊ¾¹ı¶É¶ÔÏó
+        // æ˜¾ç¤ºè¿‡æ¸¡å¯¹è±¡
         if (transitionObject != null)
         {
             transitionObject.SetActive(true);
             
-            // ¿ÉÑ¡£ºÌí¼Óµ­Èë¶¯»­
+            // å¯é€‰ï¼šæ·»åŠ æ·¡å…¥åŠ¨ç”»
             CanvasGroup canvasGroup = transitionObject.GetComponent<CanvasGroup>();
             if (canvasGroup != null)
             {
@@ -120,13 +160,13 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 canvasGroup.DOFade(1f, 0.5f).SetEase(Ease.OutQuad);
             }
             
-            Debug.Log($"ÏÔÊ¾¹ı¶É¶ÔÏó£¬µÈ´ı {transitionDelay} Ãë");
+            Debug.Log($"æ˜¾ç¤ºè¿‡æ¸¡å¯¹è±¡ï¼Œç­‰å¾… {transitionDelay} ç§’");
         }
         
-        // µÈ´ıÖ¸¶¨Ê±¼ä
+        // ç­‰å¾…æŒ‡å®šæ—¶é—´
         yield return new WaitForSeconds(transitionDelay);
         
-        // ¼ÓÔØ³¡¾°
+        // åŠ è½½åœºæ™¯
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(sceneName);
     }
@@ -139,6 +179,7 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         }
         else if(gridType == MapGridType.Boss)
         {
+            
             return "1-9";
         }
         else if (normalType == 0 && gridType == MapGridType.Normal)
@@ -175,19 +216,19 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // ¼ÓÔØÍê³ÉºóÔÙ¹Ø±ÕµØÍ¼
+        // åŠ è½½å®Œæˆåå†å…³é—­åœ°å›¾
         if (MapGridManager.instance != null)
         {
             MapGridManager.instance.gameObject.SetActive(false);
         }
 
-        // ÒÆ³ıÊÂ¼ş·ÀÖ¹ÖØ¸´´¥·¢
+        // ç§»é™¤äº‹ä»¶é˜²æ­¢é‡å¤è§¦å‘
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void ShowNextGrids()
     {
-        // ÏÔÊ¾Òş²ØÄÚÈİ
+        // æ˜¾ç¤ºéšè—å†…å®¹
         SetVisual();
         MapGridManager.instance.DimPreviousGrids(gridPos.x);
         if (isNextBoss != true)
@@ -208,7 +249,7 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     }
 
     /// <summary>
-    /// ¸ù¾İÀàĞÍÏÔÊ¾¸ñ×ÓµÄÊÓ¾õĞ§¹û
+    /// æ ¹æ®ç±»å‹æ˜¾ç¤ºæ ¼å­çš„è§†è§‰æ•ˆæœ
     /// </summary>
     public void SetVisual()
     {
@@ -218,18 +259,18 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             return;
         }
 
-        Image selfImage = GetComponent<Image>();              // µ±Ç°¸ñ×ÓµÄ UI Image
-        Image hiddenImage = HiddenPrefab?.GetComponent<Image>(); // Òş²ØÎï¼şµÄ UI Image
+        Image selfImage = GetComponent<Image>();              // å½“å‰æ ¼å­çš„ UI Image
+        Image hiddenImage = HiddenPrefab?.GetComponent<Image>(); // éšè—ç‰©ä»¶çš„ UI Image
 
         if (hiddenImage != null)
         {
-            // È·±£³õÊ¼×´Ì¬
+            // ç¡®ä¿åˆå§‹çŠ¶æ€
             Color hc = hiddenImage.color;
             hc.a = 0f;
             hiddenImage.color = hc;
             HiddenPrefab.SetActive(true);
 
-            // Í¬Ê±½øĞĞµ­³öºÍµ­Èë¶¯»­
+            // åŒæ—¶è¿›è¡Œæ·¡å‡ºå’Œæ·¡å…¥åŠ¨ç”»
             float duration = 0.8f;
             hiddenImage.DOFade(1f, duration).SetEase(Ease.OutQuad);
             if (selfImage != null)
