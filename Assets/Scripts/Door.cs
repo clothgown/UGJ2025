@@ -96,12 +96,16 @@ public class Door : MonoBehaviour
 
         Debug.Log($"单位 {unit.name} 到达门格子 {gridPos}，触发UI面板");
 
-        if (instantiatedPanel != null)
-        {
-            Destroy(instantiatedPanel);
-            instantiatedPanel = null;
-        }
+        //if (instantiatedPanel != null)
+        //{
+        //    Destroy(instantiatedPanel);
+        //    instantiatedPanel = null;
+        //}
 
+        if(isEndScene)
+        {
+            choosePanel.SetActive(true);
+        }
         if (choosePanel != null && canvas != null)
         {
             instantiatedPanel = Instantiate(choosePanel, canvas.transform);
