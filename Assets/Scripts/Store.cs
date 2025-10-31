@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class Store : MonoBehaviour
 {
@@ -68,10 +69,32 @@ public class Store : MonoBehaviour
         int.TryParse(costText.text, out cost);
         if(CollectionManager.instance.coins >= cost)
         {
-            FindAnyObjectByType<DeckManager>().AddCard(FindDeepChild(detailPanel.transform, "goods(Clone)").GetChild(0).GetComponent<CradInStore>().cardData);
-            CollectionManager.instance.coins -= cost;
+            if(FindDeepChild(currentWindow.transform, "goods").GetChild(0).GetComponent<CardHoverPreview>().cardData != null)
+            {
+                FindAnyObjectByType<DeckManager>().AddCard(FindDeepChild(currentWindow.transform, "goods").GetChild(0).GetComponent<CardHoverPreview>().cardData);
+                CollectionManager.instance.coins -= cost;
+                currentWindow.gameObject.SetActive(false);
+            }
+            if (FindDeepChild(currentWindow.transform, "goods").GetChild(0).GetComponent<CardHoverPreview>().isItemCard)
+            {
+                switch(FindDeepChild(currentWindow.transform, "goods").GetChild(0).GetComponent<CardHoverPreview>().itemType)
+                {
+                    case ItemType.fortune:
+                        ItemCardManager.instance.AddCard(0, 1); // 增加1张对应卡牌
+                        break;
 
-            currentWindow.gameObject.SetActive(false);
+                    case ItemType.god:
+                        ItemCardManager.instance.AddCard(1, 1); // 增加1张对应卡牌
+                        break;
+                    case ItemType.locate:
+                        ItemCardManager.instance.AddCard(2, 1); // 增加1张对应卡牌
+                        break;
+                        
+                }
+                CollectionManager.instance.coins -= cost;
+                currentWindow.gameObject.SetActive(false);
+            }
+
         }
     }
     private Transform FindDeepChild(Transform parent, string name)
@@ -98,7 +121,7 @@ public class Store : MonoBehaviour
         {
             if (tmp.name == "Value")
             {
-                int randomValue = Random.Range(150, 201);
+                int randomValue = UnityEngine.Random.Range(150, 201);
                 tmp.text = randomValue.ToString();
                 count++;
             }
@@ -121,7 +144,7 @@ public class Store : MonoBehaviour
             {
                 if (cardPrefabs != null && cardPrefabs.Count > 0)
                 {
-                    GameObject prefab = cardPrefabs[Random.Range(0, cardPrefabs.Count)];
+                    GameObject prefab = cardPrefabs[UnityEngine.Random.Range(0, cardPrefabs.Count)];
                     GameObject newCard = Instantiate(prefab, obj.transform);
                     newCard.transform.localPosition = Vector3.zero; // 居中放置
                     spawnCount++;

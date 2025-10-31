@@ -2,6 +2,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.VFX;
 using static UnitController;
@@ -29,7 +30,7 @@ public class EnemyUnit : MonoBehaviour
 
     public float attackDamage = 2f;
     public bool isDizziness;
-
+    public GameObject hitEffect;
     [Header("Passive Specific")]
     [SerializeField] private bool hasBeenAttacked = false; // Passive敌人是否已被攻击过
 
@@ -603,7 +604,10 @@ public class EnemyUnit : MonoBehaviour
     {
         TakeDamage(amount, CardData.AttackAttribute.None);
         currentHealth -= amount;
-        if(Attacked!=null)
+        GameObject effect = Instantiate(hitEffect, transform.Find("Canvas"));
+        effect.GetComponent<TextMeshProUGUI>().text = amount.ToString();
+        Destroy(effect, 1f);//1秒后自动销毁
+        if (Attacked!=null)
         {
             Attacked.gameObject.SetActive(true);
             

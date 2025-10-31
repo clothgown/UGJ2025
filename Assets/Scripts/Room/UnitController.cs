@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 
 using UnityEngine;
@@ -71,6 +72,8 @@ public class UnitController : MonoBehaviour
     public VisualEffect sheild;
     public VisualEffect Dodge;
 
+
+    public GameObject hitEffect;
     [Header("死亡效果")]
     public Color deadColor = new Color(0.3f, 0.3f, 0.3f, 1f);
 
@@ -406,7 +409,7 @@ public class UnitController : MonoBehaviour
         if (shield == 0)
         {
             Attacked.gameObject.SetActive(true);
-
+            hitEffect.SetActive(true);
             Attacked.SendEvent("OnPlay");
             if (who == Who.Heart)
             {
@@ -445,6 +448,11 @@ public class UnitController : MonoBehaviour
         if (amount > 0)
         {
             currentHealth -= amount;
+
+            GameObject effect = Instantiate(hitEffect, transform.Find("Canvas")); 
+            effect.GetComponent<TextMeshProUGUI>().text = amount.ToString(); 
+            Destroy(effect,1f);//1秒后自动销毁
+
             healthSystem.SetHealth(currentHealth);
 
             if (currentHealth <= 0)
