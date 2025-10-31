@@ -1343,19 +1343,19 @@ CompositeCollider2D:
   - m_Collider: {fileID: 422301576}
     m_ColliderPaths:
     - - X: 200245120
-        Y: 182599952
+        Y: 222851424
       - X: -235322192
-        Y: 182599952
+        Y: 222851424
       - X: -235322192
-        Y: -100602952
+        Y: -145067536
       - X: 200245120
-        Y: -100602952
+        Y: -145067536
   m_CompositePaths:
     m_Paths:
-    - - {x: 20.024483, y: -10.060295}
-      - {x: 20.024483, y: 18.259995}
-      - {x: -23.532219, y: 18.259966}
-      - {x: -23.53219, y: -10.060295}
+    - - {x: 20.024483, y: -14.506754}
+      - {x: 20.024483, y: 22.285143}
+      - {x: -23.532219, y: 22.285114}
+      - {x: -23.53219, y: -14.506754}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -1392,7 +1392,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: -1.1692362, y: 2.7332335}
+  m_Offset: {x: -1.1692362, y: 2.5927963}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1403,7 +1403,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 29.03782, y: 18.880194}
+  m_Size: {x: 29.03782, y: 24.527931}
   m_EdgeRadius: 0
 --- !u!50 &422301577
 Rigidbody2D:
@@ -2379,7 +2379,7 @@ MonoBehaviour:
   m_Follow: {fileID: 67349444}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 3.88
+    OrthographicSize: 4.34
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -2405,7 +2405,7 @@ Transform:
   m_GameObject: {fileID: 589974189}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.161999, y: 22.099998, z: -8.4}
+  m_LocalPosition: {x: 29.512, y: 21.24, z: -8.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3456,7 +3456,7 @@ MonoBehaviour:
   gameGridsPos:
   - {x: 38, y: 11}
   - {x: 38, y: 12}
-  choosePanel: {fileID: 8066115391996660268, guid: 7f7f345641289674ba53f8f7a59692d8, type: 3}
+  choosePanel: {fileID: 1572538500}
   canvas: {fileID: 1871112456}
   EndPanel: {fileID: 1572538500}
   isEndScene: 1
@@ -3516,7 +3516,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.88
+  orthographic size: 4.34
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3629,7 +3629,7 @@ Transform:
   m_GameObject: {fileID: 815158497}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.161999, y: 22.099998, z: -8.4}
+  m_LocalPosition: {x: 29.512, y: 21.24, z: -8.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4673,7 +4673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: -1.35, y: 2.3, z: -10}
+  m_FollowOffset: {x: 0, y: 1.44, z: -10}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -7269,7 +7269,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 24.231998, y: 27.7, z: 1.6}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 3.2800002, y: 3.2800002, z: 3.2800002}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
