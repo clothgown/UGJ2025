@@ -70,6 +70,8 @@ public class UnitController : MonoBehaviour
     public VisualEffect Cure;
     public VisualEffect sheild;
 
+
+    public GameObject hitEffect;
     [Header("死亡效果")]
     public Color deadColor = new Color(0.3f, 0.3f, 0.3f, 1f);
 
@@ -403,7 +405,7 @@ public class UnitController : MonoBehaviour
         if (shield == 0)
         {
             Attacked.gameObject.SetActive(true);
-
+            hitEffect.SetActive(true);
             Attacked.SendEvent("OnPlay");
             if (who == Who.Heart)
             {
