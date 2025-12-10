@@ -39,8 +39,13 @@ public class HealthSystem : MonoBehaviour
     public void SetHealth(float health)
     {
         currentHealth = health;
-        StartCoroutine(SmoothHealthChange(healthBar, health, maxHealth));
-        StartCoroutine(SmoothHealthChange(healthBarinUI, health, maxHealth));
+
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(SmoothHealthChange(healthBar, health, maxHealth));
+            StartCoroutine(SmoothHealthChange(healthBarinUI, health, maxHealth));
+        }
+        
         UpdateHealthText(); // 更新血量文本
         // 检查死亡
         if (health <= 0 && !isDead)
@@ -95,7 +100,8 @@ public class HealthSystem : MonoBehaviour
         OnDeath?.Invoke(unitController);
 
         // 可以在这里添加死亡特效、动画等
-        StartCoroutine(DeathRoutine());
+        if(gameObject.activeSelf)
+            StartCoroutine(DeathRoutine());
     }
 
     // 死亡协程
@@ -122,6 +128,9 @@ public class HealthSystem : MonoBehaviour
     // 平滑变化协程
     private IEnumerator SmoothHealthChange(Image bar, float targetValue, float maxValue)
     {
+        if (bar == null)
+            yield break;
+
         float currentValue = bar.fillAmount * maxValue;
         float elapsedTime = 0f;
 

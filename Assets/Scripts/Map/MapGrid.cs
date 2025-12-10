@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-using DG.Tweening;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+﻿using DG.Tweening;
 using System.Collections; // 添加这个命名空间
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -20,7 +20,7 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public bool isNextBoss;
     public MapGrid bossGrid;
-    
+
     [Header("场景过渡设置")]
     public GameObject transitionObject; // 在加载场景前要显示的对象
     public float transitionDelay = 2f; // 等待时间（秒）
@@ -52,7 +52,7 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 HiddenPrefab.SetActive(false);
             }
         }
-        
+
         // 初始化过渡对象为隐藏状态
         if (transitionObject != null)
         {
@@ -100,11 +100,13 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                     if (gridType == MapGridType.Boss)
                     {
                         // 👇 用协程执行“对话→切换场景”
-                        StartCoroutine(HandleBossDialogueAndScene(sceneToLoad));
+                        if (gameObject.activeSelf)
+                            StartCoroutine(HandleBossDialogueAndScene(sceneToLoad));
                     }
                     else
                     {
-                        StartCoroutine(LoadSceneWithTransition(sceneToLoad));
+                        if (gameObject.activeSelf)
+                            StartCoroutine(LoadSceneWithTransition(sceneToLoad));
                     }
                 }
                 else
@@ -151,7 +153,7 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         if (transitionObject != null)
         {
             transitionObject.SetActive(true);
-            
+
             // 可选：添加淡入动画
             CanvasGroup canvasGroup = transitionObject.GetComponent<CanvasGroup>();
             if (canvasGroup != null)
@@ -159,13 +161,13 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 canvasGroup.alpha = 0f;
                 canvasGroup.DOFade(1f, 0.5f).SetEase(Ease.OutQuad);
             }
-            
+
             Debug.Log($"显示过渡对象，等待 {transitionDelay} 秒");
         }
-        
+
         // 等待指定时间
         yield return new WaitForSeconds(transitionDelay);
-        
+
         // 加载场景
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(sceneName);
@@ -177,9 +179,9 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         {
             return "Store";
         }
-        else if(gridType == MapGridType.Boss)
+        else if (gridType == MapGridType.Boss)
         {
-            
+
             return "1-9";
         }
         else if (normalType == 0 && gridType == MapGridType.Normal)
@@ -210,7 +212,7 @@ public class MapGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 return MapGridManager.instance.exploreSceneNames[randomIndex];
             }
         }
-        
+
         return null;
     }
 

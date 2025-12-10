@@ -47,10 +47,6 @@ public class IsoGrid2D : MonoBehaviour
     }
     private void Update()
     {
-        
-
-        
-
         if (FindAnyObjectByType<HorizontalCardHolder>()!=null)
         {
             if (controller.GetComponent<UnitController>().isNextAttackDouble)
@@ -212,6 +208,7 @@ public class IsoGrid2D : MonoBehaviour
         if (isWaitingForGridClick) return;
         foreach (var tile in grid)
         {
+            if(tile == null) continue;
             GameGrid gridComp = tile.GetComponent<GameGrid>();
             gridComp.ResetColor();       // 恢复颜色
             gridComp.isInRange = false;

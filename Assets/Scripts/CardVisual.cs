@@ -1,12 +1,5 @@
 using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CardVisual : MonoBehaviour
@@ -68,7 +61,7 @@ public class CardVisual : MonoBehaviour
     private float curveRotationOffset;
     private Coroutine pressCoroutine;
     public HorizontalCardHolder horizontalCardHolder;
-    
+
     private CanvasGroup canvasGroup;
 
     public Image normalSprite;
@@ -85,11 +78,11 @@ public class CardVisual : MonoBehaviour
         shadowDistance = visualShadow.localPosition;
         canvasGroup = GetComponent<CanvasGroup>();
 
-        if(doubleSprite!=null)
+        if (doubleSprite != null)
         {
             doubleSprite.enabled = false;
         }
-        if(massSprite!=null)
+        if (massSprite != null)
         {
             massSprite.enabled = false;
         }
@@ -99,10 +92,11 @@ public class CardVisual : MonoBehaviour
         {
             cardAssetsPreview = previewTransform.gameObject;
             cardAssetsPreview.SetActive(false); // Ä¬ÈÏÒþ²Ø
+            /*
             normalt.SetActive(false);
             doublet.SetActive(false);
             masst.SetActive(false);
-            
+            */
         }
     }
 
@@ -187,9 +181,9 @@ public class CardVisual : MonoBehaviour
         DOTween.Kill(2, true);
         float dir = state ? 1 : 0;
         shakeParent.DOPunchPosition(shakeParent.up * selectPunchAmount * dir, scaleTransition, 10, 1);
-        shakeParent.DOPunchRotation(Vector3.forward * (hoverPunchAngle/2), hoverTransition, 20, 1).SetId(2);
+        shakeParent.DOPunchRotation(Vector3.forward * (hoverPunchAngle / 2), hoverTransition, 20, 1).SetId(2);
 
-        if(scaleAnimations)
+        if (scaleAnimations)
             transform.DOScale(scaleOnHover, scaleTransition).SetEase(scaleEase);
 
     }
@@ -209,14 +203,14 @@ public class CardVisual : MonoBehaviour
         if (IsoGrid2D.instance.isWaitingForGridClick == true) return;
         if (cardAssetsPreview != null)
             cardAssetsPreview.SetActive(false);
-        foreach(Card cards in horizontalCardHolder.cards)
+        foreach (Card cards in horizontalCardHolder.cards)
         {
-            if(cards.cardVisual.cardAssetsPreview!=null)
+            if (cards.cardVisual.cardAssetsPreview != null)
             {
                 cards.cardVisual.cardAssetsPreview.SetActive(false);
-            } 
+            }
         }
-            
+
         if (scaleAnimations)
             transform.DOScale(scaleOnSelect, scaleTransition).SetEase(scaleEase);
         canvasGroup.alpha = Mathf.Clamp01(canvasGroup.alpha - 0.25f);
@@ -312,8 +306,8 @@ public class CardVisual : MonoBehaviour
         {
             IsoGrid2D.instance.HighlightSingleTile(playerPos);
         }
-        
-        
+
+
     }
 
 
@@ -331,7 +325,7 @@ public class CardVisual : MonoBehaviour
             cardAssetsPreview.SetActive(false);
         IsoGrid2D.instance.ClearHighlight();
         TurnManager.instance.currentController.Move();
-        
+
 
     }
 
@@ -351,28 +345,28 @@ public class CardVisual : MonoBehaviour
         if (TurnManager.instance.currentController.isMoving == true) return;
         if (scaleAnimations)
             transform.DOScale(scaleOnSelect, scaleTransition).SetEase(scaleEase);
-            
+
         visualShadow.localPosition += (-Vector3.up * shadowOffset);
         shadowCanvas.overrideSorting = false;
     }
 
     private void OnDestroy()
     {
-        Debug.Log(parentCard.data.effectType);
-        if(parentCard.data.effectType == CardData.CardEffectType.Attack || parentCard.data.effectType == CardData.CardEffectType.RemoteAttack)
+        //Debug.Log(parentCard.data.effectType);
+        if (parentCard != null && (parentCard.data.effectType == CardData.CardEffectType.Attack || parentCard.data.effectType == CardData.CardEffectType.RemoteAttack))
         {
             IsoGrid2D.instance.HighlightAttackArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
         }
-        else if(parentCard.data.effectType == CardData.CardEffectType.StraightAttack)
+        else if (parentCard != null && (parentCard.data.effectType == CardData.CardEffectType.StraightAttack))
         {
             IsoGrid2D.instance.HighlightStraightAttackArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
         }
-        else if (parentCard.data.effectType == CardData.CardEffectType.ChangeGridState)
+        else if (parentCard != null && parentCard.data.effectType == CardData.CardEffectType.ChangeGridState)
         {
             IsoGrid2D.instance.MarkEditableArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
 
         }
-        else if (parentCard.data.effectType == CardData.CardEffectType.Change)
+        else if (parentCard != null && parentCard.data.effectType == CardData.CardEffectType.Change)
         {
             IsoGrid2D.instance.HighlightArea(TurnManager.instance.currentController.currentGridPos, parentCard.data.attackRange);
         }
@@ -380,8 +374,8 @@ public class CardVisual : MonoBehaviour
         {
             IsoGrid2D.instance.ClearHighlight();
         }
-        
-        horizontalCardHolder.isDraging = false;
+        if (horizontalCardHolder)
+            horizontalCardHolder.isDraging = false;
     }
 
 

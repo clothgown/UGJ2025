@@ -51,6 +51,9 @@ public class Door : MonoBehaviour
 
     void Update()
     {
+        if (allUnits == null)
+            return;
+
         foreach (var unit in allUnits)
         {
             if (unit == null) continue;

@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Collections.LowLevel.Unsafe;
 
 using UnityEngine;
 using UnityEngine.VFX;
@@ -21,11 +20,11 @@ public class UnitController : MonoBehaviour
 
     public int attackRange = 1;    // ������Χ���������� 1 ��
     public float attackDamage = 5f;
-    public float meleeMultiplier = 1f;   
+    public float meleeMultiplier = 1f;
 
-    public float rangedMultiplier = 1f;  
+    public float rangedMultiplier = 1f;
 
-    public float dodgeChance = 0f;       
+    public float dodgeChance = 0f;
 
     public Vector2Int currentGridPos; // ��ҵ�ǰ����λ��
 
@@ -62,7 +61,7 @@ public class UnitController : MonoBehaviour
     [Header("VFX")]
     public VisualEffect MoveVFX;
     public VisualEffect RunOutActionPoint;
-    
+
     public VisualEffect XN;
     public VisualEffect Attacked;
     public VisualEffect AttackedByArrow;
@@ -131,16 +130,16 @@ public class UnitController : MonoBehaviour
             //同步角色排序层级
             if (sr != null)
             {
-                int sortingOrder = startPoint.x+ startPoint.y;
+                int sortingOrder = startPoint.x + startPoint.y;
                 sr.sortingOrder = -sortingOrder + 2; // +2 确保比格子高
-                if(RunOutActionPoint!=null)
+                if (RunOutActionPoint != null)
                 {
                     RunOutActionPoint.GetComponent<Renderer>().sortingOrder = sr.sortingOrder;
                 }
             }
             IsoGrid2D.instance.currentPlayerGrid = gridComp;
         }
-        
+
         // ✅ 从 AllPlayerState 恢复血量
         AllPlayerState aps = FindAnyObjectByType<AllPlayerState>();
         if (aps != null)
@@ -153,7 +152,7 @@ public class UnitController : MonoBehaviour
                 {
                     healthSystem.SetHealth(savedHealth); // 假设 HealthSystem 有 SetHealth 方法
                 }
-                
+
             }
         }
 
@@ -187,7 +186,7 @@ public class UnitController : MonoBehaviour
         if (isActive == false) return;
         if (transform.childCount == 0) return; // 防止没子物件时报错
         currentGrid = transform.parent.GetComponent<GameGrid>();
-        
+
 
     }
 
@@ -239,7 +238,7 @@ public class UnitController : MonoBehaviour
         }
 
         // 显示游戏结束UI
-        
+
     }
     // 检查单位是否死亡
     public bool IsDead()
@@ -252,7 +251,7 @@ public class UnitController : MonoBehaviour
     {
         if (FindAnyObjectByType<DialogueSystem>().isDialoguing == true) return;
         if (IsoGrid2D.instance.isWaitingForGridClick) return;
-        if(actionPoints == 0) return;
+        if (actionPoints == 0) return;
         IsoGrid2D.instance.HighlightMoveRange(currentGridPos, moveRange);
         if (IsDead())
         {
@@ -275,7 +274,7 @@ public class UnitController : MonoBehaviour
             if (actionPoints <= 0) return;
             UseActionPoint(1);
         }
-        
+
         string[] nameParts = targetGrid.gameObject.name.Split('_');
         Vector2Int targetPos = new Vector2Int(int.Parse(nameParts[1]), int.Parse(nameParts[2]));
 
@@ -286,12 +285,12 @@ public class UnitController : MonoBehaviour
             StartCoroutine(FollowPath(path));
             IsoGrid2D.instance.ClearHighlight();
         }
-        
+
     }
 
     private System.Collections.IEnumerator FollowPath(List<GameGrid> path)
     {
-    isMoving = true;
+        isMoving = true;
         // ✅ 开始播放奔跑烟雾
         if (MoveVFX != null)
         {
@@ -300,67 +299,67 @@ public class UnitController : MonoBehaviour
         }
 
         if (startGrid != null)
-        startGrid.GetComponent<GameGrid>().isOccupied = false;
+            startGrid.GetComponent<GameGrid>().isOccupied = false;
 
-    foreach (var grid in path)
-    {
-        Vector3 startPos = transform.position;
-        Vector3 endPos = grid.transform.position;
+        foreach (var grid in path)
+        {
+            Vector3 startPos = transform.position;
+            Vector3 endPos = grid.transform.position;
             Vector2Int prevPos = startPoint;
             string[] nameParts = grid.name.Split('_');
             Vector2Int nextPos = new Vector2Int(int.Parse(nameParts[1]), int.Parse(nameParts[2]));
             UpdateDirectionSprite(prevPos, nextPos); // 关键行
             float distance = Vector2.Distance(startPos, endPos);
-        float travelTime = distance / moveSpeed; // 移动时间
-        float elapsed = 0f;
+            float travelTime = distance / moveSpeed; // 移动时间
+            float elapsed = 0f;
 
-        float jumpHeight = 0.1f; // 跳跃高度，可调
+            float jumpHeight = 0.1f; // 跳跃高度，可调
             AudioManager.Instance.PlaySFX("move");
             while (elapsed < travelTime)
-        {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / travelTime);
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / travelTime);
 
-            // XY 方向平滑插值（走格子路径）
-            Vector3 basePos = Vector3.Lerp(startPos, endPos, t);
+                // XY 方向平滑插值（走格子路径）
+                Vector3 basePos = Vector3.Lerp(startPos, endPos, t);
 
-            // 在 Y 上叠加跳跃（抛物线/正弦曲线都行）
-            float jumpOffset = Mathf.Sin(t * Mathf.PI) * jumpHeight;
+                // 在 Y 上叠加跳跃（抛物线/正弦曲线都行）
+                float jumpOffset = Mathf.Sin(t * Mathf.PI) * jumpHeight;
 
-                
+
 
                 transform.position = new Vector3(basePos.x, basePos.y + jumpOffset, basePos.z);
 
-            yield return null;
-        }
-            
+                yield return null;
+            }
+
             // 最终落地到格子
             transform.position = endPos;
-            
+
 
             // 更新格子占用
             if (startGrid != null)
-        {
-            var oldGrid = startGrid.GetComponent<GameGrid>();
-            oldGrid.isOccupied = false;
-            oldGrid.occupiedPlayer = null;
-        }
+            {
+                var oldGrid = startGrid.GetComponent<GameGrid>();
+                oldGrid.isOccupied = false;
+                oldGrid.occupiedPlayer = null;
+            }
 
-        grid.isOccupied = true;
-        grid.occupiedPlayer = this;
-        startGrid = grid.gameObject;
-        
-        int x = int.Parse(nameParts[1]);
-        int y = int.Parse(nameParts[2]);
-        startPoint = new Vector2Int(x, y);
-        currentGridPos = startPoint;
+            grid.isOccupied = true;
+            grid.occupiedPlayer = this;
+            startGrid = grid.gameObject;
 
-        IsoGrid2D.instance.currentPlayerGrid = grid.GetComponent<GameGrid>();
+            int x = int.Parse(nameParts[1]);
+            int y = int.Parse(nameParts[2]);
+            startPoint = new Vector2Int(x, y);
+            currentGridPos = startPoint;
 
-        transform.SetParent(grid.transform);
-        transform.localPosition = Vector3.zero;
+            IsoGrid2D.instance.currentPlayerGrid = grid.GetComponent<GameGrid>();
 
-        if (sr != null)
+            transform.SetParent(grid.transform);
+            transform.localPosition = Vector3.zero;
+
+            if (sr != null)
             {
                 sr.sortingOrder = grid.GetComponent<GameGrid>().sortingOrder * -1 + 2;
             }
@@ -375,7 +374,7 @@ public class UnitController : MonoBehaviour
             }
         }
 
-    isMoving = false;
+        isMoving = false;
         // ✅ 停止播放奔跑烟雾
         if (MoveVFX != null)
         {
@@ -386,13 +385,13 @@ public class UnitController : MonoBehaviour
         Move();
     }
 
-   
+
 
     public void TakeDamage(float amount)
     {
         if (Random.value < dodgeChance)
         {
-            
+
             Debug.Log($"{name} 闪避了这次攻击！");
             Dodge.gameObject.SetActive(true);
             Dodge.Play();
@@ -449,9 +448,9 @@ public class UnitController : MonoBehaviour
         {
             currentHealth -= amount;
 
-            GameObject effect = Instantiate(hitEffect, transform.Find("Canvas")); 
-            effect.GetComponent<TextMeshProUGUI>().text = amount.ToString(); 
-            Destroy(effect,1f);//1秒后自动销毁
+            GameObject effect = Instantiate(hitEffect, transform.Find("Canvas"));
+            effect.GetComponent<TextMeshProUGUI>().text = amount.ToString();
+            Destroy(effect, 1f);//1秒后自动销毁
 
             healthSystem.SetHealth(currentHealth);
 
@@ -511,7 +510,7 @@ public class UnitController : MonoBehaviour
         AudioManager.Instance.PlaySFX("shield");
     }
 
-    
+
     public void Heal(float health)
     {
         Debug.Log(123);
@@ -519,15 +518,15 @@ public class UnitController : MonoBehaviour
         if (health > 5)
         {
             Cure.SetFloat(Shader.PropertyToID("size"), 2.5f);
-            Cure.SetVector2(Shader.PropertyToID("count"), new Vector2(20,25));
-            
+            Cure.SetVector2(Shader.PropertyToID("count"), new Vector2(20, 25));
+
         }
         Cure.gameObject.SetActive(true);
         Cure.Play();
         AudioManager.Instance.PlaySFX("heal");
-        if (currentHealth>=maxHealth)
+        if (currentHealth >= maxHealth)
         {
-            currentHealth=maxHealth;
+            currentHealth = maxHealth;
         }
         healthSystem.SetHealth(currentHealth);
         UpdateCharacterHealthRecord();
@@ -544,7 +543,7 @@ public class UnitController : MonoBehaviour
         {
             UpdateDirectionSprite(currentGridPos, targetGrid.gridPos);
             Debug.Log($"��ҹ��� {enemy.name}����� {attackDamage} �˺���");
-            
+
             if (attackType == 1)
             {
                 AudioManager.Instance.PlaySFX("sword");
@@ -577,15 +576,15 @@ public class UnitController : MonoBehaviour
             float finalDamage = attackDamage;
             if (isNextAttackFire)
             {
-                
 
-                
+
+
             }
             if (isNextAttackIce)
             {
-                
 
-                
+
+
             }
             if (IsoGrid2D.instance.isFortune)
             {
@@ -602,9 +601,9 @@ public class UnitController : MonoBehaviour
             enemy.TakeDamage(finalDamage);
 
         }
-        
+
     }
-    
+
     public void TeleportToGrid(GameGrid targetGrid)
     {
         // �ͷ�ԭ���ĸ���
@@ -636,10 +635,10 @@ public class UnitController : MonoBehaviour
     {
         if (TurnManager.instance.currentController == this)
         {
-            actionPoints-=usePoint;
+            actionPoints -= usePoint;
             TurnManager.instance.UpdateActionPointUI(this);
         }
-        
+
         Debug.Log($"剩余行动点：{TurnManager.instance.currentController.actionPoints}");
         if (actionPoints <= 0)
         {
@@ -648,7 +647,7 @@ public class UnitController : MonoBehaviour
             RunOutActionPoint.gameObject.SetActive(true);
             RunOutActionPoint.Play(); // 直接播放特效
             Debug.Log("🎇 播放行动点耗尽特效！");
-           
+
         }
     }
 
@@ -670,7 +669,7 @@ public class UnitController : MonoBehaviour
     {
         actionPoints = actionPoint;
         TurnManager.instance.UpdateActionPointUI(this);
-        
+
     }
     public void SetNextAttackDouble()
     {
@@ -698,7 +697,7 @@ public class UnitController : MonoBehaviour
         isNextAttackBloodSucking = false;
         isNextAttackDouble = false;
         isNextAttackMass = false;
-        if(XN!=null)
+        if (XN != null)
         {
             XN.gameObject.SetActive(false);
         }
@@ -874,7 +873,7 @@ public class UnitController : MonoBehaviour
             }
         }
     }
-    
+
 
 }
 

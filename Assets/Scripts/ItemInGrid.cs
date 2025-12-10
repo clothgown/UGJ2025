@@ -275,6 +275,8 @@ public class ItemInGrid : MonoBehaviour
         tmp.alignment = TextAlignmentOptions.Center;
         tmp.color = Color.black;
 
+        messageObj.GetComponent<MeshRenderer>().sortingLayerName = "JumpText";
+
         // 尝试设置字体
         if (customFont != null)
         {

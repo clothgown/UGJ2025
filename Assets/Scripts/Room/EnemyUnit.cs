@@ -69,15 +69,15 @@ public class EnemyUnit : MonoBehaviour
         // 初始化敌人的位置
         if (IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y) != null)
         {
-            if(IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y).GetComponent<GameGrid>().occupiedPlayer != null)
+            if (IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y).GetComponent<GameGrid>().occupiedPlayer != null)
             {
-                startGrid = IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y-1);
+                startGrid = IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y - 1);
             }
             else
             {
                 startGrid = IsoGrid2D.instance.GetTile(startPoint.x, startPoint.y);
             }
-            
+
             var gridComp = startGrid.GetComponent<GameGrid>();
 
             gridComp.isOccupied = true;
@@ -89,14 +89,15 @@ public class EnemyUnit : MonoBehaviour
             //同步敌人 SpriteRenderer 层级
             if (sr != null)
             {
-                
+
                 int sortingOrder = startGrid.GetComponent<GameGrid>().gridPos.x + startGrid.GetComponent<GameGrid>().gridPos.y;
                 sr.sortingOrder = -sortingOrder + 2; // +2 确保比格子高
             }
         }
 
         currentHealth = maxHealth;
-        healthSystem.SetMaxHealth(maxHealth);
+        if (healthSystem)
+            healthSystem.SetMaxHealth(maxHealth);
 
         // Passive敌人初始不行动
         if (enemyType == EnemyType.Passive)
@@ -191,7 +192,7 @@ public class EnemyUnit : MonoBehaviour
     // 🎯 修改 TakeDamage 方法，添加攻击属性检测
     public void TakeDamage(float amount, CardData.AttackAttribute attackAttribute = CardData.AttackAttribute.None)
     {
-        
+
 
         // 🎯 播放属性攻击VFX
         if (attackAttribute != CardData.AttackAttribute.None)
@@ -415,7 +416,7 @@ public class EnemyUnit : MonoBehaviour
         if (enemyType == EnemyType.Passive)
         {
             // 1️⃣ 目标在攻击范围内，直接攻击
-            
+
             if (dist <= attackRadius)
             {
                 Debug.Log("Passive enemy: target in attack range, attack directly!");
@@ -607,10 +608,10 @@ public class EnemyUnit : MonoBehaviour
         GameObject effect = Instantiate(hitEffect, transform.Find("Canvas"));
         effect.GetComponent<TextMeshProUGUI>().text = amount.ToString();
         Destroy(effect, 1f);//1秒后自动销毁
-        if (Attacked!=null)
+        if (Attacked != null)
         {
             Attacked.gameObject.SetActive(true);
-            
+
             Attacked.SendEvent("OnPlay");
             if (who == Who.Insert)
             {
@@ -625,9 +626,9 @@ public class EnemyUnit : MonoBehaviour
                 AudioManager.Instance.PlaySFX("soldier");
             }
         }
-        
-        
-        
+
+
+
         DOTweenAnimation attackedTween = GetComponent<DOTweenAnimation>();
         if (attackedTween != null && attackedTween.id == "Attacked")
         {
@@ -732,12 +733,12 @@ public class EnemyUnit : MonoBehaviour
             grid.currentEnemy = null;
         }
         Debug.Log($"敌人死亡: {name}");
-        if(isMaid)
+        if (isMaid)
         {
             TurnManager.instance.isMaidDead = true;
         }
 
-        if(FindAnyObjectByType<ClubChange>() != null)
+        if (FindAnyObjectByType<ClubChange>() != null)
         {
             TurnManager.instance.is16Battle = true;
         }
@@ -754,12 +755,12 @@ public class EnemyUnit : MonoBehaviour
     public void Dizziness()
     {
         isDizziness = true;
-        if(Dizzy!=null)
+        if (Dizzy != null)
         {
             Dizzy.gameObject.SetActive(true);
             Dizzy.Play();
         }
-        
+
     }
 
     public void Recover()

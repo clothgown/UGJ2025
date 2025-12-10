@@ -31,6 +31,7 @@ public class NextSceneManager : MonoBehaviour
                 }
                 
                 SceneManager.LoadScene(nextSceneName);
+                if(FindAnyObjectByType<LevelSelectRoot>())
                 FindAnyObjectByType<LevelSelectRoot>().SetGridManagerTrue();
             }
             

@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CollectionManager : MonoBehaviour
 {
     public static CollectionManager instance;
-    public int coins=0;
+    public int coins = 0;
     public int thisLevelGetCoins;
 
     public bool isEntered1_5;
@@ -44,18 +41,18 @@ public class CollectionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public int GetCoinCount()
     {
         return coins; // 假设 coinCount 是你的金币变量
     }
 
-    
+
     public void AddCoin(int coin)
     {
         coins += coin;
-        if(FindAnyObjectByType<NextSceneManager>()!=null)
+        if (FindAnyObjectByType<NextSceneManager>() != null)
         {
             thisLevelGetCoins += coin;
         }
